@@ -1,0 +1,6 @@
+framework module Pods_RapidFund_RapidFundUITests {
+  umbrella header "Pods-RapidFund-RapidFundUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

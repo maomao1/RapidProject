@@ -1,0 +1,71 @@
+PODS:
+  - Alamofire (4.9.1)
+  - AlamofireImage (3.6.0):
+    - Alamofire (~> 4.9)
+  - Differentiator (5.0.0)
+  - IQKeyboardManagerSwift (6.5.15)
+  - MBProgressHUD (1.2.0)
+  - MJRefresh (3.7.5)
+  - RxCocoa (6.6.0):
+    - RxRelay (= 6.6.0)
+    - RxSwift (= 6.6.0)
+  - RxDataSources (5.0.0):
+    - Differentiator (~> 5.0)
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxKeyboard (2.0.0):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
+  - RxRelay (6.6.0):
+    - RxSwift (= 6.6.0)
+  - RxSwift (6.6.0)
+  - SnapKit (5.6.0)
+  - SwiftyJSON (5.0.1)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.9.1)
+  - AlamofireImage
+  - IQKeyboardManagerSwift
+  - MBProgressHUD
+  - MJRefresh
+  - RxCocoa
+  - RxDataSources
+  - RxKeyboard
+  - RxSwift
+  - SnapKit
+  - SwiftyJSON
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - AlamofireImage
+    - Differentiator
+    - IQKeyboardManagerSwift
+    - MBProgressHUD
+    - MJRefresh
+    - RxCocoa
+    - RxDataSources
+    - RxKeyboard
+    - RxRelay
+    - RxSwift
+    - SnapKit
+    - SwiftyJSON
+
+SPEC CHECKSUMS:
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
+  Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  IQKeyboardManagerSwift: 79fab21f451441935788dc5d80ded21c32685904
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
+  RxCocoa: 44a80de90e25b739b5aeaae3c8c371a32e3343cc
+  RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
+  RxKeyboard: 4f5863f43b4ff0cbb2a20b94688d6b80c8a43c14
+  RxRelay: 45eaa5db8ee4fb50e5ebd57deec0159e97fa51e6
+  RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
+
+PODFILE CHECKSUM: 3cf30469427dd781aea88bb5ae6abd85f7946ab2
+
+COCOAPODS: 1.10.2

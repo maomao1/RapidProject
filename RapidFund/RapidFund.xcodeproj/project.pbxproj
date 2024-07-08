@@ -1,0 +1,1011 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2E4D39042C31326500C2271A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D39032C31326500C2271A /* AppDelegate.swift */; };
+		2E4D39082C31326500C2271A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D39072C31326500C2271A /* ViewController.swift */; };
+		2E4D390B2C31326500C2271A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E4D39092C31326500C2271A /* Main.storyboard */; };
+		2E4D390D2C31326900C2271A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2E4D390C2C31326900C2271A /* Assets.xcassets */; };
+		2E4D39102C31326900C2271A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E4D390E2C31326900C2271A /* LaunchScreen.storyboard */; };
+		2E4D391B2C31326900C2271A /* RapidFundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D391A2C31326900C2271A /* RapidFundTests.swift */; };
+		2E4D39252C31326900C2271A /* RapidFundUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D39242C31326900C2271A /* RapidFundUITests.swift */; };
+		2E4D39272C31326900C2271A /* RapidFundUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D39262C31326900C2271A /* RapidFundUITestsLaunchTests.swift */; };
+		2E4D39432C35857B00C2271A /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D393A2C35857B00C2271A /* AppConfig.swift */; };
+		2E4D39442C35857B00C2271A /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D393C2C35857B00C2271A /* UIColorExtension.swift */; };
+		2E4D39452C35857B00C2271A /* UIFontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D393D2C35857B00C2271A /* UIFontExtension.swift */; };
+		2E4D39462C35857B00C2271A /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D393E2C35857B00C2271A /* UIImageExtension.swift */; };
+		2E4D39472C35857B00C2271A /* NSNumberExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D393F2C35857B00C2271A /* NSNumberExtension.swift */; };
+		2E4D39492C36A48000C2271A /* RapidBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D39482C36A48000C2271A /* RapidBaseViewController.swift */; };
+		2E4D394B2C36A4BA00C2271A /* RapidBaseNavgationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D394A2C36A4BA00C2271A /* RapidBaseNavgationController.swift */; };
+		2E91E8612C36A684005E2AB4 /* RapidRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E91E8602C36A684005E2AB4 /* RapidRootViewController.swift */; };
+		2E91E8642C36A72A005E2AB4 /* RapidHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E91E8632C36A72A005E2AB4 /* RapidHomeViewController.swift */; };
+		2E91E8682C36A764005E2AB4 /* RapidOrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E91E8672C36A764005E2AB4 /* RapidOrderViewController.swift */; };
+		2E91E86B2C36A77D005E2AB4 /* RapidMineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E91E86A2C36A77D005E2AB4 /* RapidMineViewController.swift */; };
+		2E91E8712C36D2EC005E2AB4 /* RapidLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E91E8702C36D2EC005E2AB4 /* RapidLoginViewController.swift */; };
+		2E91E8772C36E2E7005E2AB4 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E91E8762C36E2E7005E2AB4 /* UILabelExtension.swift */; };
+		2EBDADF62C39769E00B3C845 /* ProjectConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADF52C39769E00B3C845 /* ProjectConfig.swift */; };
+		2EBDADF82C39BAEB00B3C845 /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADF72C39BAEB00B3C845 /* TimeIntervalExtension.swift */; };
+		2EBDADFA2C39BBCB00B3C845 /* RapidLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADF92C39BBCB00B3C845 /* RapidLoginViewModel.swift */; };
+		2EBDADFC2C39C28F00B3C845 /* RapidApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADFB2C39C28F00B3C845 /* RapidApi.swift */; };
+		2EBDADFE2C39C36400B3C845 /* ErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADFD2C39C36400B3C845 /* ErrorExtension.swift */; };
+		2EBDAE002C39C45F00B3C845 /* JSONExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADFF2C39C45F00B3C845 /* JSONExtension.swift */; };
+		2EBDAE022C39C59D00B3C845 /* RapidApiConstantUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE012C39C59D00B3C845 /* RapidApiConstantUrl.swift */; };
+		2EBDAE042C39C7AC00B3C845 /* RapidMainApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE032C39C7AC00B3C845 /* RapidMainApi.swift */; };
+		2EBDAE062C39CB3800B3C845 /* MainAppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE052C39CB3800B3C845 /* MainAppInfo.swift */; };
+		2EBDAE082C3AD25000B3C845 /* MBProgressHUDExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE072C3AD25000B3C845 /* MBProgressHUDExtension.swift */; };
+		2EBDAE0A2C3AD35A00B3C845 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE092C3AD35A00B3C845 /* StringExtension.swift */; };
+		2EBDAE0D2C3B9C3000B3C845 /* RapidSingleIdentifierManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE0C2C3B9C3000B3C845 /* RapidSingleIdentifierManager.swift */; };
+		2EBDAE0F2C3B9F6E00B3C845 /* CacheHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE0E2C3B9F6E00B3C845 /* CacheHelper.swift */; };
+		2EBDAE122C3BDBC500B3C845 /* RapidTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE112C3BDBC500B3C845 /* RapidTabbar.swift */; };
+		2EBDAE142C3C21A100B3C845 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE132C3C21A100B3C845 /* UIViewExtension.swift */; };
+		81868C2FC647AA625D44B21C /* Pods_RapidFundTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565CF0205FADBDEBAF62DE6C /* Pods_RapidFundTests.framework */; };
+		99CD401003CB24EEEAC74020 /* Pods_RapidFund_RapidFundUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F61E2469C0BBFED2185A51D4 /* Pods_RapidFund_RapidFundUITests.framework */; };
+		D20894E77090E15AC556F055 /* Pods_RapidFund.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0679B2D7EE58B27A156FE6 /* Pods_RapidFund.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2E4D39172C31326900C2271A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2E4D38F82C31326500C2271A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E4D38FF2C31326500C2271A;
+			remoteInfo = RapidFund;
+		};
+		2E4D39212C31326900C2271A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2E4D38F82C31326500C2271A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E4D38FF2C31326500C2271A;
+			remoteInfo = RapidFund;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		19F635D9772749B286942930 /* Pods-RapidFundTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFundTests.release.xcconfig"; path = "Target Support Files/Pods-RapidFundTests/Pods-RapidFundTests.release.xcconfig"; sourceTree = "<group>"; };
+		28F36B4CADBD36A283814F95 /* Pods-RapidFund-RapidFundUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFund-RapidFundUITests.release.xcconfig"; path = "Target Support Files/Pods-RapidFund-RapidFundUITests/Pods-RapidFund-RapidFundUITests.release.xcconfig"; sourceTree = "<group>"; };
+		2E4D39002C31326500C2271A /* RapidFund.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RapidFund.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E4D39032C31326500C2271A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2E4D39072C31326500C2271A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2E4D390A2C31326500C2271A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		2E4D390C2C31326900C2271A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2E4D390F2C31326900C2271A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		2E4D39112C31326900C2271A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2E4D39162C31326900C2271A /* RapidFundTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RapidFundTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E4D391A2C31326900C2271A /* RapidFundTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidFundTests.swift; sourceTree = "<group>"; };
+		2E4D39202C31326900C2271A /* RapidFundUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RapidFundUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E4D39242C31326900C2271A /* RapidFundUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidFundUITests.swift; sourceTree = "<group>"; };
+		2E4D39262C31326900C2271A /* RapidFundUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidFundUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2E4D393A2C35857B00C2271A /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		2E4D393C2C35857B00C2271A /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		2E4D393D2C35857B00C2271A /* UIFontExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFontExtension.swift; sourceTree = "<group>"; };
+		2E4D393E2C35857B00C2271A /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		2E4D393F2C35857B00C2271A /* NSNumberExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSNumberExtension.swift; sourceTree = "<group>"; };
+		2E4D39482C36A48000C2271A /* RapidBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidBaseViewController.swift; sourceTree = "<group>"; };
+		2E4D394A2C36A4BA00C2271A /* RapidBaseNavgationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidBaseNavgationController.swift; sourceTree = "<group>"; };
+		2E91E8602C36A684005E2AB4 /* RapidRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidRootViewController.swift; sourceTree = "<group>"; };
+		2E91E8632C36A72A005E2AB4 /* RapidHomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidHomeViewController.swift; sourceTree = "<group>"; };
+		2E91E8672C36A764005E2AB4 /* RapidOrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidOrderViewController.swift; sourceTree = "<group>"; };
+		2E91E86A2C36A77D005E2AB4 /* RapidMineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidMineViewController.swift; sourceTree = "<group>"; };
+		2E91E8702C36D2EC005E2AB4 /* RapidLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidLoginViewController.swift; sourceTree = "<group>"; };
+		2E91E8762C36E2E7005E2AB4 /* UILabelExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
+		2EBDADF52C39769E00B3C845 /* ProjectConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectConfig.swift; sourceTree = "<group>"; };
+		2EBDADF72C39BAEB00B3C845 /* TimeIntervalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtension.swift; sourceTree = "<group>"; };
+		2EBDADF92C39BBCB00B3C845 /* RapidLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidLoginViewModel.swift; sourceTree = "<group>"; };
+		2EBDADFB2C39C28F00B3C845 /* RapidApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidApi.swift; sourceTree = "<group>"; };
+		2EBDADFD2C39C36400B3C845 /* ErrorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorExtension.swift; sourceTree = "<group>"; };
+		2EBDADFF2C39C45F00B3C845 /* JSONExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONExtension.swift; sourceTree = "<group>"; };
+		2EBDAE012C39C59D00B3C845 /* RapidApiConstantUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidApiConstantUrl.swift; sourceTree = "<group>"; };
+		2EBDAE032C39C7AC00B3C845 /* RapidMainApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidMainApi.swift; sourceTree = "<group>"; };
+		2EBDAE052C39CB3800B3C845 /* MainAppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppInfo.swift; sourceTree = "<group>"; };
+		2EBDAE072C3AD25000B3C845 /* MBProgressHUDExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MBProgressHUDExtension.swift; sourceTree = "<group>"; };
+		2EBDAE092C3AD35A00B3C845 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		2EBDAE0C2C3B9C3000B3C845 /* RapidSingleIdentifierManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidSingleIdentifierManager.swift; sourceTree = "<group>"; };
+		2EBDAE0E2C3B9F6E00B3C845 /* CacheHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheHelper.swift; sourceTree = "<group>"; };
+		2EBDAE112C3BDBC500B3C845 /* RapidTabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidTabbar.swift; sourceTree = "<group>"; };
+		2EBDAE132C3C21A100B3C845 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		565CF0205FADBDEBAF62DE6C /* Pods_RapidFundTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RapidFundTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7303F2785653D5EFAC06F8CB /* Pods-RapidFund-RapidFundUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFund-RapidFundUITests.debug.xcconfig"; path = "Target Support Files/Pods-RapidFund-RapidFundUITests/Pods-RapidFund-RapidFundUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		9A0679B2D7EE58B27A156FE6 /* Pods_RapidFund.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RapidFund.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A6D32A5DE68100C616912A6 /* Pods-RapidFund.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFund.debug.xcconfig"; path = "Target Support Files/Pods-RapidFund/Pods-RapidFund.debug.xcconfig"; sourceTree = "<group>"; };
+		D23407314EA365A791685095 /* Pods-RapidFund.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFund.release.xcconfig"; path = "Target Support Files/Pods-RapidFund/Pods-RapidFund.release.xcconfig"; sourceTree = "<group>"; };
+		DCECA8D5F659AE849A236F9C /* Pods-RapidFundTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFundTests.debug.xcconfig"; path = "Target Support Files/Pods-RapidFundTests/Pods-RapidFundTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F61E2469C0BBFED2185A51D4 /* Pods_RapidFund_RapidFundUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RapidFund_RapidFundUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2E4D38FD2C31326500C2271A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D20894E77090E15AC556F055 /* Pods_RapidFund.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E4D39132C31326900C2271A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81868C2FC647AA625D44B21C /* Pods_RapidFundTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E4D391D2C31326900C2271A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99CD401003CB24EEEAC74020 /* Pods_RapidFund_RapidFundUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2E4D38F72C31326500C2271A = {
+			isa = PBXGroup;
+			children = (
+				2E4D39022C31326500C2271A /* RapidFund */,
+				2E4D39192C31326900C2271A /* RapidFundTests */,
+				2E4D39232C31326900C2271A /* RapidFundUITests */,
+				2E4D39012C31326500C2271A /* Products */,
+				ED9999D2688070D7C1E962BF /* Pods */,
+				3D93E43EAC0F0E0621C17374 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		2E4D39012C31326500C2271A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2E4D39002C31326500C2271A /* RapidFund.app */,
+				2E4D39162C31326900C2271A /* RapidFundTests.xctest */,
+				2E4D39202C31326900C2271A /* RapidFundUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2E4D39022C31326500C2271A /* RapidFund */ = {
+			isa = PBXGroup;
+			children = (
+				2E4D39112C31326900C2271A /* Info.plist */,
+				2E91E86D2C36AEA4005E2AB4 /* Resource */,
+				2E91E86C2C36A888005E2AB4 /* Appdelegate */,
+				2E91E8622C36A704005E2AB4 /* Main */,
+				2E4D39382C35857B00C2271A /* Expand */,
+				2E4D39342C35857B00C2271A /* Root */,
+			);
+			path = RapidFund;
+			sourceTree = "<group>";
+		};
+		2E4D39192C31326900C2271A /* RapidFundTests */ = {
+			isa = PBXGroup;
+			children = (
+				2E4D391A2C31326900C2271A /* RapidFundTests.swift */,
+			);
+			path = RapidFundTests;
+			sourceTree = "<group>";
+		};
+		2E4D39232C31326900C2271A /* RapidFundUITests */ = {
+			isa = PBXGroup;
+			children = (
+				2E4D39242C31326900C2271A /* RapidFundUITests.swift */,
+				2E4D39262C31326900C2271A /* RapidFundUITestsLaunchTests.swift */,
+			);
+			path = RapidFundUITests;
+			sourceTree = "<group>";
+		};
+		2E4D39342C35857B00C2271A /* Root */ = {
+			isa = PBXGroup;
+			children = (
+				2EBDAE102C3BDBA200B3C845 /* View */,
+				2E4D39482C36A48000C2271A /* RapidBaseViewController.swift */,
+				2E4D394A2C36A4BA00C2271A /* RapidBaseNavgationController.swift */,
+				2E91E8602C36A684005E2AB4 /* RapidRootViewController.swift */,
+			);
+			path = Root;
+			sourceTree = "<group>";
+		};
+		2E4D39382C35857B00C2271A /* Expand */ = {
+			isa = PBXGroup;
+			children = (
+				2EBDAE0B2C3B9C0C00B3C845 /* Cache */,
+				2E91E86E2C36B30A005E2AB4 /* API */,
+				2E4D39392C35857B00C2271A /* MainAppInfo */,
+				2E4D393B2C35857B00C2271A /* Extensions */,
+			);
+			path = Expand;
+			sourceTree = "<group>";
+		};
+		2E4D39392C35857B00C2271A /* MainAppInfo */ = {
+			isa = PBXGroup;
+			children = (
+				2E4D393A2C35857B00C2271A /* AppConfig.swift */,
+				2EBDADF52C39769E00B3C845 /* ProjectConfig.swift */,
+				2EBDAE052C39CB3800B3C845 /* MainAppInfo.swift */,
+			);
+			path = MainAppInfo;
+			sourceTree = "<group>";
+		};
+		2E4D393B2C35857B00C2271A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2E91E8762C36E2E7005E2AB4 /* UILabelExtension.swift */,
+				2E4D393C2C35857B00C2271A /* UIColorExtension.swift */,
+				2E4D393D2C35857B00C2271A /* UIFontExtension.swift */,
+				2E4D393E2C35857B00C2271A /* UIImageExtension.swift */,
+				2E4D393F2C35857B00C2271A /* NSNumberExtension.swift */,
+				2EBDADF72C39BAEB00B3C845 /* TimeIntervalExtension.swift */,
+				2EBDADFF2C39C45F00B3C845 /* JSONExtension.swift */,
+				2EBDADFD2C39C36400B3C845 /* ErrorExtension.swift */,
+				2EBDAE072C3AD25000B3C845 /* MBProgressHUDExtension.swift */,
+				2EBDAE092C3AD35A00B3C845 /* StringExtension.swift */,
+				2EBDAE132C3C21A100B3C845 /* UIViewExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2E91E8622C36A704005E2AB4 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				2E91E86F2C36D2C1005E2AB4 /* LoginRegister */,
+				2E91E8692C36A76D005E2AB4 /* Mine */,
+				2E91E8662C36A750005E2AB4 /* Order */,
+				2E91E8652C36A740005E2AB4 /* Home */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		2E91E8652C36A740005E2AB4 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				2E91E8632C36A72A005E2AB4 /* RapidHomeViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		2E91E8662C36A750005E2AB4 /* Order */ = {
+			isa = PBXGroup;
+			children = (
+				2E91E8672C36A764005E2AB4 /* RapidOrderViewController.swift */,
+			);
+			path = Order;
+			sourceTree = "<group>";
+		};
+		2E91E8692C36A76D005E2AB4 /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+				2E91E86A2C36A77D005E2AB4 /* RapidMineViewController.swift */,
+			);
+			path = Mine;
+			sourceTree = "<group>";
+		};
+		2E91E86C2C36A888005E2AB4 /* Appdelegate */ = {
+			isa = PBXGroup;
+			children = (
+				2E4D39032C31326500C2271A /* AppDelegate.swift */,
+				2E4D39072C31326500C2271A /* ViewController.swift */,
+			);
+			path = Appdelegate;
+			sourceTree = "<group>";
+		};
+		2E91E86D2C36AEA4005E2AB4 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				2E4D39092C31326500C2271A /* Main.storyboard */,
+				2E4D390C2C31326900C2271A /* Assets.xcassets */,
+				2E4D390E2C31326900C2271A /* LaunchScreen.storyboard */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		2E91E86E2C36B30A005E2AB4 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				2EBDADFB2C39C28F00B3C845 /* RapidApi.swift */,
+				2EBDAE032C39C7AC00B3C845 /* RapidMainApi.swift */,
+				2EBDAE012C39C59D00B3C845 /* RapidApiConstantUrl.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		2E91E86F2C36D2C1005E2AB4 /* LoginRegister */ = {
+			isa = PBXGroup;
+			children = (
+				2E91E8752C36D338005E2AB4 /* View */,
+				2E91E8742C36D32F005E2AB4 /* Model */,
+				2E91E8732C36D326005E2AB4 /* ViewModel */,
+				2E91E8722C36D2FA005E2AB4 /* Controller */,
+			);
+			path = LoginRegister;
+			sourceTree = "<group>";
+		};
+		2E91E8722C36D2FA005E2AB4 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2E91E8702C36D2EC005E2AB4 /* RapidLoginViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2E91E8732C36D326005E2AB4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2EBDADF92C39BBCB00B3C845 /* RapidLoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2E91E8742C36D32F005E2AB4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2E91E8752C36D338005E2AB4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2EBDAE0B2C3B9C0C00B3C845 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				2EBDAE0C2C3B9C3000B3C845 /* RapidSingleIdentifierManager.swift */,
+				2EBDAE0E2C3B9F6E00B3C845 /* CacheHelper.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		2EBDAE102C3BDBA200B3C845 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2EBDAE112C3BDBC500B3C845 /* RapidTabbar.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3D93E43EAC0F0E0621C17374 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9A0679B2D7EE58B27A156FE6 /* Pods_RapidFund.framework */,
+				F61E2469C0BBFED2185A51D4 /* Pods_RapidFund_RapidFundUITests.framework */,
+				565CF0205FADBDEBAF62DE6C /* Pods_RapidFundTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ED9999D2688070D7C1E962BF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9A6D32A5DE68100C616912A6 /* Pods-RapidFund.debug.xcconfig */,
+				D23407314EA365A791685095 /* Pods-RapidFund.release.xcconfig */,
+				7303F2785653D5EFAC06F8CB /* Pods-RapidFund-RapidFundUITests.debug.xcconfig */,
+				28F36B4CADBD36A283814F95 /* Pods-RapidFund-RapidFundUITests.release.xcconfig */,
+				DCECA8D5F659AE849A236F9C /* Pods-RapidFundTests.debug.xcconfig */,
+				19F635D9772749B286942930 /* Pods-RapidFundTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2E4D38FF2C31326500C2271A /* RapidFund */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E4D392A2C31326900C2271A /* Build configuration list for PBXNativeTarget "RapidFund" */;
+			buildPhases = (
+				A37AF753427D481192DBDF77 /* [CP] Check Pods Manifest.lock */,
+				2E4D38FC2C31326500C2271A /* Sources */,
+				2E4D38FD2C31326500C2271A /* Frameworks */,
+				2E4D38FE2C31326500C2271A /* Resources */,
+				ACB8AE6C56BB3F4C285BEF67 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RapidFund;
+			productName = RapidFund;
+			productReference = 2E4D39002C31326500C2271A /* RapidFund.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2E4D39152C31326900C2271A /* RapidFundTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E4D392D2C31326900C2271A /* Build configuration list for PBXNativeTarget "RapidFundTests" */;
+			buildPhases = (
+				8D168DCE8B1C9EC7185295CC /* [CP] Check Pods Manifest.lock */,
+				2E4D39122C31326900C2271A /* Sources */,
+				2E4D39132C31326900C2271A /* Frameworks */,
+				2E4D39142C31326900C2271A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2E4D39182C31326900C2271A /* PBXTargetDependency */,
+			);
+			name = RapidFundTests;
+			productName = RapidFundTests;
+			productReference = 2E4D39162C31326900C2271A /* RapidFundTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2E4D391F2C31326900C2271A /* RapidFundUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E4D39302C31326900C2271A /* Build configuration list for PBXNativeTarget "RapidFundUITests" */;
+			buildPhases = (
+				E39EEF6ED51FBD19904654C0 /* [CP] Check Pods Manifest.lock */,
+				2E4D391C2C31326900C2271A /* Sources */,
+				2E4D391D2C31326900C2271A /* Frameworks */,
+				2E4D391E2C31326900C2271A /* Resources */,
+				07943CFBE46464B7F39C8B39 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2E4D39222C31326900C2271A /* PBXTargetDependency */,
+			);
+			name = RapidFundUITests;
+			productName = RapidFundUITests;
+			productReference = 2E4D39202C31326900C2271A /* RapidFundUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2E4D38F82C31326500C2271A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					2E4D38FF2C31326500C2271A = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					2E4D39152C31326900C2271A = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 2E4D38FF2C31326500C2271A;
+					};
+					2E4D391F2C31326900C2271A = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 2E4D38FF2C31326500C2271A;
+					};
+				};
+			};
+			buildConfigurationList = 2E4D38FB2C31326500C2271A /* Build configuration list for PBXProject "RapidFund" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2E4D38F72C31326500C2271A;
+			productRefGroup = 2E4D39012C31326500C2271A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2E4D38FF2C31326500C2271A /* RapidFund */,
+				2E4D39152C31326900C2271A /* RapidFundTests */,
+				2E4D391F2C31326900C2271A /* RapidFundUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2E4D38FE2C31326500C2271A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E4D39102C31326900C2271A /* LaunchScreen.storyboard in Resources */,
+				2E4D390D2C31326900C2271A /* Assets.xcassets in Resources */,
+				2E4D390B2C31326500C2271A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E4D39142C31326900C2271A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E4D391E2C31326900C2271A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		07943CFBE46464B7F39C8B39 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RapidFund-RapidFundUITests/Pods-RapidFund-RapidFundUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RapidFund-RapidFundUITests/Pods-RapidFund-RapidFundUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RapidFund-RapidFundUITests/Pods-RapidFund-RapidFundUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8D168DCE8B1C9EC7185295CC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RapidFundTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A37AF753427D481192DBDF77 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RapidFund-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ACB8AE6C56BB3F4C285BEF67 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RapidFund/Pods-RapidFund-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RapidFund/Pods-RapidFund-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-RapidFund/Pods-RapidFund-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E39EEF6ED51FBD19904654C0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RapidFund-RapidFundUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2E4D38FC2C31326500C2271A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2EBDAE142C3C21A100B3C845 /* UIViewExtension.swift in Sources */,
+				2E91E86B2C36A77D005E2AB4 /* RapidMineViewController.swift in Sources */,
+				2E91E8712C36D2EC005E2AB4 /* RapidLoginViewController.swift in Sources */,
+				2E4D39442C35857B00C2271A /* UIColorExtension.swift in Sources */,
+				2E4D39452C35857B00C2271A /* UIFontExtension.swift in Sources */,
+				2E4D39082C31326500C2271A /* ViewController.swift in Sources */,
+				2EBDADFE2C39C36400B3C845 /* ErrorExtension.swift in Sources */,
+				2EBDAE062C39CB3800B3C845 /* MainAppInfo.swift in Sources */,
+				2E91E8642C36A72A005E2AB4 /* RapidHomeViewController.swift in Sources */,
+				2EBDAE002C39C45F00B3C845 /* JSONExtension.swift in Sources */,
+				2E91E8612C36A684005E2AB4 /* RapidRootViewController.swift in Sources */,
+				2EBDAE082C3AD25000B3C845 /* MBProgressHUDExtension.swift in Sources */,
+				2EBDAE022C39C59D00B3C845 /* RapidApiConstantUrl.swift in Sources */,
+				2E91E8772C36E2E7005E2AB4 /* UILabelExtension.swift in Sources */,
+				2EBDAE122C3BDBC500B3C845 /* RapidTabbar.swift in Sources */,
+				2EBDADFC2C39C28F00B3C845 /* RapidApi.swift in Sources */,
+				2E4D39472C35857B00C2271A /* NSNumberExtension.swift in Sources */,
+				2EBDAE042C39C7AC00B3C845 /* RapidMainApi.swift in Sources */,
+				2EBDAE0F2C3B9F6E00B3C845 /* CacheHelper.swift in Sources */,
+				2EBDADFA2C39BBCB00B3C845 /* RapidLoginViewModel.swift in Sources */,
+				2E4D39462C35857B00C2271A /* UIImageExtension.swift in Sources */,
+				2E4D394B2C36A4BA00C2271A /* RapidBaseNavgationController.swift in Sources */,
+				2EBDADF62C39769E00B3C845 /* ProjectConfig.swift in Sources */,
+				2E4D39492C36A48000C2271A /* RapidBaseViewController.swift in Sources */,
+				2E4D39432C35857B00C2271A /* AppConfig.swift in Sources */,
+				2EBDAE0D2C3B9C3000B3C845 /* RapidSingleIdentifierManager.swift in Sources */,
+				2E91E8682C36A764005E2AB4 /* RapidOrderViewController.swift in Sources */,
+				2E4D39042C31326500C2271A /* AppDelegate.swift in Sources */,
+				2EBDAE0A2C3AD35A00B3C845 /* StringExtension.swift in Sources */,
+				2EBDADF82C39BAEB00B3C845 /* TimeIntervalExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E4D39122C31326900C2271A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E4D391B2C31326900C2271A /* RapidFundTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E4D391C2C31326900C2271A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E4D39272C31326900C2271A /* RapidFundUITestsLaunchTests.swift in Sources */,
+				2E4D39252C31326900C2271A /* RapidFundUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2E4D39182C31326900C2271A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2E4D38FF2C31326500C2271A /* RapidFund */;
+			targetProxy = 2E4D39172C31326900C2271A /* PBXContainerItemProxy */;
+		};
+		2E4D39222C31326900C2271A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2E4D38FF2C31326500C2271A /* RapidFund */;
+			targetProxy = 2E4D39212C31326900C2271A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2E4D39092C31326500C2271A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2E4D390A2C31326500C2271A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		2E4D390E2C31326900C2271A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2E4D390F2C31326900C2271A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2E4D39282C31326900C2271A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2E4D39292C31326900C2271A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2E4D392B2C31326900C2271A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9A6D32A5DE68100C616912A6 /* Pods-RapidFund.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RapidFund/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shangHaiYalo.RapidFund;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2E4D392C2C31326900C2271A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D23407314EA365A791685095 /* Pods-RapidFund.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RapidFund/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shangHaiYalo.RapidFund;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2E4D392E2C31326900C2271A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DCECA8D5F659AE849A236F9C /* Pods-RapidFundTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shangHaiYalo.RapidFundTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RapidFund.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RapidFund";
+			};
+			name = Debug;
+		};
+		2E4D392F2C31326900C2271A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 19F635D9772749B286942930 /* Pods-RapidFundTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shangHaiYalo.RapidFundTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RapidFund.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RapidFund";
+			};
+			name = Release;
+		};
+		2E4D39312C31326900C2271A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7303F2785653D5EFAC06F8CB /* Pods-RapidFund-RapidFundUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shangHaiYalo.RapidFundUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = RapidFund;
+			};
+			name = Debug;
+		};
+		2E4D39322C31326900C2271A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 28F36B4CADBD36A283814F95 /* Pods-RapidFund-RapidFundUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shangHaiYalo.RapidFundUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = RapidFund;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2E4D38FB2C31326500C2271A /* Build configuration list for PBXProject "RapidFund" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E4D39282C31326900C2271A /* Debug */,
+				2E4D39292C31326900C2271A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2E4D392A2C31326900C2271A /* Build configuration list for PBXNativeTarget "RapidFund" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E4D392B2C31326900C2271A /* Debug */,
+				2E4D392C2C31326900C2271A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2E4D392D2C31326900C2271A /* Build configuration list for PBXNativeTarget "RapidFundTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E4D392E2C31326900C2271A /* Debug */,
+				2E4D392F2C31326900C2271A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2E4D39302C31326900C2271A /* Build configuration list for PBXNativeTarget "RapidFundUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E4D39312C31326900C2271A /* Debug */,
+				2E4D39322C31326900C2271A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2E4D38F82C31326500C2271A /* Project object */;
+}
