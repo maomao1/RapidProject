@@ -9,6 +9,11 @@ import UIKit
 import RxSwift
 import RxCocoa
 
+@_exported import XYZKit
+
+
+
+
 class RapidBaseViewController: UIViewController {
 
     // MARK: - Properties

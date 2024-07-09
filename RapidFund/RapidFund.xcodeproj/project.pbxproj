@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		024F6C432C3CFD290041F532 /* RFPInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F6C422C3CFD290041F532 /* RFPInVC.swift */; };
+		024F6C462C3CFECA0041F532 /* RFInfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F6C452C3CFECA0041F532 /* RFInfoItem.swift */; };
 		2E4D39042C31326500C2271A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D39032C31326500C2271A /* AppDelegate.swift */; };
 		2E4D39082C31326500C2271A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D39072C31326500C2271A /* ViewController.swift */; };
 		2E4D390B2C31326500C2271A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E4D39092C31326500C2271A /* Main.storyboard */; };
@@ -68,6 +70,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		024F6C422C3CFD290041F532 /* RFPInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFPInVC.swift; sourceTree = "<group>"; };
+		024F6C452C3CFECA0041F532 /* RFInfoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFInfoItem.swift; sourceTree = "<group>"; };
 		19F635D9772749B286942930 /* Pods-RapidFundTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFundTests.release.xcconfig"; path = "Target Support Files/Pods-RapidFundTests/Pods-RapidFundTests.release.xcconfig"; sourceTree = "<group>"; };
 		28F36B4CADBD36A283814F95 /* Pods-RapidFund-RapidFundUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFund-RapidFundUITests.release.xcconfig"; path = "Target Support Files/Pods-RapidFund-RapidFundUITests/Pods-RapidFund-RapidFundUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2E4D39002C31326500C2271A /* RapidFund.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RapidFund.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,6 +153,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		024F6C412C3CFD000041F532 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				024F6C442C3CFEB40041F532 /* View */,
+				024F6C422C3CFD290041F532 /* RFPInVC.swift */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
+		024F6C442C3CFEB40041F532 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				024F6C452C3CFECA0041F532 /* RFInfoItem.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		2E4D38F72C31326500C2271A = {
 			isa = PBXGroup;
 			children = (
@@ -254,6 +275,7 @@
 		2E91E8622C36A704005E2AB4 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				024F6C412C3CFD000041F532 /* Info */,
 				2E91E86F2C36D2C1005E2AB4 /* LoginRegister */,
 				2E91E8692C36A76D005E2AB4 /* Mine */,
 				2E91E8662C36A750005E2AB4 /* Order */,
@@ -718,6 +740,7 @@
 				2EBDAE022C39C59D00B3C845 /* RapidApiConstantUrl.swift in Sources */,
 				2E91E8772C36E2E7005E2AB4 /* UILabelExtension.swift in Sources */,
 				2EBDAE122C3BDBC500B3C845 /* RapidTabbar.swift in Sources */,
+				024F6C432C3CFD290041F532 /* RFPInVC.swift in Sources */,
 				2EBDADFC2C39C28F00B3C845 /* RapidApi.swift in Sources */,
 				2E4D39472C35857B00C2271A /* NSNumberExtension.swift in Sources */,
 				2EBDAE042C39C7AC00B3C845 /* RapidMainApi.swift in Sources */,
@@ -732,6 +755,7 @@
 				2E91E8682C36A764005E2AB4 /* RapidOrderViewController.swift in Sources */,
 				2E4D39042C31326500C2271A /* AppDelegate.swift in Sources */,
 				2EBDAE0A2C3AD35A00B3C845 /* StringExtension.swift in Sources */,
+				024F6C462C3CFECA0041F532 /* RFInfoItem.swift in Sources */,
 				2EBDADF82C39BAEB00B3C845 /* TimeIntervalExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

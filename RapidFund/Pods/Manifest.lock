@@ -21,6 +21,9 @@ PODS:
   - RxSwift (6.6.0)
   - SnapKit (5.6.0)
   - SwiftyJSON (5.0.1)
+  - XYZKit (0.7.0):
+    - XYZKit/Core (= 0.7.0)
+  - XYZKit/Core (0.7.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.9.1)
@@ -34,6 +37,7 @@ DEPENDENCIES:
   - RxSwift
   - SnapKit
   - SwiftyJSON
+  - XYZKit (from `https://github.com/DFTT/XYZKit.git`, branch `master`)
 
 SPEC REPOS:
   trunk:
@@ -51,6 +55,16 @@ SPEC REPOS:
     - SnapKit
     - SwiftyJSON
 
+EXTERNAL SOURCES:
+  XYZKit:
+    :branch: master
+    :git: https://github.com/DFTT/XYZKit.git
+
+CHECKOUT OPTIONS:
+  XYZKit:
+    :commit: f25f16921a50b0042bfc942e5d936905da095ca6
+    :git: https://github.com/DFTT/XYZKit.git
+
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
@@ -65,7 +79,8 @@ SPEC CHECKSUMS:
   RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
+  XYZKit: 4b36427ed270de9db9ae7b6790c2365d6811c196
 
-PODFILE CHECKSUM: 3cf30469427dd781aea88bb5ae6abd85f7946ab2
+PODFILE CHECKSUM: 3328c2ec0bcf61470e37e3f6e8fdfa48e6129756
 
 COCOAPODS: 1.10.2
