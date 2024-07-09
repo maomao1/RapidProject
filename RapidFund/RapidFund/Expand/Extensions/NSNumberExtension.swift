@@ -284,11 +284,11 @@ protocol Scalable {
 
 extension CGFloat: Scalable {
     var rc: CGFloat {
-        return ceil(self * ScaledRatio) * InvertedScale
+        return Darwin.ceil(self * ScaledRatio) * InvertedScale
     }
     
     var rf: CGFloat {
-        return floor(self * ScaledRatio) * InvertedScale
+        return Darwin.floor(self * ScaledRatio) * InvertedScale
     }
     
     var r: CGFloat {
@@ -298,11 +298,11 @@ extension CGFloat: Scalable {
 
 extension CGFloat {
     var pixelCeil: CGFloat {
-        return ceil(self * Scale) * InvertedScale
+        return Darwin.ceil(self * Scale) * InvertedScale
     }
     
     var pixelFloor: CGFloat {
-        return floor(self * Scale) * InvertedScale
+        return Darwin.floor(self * Scale) * InvertedScale
     }
     
     func interpolate(from a: CGFloat, to b: CGFloat) -> CGFloat {

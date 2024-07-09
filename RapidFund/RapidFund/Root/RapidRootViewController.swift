@@ -115,7 +115,7 @@ extension RapidRootViewController: UITabBarControllerDelegate {
         if index == 0 {
             return true
         }else {
-            if !GetInfo(RapidSession).isEmpty {
+            if !GetInfo(kRapidSession).isEmpty {
                 return true
             }else{
                 let vc = RapidLoginViewController()

@@ -16,5 +16,9 @@ struct RapidApiConstantUrl {
     
     //MARK: - home
     static let homeGetData  = "/rfapi/hardly/passed/getting"
+    
+    //MARK: - mine
+    static let getMineData  = "/rfapi/dream/shall/smiled"
+    
 
 }

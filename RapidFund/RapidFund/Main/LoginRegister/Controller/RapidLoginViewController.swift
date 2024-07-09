@@ -368,7 +368,8 @@ extension RapidLoginViewController {
     
     func cacheLoginInfo(){
         let model = viewModel.loginModel.value
-        SetInfo(model?.session ?? "", value: kRapidSession)
+        SetInfo(kRapidSession, value: model?.session ?? "" )
+        self.dismiss(animated: true, completion: nil)
     }
     func changeAgreementEvent() {
         self.agreeBtn.isSelected = !self.agreeBtn.isSelected

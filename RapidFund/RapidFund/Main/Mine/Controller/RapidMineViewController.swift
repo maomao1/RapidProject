@@ -8,22 +8,20 @@
 import UIKit
 
 class RapidMineViewController: RapidBaseViewController {
-
+    
+    var viewModel: RapidMineViewModel = RapidMineViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        viewModel.getData()
+        setupViews()
         // Do any additional setup after loading the view.
     }
+
+}
+
+extension RapidMineViewController {
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func setupViews() {
+        
     }
-    */
-
 }
