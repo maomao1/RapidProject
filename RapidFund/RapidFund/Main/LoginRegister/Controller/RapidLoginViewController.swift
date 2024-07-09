@@ -349,6 +349,13 @@ extension RapidLoginViewController {
             })
             .disposed(by: disposeBag)
         
+        viewModel.loginModel
+            .subscribe(onNext: { [weak self] (_) in
+                guard let `self` = self else { return }
+                self.cacheLoginInfo()
+            })
+            .disposed(by: bag)
+        
         viewModel.loginSuccessAction 
             .subscribe(onNext: { [weak self] in
                 self?.dismiss(animated: true, completion: nil)
@@ -358,6 +365,11 @@ extension RapidLoginViewController {
 }
 
 extension RapidLoginViewController {
+    
+    func cacheLoginInfo(){
+        let model = viewModel.loginModel.value
+        SetInfo(model?.session ?? "", value: kRapidSession)
+    }
     func changeAgreementEvent() {
         self.agreeBtn.isSelected = !self.agreeBtn.isSelected
     }

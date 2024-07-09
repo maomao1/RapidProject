@@ -22,6 +22,7 @@ class RapidRootViewController: UITabBarController {
         
     }
     
+    
    
     
 }
@@ -54,6 +55,7 @@ extension RapidRootViewController {
         viewControllers = [homeNVC, orderNVC, mineNVC]
         viewControllers?.forEach({ (vc) in
             vc.tabBarItem = UITabBarItem(title: nil, image: nil, selectedImage: nil)
+            
         })
         
         
@@ -88,7 +90,7 @@ extension RapidRootViewController {
 //        tabBar.layer.masksToBounds = true
 //        tabBar.layer.cornerRadius = 40.rf
         
-//        tabBar.layer.mask = tabBar.configRectCorner(corner: [.topLeft, .topRight], radii: CGSize(width: 48.rf, height: 48.rf))
+        tabBar.layer.mask = tabBar.configRectCorner(corner: [.topLeft, .topRight], radii: CGSize(width: 48.rf, height: 48.rf))
         
 //        selectedIndex = 0
     }
@@ -107,10 +109,28 @@ extension RapidRootViewController: UITabBarControllerDelegate {
     }
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        let vc = RapidLoginViewController()
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true)
-        return false
+       
+        let childsVc = tabBarController.viewControllers! as NSArray
+        let index = childsVc.index(of: viewController)
+        if index == 0 {
+            return true
+        }else {
+            if !GetInfo(RapidSession).isEmpty {
+                return true
+            }else{
+                let vc = RapidLoginViewController()
+                vc.modalPresentationStyle = .fullScreen
+                self.present(vc, animated: true)
+                return false 
+            }
+        }
+//        guard  index != 0 && GetInfo(RapidSession).isEmpty else {
+//            let vc = RapidLoginViewController()
+//            vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: true)
+//            return false
+//        }
+//        return true
     }
 }
 

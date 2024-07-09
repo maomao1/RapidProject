@@ -6,12 +6,22 @@
 //
 
 import UIKit
-
+import RxSwift
+import RxCocoa
+import MBProgressHUD
 class RapidHomeViewController: RapidBaseViewController {
-
+    
+    // MARK: - Properties
+//    let bag = DisposeBag()
+    
+    var viewModel: RapidHomeViewModel = RapidHomeViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .red
+        self.view.backgroundColor = .blue
+        self.titleNav.text = "Hello User"
+        viewModel.getData()
+        setBackBtnHidden()
         // Do any additional setup after loading the view.
         
     }

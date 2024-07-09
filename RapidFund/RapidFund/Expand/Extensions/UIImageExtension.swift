@@ -46,5 +46,9 @@ extension UIImage {
     static let loginCountryImage = UIImage(named: "login_countryImage")!
     static let loginAgreeNormalImage = UIImage(named: "login_agree_normal")!
     static let loginAgreeSelectedImage = UIImage(named: "login_agree_selected")!
+    
+    //MARK: - home
+    static let homeNavRight = UIImage(named: "home_nav_right")!
+    static let homeNavBack  = UIImage(named: "home_nav_back")!
 
 }

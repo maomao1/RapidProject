@@ -43,6 +43,8 @@
 		2EBDAE0F2C3B9F6E00B3C845 /* CacheHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE0E2C3B9F6E00B3C845 /* CacheHelper.swift */; };
 		2EBDAE122C3BDBC500B3C845 /* RapidTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE112C3BDBC500B3C845 /* RapidTabbar.swift */; };
 		2EBDAE142C3C21A100B3C845 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE132C3C21A100B3C845 /* UIViewExtension.swift */; };
+		2EBDAE1A2C3CF6CC00B3C845 /* RapidHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE192C3CF6CC00B3C845 /* RapidHomeViewModel.swift */; };
+		2EBDAE202C3D2EEA00B3C845 /* RapidLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE1F2C3D2EEA00B3C845 /* RapidLoginModel.swift */; };
 		81868C2FC647AA625D44B21C /* Pods_RapidFundTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565CF0205FADBDEBAF62DE6C /* Pods_RapidFundTests.framework */; };
 		99CD401003CB24EEEAC74020 /* Pods_RapidFund_RapidFundUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F61E2469C0BBFED2185A51D4 /* Pods_RapidFund_RapidFundUITests.framework */; };
 		D20894E77090E15AC556F055 /* Pods_RapidFund.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A0679B2D7EE58B27A156FE6 /* Pods_RapidFund.framework */; };
@@ -108,6 +110,8 @@
 		2EBDAE0E2C3B9F6E00B3C845 /* CacheHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheHelper.swift; sourceTree = "<group>"; };
 		2EBDAE112C3BDBC500B3C845 /* RapidTabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidTabbar.swift; sourceTree = "<group>"; };
 		2EBDAE132C3C21A100B3C845 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		2EBDAE192C3CF6CC00B3C845 /* RapidHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidHomeViewModel.swift; sourceTree = "<group>"; };
+		2EBDAE1F2C3D2EEA00B3C845 /* RapidLoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidLoginModel.swift; sourceTree = "<group>"; };
 		565CF0205FADBDEBAF62DE6C /* Pods_RapidFundTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RapidFundTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7303F2785653D5EFAC06F8CB /* Pods-RapidFund-RapidFundUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFund-RapidFundUITests.debug.xcconfig"; path = "Target Support Files/Pods-RapidFund-RapidFundUITests/Pods-RapidFund-RapidFundUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		9A0679B2D7EE58B27A156FE6 /* Pods_RapidFund.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RapidFund.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -261,7 +265,10 @@
 		2E91E8652C36A740005E2AB4 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				2E91E8632C36A72A005E2AB4 /* RapidHomeViewController.swift */,
+				2EBDAE182C3CF68900B3C845 /* Controller */,
+				2EBDAE172C3CF67D00B3C845 /* ViewModel */,
+				2EBDAE162C3CF67400B3C845 /* Model */,
+				2EBDAE152C3CF66900B3C845 /* View */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -277,7 +284,10 @@
 		2E91E8692C36A76D005E2AB4 /* Mine */ = {
 			isa = PBXGroup;
 			children = (
-				2E91E86A2C36A77D005E2AB4 /* RapidMineViewController.swift */,
+				2EBDAE1E2C3D259F00B3C845 /* ViewModel */,
+				2EBDAE1D2C3D259300B3C845 /* Model */,
+				2EBDAE1C2C3D258A00B3C845 /* View */,
+				2EBDAE1B2C3D257B00B3C845 /* Controller */,
 			);
 			path = Mine;
 			sourceTree = "<group>";
@@ -367,6 +377,66 @@
 				2EBDAE112C3BDBC500B3C845 /* RapidTabbar.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		2EBDAE152C3CF66900B3C845 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2EBDAE162C3CF67400B3C845 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2EBDAE1F2C3D2EEA00B3C845 /* RapidLoginModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2EBDAE172C3CF67D00B3C845 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2EBDAE192C3CF6CC00B3C845 /* RapidHomeViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2EBDAE182C3CF68900B3C845 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2E91E8632C36A72A005E2AB4 /* RapidHomeViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2EBDAE1B2C3D257B00B3C845 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2E91E86A2C36A77D005E2AB4 /* RapidMineViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2EBDAE1C2C3D258A00B3C845 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2EBDAE1D2C3D259300B3C845 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2EBDAE1E2C3D259F00B3C845 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		3D93E43EAC0F0E0621C17374 /* Frameworks */ = {
@@ -641,8 +711,10 @@
 				2EBDAE062C39CB3800B3C845 /* MainAppInfo.swift in Sources */,
 				2E91E8642C36A72A005E2AB4 /* RapidHomeViewController.swift in Sources */,
 				2EBDAE002C39C45F00B3C845 /* JSONExtension.swift in Sources */,
+				2EBDAE202C3D2EEA00B3C845 /* RapidLoginModel.swift in Sources */,
 				2E91E8612C36A684005E2AB4 /* RapidRootViewController.swift in Sources */,
 				2EBDAE082C3AD25000B3C845 /* MBProgressHUDExtension.swift in Sources */,
+				2EBDAE1A2C3CF6CC00B3C845 /* RapidHomeViewModel.swift in Sources */,
 				2EBDAE022C39C59D00B3C845 /* RapidApiConstantUrl.swift in Sources */,
 				2E91E8772C36E2E7005E2AB4 /* UILabelExtension.swift in Sources */,
 				2EBDAE122C3BDBC500B3C845 /* RapidTabbar.swift in Sources */,

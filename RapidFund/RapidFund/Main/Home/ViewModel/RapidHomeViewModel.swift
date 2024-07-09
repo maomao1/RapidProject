@@ -1,46 +1,36 @@
 //
-//  RapidLoginViewModel.swift
+//  RapidHomeViewModel.swift
 //  RapidFund
 //
-//  Created by 毛亚恒 on  2024/7/8.
+//  Created by 毛亚恒 on 2024/7/9.
 //
 
 import UIKit
 import RxSwift
 import RxCocoa
 
+class RapidHomeViewModel {
 
-class RapidLoginViewModel {
-    
     init() {
         
     }
     
     let bag = DisposeBag()
-    let loginSuccessAction = PublishSubject<Void>()
     private let message = PublishSubject<String>()
     var newMessage: Driver<String> {
         return message.filter { !$0.isEmpty }.asDriver(onErrorJustReturn: "")
     }
-    
-    let loginModel = BehaviorRelay<RapidLoginModel?>(value: nil)
 
     
-    func getCodeData(){
-        print("getCodeData")
-    }
-    
-    func getLoginData(){
-        var param: [String : Any] = [String : Any]()
-        param["knows"] = "8111222251"
-        param["weeks"] = "202406"
-        param["scolded"] = "202406"
+    func getData(){
+        var para = [String : Any]()
+        para["truant"] = RapidRandom
+        para["sdaughter"] = RapidRandom
         
-        RapidApi.shared.loginByPhone(para: param)
+        RapidApi.shared.getHomeData(para: para)
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}
-                self.loginModel.accept(RapidLoginModel(json: json["trouble"]))
-                self.loginSuccessAction.onNext(Void())
+//                self.loginSuccessAction.onNext(Void())
             },
             onError: { [weak self] error in
                 guard let `self` = self else {return}
