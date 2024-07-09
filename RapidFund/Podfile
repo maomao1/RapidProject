@@ -15,6 +15,12 @@ target 'RapidFund' do
   pod 'MJRefresh'
   pod 'MBProgressHUD'
   pod 'IQKeyboardManagerSwift'
+  pod 'XYZKit', :git => 'https://github.com/DFTT/XYZKit.git', :branch => 'master'
+#  pod 'XYZKit/XYZEmptyBoard', :git => 'https://github.com/DFTT/XYZKit.git', :branch => 'master'
+#  pod 'XYZKit/XYZFloatDragView', :git => 'https://github.com/DFTT/XYZKit.git', :branch => 'master'
+#  pod 'XYZKit/XYZBadgeView', :git => 'https://github.com/DFTT/XYZKit.git', :branch => 'master'
+#  pod 'XYZAlert', :git => 'https://github.com/DFTT/XYZAlertView.git', :branch => 'main'
+#  pod 'XYZSheetView', :git => 'https://github.com/DFTT/XYZSheetView.git', :branch => 'main'
   
   # Pods for RapidFund
 
