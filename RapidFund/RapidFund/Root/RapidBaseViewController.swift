@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 @_exported import XYZKit
-
+@_exported import SnapKit
 
 
 
@@ -19,7 +19,7 @@ class RapidBaseViewController: UIViewController {
     // MARK: - Properties
     let bag = DisposeBag()
     
-    fileprivate lazy var customNavView: UIView = {
+    private(set) lazy var customNavView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
         return view
@@ -41,7 +41,7 @@ class RapidBaseViewController: UIViewController {
         return button
     }()
     
-    fileprivate lazy var rightBtn: UIButton = {
+    private(set) lazy var rightBtn: UIButton = {
         let button = UIButton(type: .custom)
         button.setBackgroundImage(.homeNavRight, for: .normal)
         button.setBackgroundImage(.homeNavRight, for: .selected)
@@ -193,5 +193,10 @@ class RapidBaseViewController: UIViewController {
     
 
     
-
+    func adjustNavTitleCenter() {
+        titleNav.snp.remakeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.centerX.equalToSuperview()
+        }
+    }
 }
