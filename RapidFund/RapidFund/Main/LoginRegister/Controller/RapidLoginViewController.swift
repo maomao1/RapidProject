@@ -152,7 +152,10 @@ class RapidLoginViewController: RapidBaseViewController {
         let button = UIButton(type: .custom)
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 20.rf
-        button.backgroundColor = .c_FF942F
+//        button.backgroundColor = .c_FF942F
+        button.setBackgroundImage(.loginConfirmBtnImage, for: .normal)
+        button.setBackgroundImage(.loginConfirmBtnImage, for: .selected)
+        button.setBackgroundImage(.loginConfirmBtnImage, for: .highlighted)
         return button
     }()
     
@@ -175,7 +178,7 @@ class RapidLoginViewController: RapidBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.automaticallyAdjustsScrollViewInsets = false
+//        self.automaticallyAdjustsScrollViewInsets = false
         setUpViews()
         setupRx() 
     }
@@ -314,6 +317,7 @@ extension RapidLoginViewController {
             make.centerY.equalTo(confirmBtn)
             make.right.equalTo(confirmBtn.snp.right).offset(-48.5.rf)
         }
+        
     }
     
     func setupRx() {
@@ -361,6 +365,27 @@ extension RapidLoginViewController {
                 self?.dismiss(animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
+    }
+    
+    //获取验证码倒计时
+    func startCountDown() {
+        //多次触发时成功执行倒计时，以最后一次执行为准，重新倒计时
+        timerDisposeBag = DisposeBag()
+        let timeout = 60
+        Observable<Int>
+            .timer(.seconds_0, period: .seconds_1, scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] (timeElapse) in
+                let time = timeout - timeElapse
+                if time < 1 {
+                    self?.timerDisposeBag = DisposeBag()
+                    self?.getCodeBtn.setTitle("Send", for: .normal)
+                    self?.getCodeBtn.isUserInteractionEnabled = true
+                } else {
+                    self?.getCodeBtn.setTitle("\(time)s", for: .normal)
+                }
+            }, onDisposed:  {
+                print("timer disposed")
+            }).disposed(by: timerDisposeBag)
     }
 }
 

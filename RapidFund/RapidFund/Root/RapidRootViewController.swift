@@ -11,11 +11,12 @@ import RxCocoa
 import MBProgressHUD
 
 class RapidRootViewController: UITabBarController {
-
+    let bag = DisposeBag()
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
         setUpRootView()
+        setUpRx()
         self.delegate = self
         // Do any additional setup after loading the view.
         
@@ -100,6 +101,30 @@ extension RapidRootViewController {
             
         }
     }
+}
+
+//MARK: - 监听
+extension RapidRootViewController{
+    fileprivate func setUpRx(){
+        NotificationCenter.default
+            .rx.notification(.RapidLogoutSuccess)
+            .subscribe(onNext: { [weak self] (notification) in
+                guard let `self` = self else {return}
+                RapidUserCache.default.clearUserInfo()
+                self.selectedIndex = 0
+            })
+            .disposed(by: bag)
+        
+        NotificationCenter.default
+            .rx.notification(.RapidLogoffSuccess)
+            .subscribe(onNext: { [weak self] (notification) in
+                guard let `self` = self else {return}
+                
+            })
+            .disposed(by: bag)
+    }
+    
+    
 }
 
 extension RapidRootViewController: UITabBarControllerDelegate {

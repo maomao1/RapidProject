@@ -37,10 +37,16 @@ extension UIColor {
     static let c_FFFFFF = UIColor(hex: 0xFFFFFF) //
     static let c_000000 = UIColor(hex: 0x000000) //
     static let c_111111 = UIColor(hex: 0x111111) //
+    static let c_E5DEFA = UIColor(hex: 0xE5DEFA) //
+    static let c_999999 = UIColor(hex: 0x999999) //
+    static let c_232323 = UIColor(hex: 0x232323)
+    static let c_151515 = UIColor(hex: 0x151515)
+
+    
+    
+    
     static let c_CECECE = UIColor(hex: 0xCECECE)
     static let c_FF942F = UIColor(hex: 0xCFF942F)
-    static let c_151515 = UIColor(hex: 0x151515)
-    
     static let c_FFDE8E = UIColor(hex: 0xFFDE8E)
     static let c_FCA338 = UIColor(hex: 0xFCA338)
     static let c_E9BF70 = UIColor(hex: 0xE9BF70)

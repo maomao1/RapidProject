@@ -12,7 +12,7 @@ struct RapidApiConstantUrl {
     static let loginByPhone = "/rfapi/theboys/listen/absolutely"
     static let getPhoneCode = "/rfapi/place/hidden/every"
     static let logout       = "/rfapi/morgan/tears/theres"
-    static let signOut      = "/rfapi/shadows/anenormous/taste"
+    static let logoff       = "/rfapi/shadows/anenormous/taste"
     
     //MARK: - home
     static let homeGetData  = "/rfapi/hardly/passed/getting"

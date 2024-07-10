@@ -19,7 +19,7 @@ class RapidBaseViewController: UIViewController {
     // MARK: - Properties
     let bag = DisposeBag()
     
-    fileprivate lazy var customNavView: UIView = {
+    lazy var customNavView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
         return view
@@ -63,6 +63,10 @@ class RapidBaseViewController: UIViewController {
         super.viewWillAppear(animated)
 //        navigationController?.setNavigationBarHidden(false, animated: false)
 //        setUpNoNetworkView()
+    }
+    
+    func setNavViewHidden() {
+        self.customNavView.isHidden = true
     }
     
     func setBackBtnHidden(){
@@ -114,6 +118,7 @@ class RapidBaseViewController: UIViewController {
         }
         
     }
+    
     
     func setBottomView(){
         let safeAreaBottomView = UIView()
