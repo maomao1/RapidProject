@@ -14,9 +14,9 @@ class RFInfoItem: UIView {
         
     }
     
-    init(_ title: String) {
+    init(_ title: String, hiddenNext:Bool = false) {
         super.init(frame: .zero)
-        setup()
+        setup(hiddenNext: hiddenNext)
         
         titLb.text = title
     }
@@ -27,7 +27,7 @@ class RFInfoItem: UIView {
     }
 
     private let titLb = UILabel().textColor(0x111111.color).font(20.font)
-    private lazy var contentView: (container: UIView, textLb: UILabel) = {
+    private lazy var contentView: (container: UIView, textLb: UILabel, btn: UIButton) = {
         let bgView = UIView()
         bgView.backgroundColor = UIColor(rgbHex: 0x000000, alpha: 0.05)
         bgView.clipsCornerRadius(Float(10.rf))
@@ -49,11 +49,12 @@ class RFInfoItem: UIView {
             make.right.equalTo(btn.snp.left).offset(-10.rf)
         }
         
-        return (bgView, label)
+        return (bgView, label, btn)
     }()
 
-    private func setup() {
+    private func setup(hiddenNext:Bool) {
         addSubview(titLb)
+        contentView.btn.isHidden = hiddenNext
         addSubview(contentView.container)
         titLb.snp.makeConstraints { make in
             make.top.left.equalToSuperview()

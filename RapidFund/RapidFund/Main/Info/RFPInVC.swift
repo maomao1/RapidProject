@@ -7,22 +7,41 @@
 
 import UIKit
 
+enum RFRoute {
+    case personal_info
+    case employment_info
+}
+
 class RFPInVC: UIViewController {
+    
+    private let route:RFRoute
+    init(route: RFRoute) {
+        self.route = route
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
     }
+
     private let genderItem = RFGengerItem()
     private let relaItem = RFInfoItem("Marriage Status")
     private let passportItem = RFInfoItem("Passport")
     private let addressItem = RFInfoItem("Address")
+    private let phoneItem = RFInfoItem("Phone Number", hiddenNext: true)
+    private let inomeItem = RFInfoItem("Monthly Income")
     
     private func setup() {
-        let bottV = UIImageView(image: "info_bg".image)
+        let bottV = UIImageView(image: getResourceConfig().0)
         view.addSubview(bottV)
         bottV.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        let bgImgV = UIImageView(image: "info_top".image)
+        let bgImgV = UIImageView(image: getResourceConfig().1)
         view.addSubview(bgImgV)
         bgImgV.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
@@ -39,7 +58,13 @@ class RFPInVC: UIViewController {
             make.top.equalTo(bgImgV.snp.bottom).offset(-40.rf)
         }
         
-        let stackView = UIStackView(arrangedSubviews: [genderItem,relaItem,passportItem,addressItem])
+        let stackViews:[UIView]
+        if route == .personal_info {
+            stackViews = [genderItem, relaItem, passportItem, addressItem]
+        } else {
+            stackViews = [phoneItem,inomeItem]
+        }
+        let stackView = UIStackView(arrangedSubviews: stackViews)
         stackView.spacing = 24.rf
         stackView.axis = .vertical
         stackView.distribution = .fill
@@ -56,10 +81,16 @@ class RFPInVC: UIViewController {
             make.centerX.equalToSuperview()
             make.centerY.equalTo(bgView.snp.bottom)
         }
-        
     }
     
-    @objc private func nextAction() {
+    private func getResourceConfig()->(UIImage?, UIImage?) {
+        if route == .personal_info {
+            return ("info_bg".image,"info_top".image)
+        }
         
+        return ("em_in_bg".image,"em_in_top".image
+        )
     }
+    
+    @objc private func nextAction() {}
 }
