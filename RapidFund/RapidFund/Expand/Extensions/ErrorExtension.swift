@@ -20,8 +20,7 @@ enum RapidError: LocalizedError {
         
         case .tokenUnused:
             return "重新登录"
-//        case .haveAlreadyRegistered:
-//            return "该手机号已注册"
+
         case .other(let message):
             return message
         case .iapAlreadyServed(message: let message):

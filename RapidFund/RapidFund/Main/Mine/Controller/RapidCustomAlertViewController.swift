@@ -167,9 +167,9 @@ class RapidCustomAlertViewController: RapidBaseViewController {
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 20.rf
 //        button.backgroundColor = .c_FF942F
-        button.setBackgroundImage(.loginConfirmBtnImage, for: .normal)
-        button.setBackgroundImage(.loginConfirmBtnImage, for: .selected)
-        button.setBackgroundImage(.loginConfirmBtnImage, for: .highlighted)
+        button.setBackgroundImage(.homeBtnBg, for: .normal)
+        button.setBackgroundImage(.homeBtnBg, for: .selected)
+        button.setBackgroundImage(.homeBtnBg, for: .highlighted)
         return button
     }()
     

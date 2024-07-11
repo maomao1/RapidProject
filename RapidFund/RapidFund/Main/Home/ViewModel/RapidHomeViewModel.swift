@@ -16,6 +16,7 @@ class RapidHomeViewModel {
     }
     
     let bag = DisposeBag()
+    let pageTitle = "Hello User"
     private let message = PublishSubject<String>()
     var newMessage: Driver<String> {
         return message.filter { !$0.isEmpty }.asDriver(onErrorJustReturn: "")

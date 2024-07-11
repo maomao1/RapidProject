@@ -54,6 +54,10 @@
 		2EECB1F12C3D758000E59A1C /* RapidMineMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECB1F02C3D758000E59A1C /* RapidMineMenuCell.swift */; };
 		2EECB1F32C3D892F00E59A1C /* RapidCustomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECB1F22C3D892F00E59A1C /* RapidCustomAlertViewController.swift */; };
 		2EECB1F52C3E2D6C00E59A1C /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECB1F42C3E2D6C00E59A1C /* NotificationNameExtension.swift */; };
+		2EECB1FB2C3E749600E59A1C /* RapidOrderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECB1FA2C3E749600E59A1C /* RapidOrderViewModel.swift */; };
+		2EECB1FD2C3E79FF00E59A1C /* RapidOrderMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECB1FC2C3E79FF00E59A1C /* RapidOrderMenuCell.swift */; };
+		2EECB1FF2C3EC21B00E59A1C /* HomeMoneyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECB1FE2C3EC21B00E59A1C /* HomeMoneyView.swift */; };
+		2EECB2012C3EE40500E59A1C /* RapidHomeProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECB2002C3EE40500E59A1C /* RapidHomeProductCell.swift */; };
 		2EFF26902C3D4236003A0344 /* RapidMineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFF268F2C3D4236003A0344 /* RapidMineViewModel.swift */; };
 		81868C2FC647AA625D44B21C /* Pods_RapidFundTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565CF0205FADBDEBAF62DE6C /* Pods_RapidFundTests.framework */; };
 		99CD401003CB24EEEAC74020 /* Pods_RapidFund_RapidFundUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F61E2469C0BBFED2185A51D4 /* Pods_RapidFund_RapidFundUITests.framework */; };
@@ -131,6 +135,10 @@
 		2EECB1F02C3D758000E59A1C /* RapidMineMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidMineMenuCell.swift; sourceTree = "<group>"; };
 		2EECB1F22C3D892F00E59A1C /* RapidCustomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidCustomAlertViewController.swift; sourceTree = "<group>"; };
 		2EECB1F42C3E2D6C00E59A1C /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
+		2EECB1FA2C3E749600E59A1C /* RapidOrderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidOrderViewModel.swift; sourceTree = "<group>"; };
+		2EECB1FC2C3E79FF00E59A1C /* RapidOrderMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidOrderMenuCell.swift; sourceTree = "<group>"; };
+		2EECB1FE2C3EC21B00E59A1C /* HomeMoneyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMoneyView.swift; sourceTree = "<group>"; };
+		2EECB2002C3EE40500E59A1C /* RapidHomeProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidHomeProductCell.swift; sourceTree = "<group>"; };
 		2EFF268F2C3D4236003A0344 /* RapidMineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidMineViewModel.swift; sourceTree = "<group>"; };
 		565CF0205FADBDEBAF62DE6C /* Pods_RapidFundTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RapidFundTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7303F2785653D5EFAC06F8CB /* Pods-RapidFund-RapidFundUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFund-RapidFundUITests.debug.xcconfig"; path = "Target Support Files/Pods-RapidFund-RapidFundUITests/Pods-RapidFund-RapidFundUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -319,7 +327,10 @@
 		2E91E8662C36A750005E2AB4 /* Order */ = {
 			isa = PBXGroup;
 			children = (
-				2E91E8672C36A764005E2AB4 /* RapidOrderViewController.swift */,
+				2EECB1F92C3E744400E59A1C /* View */,
+				2EECB1F82C3E743D00E59A1C /* Model */,
+				2EECB1F72C3E742C00E59A1C /* ViewModel */,
+				2EECB1F62C3E742100E59A1C /* Controller */,
 			);
 			path = Order;
 			sourceTree = "<group>";
@@ -426,6 +437,8 @@
 		2EBDAE152C3CF66900B3C845 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2EECB1FE2C3EC21B00E59A1C /* HomeMoneyView.swift */,
+				2EECB2002C3EE40500E59A1C /* RapidHomeProductCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -483,6 +496,37 @@
 				2EFF268F2C3D4236003A0344 /* RapidMineViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2EECB1F62C3E742100E59A1C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2E91E8672C36A764005E2AB4 /* RapidOrderViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2EECB1F72C3E742C00E59A1C /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2EECB1FA2C3E749600E59A1C /* RapidOrderViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2EECB1F82C3E743D00E59A1C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2EECB1F92C3E744400E59A1C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2EECB1FC2C3E79FF00E59A1C /* RapidOrderMenuCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		3D93E43EAC0F0E0621C17374 /* Frameworks */ = {
@@ -762,14 +806,18 @@
 				2EBDAE202C3D2EEA00B3C845 /* RapidLoginModel.swift in Sources */,
 				2E91E8612C36A684005E2AB4 /* RapidRootViewController.swift in Sources */,
 				2EBDAE082C3AD25000B3C845 /* MBProgressHUDExtension.swift in Sources */,
+				2EECB2012C3EE40500E59A1C /* RapidHomeProductCell.swift in Sources */,
 				2EBDAE1A2C3CF6CC00B3C845 /* RapidHomeViewModel.swift in Sources */,
 				2EBDAE022C39C59D00B3C845 /* RapidApiConstantUrl.swift in Sources */,
 				2E91E8772C36E2E7005E2AB4 /* UILabelExtension.swift in Sources */,
 				2EBDAE122C3BDBC500B3C845 /* RapidTabbar.swift in Sources */,
 				024F6C432C3CFD290041F532 /* RFPInVC.swift in Sources */,
+				2EECB1FD2C3E79FF00E59A1C /* RapidOrderMenuCell.swift in Sources */,
 				2EBDADFC2C39C28F00B3C845 /* RapidApi.swift in Sources */,
+				2EECB1FF2C3EC21B00E59A1C /* HomeMoneyView.swift in Sources */,
 				2E4D39472C35857B00C2271A /* NSNumberExtension.swift in Sources */,
 				2EBDAE042C39C7AC00B3C845 /* RapidMainApi.swift in Sources */,
+				2EECB1FB2C3E749600E59A1C /* RapidOrderViewModel.swift in Sources */,
 				2EBDAE0F2C3B9F6E00B3C845 /* CacheHelper.swift in Sources */,
 				02C3BAEB2C3D3F9F001B4107 /* RFFlowVC.swift in Sources */,
 				2EBDADFA2C39BBCB00B3C845 /* RapidLoginViewModel.swift in Sources */,

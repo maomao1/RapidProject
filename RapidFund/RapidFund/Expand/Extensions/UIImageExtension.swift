@@ -59,8 +59,33 @@ extension UIImage {
     static let loginConfirmBtnImage = UIImage(named: "login_confirm_btn")!
     
     //MARK: - home
-    static let homeNavRight = UIImage(named: "home_nav_right")!
-    static let homeNavBack  = UIImage(named: "home_nav_back")!
+    static let homeNavBlackRight = UIImage(named: "home_nav_black_right")!
+    static let homeNavBlackBack  = UIImage(named: "home_nav_black_back")!
+    static let homeNavWhiteRight = UIImage(named: "home_nav_white_right")!
+    static let homeNavWhiteBack  = UIImage(named: "home_nav_white_back")!
+    static let homeFullBg   = UIImage(named: "home_full_bg")!
+    static let homeCircleLeft   = UIImage(named: "home_circle_left")!
+    static let homeCircleTopRight   = UIImage(named: "home_circle_topRight")!
+    static let homeCircleBottomRight   = UIImage(named: "home_circle_bottomRight")!
+    static let homeUnloginBg   = UIImage(named: "home_unlogin_bg")!
+    static let homeBtnBg   = UIImage(named: "home_btn_bg")!
+    static let homeApplyArrow   = UIImage(named: "home_apply_arrow")!
+    static let homeLimitIcon   = UIImage(named: "home_limit_icon")!
+    static let homeSoundIcon   = UIImage(named: "home_sound_icon")!
+    static let homeLoginTopBg   = UIImage(named: "home_login_topBg")!
+    static let homeLoginBanner   = UIImage(named: "home_banner")!
+
+    
+    
+    //MARK: - order
+    static let orderFullBg   = UIImage(named: "order_full_bg")!
+    static let orderMenuBg   = UIImage(named: "order_menu_bg")!
+    static let orderTopBg   = UIImage(named: "order_top_bgImg")!
+    static let orderUnpaidIcon   = UIImage(named: "order_unpaid_icon")!
+    static let orderUnderIcon   = UIImage(named: "order_under_icon")!
+    static let orderFailedIcon   = UIImage(named: "order_failed_icon")!
+    static let orderSettedIcon   = UIImage(named: "order_setted_icon")!
+
     
     //MARK: - mine
     static let mineFullBg   = UIImage(named: "mine_full_bg")!

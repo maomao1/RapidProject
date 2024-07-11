@@ -327,7 +327,7 @@ extension RapidLoginViewController {
             .throttle(.seconds_1, latest: false, scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] (_) in
                 guard let `self` = self else { return }
-                self.viewModel.getCodeData()
+                self.viewModel.getCodeData(phone: self.phoneNumTF.text?.trim() ?? "")
             })
             .disposed(by: disposeBag)
         
@@ -343,7 +343,7 @@ extension RapidLoginViewController {
             .throttle(.seconds_1, latest: false, scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] (_) in
                 guard let `self` = self else { return }
-                self.viewModel.getLoginData()
+                self.viewModel.getLoginData(phone: self.phoneNumTF.text?.trim() ?? "", codeStr: self.codeTF.text?.trim() ?? "")
             })
             .disposed(by: disposeBag)
         
@@ -365,6 +365,21 @@ extension RapidLoginViewController {
                 self?.dismiss(animated: true, completion: nil)
             })
             .disposed(by: disposeBag)
+        
+        viewModel.sendSuccessAction 
+            .subscribe(onNext: { [weak self] in
+                guard let `self` = self else { return }
+                self.startCountDown()
+                self.codeTF.becomeFirstResponder()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.sendCodeIsEnable
+            .subscribe(onNext: { [weak self] isAble in 
+                guard let `self` = self else { return }
+                self.getCodeBtn.isUserInteractionEnabled = isAble
+            })
+            .disposed(by: disposeBag)
     }
     
     //获取验证码倒计时
@@ -379,7 +394,8 @@ extension RapidLoginViewController {
                 if time < 1 {
                     self?.timerDisposeBag = DisposeBag()
                     self?.getCodeBtn.setTitle("Send", for: .normal)
-                    self?.getCodeBtn.isUserInteractionEnabled = true
+//                    self?.getCodeBtn.isUserInteractionEnabled = true
+                    self?.viewModel.sendCodeIsEnable.accept(true)
                 } else {
                     self?.getCodeBtn.setTitle("\(time)s", for: .normal)
                 }
@@ -398,6 +414,7 @@ extension RapidLoginViewController {
     }
     func changeAgreementEvent() {
         self.agreeBtn.isSelected = !self.agreeBtn.isSelected
+        viewModel.isAccept.accept(self.agreeBtn.isSelected)
     }
 }
 

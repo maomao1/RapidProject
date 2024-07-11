@@ -43,11 +43,13 @@ extension UIFont {
     static let f_boldSys18 = UIFont.BoldPingFangFont(ofSize: 18.rf)
     static let f_boldSys19 = UIFont.BoldPingFangFont(ofSize: 19.rf)
     static let f_boldSys20 = UIFont.BoldPingFangFont(ofSize: 20.rf)
+    static let f_boldSys32 = UIFont.BoldPingFangFont(ofSize: 32.rf)
     
 }
 
 extension UIFont {
-    
+    static let f_lightSys10 = UIFont.LightPingFangFont(ofSize: 10.rf)
+    static let f_lightSys11 = UIFont.LightPingFangFont(ofSize: 11.rf)
     static let f_lightSys12 = UIFont.LightPingFangFont(ofSize: 12.rf)
     static let f_lightSys14 = UIFont.LightPingFangFont(ofSize: 14.rf)
     static let f_lightSys15 = UIFont.LightPingFangFont(ofSize: 15.rf)
@@ -56,6 +58,7 @@ extension UIFont {
     static let f_lightSys18 = UIFont.LightPingFangFont(ofSize: 18.rf)
     static let f_lightSys19 = UIFont.LightPingFangFont(ofSize: 19.rf)
     static let f_lightSys20 = UIFont.LightPingFangFont(ofSize: 20.rf)
+    static let f_lightSys24 = UIFont.LightPingFangFont(ofSize: 24.rf)
     static let f_lightSys32 = UIFont.LightPingFangFont(ofSize: 32.rf)
     static let f_lightSys33 = UIFont.LightPingFangFont(ofSize: 33.rf)
     

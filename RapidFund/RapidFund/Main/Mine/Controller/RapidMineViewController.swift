@@ -51,7 +51,7 @@ class RapidMineViewController: RapidBaseViewController {
 extension RapidMineViewController {
     
     func setupViews() {
-        self.titleNav.text = viewModel.title
+        self.titleNav.text = viewModel.pageTitle
         
         view.insertSubview(backgroundImageView, at: 0)
         view.addSubview(rapidImageView)
@@ -133,6 +133,8 @@ extension RapidMineViewController: UITableViewDelegate, UITableViewDataSource{
 
         switch type{
         case .order:
+            let vc = RFPInVC(route: .personal_info)
+            self.navigationController?.pushViewController(vc, animated: true)
             print("click order")
         case .payment:
             print("click payment")

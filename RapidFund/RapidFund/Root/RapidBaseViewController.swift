@@ -27,7 +27,7 @@ class RapidBaseViewController: UIViewController {
     
     lazy var titleNav: UILabel = {
         let label = UILabel()
-        label.font = .f_lightSys33
+        label.font = .f_lightSys32
         label.textColor = .c_111111
         label.textAlignment = .left
         return label
@@ -35,16 +35,16 @@ class RapidBaseViewController: UIViewController {
     
     fileprivate lazy var backBtn: UIButton = {
         let button = UIButton(type: .custom)
-        button.setBackgroundImage(.homeNavBack, for: .normal)
-        button.setBackgroundImage(.homeNavBack, for: .selected)
+//        button.setBackgroundImage(.homeNavBlackBack, for: .normal)
+//        button.setBackgroundImage(.homeNavBlackBack, for: .selected)
         button.contentHorizontalAlignment = .left
         return button
     }()
     
     fileprivate lazy var rightBtn: UIButton = {
         let button = UIButton(type: .custom)
-        button.setBackgroundImage(.homeNavRight, for: .normal)
-        button.setBackgroundImage(.homeNavRight, for: .selected)
+//        button.setBackgroundImage(.homeNavBlackRight, for: .normal)
+//        button.setBackgroundImage(.homeNavBlackRight, for: .selected)
         button.contentHorizontalAlignment = .right
         return button
     }()
@@ -54,7 +54,8 @@ class RapidBaseViewController: UIViewController {
 //        navigationController?.navigationBar.isTranslucent = false
         setBottomView()
         setCustomNav()
-        setUpRx()
+        setNavImageTitleWhite(isWhite: false)
+        setBaseUpRx()
         
         navigationController?.setNavigationBarHidden(true, animated: false)
         // Do any additional setup after loading the view.
@@ -63,6 +64,15 @@ class RapidBaseViewController: UIViewController {
         super.viewWillAppear(animated)
 //        navigationController?.setNavigationBarHidden(false, animated: false)
 //        setUpNoNetworkView()
+    }
+    
+    func setNavImageTitleWhite(isWhite: Bool){
+        backBtn.setBackgroundImage( isWhite ? .homeNavWhiteBack : .homeNavBlackBack, for: .normal)
+        backBtn.setBackgroundImage( isWhite ? .homeNavWhiteBack : .homeNavBlackBack, for: .selected)
+        rightBtn.setBackgroundImage(isWhite ? .homeNavWhiteRight: .homeNavBlackRight, for: .normal)
+        rightBtn.setBackgroundImage(isWhite ? .homeNavWhiteRight: .homeNavBlackRight, for: .selected)
+        titleNav.textColor = isWhite ? .c_FFFFFF : .c_111111
+        titleNav.font = isWhite ? .f_lightSys24 : .f_lightSys32
     }
     
     func setNavViewHidden() {
@@ -140,13 +150,13 @@ class RapidBaseViewController: UIViewController {
     
     //设置LeftBarButtonItem 
 
-    func setLeftBarButtonItem(image: UIImage = (.homeNavRight)) {
+    func setLeftBarButtonItem(image: UIImage = (.homeNavBlackBack)) {
         let backButton = UIBarButtonItem(image: image.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(back))
         backButton.width = 50
         navigationItem.leftBarButtonItem = backButton
     }
     
-    func setRightBarButtonItem(image: UIImage = (.homeNavRight)) {
+    func setRightBarButtonItem(image: UIImage = (.homeNavBlackRight)) {
 //        let rightButton = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(rightBarEvent))
 //        navigationItem.rightBarButtonItem = rightButton
         let rightButton = UIBarButtonItem(image: image.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(rightBarEvent))
@@ -154,7 +164,7 @@ class RapidBaseViewController: UIViewController {
         navigationItem.rightBarButtonItem = rightButton
         
     }
-    func setUpRx() {
+    func setBaseUpRx() {
         
         backBtn.rx
             .tap
@@ -173,6 +183,19 @@ class RapidBaseViewController: UIViewController {
                 self.rightBarEvent()
             })
             .disposed(by: bag)
+        
+        NotificationCenter.default
+            .rx.notification(.RapidLoginSuccess)
+            .subscribe(onNext: { [weak self] (notification) in
+                guard let `self` = self else {return}
+                self.loginSuccessAction()
+            })
+            .disposed(by: bag)
+    }
+    
+    //
+    func loginSuccessAction(){
+        
     }
     
     @objc func rightBarEvent(){

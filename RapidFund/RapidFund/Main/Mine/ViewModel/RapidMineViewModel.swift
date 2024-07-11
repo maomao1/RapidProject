@@ -64,7 +64,7 @@ class RapidMineViewModel {
         return message.filter { !$0.isEmpty }.asDriver(onErrorJustReturn: "")
     }
     
-    let title = "Personal Center"
+    let pageTitle = "Personal Center"
     var sections: [MenuType] = [.order, .payment, .agreement, .aboutUs, .logOut, .logOff]
 
     
