@@ -1,0 +1,6 @@
+framework module XYZAlert {
+  umbrella header "XYZAlert-umbrella.h"
+
+  export *
+  module * { export * }
+}
