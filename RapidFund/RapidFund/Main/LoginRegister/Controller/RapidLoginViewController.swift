@@ -410,6 +410,7 @@ extension RapidLoginViewController {
     func cacheLoginInfo(){
         let model = viewModel.loginModel.value
         SetInfo(kRapidSession, value: model?.session ?? "" )
+        NotificationCenter.default.post(name: .RapidLoginSuccess, object: nil, userInfo: nil)
         self.dismiss(animated: true, completion: nil)
     }
     func changeAgreementEvent() {

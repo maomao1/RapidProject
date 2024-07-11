@@ -150,3 +150,20 @@ let RapidUrlParam: String = {
    
     return para.compentUrl()
 }()
+
+/**
+ *  app name
+ */
+let RPFAppName: String = {
+    if let name = Bundle.main.localizedInfoDictionary?["CFBundleDisplayName"] as? String {
+        return name
+    }
+    if let name = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String {
+        return name
+    }
+    if let name = Bundle.main.infoDictionary?["CFBundleName"] as? String {
+        return name
+    }
+    return "App"
+}()
+

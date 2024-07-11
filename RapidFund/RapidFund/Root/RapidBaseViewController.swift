@@ -25,6 +25,8 @@ class RapidBaseViewController: UIViewController {
         return view
     }()
     
+    private(set) lazy var safeAreaBottomView = UIView()
+    
     lazy var titleNav: UILabel = {
         let label = UILabel()
         label.font = .f_lightSys32
@@ -131,7 +133,7 @@ class RapidBaseViewController: UIViewController {
     
     
     func setBottomView(){
-        let safeAreaBottomView = UIView()
+        
         safeAreaBottomView.backgroundColor = .white
         view.addSubview(safeAreaBottomView)
         safeAreaBottomView.snp.makeConstraints { (make) in

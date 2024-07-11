@@ -81,7 +81,6 @@ class RapidLoginViewModel {
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}
                 self.loginModel.accept(RapidLoginModel(json: json["trouble"]))
-                NotificationCenter.default.post(name: .RapidLoginSuccess, object: nil, userInfo: nil)
 
 //                self.loginSuccessAction.onNext(Void())
             },

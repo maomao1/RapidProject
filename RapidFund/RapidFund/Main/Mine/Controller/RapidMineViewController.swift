@@ -16,7 +16,11 @@ class RapidMineViewController: RapidBaseViewController {
     var viewModel: RapidMineViewModel = RapidMineViewModel()
     
     let backgroundImageView = UIImageView(image: .mineFullBg)
-    let rapidImageView = UIImageView(image: .loginRapidImage)
+    let rapidImageView = UIImageView(image: .rapidFundLogoImg)
+    let rapidNameLabel = UILabel().withFont(.f_lightSys14)
+        .withTextColor(.c_111111)
+        .withTextAlignment(.center)
+        .withText("RapidFund")
     let centerImageView = UIImageView(image: .mineCenterBg)
     let menuBgImageView = UIImageView(image: .mineMenuBg)
     let rightBgImageView = UIImageView(image: .mineRightBg)
@@ -55,6 +59,7 @@ extension RapidMineViewController {
         
         view.insertSubview(backgroundImageView, at: 0)
         view.addSubview(rapidImageView)
+        view.addSubview(rapidNameLabel)
         view.addSubview(centerImageView)
         view.addSubview(rightBgImageView)
         view.addSubview(menuBgImageView)
@@ -70,6 +75,11 @@ extension RapidMineViewController {
             make.left.equalTo(40.5.rf)
             make.top.equalTo(self.customNavView.snp.bottom).offset(28.rf)
             make.size.equalTo(CGSize(width: 90.rf, height: 90.rf))
+        }
+        
+        rapidNameLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(rapidImageView)
+            make.top.equalTo(rapidImageView.snp.bottom).offset(15.rf)
         }
         
         rightBgImageView.snp.makeConstraints { make in
@@ -141,6 +151,8 @@ extension RapidMineViewController: UITableViewDelegate, UITableViewDataSource{
         case .agreement:
             print("click agreement")
         case .aboutUs:
+            let vc = RPFAboutUsViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
             print("click about us")
         case .logOut:
             alertShow(type: .logout)

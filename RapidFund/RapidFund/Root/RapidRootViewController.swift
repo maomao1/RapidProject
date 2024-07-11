@@ -18,6 +18,7 @@ class RapidRootViewController: UITabBarController {
         setUpRootView()
         setUpRx()
         self.delegate = self
+        setUpDebugView()
         // Do any additional setup after loading the view.
         
         
@@ -159,6 +160,43 @@ extension RapidRootViewController: UITabBarControllerDelegate {
     }
 }
 
+//MARK: - debugView
+extension RapidRootViewController {
+    
+    private func setUpDebugView() {
+      
+        
+        let button = UIButton(type: .custom)
+        button.backgroundColor = .red.withAlphaComponent(0.6)
+        button.setTitle("debug", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.isHidden = false
+        view.addSubview(button)
+        button.snp.makeConstraints { make in
+            make.left.equalTo(15)
+            make.bottom.equalTo(-80)
+            make.width.equalTo(60)
+            make.height.equalTo(45)
+        }
+        
+        button.rx
+            .tap
+            .throttle(.seconds_0, scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] (_) in
+                guard let `self` = self else {return}
+                self.buttonAction()
+            })
+            .disposed(by: bag)
 
+    }
+    
+    func buttonAction() {
+        guard let nc = selectedViewController as? RapidBaseNavgationController else {
+            return
+        }
+        nc.pushViewController(RFFlowVC(), animated: true)
+    }
+    
+}
 
 

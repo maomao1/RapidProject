@@ -15,6 +15,11 @@
 		02C3BAEF2C3D46A7001B4107 /* RFFlowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAEE2C3D46A7001B4107 /* RFFlowItem.swift */; };
 		02C3BAF12C3E2148001B4107 /* RFIDDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAF02C3E2148001B4107 /* RFIDDetailVC.swift */; };
 		02C3BAF32C3E62E5001B4107 /* RFPRCIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAF22C3E62E5001B4107 /* RFPRCIDView.swift */; };
+		2E3D98952C3FF3DC00C49298 /* RapidOrderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3D98942C3FF3DC00C49298 /* RapidOrderListCell.swift */; };
+		2E3D98972C40175500C49298 /* RPFAboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3D98962C40175500C49298 /* RPFAboutUsViewController.swift */; };
+		2E3D98992C40177500C49298 /* RPFAboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3D98982C40177500C49298 /* RPFAboutCell.swift */; };
+		2E3D989B2C40178D00C49298 /* RPFAboutUsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3D989A2C40178D00C49298 /* RPFAboutUsViewModel.swift */; };
+		2E3D989D2C405C4500C49298 /* RapidHomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3D989C2C405C4500C49298 /* RapidHomeModel.swift */; };
 		2E4D39042C31326500C2271A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D39032C31326500C2271A /* AppDelegate.swift */; };
 		2E4D39082C31326500C2271A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D39072C31326500C2271A /* ViewController.swift */; };
 		2E4D390B2C31326500C2271A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E4D39092C31326500C2271A /* Main.storyboard */; };
@@ -60,6 +65,8 @@
 		2EECB1FD2C3E79FF00E59A1C /* RapidOrderMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECB1FC2C3E79FF00E59A1C /* RapidOrderMenuCell.swift */; };
 		2EECB1FF2C3EC21B00E59A1C /* HomeMoneyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECB1FE2C3EC21B00E59A1C /* HomeMoneyView.swift */; };
 		2EECB2012C3EE40500E59A1C /* RapidHomeProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECB2002C3EE40500E59A1C /* RapidHomeProductCell.swift */; };
+		2EECB2032C3FDC6E00E59A1C /* RapidOrderListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECB2022C3FDC6E00E59A1C /* RapidOrderListViewController.swift */; };
+		2EECB2052C3FE87800E59A1C /* RapidOrderListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECB2042C3FE87800E59A1C /* RapidOrderListViewModel.swift */; };
 		2EFF26902C3D4236003A0344 /* RapidMineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EFF268F2C3D4236003A0344 /* RapidMineViewModel.swift */; };
 		81868C2FC647AA625D44B21C /* Pods_RapidFundTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565CF0205FADBDEBAF62DE6C /* Pods_RapidFundTests.framework */; };
 		99CD401003CB24EEEAC74020 /* Pods_RapidFund_RapidFundUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F61E2469C0BBFED2185A51D4 /* Pods_RapidFund_RapidFundUITests.framework */; };
@@ -94,6 +101,11 @@
 		02C3BAF22C3E62E5001B4107 /* RFPRCIDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFPRCIDView.swift; sourceTree = "<group>"; };
 		19F635D9772749B286942930 /* Pods-RapidFundTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFundTests.release.xcconfig"; path = "Target Support Files/Pods-RapidFundTests/Pods-RapidFundTests.release.xcconfig"; sourceTree = "<group>"; };
 		28F36B4CADBD36A283814F95 /* Pods-RapidFund-RapidFundUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFund-RapidFundUITests.release.xcconfig"; path = "Target Support Files/Pods-RapidFund-RapidFundUITests/Pods-RapidFund-RapidFundUITests.release.xcconfig"; sourceTree = "<group>"; };
+		2E3D98942C3FF3DC00C49298 /* RapidOrderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidOrderListCell.swift; sourceTree = "<group>"; };
+		2E3D98962C40175500C49298 /* RPFAboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFAboutUsViewController.swift; sourceTree = "<group>"; };
+		2E3D98982C40177500C49298 /* RPFAboutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFAboutCell.swift; sourceTree = "<group>"; };
+		2E3D989A2C40178D00C49298 /* RPFAboutUsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFAboutUsViewModel.swift; sourceTree = "<group>"; };
+		2E3D989C2C405C4500C49298 /* RapidHomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidHomeModel.swift; sourceTree = "<group>"; };
 		2E4D39002C31326500C2271A /* RapidFund.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RapidFund.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E4D39032C31326500C2271A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2E4D39072C31326500C2271A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +155,8 @@
 		2EECB1FC2C3E79FF00E59A1C /* RapidOrderMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidOrderMenuCell.swift; sourceTree = "<group>"; };
 		2EECB1FE2C3EC21B00E59A1C /* HomeMoneyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMoneyView.swift; sourceTree = "<group>"; };
 		2EECB2002C3EE40500E59A1C /* RapidHomeProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidHomeProductCell.swift; sourceTree = "<group>"; };
+		2EECB2022C3FDC6E00E59A1C /* RapidOrderListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidOrderListViewController.swift; sourceTree = "<group>"; };
+		2EECB2042C3FE87800E59A1C /* RapidOrderListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidOrderListViewModel.swift; sourceTree = "<group>"; };
 		2EFF268F2C3D4236003A0344 /* RapidMineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidMineViewModel.swift; sourceTree = "<group>"; };
 		565CF0205FADBDEBAF62DE6C /* Pods_RapidFundTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RapidFundTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7303F2785653D5EFAC06F8CB /* Pods-RapidFund-RapidFundUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFund-RapidFundUITests.debug.xcconfig"; path = "Target Support Files/Pods-RapidFund-RapidFundUITests/Pods-RapidFund-RapidFundUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -452,6 +466,7 @@
 		2EBDAE162C3CF67400B3C845 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2E3D989C2C405C4500C49298 /* RapidHomeModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -476,6 +491,7 @@
 			isa = PBXGroup;
 			children = (
 				2E91E86A2C36A77D005E2AB4 /* RapidMineViewController.swift */,
+				2E3D98962C40175500C49298 /* RPFAboutUsViewController.swift */,
 				2EECB1F22C3D892F00E59A1C /* RapidCustomAlertViewController.swift */,
 			);
 			path = Controller;
@@ -485,6 +501,7 @@
 			isa = PBXGroup;
 			children = (
 				2EECB1F02C3D758000E59A1C /* RapidMineMenuCell.swift */,
+				2E3D98982C40177500C49298 /* RPFAboutCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -500,6 +517,7 @@
 			isa = PBXGroup;
 			children = (
 				2EFF268F2C3D4236003A0344 /* RapidMineViewModel.swift */,
+				2E3D989A2C40178D00C49298 /* RPFAboutUsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -508,6 +526,7 @@
 			isa = PBXGroup;
 			children = (
 				2E91E8672C36A764005E2AB4 /* RapidOrderViewController.swift */,
+				2EECB2022C3FDC6E00E59A1C /* RapidOrderListViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -516,6 +535,7 @@
 			isa = PBXGroup;
 			children = (
 				2EECB1FA2C3E749600E59A1C /* RapidOrderViewModel.swift */,
+				2EECB2042C3FE87800E59A1C /* RapidOrderListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -531,6 +551,7 @@
 			isa = PBXGroup;
 			children = (
 				2EECB1FC2C3E79FF00E59A1C /* RapidOrderMenuCell.swift */,
+				2E3D98942C3FF3DC00C49298 /* RapidOrderListCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -798,15 +819,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EBDAE142C3C21A100B3C845 /* UIViewExtension.swift in Sources */,
+				2E3D98952C3FF3DC00C49298 /* RapidOrderListCell.swift in Sources */,
 				2E91E86B2C36A77D005E2AB4 /* RapidMineViewController.swift in Sources */,
 				2E91E8712C36D2EC005E2AB4 /* RapidLoginViewController.swift in Sources */,
 				2E4D39442C35857B00C2271A /* UIColorExtension.swift in Sources */,
+				2EECB2052C3FE87800E59A1C /* RapidOrderListViewModel.swift in Sources */,
 				2E4D39452C35857B00C2271A /* UIFontExtension.swift in Sources */,
+				2E3D98972C40175500C49298 /* RPFAboutUsViewController.swift in Sources */,
 				2E4D39082C31326500C2271A /* ViewController.swift in Sources */,
 				2EBDADFE2C39C36400B3C845 /* ErrorExtension.swift in Sources */,
 				2EBDAE062C39CB3800B3C845 /* MainAppInfo.swift in Sources */,
 				2E91E8642C36A72A005E2AB4 /* RapidHomeViewController.swift in Sources */,
 				2EFF26902C3D4236003A0344 /* RapidMineViewModel.swift in Sources */,
+				2E3D98992C40177500C49298 /* RPFAboutCell.swift in Sources */,
 				2EBDAE002C39C45F00B3C845 /* JSONExtension.swift in Sources */,
 				2EECB1F52C3E2D6C00E59A1C /* NotificationNameExtension.swift in Sources */,
 				2EBDAE202C3D2EEA00B3C845 /* RapidLoginModel.swift in Sources */,
@@ -818,6 +843,8 @@
 				2E91E8772C36E2E7005E2AB4 /* UILabelExtension.swift in Sources */,
 				0221C86A2C3E917300896864 /* RFFRVC.swift in Sources */,
 				2EBDAE122C3BDBC500B3C845 /* RapidTabbar.swift in Sources */,
+				2E3D989B2C40178D00C49298 /* RPFAboutUsViewModel.swift in Sources */,
+				2E3D989D2C405C4500C49298 /* RapidHomeModel.swift in Sources */,
 				024F6C432C3CFD290041F532 /* RFPInVC.swift in Sources */,
 				2EECB1FD2C3E79FF00E59A1C /* RapidOrderMenuCell.swift in Sources */,
 				2EBDADFC2C39C28F00B3C845 /* RapidApi.swift in Sources */,
@@ -836,6 +863,7 @@
 				2EECB1F12C3D758000E59A1C /* RapidMineMenuCell.swift in Sources */,
 				2E4D39432C35857B00C2271A /* AppConfig.swift in Sources */,
 				2EBDAE0D2C3B9C3000B3C845 /* RapidSingleIdentifierManager.swift in Sources */,
+				2EECB2032C3FDC6E00E59A1C /* RapidOrderListViewController.swift in Sources */,
 				2E91E8682C36A764005E2AB4 /* RapidOrderViewController.swift in Sources */,
 				02C3BAF32C3E62E5001B4107 /* RFPRCIDView.swift in Sources */,
 				2E4D39042C31326500C2271A /* AppDelegate.swift in Sources */,

@@ -27,7 +27,11 @@ class RapidHomeViewController: RapidBaseViewController {
     let circleLeftImageView = UIImageView(image: .homeCircleLeft)
     let circleTopRightImageView = UIImageView(image: .homeCircleTopRight)
     let circleBottomRightImageView = UIImageView(image: .homeCircleBottomRight)
-    let rapidImageView = UIImageView(image: .loginRapidImage)
+    let rapidImageView = UIImageView(image: .rapidFundLogoImg)
+    let rapidNameLabel = UILabel().withFont(.f_lightSys12)
+        .withTextColor(.c_111111)
+        .withTextAlignment(.center)
+        .withText("RapidFund")
     let unLoginImgBg  = UIImageView(image: .homeUnloginBg)
     let LoginTopImgBg  = UIImageView(image: .homeLoginTopBg)
     let homeMoneyView = HomeMoneyView()
@@ -106,10 +110,6 @@ extension RapidHomeViewController {
         setUpRx()
         // Do any additional setup after loading the view.
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
-            self?.navigationController?.pushViewController(RFFlowVC(), animated: true)
-        }
-        
     }
     
     
@@ -119,18 +119,23 @@ extension RapidHomeViewController {
     
     func setupViews(){
         self.titleNav.text = viewModel.pageTitle
-        view.insertSubview(backgroundImageView, at: 0)
-        backgroundImageView.addSubview(circleLeftImageView)
-        backgroundImageView.addSubview(circleTopRightImageView)
+//        self.view.bringSubviewToFront(self.customNavView)
+//        view.insertSubview(backgroundImageView, at: 0)
+        view.addSubview(backgroundImageView)
+        view.addSubview(circleLeftImageView)
+        view.addSubview(circleTopRightImageView)
 //        view.insertSubview(circleBottomRightImageView, aboveSubview: backgroundImageView)
-        backgroundImageView.addSubview(circleBottomRightImageView)
+        view.addSubview(circleBottomRightImageView)
         view.addSubview(unLoginContainer)
-        backgroundImageView.addSubview(loginContainer)
+        view.addSubview(loginContainer)
+        self.view.bringSubviewToFront(self.customNavView)
+        self.view.bringSubviewToFront(self.safeAreaBottomView)
         
         backgroundImageView.isUserInteractionEnabled = true
         loginContainer.isUserInteractionEnabled = true
         
         unLoginContainer.addSubview(rapidImageView)
+        unLoginContainer.addSubview(rapidNameLabel)
         unLoginContainer.addSubview(unLoginImgBg)
         unLoginContainer.addSubview(applyBtn)
         unLoginContainer.addSubview(applyTitle)
@@ -171,12 +176,17 @@ extension RapidHomeViewController {
         rapidImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(unLoginContainer.snp.top).offset(5.5.rf)
-            make.size.equalTo(CGSize(width: 63.rc, height: 88.rc))
+            make.size.equalTo(CGSize(width: 63.rc, height: 64.rc))
         }
+        rapidNameLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(rapidImageView)
+            make.top.equalTo(rapidImageView.snp.bottom).offset(11.5.rf)
+        }
+        
         
         unLoginImgBg.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(rapidImageView.snp.bottom).offset(14.5.rf)
+            make.top.equalTo(rapidNameLabel.snp.bottom).offset(14.5.rf)
             make.left.equalTo(63.5.rf)
         }
         
@@ -241,7 +251,7 @@ extension RapidHomeViewController {
             }
         }
         self.unLoginContainer.isHidden = true
-        self.loginContainer.isHidden = true
+//        self.loginContainer.isHidden = true
     }
     
     func loginSuccessEvent() {

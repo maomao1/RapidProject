@@ -99,6 +99,8 @@ extension RapidOrderViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let vc = RapidOrderListViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
         let type = viewModel.sections[indexPath.row]
 
         switch type{

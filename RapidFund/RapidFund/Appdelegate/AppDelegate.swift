@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         setUpRootVC()
+        setUIAttribute()
         return true
     }
     
@@ -42,5 +43,26 @@ extension AppDelegate {
         window?.frame = UIScreen.main.bounds
         window?.rootViewController = RapidRootViewController()
         window?.makeKeyAndVisible()
+    }
+    
+    //MARK: - 配置UI属性
+    func setUIAttribute() {
+        let tableViewAppearance = UITableView.appearance()
+        let scrollViewApperance = UIScrollView.appearance()
+        
+//        UITextField.appearance().tintColor = .c_0EC275
+//        UITextView.appearance().tintColor = .c_0EC275
+        tableViewAppearance.tableFooterView = UIView()
+        tableViewAppearance.separatorColor = .black.withAlphaComponent(0.08)
+        if #available(iOS 11.0, *) {
+            tableViewAppearance.contentInsetAdjustmentBehavior = .never
+            tableViewAppearance.estimatedSectionFooterHeight = 0
+            tableViewAppearance.estimatedSectionHeaderHeight = 0
+            tableViewAppearance.estimatedRowHeight = 0
+            scrollViewApperance.contentInsetAdjustmentBehavior = .never
+        }
+        if #available(iOS 15.0, *) {
+            tableViewAppearance.sectionHeaderTopPadding = 0.f
+        }
     }
 }

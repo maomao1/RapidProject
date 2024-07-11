@@ -86,7 +86,13 @@ extension UIImage {
     static let orderFailedIcon   = UIImage(named: "order_failed_icon")!
     static let orderSettedIcon   = UIImage(named: "order_setted_icon")!
 
-    
+    //MARK: - orderList
+    static let orderListShadowBg   = UIImage(named: "orderList_shadow_bg")!
+    static let orderListRightBg   = UIImage(named: "orderList_right_bg")!
+    static let orderListBottomIcon   = UIImage(named: "orderList_bottom_icon")!
+    static let orderListSoundIcon   = UIImage(named: "orderList_sound_icon")!
+    static let orderListDetailBtnIcon   = UIImage(named: "orderList_detail_btn")!
+
     //MARK: - mine
     static let mineFullBg   = UIImage(named: "mine_full_bg")!
     static let mineCenterBg = UIImage(named: "mine_center_bg")!
@@ -103,5 +109,10 @@ extension UIImage {
     static let mineLogOutIcon  = UIImage(named: "mine_icon_logout")!
     static let mineLogOffIcon  = UIImage(named: "mine_icon_logoff")!
     
+    // MARK: - about us
+    static let mineAboutUsBlackBg = UIImage(named: "mine_about_us_blackbg")!
+    static let rapidFundLogoImg   = UIImage(named: "mine_about_us_logo")!
+    static let mineAboutUsMenuBg = UIImage(named: "mine_about_us_menu_bg")!
+
 
 }
