@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0221C86A2C3E917300896864 /* RFFRVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0221C8692C3E917300896864 /* RFFRVC.swift */; };
 		024F6C432C3CFD290041F532 /* RFPInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F6C422C3CFD290041F532 /* RFPInVC.swift */; };
 		024F6C462C3CFECA0041F532 /* RFInfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F6C452C3CFECA0041F532 /* RFInfoItem.swift */; };
 		02C3BAEB2C3D3F9F001B4107 /* RFFlowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAEA2C3D3F9F001B4107 /* RFFlowVC.swift */; };
 		02C3BAED2C3D40DD001B4107 /* RFLoadProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAEC2C3D40DD001B4107 /* RFLoadProgressView.swift */; };
 		02C3BAEF2C3D46A7001B4107 /* RFFlowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAEE2C3D46A7001B4107 /* RFFlowItem.swift */; };
 		02C3BAF12C3E2148001B4107 /* RFIDDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAF02C3E2148001B4107 /* RFIDDetailVC.swift */; };
+		02C3BAF32C3E62E5001B4107 /* RFPRCIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAF22C3E62E5001B4107 /* RFPRCIDView.swift */; };
 		2E4D39042C31326500C2271A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D39032C31326500C2271A /* AppDelegate.swift */; };
 		2E4D39082C31326500C2271A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D39072C31326500C2271A /* ViewController.swift */; };
 		2E4D390B2C31326500C2271A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E4D39092C31326500C2271A /* Main.storyboard */; };
@@ -82,12 +84,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0221C8692C3E917300896864 /* RFFRVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFFRVC.swift; sourceTree = "<group>"; };
 		024F6C422C3CFD290041F532 /* RFPInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFPInVC.swift; sourceTree = "<group>"; };
 		024F6C452C3CFECA0041F532 /* RFInfoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFInfoItem.swift; sourceTree = "<group>"; };
 		02C3BAEA2C3D3F9F001B4107 /* RFFlowVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFFlowVC.swift; sourceTree = "<group>"; };
 		02C3BAEC2C3D40DD001B4107 /* RFLoadProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFLoadProgressView.swift; sourceTree = "<group>"; };
 		02C3BAEE2C3D46A7001B4107 /* RFFlowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFFlowItem.swift; sourceTree = "<group>"; };
 		02C3BAF02C3E2148001B4107 /* RFIDDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFIDDetailVC.swift; sourceTree = "<group>"; };
+		02C3BAF22C3E62E5001B4107 /* RFPRCIDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFPRCIDView.swift; sourceTree = "<group>"; };
 		19F635D9772749B286942930 /* Pods-RapidFundTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFundTests.release.xcconfig"; path = "Target Support Files/Pods-RapidFundTests/Pods-RapidFundTests.release.xcconfig"; sourceTree = "<group>"; };
 		28F36B4CADBD36A283814F95 /* Pods-RapidFund-RapidFundUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFund-RapidFundUITests.release.xcconfig"; path = "Target Support Files/Pods-RapidFund-RapidFundUITests/Pods-RapidFund-RapidFundUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2E4D39002C31326500C2271A /* RapidFund.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RapidFund.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,6 +188,7 @@
 				024F6C422C3CFD290041F532 /* RFPInVC.swift */,
 				02C3BAEA2C3D3F9F001B4107 /* RFFlowVC.swift */,
 				02C3BAF02C3E2148001B4107 /* RFIDDetailVC.swift */,
+				0221C8692C3E917300896864 /* RFFRVC.swift */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -194,6 +199,7 @@
 				024F6C452C3CFECA0041F532 /* RFInfoItem.swift */,
 				02C3BAEC2C3D40DD001B4107 /* RFLoadProgressView.swift */,
 				02C3BAEE2C3D46A7001B4107 /* RFFlowItem.swift */,
+				02C3BAF22C3E62E5001B4107 /* RFPRCIDView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -810,6 +816,7 @@
 				2EBDAE1A2C3CF6CC00B3C845 /* RapidHomeViewModel.swift in Sources */,
 				2EBDAE022C39C59D00B3C845 /* RapidApiConstantUrl.swift in Sources */,
 				2E91E8772C36E2E7005E2AB4 /* UILabelExtension.swift in Sources */,
+				0221C86A2C3E917300896864 /* RFFRVC.swift in Sources */,
 				2EBDAE122C3BDBC500B3C845 /* RapidTabbar.swift in Sources */,
 				024F6C432C3CFD290041F532 /* RFPInVC.swift in Sources */,
 				2EECB1FD2C3E79FF00E59A1C /* RapidOrderMenuCell.swift in Sources */,
@@ -830,6 +837,7 @@
 				2E4D39432C35857B00C2271A /* AppConfig.swift in Sources */,
 				2EBDAE0D2C3B9C3000B3C845 /* RapidSingleIdentifierManager.swift in Sources */,
 				2E91E8682C36A764005E2AB4 /* RapidOrderViewController.swift in Sources */,
+				02C3BAF32C3E62E5001B4107 /* RFPRCIDView.swift in Sources */,
 				2E4D39042C31326500C2271A /* AppDelegate.swift in Sources */,
 				02C3BAEF2C3D46A7001B4107 /* RFFlowItem.swift in Sources */,
 				2EBDAE0A2C3AD35A00B3C845 /* StringExtension.swift in Sources */,

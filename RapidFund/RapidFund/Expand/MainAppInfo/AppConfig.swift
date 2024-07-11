@@ -39,7 +39,7 @@ struct RapidMetrics {
     //导航栏高度
     static let navigationBarHeight = 44.f
     //导航栏和状态条总高度
-    static let navBarHeight: CGFloat = statusBarHeight + navigationBarHeight
+    static let navBarHeight: CGFloat = (statusBarHeight + navigationBarHeight)
     static let homeBarHeight: CGFloat = IPHONE_X ? 34 : 0
     static let separatorThickness = 2 / UIScreen.main.scale
     

@@ -12,7 +12,7 @@ enum RFRoute {
     case employment_info
 }
 
-class RFPInVC: UIViewController {
+class RFPInVC: RapidBaseViewController {
     
     private let route:RFRoute
     init(route: RFRoute) {
@@ -25,15 +25,21 @@ class RFPInVC: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.titleNav.text = route == .personal_info ? "Personal Information" : "Employment Information"
+        self.titleNav.textColor = .white
+        adjustNavTitleCenter()
+        titleNav.font = 24.font
+        self.rightBtn.isHidden = true
         setup()
+        self.view.bringSubviewToFront(self.customNavView)
     }
 
     private let genderItem = RFGengerItem()
-    private let relaItem = RFInfoItem("Marriage Status")
-    private let passportItem = RFInfoItem("Passport")
-    private let addressItem = RFInfoItem("Address")
-    private let phoneItem = RFInfoItem("Phone Number", hiddenNext: true)
-    private let inomeItem = RFInfoItem("Monthly Income")
+    private let relaItem = RFInfoItem("Marriage Status", placeholder: "Ralationship")
+    private let passportItem = RFInfoItem("Passport",placeholder: "12-12-2024")
+    private let addressItem = RFInfoItem("Address",placeholder: "Address")
+    private let phoneItem = RFInfoItem("Phone Number",placeholder: "1234567", hiddenNext: true)
+    private let inomeItem = RFInfoItem("Monthly Income",placeholder: "aaaaa")
     
     private func setup() {
         let bottV = UIImageView(image: getResourceConfig().0)
@@ -42,15 +48,16 @@ class RFPInVC: UIViewController {
             make.edges.equalToSuperview()
         }
         let bgImgV = UIImageView(image: getResourceConfig().1)
+        bgImgV.isUserInteractionEnabled = true
         view.addSubview(bgImgV)
         bgImgV.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
             make.height.equalTo(303.rf)
         }
         
-        let bgView = UIView()
+        let bgView = UIImageView(image: UIImage.image(gradientDirection: .vertical, colors: [0xE5DEFA.color,0xffffff.color]))
         bgView.clipsCornerRadius(Float(24.rf))
-        
+        bgView.isUserInteractionEnabled = true
         view.addSubview(bgView)
         bgView.snp.makeConstraints { make in
             make.left.equalTo(24.rf)
@@ -67,7 +74,7 @@ class RFPInVC: UIViewController {
         let stackView = UIStackView(arrangedSubviews: stackViews)
         stackView.spacing = 24.rf
         stackView.axis = .vertical
-        stackView.distribution = .fill
+        stackView.distribution = .fillProportionally
         bgView.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.edges.equalTo(UIEdgeInsets(top: 20.rf, left: 16.rf, bottom: 55.rf, right: 16.rf))

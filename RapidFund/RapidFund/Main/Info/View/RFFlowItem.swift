@@ -35,7 +35,8 @@ class RFFlowItem: UIView {
         addSubview(iconImgV)
         iconImgV.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.centerY.equalTo(self.snp.centerY).offset(5.rf)
+            make.width.height.equalTo(36.rf)
+            make.top.equalTo(30.rf)
         }
         addSubview(textLb)
         textLb.snp.makeConstraints { make in

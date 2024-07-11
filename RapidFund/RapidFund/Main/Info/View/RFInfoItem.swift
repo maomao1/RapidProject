@@ -14,9 +14,9 @@ class RFInfoItem: UIView {
         
     }
     
-    init(_ title: String, hiddenNext:Bool = false) {
+    init(_ title: String,placeholder:String? = nil, hiddenNext:Bool = false) {
         super.init(frame: .zero)
-        setup(hiddenNext: hiddenNext)
+        setup(placeholder: placeholder, hiddenNext: hiddenNext)
         
         titLb.text = title
     }
@@ -27,12 +27,15 @@ class RFInfoItem: UIView {
     }
 
     private let titLb = UILabel().textColor(0x111111.color).font(20.font)
-    private lazy var contentView: (container: UIView, textLb: UILabel, btn: UIButton) = {
+    private lazy var contentView: (container: UIView, textLb: UITextField, btn: UIButton) = {
         let bgView = UIView()
         bgView.backgroundColor = UIColor(rgbHex: 0x000000, alpha: 0.05)
         bgView.clipsCornerRadius(Float(10.rf))
         
-        let label = UILabel().textColor(0x999999.color).font(14.font)
+        let label = UITextField()
+        label.font = 14.font
+        label.textColor = 0x999999.color
+        label.delegate = self
         let btn = UIButton(type: .custom)
         btn.setImage("info_item_next".image, for: .normal)
         btn.addTarget(self, action: #selector(btnClick), for: .touchUpInside)
@@ -46,19 +49,24 @@ class RFInfoItem: UIView {
         label.snp.makeConstraints { make in
             make.left.equalTo(24.rf)
             make.centerY.equalToSuperview()
-            make.right.equalTo(btn.snp.left).offset(-10.rf)
+//            make.right.equalTo(btn.snp.left).offset(-10.rf)
         }
         
         return (bgView, label, btn)
     }()
 
-    private func setup(hiddenNext:Bool) {
+    private func setup(placeholder:String?,hiddenNext:Bool) {
         addSubview(titLb)
+        if let placeholder = placeholder {
+            contentView.textLb.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.font:14.font,.foregroundColor:0x999999.color])
+        }
+        
         contentView.btn.isHidden = hiddenNext
         addSubview(contentView.container)
         titLb.snp.makeConstraints { make in
             make.top.left.equalToSuperview()
         }
+        
         contentView.container.snp.makeConstraints { make in
             make.left.equalTo(titLb)
             make.top.equalTo(titLb.snp.bottom).offset(12.rf)
@@ -68,6 +76,12 @@ class RFInfoItem: UIView {
     }
 
     @objc private func btnClick() {}
+}
+
+extension RFInfoItem:UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return false
+    }
 }
 
 class RFGengerItem: UIView {
@@ -125,6 +139,7 @@ class RFGengerItem: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setup()
     }
     
     @available(*, unavailable)
@@ -134,10 +149,10 @@ class RFGengerItem: UIView {
     
     private let titLb = UILabel().textColor(0x111111.color).font(20.font).text("Gender")
     private let femaleItem
-        = __GenderView("info_male".image, text: "Mr.")
+        = __GenderView("info_female".image, text: "Miss.")
     
     private let maleItem
-        = __GenderView("info_male".image, text: "Miss.")
+        = __GenderView("info_male".image, text: "Mr.")
     
     private func setup() {
         addSubview(titLb)

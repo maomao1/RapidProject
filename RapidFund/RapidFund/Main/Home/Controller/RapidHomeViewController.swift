@@ -104,6 +104,12 @@ extension RapidHomeViewController {
         viewModel.getData()
         setBackBtnHidden()
         setUpRx()
+        // Do any additional setup after loading the view.
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
+            self?.navigationController?.pushViewController(RFFlowVC(), animated: true)
+        }
+        
     }
     
     

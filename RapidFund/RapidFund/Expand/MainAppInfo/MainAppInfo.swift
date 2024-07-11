@@ -119,7 +119,7 @@ let RapidSingleUUID: String = {
  *  混淆随机数字符串
  */
 let RapidRandom: String = {
-    return "eikskjeoifj345245"
+//    return "eikskjeoifj345245"
     var randomString: String = ""
     for _ in 0..<20 {
         randomString += String(Int.random(in: 0...9))
