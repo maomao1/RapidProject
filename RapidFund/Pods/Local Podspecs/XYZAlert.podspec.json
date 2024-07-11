@@ -1,0 +1,28 @@
+{
+  "name": "XYZAlert",
+  "version": "1.1.7",
+  "summary": "XYZAlert...",
+  "description": "XYZAlert Description...",
+  "homepage": "https://github.com/DFTT",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "XYZAlert": "lidong@021.com"
+  },
+  "source": {
+    "git": "https://github.com/DFTT/XYZAlertView.git",
+    "tag": "1.1.7"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "frameworks": [
+    "Foundation",
+    "UIKit"
+  ],
+  "requires_arc": true,
+  "source_files": "XYZAlert/Classes/**/*.{h,m}",
+  "public_header_files": "XYZAlert/Classes/**/*.{h}"
+}
