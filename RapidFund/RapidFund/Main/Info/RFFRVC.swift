@@ -113,28 +113,13 @@ class RFFRVC: RapidBaseViewController {
             make.top.equalTo(faceDesLb.snp.bottom).offset(20.rf)
         }
         
-        let nextimgV = UIImageView(image: "face_next_bg".image)
-        contentView.addSubview(nextimgV)
-        nextimgV.snp.makeConstraints { make in
-            make.width.equalTo(294.rf)
-            make.height.equalTo(60.rf)
+        let nextBtn = RFNextBtn()
+        contentView.addSubview(nextBtn)
+        nextBtn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.bottom.equalTo(-53.rf)
         }
         
-        let nextLb = UILabel().font(16.font).text("Next").textColor(0xffffff.color)
-        nextimgV.addSubview(nextLb)
-        nextLb.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.left.equalTo(35.rf)
-        }
-        
-        let next_arr = UIImageView(image: "face_next".image)
-        nextimgV.addSubview(next_arr)
-        next_arr.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.right.equalTo(-32.rf)
-        }
     }
 }
 

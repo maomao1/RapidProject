@@ -233,10 +233,12 @@ class RFIDDetailVC: RapidBaseViewController {
 
 extension RFIDDetailVC {
     @objc private func btnClick() {
-        let alert = RFDateSelAlert()
+//        let alert = RFDateSelAlert()
+//        alert.show(on: self.view)
+        
+        let alert = RFBankMgrAlert()
         alert.show(on: self.view)
-        
-        
+//        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc private func faceClick() {

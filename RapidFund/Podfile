@@ -22,6 +22,9 @@ target 'RapidFund' do
   pod 'XYZAlert', :git => 'https://github.com/DFTT/XYZAlertView.git', :branch => 'main'
 #  pod 'XYZSheetView', :git => 'https://github.com/DFTT/XYZSheetView.git', :branch => 'main'
   
+  pod 'JXPagingView'
+  pod 'JXSegmentedView'
+  
   # Pods for RapidFund
 
   target 'RapidFundTests' do

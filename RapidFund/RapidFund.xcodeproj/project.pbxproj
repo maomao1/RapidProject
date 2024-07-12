@@ -24,6 +24,13 @@
 		02F57BEA2C3FC05B0049D21C /* RFIDVerifyAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F57BE92C3FC05B0049D21C /* RFIDVerifyAlert.swift */; };
 		02F57BEC2C3FD4F40049D21C /* RFDateSelAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F57BEB2C3FD4F40049D21C /* RFDateSelAlert.swift */; };
 		02F57BEE2C3FE6AE0049D21C /* RFAddressAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F57BED2C3FE6AE0049D21C /* RFAddressAlert.swift */; };
+		02F57BF02C3FEB710049D21C /* RFContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F57BEF2C3FEB710049D21C /* RFContactCell.swift */; };
+		02F57BF22C40C2A20049D21C /* RFContactListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F57BF12C40C2A20049D21C /* RFContactListVC.swift */; };
+		02F57BF42C40CB390049D21C /* RFBankBindVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F57BF32C40CB390049D21C /* RFBankBindVC.swift */; };
+		02F57BF62C4106A50049D21C /* RFBankItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F57BF52C4106A50049D21C /* RFBankItem.swift */; };
+		02F57BF82C4112680049D21C /* RFNextBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F57BF72C4112680049D21C /* RFNextBtn.swift */; };
+		02F57BFA2C4115500049D21C /* RFBankMgrAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F57BF92C4115500049D21C /* RFBankMgrAlert.swift */; };
+		02F57BFC2C411E460049D21C /* JXPageAss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F57BFB2C411E460049D21C /* JXPageAss.swift */; };
 		2E4D39042C31326500C2271A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D39032C31326500C2271A /* AppDelegate.swift */; };
 		2E4D39082C31326500C2271A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D39072C31326500C2271A /* ViewController.swift */; };
 		2E4D390B2C31326500C2271A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E4D39092C31326500C2271A /* Main.storyboard */; };
@@ -107,6 +114,13 @@
 		02F57BE92C3FC05B0049D21C /* RFIDVerifyAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFIDVerifyAlert.swift; sourceTree = "<group>"; };
 		02F57BEB2C3FD4F40049D21C /* RFDateSelAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFDateSelAlert.swift; sourceTree = "<group>"; };
 		02F57BED2C3FE6AE0049D21C /* RFAddressAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFAddressAlert.swift; sourceTree = "<group>"; };
+		02F57BEF2C3FEB710049D21C /* RFContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFContactCell.swift; sourceTree = "<group>"; };
+		02F57BF12C40C2A20049D21C /* RFContactListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFContactListVC.swift; sourceTree = "<group>"; };
+		02F57BF32C40CB390049D21C /* RFBankBindVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFBankBindVC.swift; sourceTree = "<group>"; };
+		02F57BF52C4106A50049D21C /* RFBankItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFBankItem.swift; sourceTree = "<group>"; };
+		02F57BF72C4112680049D21C /* RFNextBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFNextBtn.swift; sourceTree = "<group>"; };
+		02F57BF92C4115500049D21C /* RFBankMgrAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFBankMgrAlert.swift; sourceTree = "<group>"; };
+		02F57BFB2C411E460049D21C /* JXPageAss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JXPageAss.swift; sourceTree = "<group>"; };
 		19F635D9772749B286942930 /* Pods-RapidFundTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFundTests.release.xcconfig"; path = "Target Support Files/Pods-RapidFundTests/Pods-RapidFundTests.release.xcconfig"; sourceTree = "<group>"; };
 		28F36B4CADBD36A283814F95 /* Pods-RapidFund-RapidFundUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFund-RapidFundUITests.release.xcconfig"; path = "Target Support Files/Pods-RapidFund-RapidFundUITests/Pods-RapidFund-RapidFundUITests.release.xcconfig"; sourceTree = "<group>"; };
 		2E3D98942C3FF3DC00C49298 /* RapidOrderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidOrderListCell.swift; sourceTree = "<group>"; };
@@ -211,6 +225,8 @@
 				02C3BAEA2C3D3F9F001B4107 /* RFFlowVC.swift */,
 				02C3BAF02C3E2148001B4107 /* RFIDDetailVC.swift */,
 				0221C8692C3E917300896864 /* RFFRVC.swift */,
+				02F57BF12C40C2A20049D21C /* RFContactListVC.swift */,
+				02F57BF32C40CB390049D21C /* RFBankBindVC.swift */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -226,6 +242,11 @@
 				02F57BE92C3FC05B0049D21C /* RFIDVerifyAlert.swift */,
 				02F57BEB2C3FD4F40049D21C /* RFDateSelAlert.swift */,
 				02F57BED2C3FE6AE0049D21C /* RFAddressAlert.swift */,
+				02F57BEF2C3FEB710049D21C /* RFContactCell.swift */,
+				02F57BF52C4106A50049D21C /* RFBankItem.swift */,
+				02F57BF72C4112680049D21C /* RFNextBtn.swift */,
+				02F57BF92C4115500049D21C /* RFBankMgrAlert.swift */,
+				02F57BFB2C411E460049D21C /* JXPageAss.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -840,6 +861,7 @@
 				2E3D98972C40175500C49298 /* RPFAboutUsViewController.swift in Sources */,
 				02F57BEE2C3FE6AE0049D21C /* RFAddressAlert.swift in Sources */,
 				2E4D39082C31326500C2271A /* ViewController.swift in Sources */,
+				02F57BFA2C4115500049D21C /* RFBankMgrAlert.swift in Sources */,
 				2EBDADFE2C39C36400B3C845 /* ErrorExtension.swift in Sources */,
 				2EBDAE062C39CB3800B3C845 /* MainAppInfo.swift in Sources */,
 				2E91E8642C36A72A005E2AB4 /* RapidHomeViewController.swift in Sources */,
@@ -847,9 +869,12 @@
 				2E3D98992C40177500C49298 /* RPFAboutCell.swift in Sources */,
 				2EBDAE002C39C45F00B3C845 /* JSONExtension.swift in Sources */,
 				2EECB1F52C3E2D6C00E59A1C /* NotificationNameExtension.swift in Sources */,
+				02F57BF22C40C2A20049D21C /* RFContactListVC.swift in Sources */,
 				2EBDAE202C3D2EEA00B3C845 /* RapidLoginModel.swift in Sources */,
+				02F57BF82C4112680049D21C /* RFNextBtn.swift in Sources */,
 				2E91E8612C36A684005E2AB4 /* RapidRootViewController.swift in Sources */,
 				2EBDAE082C3AD25000B3C845 /* MBProgressHUDExtension.swift in Sources */,
+				02F57BFC2C411E460049D21C /* JXPageAss.swift in Sources */,
 				2EECB2012C3EE40500E59A1C /* RapidHomeProductCell.swift in Sources */,
 				2EBDAE1A2C3CF6CC00B3C845 /* RapidHomeViewModel.swift in Sources */,
 				2EBDAE022C39C59D00B3C845 /* RapidApiConstantUrl.swift in Sources */,
@@ -861,6 +886,7 @@
 				024F6C432C3CFD290041F532 /* RFPInVC.swift in Sources */,
 				2EECB1FD2C3E79FF00E59A1C /* RapidOrderMenuCell.swift in Sources */,
 				2EBDADFC2C39C28F00B3C845 /* RapidApi.swift in Sources */,
+				02F57BF02C3FEB710049D21C /* RFContactCell.swift in Sources */,
 				2EECB1FF2C3EC21B00E59A1C /* HomeMoneyView.swift in Sources */,
 				2E4D39472C35857B00C2271A /* NSNumberExtension.swift in Sources */,
 				2EBDAE042C39C7AC00B3C845 /* RapidMainApi.swift in Sources */,
@@ -873,6 +899,7 @@
 				2E4D394B2C36A4BA00C2271A /* RapidBaseNavgationController.swift in Sources */,
 				2EBDADF62C39769E00B3C845 /* ProjectConfig.swift in Sources */,
 				2E4D39492C36A48000C2271A /* RapidBaseViewController.swift in Sources */,
+				02F57BF42C40CB390049D21C /* RFBankBindVC.swift in Sources */,
 				02F57BEC2C3FD4F40049D21C /* RFDateSelAlert.swift in Sources */,
 				2EECB1F12C3D758000E59A1C /* RapidMineMenuCell.swift in Sources */,
 				2E4D39432C35857B00C2271A /* AppConfig.swift in Sources */,
@@ -880,6 +907,7 @@
 				2EECB2032C3FDC6E00E59A1C /* RapidOrderListViewController.swift in Sources */,
 				2E91E8682C36A764005E2AB4 /* RapidOrderViewController.swift in Sources */,
 				02C3BAF32C3E62E5001B4107 /* RFPRCIDView.swift in Sources */,
+				02F57BF62C4106A50049D21C /* RFBankItem.swift in Sources */,
 				2E4D39042C31326500C2271A /* AppDelegate.swift in Sources */,
 				029A1E4F2C3FB6B900CAA29C /* RFBankAlert.swift in Sources */,
 				02C3BAEF2C3D46A7001B4107 /* RFFlowItem.swift in Sources */,

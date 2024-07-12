@@ -4,6 +4,12 @@ PODS:
     - Alamofire (~> 4.9)
   - Differentiator (5.0.0)
   - IQKeyboardManagerSwift (6.5.15)
+  - JXPagingView (2.1.3):
+    - JXPagingView/Pager (= 2.1.3)
+    - JXPagingView/Paging (= 2.1.3)
+  - JXPagingView/Pager (2.1.3)
+  - JXPagingView/Paging (2.1.3)
+  - JXSegmentedView (1.3.3)
   - MBProgressHUD (1.2.0)
   - MJRefresh (3.7.5)
   - RxCocoa (6.6.0):
@@ -30,6 +36,8 @@ DEPENDENCIES:
   - Alamofire (~> 4.9.1)
   - AlamofireImage
   - IQKeyboardManagerSwift
+  - JXPagingView
+  - JXSegmentedView
   - MBProgressHUD
   - MJRefresh
   - RxCocoa
@@ -47,6 +55,8 @@ SPEC REPOS:
     - AlamofireImage
     - Differentiator
     - IQKeyboardManagerSwift
+    - JXPagingView
+    - JXSegmentedView
     - MBProgressHUD
     - MJRefresh
     - RxCocoa
@@ -78,6 +88,8 @@ SPEC CHECKSUMS:
   AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
   IQKeyboardManagerSwift: 79fab21f451441935788dc5d80ded21c32685904
+  JXPagingView: afdd2e9af09c90160dd232b970d603cc6e7ddd0e
+  JXSegmentedView: 651b60fcf705258ba9395edd53876dbd2853fb68
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
   RxCocoa: 44a80de90e25b739b5aeaae3c8c371a32e3343cc
@@ -90,6 +102,6 @@ SPEC CHECKSUMS:
   XYZAlert: 4240e0c7abf859dcd3d7ee534a5595ba6b58f9b1
   XYZKit: 4b36427ed270de9db9ae7b6790c2365d6811c196
 
-PODFILE CHECKSUM: 3c22092a481d278d3d33afb784c0e0ab748b7695
+PODFILE CHECKSUM: 5d84cbdad17a4b3d78912edd644c6ade0179c1eb
 
 COCOAPODS: 1.15.2
