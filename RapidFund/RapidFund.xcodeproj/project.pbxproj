@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0221C86A2C3E917300896864 /* RFFRVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0221C8692C3E917300896864 /* RFFRVC.swift */; };
+		0221C86D2C3F6C7D00896864 /* RFAuthFRModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0221C86C2C3F6C7D00896864 /* RFAuthFRModel.swift */; };
 		024F6C432C3CFD290041F532 /* RFPInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F6C422C3CFD290041F532 /* RFPInVC.swift */; };
 		024F6C462C3CFECA0041F532 /* RFInfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F6C452C3CFECA0041F532 /* RFInfoItem.swift */; };
 		029A1E4F2C3FB6B900CAA29C /* RFBankAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029A1E4E2C3FB6B900CAA29C /* RFBankAlert.swift */; };
@@ -103,6 +104,7 @@
 
 /* Begin PBXFileReference section */
 		0221C8692C3E917300896864 /* RFFRVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFFRVC.swift; sourceTree = "<group>"; };
+		0221C86C2C3F6C7D00896864 /* RFAuthFRModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFAuthFRModel.swift; sourceTree = "<group>"; };
 		024F6C422C3CFD290041F532 /* RFPInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFPInVC.swift; sourceTree = "<group>"; };
 		024F6C452C3CFECA0041F532 /* RFInfoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFInfoItem.swift; sourceTree = "<group>"; };
 		029A1E4E2C3FB6B900CAA29C /* RFBankAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFBankAlert.swift; sourceTree = "<group>"; };
@@ -217,9 +219,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0221C86B2C3F6C5700896864 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				0221C86C2C3F6C7D00896864 /* RFAuthFRModel.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
 		024F6C412C3CFD000041F532 /* Info */ = {
 			isa = PBXGroup;
 			children = (
+				0221C86B2C3F6C5700896864 /* model */,
 				024F6C442C3CFEB40041F532 /* View */,
 				024F6C422C3CFD290041F532 /* RFPInVC.swift */,
 				02C3BAEA2C3D3F9F001B4107 /* RFFlowVC.swift */,
@@ -883,6 +894,7 @@
 				2EBDAE122C3BDBC500B3C845 /* RapidTabbar.swift in Sources */,
 				2E3D989B2C40178D00C49298 /* RPFAboutUsViewModel.swift in Sources */,
 				2E3D989D2C405C4500C49298 /* RapidHomeModel.swift in Sources */,
+				0221C86D2C3F6C7D00896864 /* RFAuthFRModel.swift in Sources */,
 				024F6C432C3CFD290041F532 /* RFPInVC.swift in Sources */,
 				2EECB1FD2C3E79FF00E59A1C /* RapidOrderMenuCell.swift in Sources */,
 				2EBDADFC2C39C28F00B3C845 /* RapidApi.swift in Sources */,

@@ -4,10 +4,12 @@
 //
 //  Created by C on 2024/7/9.
 //
-
 import UIKit
+import RxSwift
+import HandyJSON
 
 class RFFlowVC: RapidBaseViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.titleNav.text = "Borrowing  Process"
@@ -105,4 +107,11 @@ class RFFlowVC: RapidBaseViewController {
             navigationController?.pushViewController(RFPInVC(route: .employment_info), animated: true)
         }
     }
+}
+
+extension RFFlowVC {
+    
+    
+    
+    
 }

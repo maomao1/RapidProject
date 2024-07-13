@@ -5,6 +5,7 @@
 //  Created by C on 2024/7/10.
 //
 
+@_exported import SDWebImage
 @_exported import SnapKit
 import UIKit
 
@@ -17,10 +18,17 @@ class RFIDDetailVC: RapidBaseViewController {
         self.rightBtn.isHidden = true
         setup()
         view.bringSubviewToFront(customNavView)
+        loadData()
     }
     
     private let contentView = UIView()
     private let scrollView = UIScrollView()
+    private let cardView = UIImageView(image: "ID_bg1".image)
+    private let addBtn = UIButton(type: .custom)
+    private let face_addBtn = UIButton(type: .custom)
+    private let face_recognitionLb = UILabel().text("Face Recognition").textColor(0xffffff.color).font(24.font)
+    private let face_recognitionImgV = UIImageView(image: "face_recognition".image)
+    private let face_verifyImgV = UIImageView(image: "face_verify".image)
     private func setup() {
         scrollView.bounces = false
         scrollView.frame = self.view.bounds
@@ -57,8 +65,6 @@ class RFIDDetailVC: RapidBaseViewController {
             make.height.equalTo(96.rf)
         }
         
-        
-        
         let cardBgView = UIImageView(image: "ID_bg".image)
         contentView.addSubview(cardBgView)
         cardBgView.snp.makeConstraints { make in
@@ -68,7 +74,7 @@ class RFIDDetailVC: RapidBaseViewController {
             make.height.equalTo(158.rf)
         }
         
-        let cardView = UIImageView(image: "ID_bg1".image)
+        
         contentView.addSubview(cardView)
         cardView.snp.makeConstraints { make in
             make.width.equalTo(271.rf)
@@ -84,7 +90,6 @@ class RFIDDetailVC: RapidBaseViewController {
             make.bottom.equalTo(cardBgView.snp.top).offset(-18.5.rf)
         }
         
-        let addBtn = UIButton(type: .custom)
         addBtn.setImage("ID_add".image, for: .normal)
         addBtn.addTarget(self, action: #selector(btnClick), for: .touchUpInside)
         contentView.addSubview(addBtn)
@@ -143,7 +148,6 @@ class RFIDDetailVC: RapidBaseViewController {
             make.top.equalTo(cardDesLb.snp.bottom).offset(20.rf)
         }
         
-        let face_recognitionImgV = UIImageView(image: "face_recognition".image)
         contentView.addSubview(face_recognitionImgV)
         face_recognitionImgV.snp.makeConstraints { make in
             make.width.equalTo(327.rf)
@@ -151,15 +155,19 @@ class RFIDDetailVC: RapidBaseViewController {
             make.top.equalTo(stackView.snp.bottom).offset(20.rf)
             make.centerX.equalToSuperview()
         }
+        face_recognitionImgV.addSubview(face_verifyImgV)
+        face_verifyImgV.isHidden = true
+        face_verifyImgV.snp.makeConstraints { make in
+            make.left.top.equalToSuperview()
+            make.width.height.equalTo(47.rf)
+        }
         
-        let face_recognitionLb = UILabel().text("Face Recognition").textColor(0xffffff.color).font(24.font)
         face_recognitionImgV.addSubview(face_recognitionLb)
         face_recognitionLb.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalTo(24.rf)
         }
         
-        let face_addBtn = UIButton(type: .custom)
         face_addBtn.setImage("face_add".image, for: .normal)
         face_addBtn.addTarget(self, action: #selector(faceClick), for: .touchUpInside)
         contentView.addSubview(face_addBtn)
@@ -243,5 +251,37 @@ extension RFIDDetailVC {
     
     @objc private func faceClick() {
         navigationController?.pushViewController(RFFRVC(), animated: true)
+    }
+}
+
+extension RFIDDetailVC {
+    private func loadData() {
+        RapidApi.shared.getAuthOneData(para: ["putit": "putit", "melted": "melted"]).subscribe(onNext: { [weak self] json in
+            guard let model = RFAuthFRModel.deserialize(from: json.dictionary) else {
+                return
+            }
+            self?.render(model: model)
+            // todo
+        }, onError: { _ in
+            
+        }).disposed(by: bag)
+    }
+    
+    private func render(model: RFAuthFRModel) {
+        if model.trouble?.carefully?.mustn == 1 {
+            addBtn.setImage("id_add_1".image, for: .normal)
+            addBtn.isUserInteractionEnabled = false
+            
+            cardView.sd_setImage(with: URL(string: model.trouble?.carefully?.littleroom ?? ""), placeholderImage: "ID_bg1".image, context: nil)
+        }
+        if model.trouble?.tyou == 1 {
+            face_addBtn.setImage("face_add_1".image, for: .normal)
+            face_addBtn.isUserInteractionEnabled = false
+        }
+        if model.trouble?.littleroom.isEmpty == false {
+            face_verifyImgV.isHidden = false
+            face_recognitionLb.isHidden = true
+            face_recognitionImgV.sd_setImage(with: URL(string: model.trouble?.littleroom ?? ""), placeholderImage: "face_recognition".image, context: nil)
+        }
     }
 }
