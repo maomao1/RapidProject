@@ -165,7 +165,7 @@ static NSString * const SDDiskCacheExtendedAttributeName = @"com.hackemist.SDDis
     NSArray<NSString *> *resourceKeys = @[NSURLIsDirectoryKey, cacheContentDateKey, NSURLTotalFileAllocatedSizeKey];
     
     // This enumerator prefetches useful properties for our cache files.
-    NSDirectoryEnumerator<NSURL *> *fileEnumerator = [self.fileManager enumeratorAtURL:diskCacheURL
+    NSDirectoryEnumerator *fileEnumerator = [self.fileManager enumeratorAtURL:diskCacheURL
                                                includingPropertiesForKeys:resourceKeys
                                                                   options:NSDirectoryEnumerationSkipsHiddenFiles
                                                              errorHandler:NULL];
@@ -180,27 +180,25 @@ static NSString * const SDDiskCacheExtendedAttributeName = @"com.hackemist.SDDis
     //  2. Storing file attributes for the size-based cleanup pass.
     NSMutableArray<NSURL *> *urlsToDelete = [[NSMutableArray alloc] init];
     for (NSURL *fileURL in fileEnumerator) {
-        @autoreleasepool {
-            NSError *error;
-            NSDictionary<NSString *, id> *resourceValues = [fileURL resourceValuesForKeys:resourceKeys error:&error];
-            
-            // Skip directories and errors.
-            if (error || !resourceValues || [resourceValues[NSURLIsDirectoryKey] boolValue]) {
-                continue;
-            }
-            
-            // Remove files that are older than the expiration date;
-            NSDate *modifiedDate = resourceValues[cacheContentDateKey];
-            if (expirationDate && [[modifiedDate laterDate:expirationDate] isEqualToDate:expirationDate]) {
-                [urlsToDelete addObject:fileURL];
-                continue;
-            }
-            
-            // Store a reference to this file and account for its total size.
-            NSNumber *totalAllocatedSize = resourceValues[NSURLTotalFileAllocatedSizeKey];
-            currentCacheSize += totalAllocatedSize.unsignedIntegerValue;
-            cacheFiles[fileURL] = resourceValues;
+        NSError *error;
+        NSDictionary<NSString *, id> *resourceValues = [fileURL resourceValuesForKeys:resourceKeys error:&error];
+        
+        // Skip directories and errors.
+        if (error || !resourceValues || [resourceValues[NSURLIsDirectoryKey] boolValue]) {
+            continue;
         }
+        
+        // Remove files that are older than the expiration date;
+        NSDate *modifiedDate = resourceValues[cacheContentDateKey];
+        if (expirationDate && [[modifiedDate laterDate:expirationDate] isEqualToDate:expirationDate]) {
+            [urlsToDelete addObject:fileURL];
+            continue;
+        }
+        
+        // Store a reference to this file and account for its total size.
+        NSNumber *totalAllocatedSize = resourceValues[NSURLTotalFileAllocatedSizeKey];
+        currentCacheSize += totalAllocatedSize.unsignedIntegerValue;
+        cacheFiles[fileURL] = resourceValues;
     }
     
     for (NSURL *fileURL in urlsToDelete) {
@@ -242,37 +240,19 @@ static NSString * const SDDiskCacheExtendedAttributeName = @"com.hackemist.SDDis
 
 - (NSUInteger)totalSize {
     NSUInteger size = 0;
-
-    // Use URL-based enumerator instead of Path(NSString *)-based enumerator to reduce
-    // those objects(ex. NSPathStore2/_NSCFString/NSConcreteData) created during traversal.
-    // Even worse, those objects are added into AutoreleasePool, in background threads, 
-    // the time to release those objects is undifined(according to the usage of CPU)
-    // It will truely consumes a lot of VM, up to cause OOMs.
-    @autoreleasepool {
-        NSURL *pathURL = [NSURL fileURLWithPath:self.diskCachePath isDirectory:YES];
-        NSDirectoryEnumerator<NSURL *> *fileEnumerator = [self.fileManager enumeratorAtURL:pathURL
-                                                  includingPropertiesForKeys:@[NSURLFileSizeKey]
-                                                                     options:(NSDirectoryEnumerationOptions)0
-                                                                errorHandler:NULL];
-        
-        for (NSURL *fileURL in fileEnumerator) {
-            @autoreleasepool {
-                NSNumber *fileSize;
-                [fileURL getResourceValue:&fileSize forKey:NSURLFileSizeKey error:NULL];
-                size += fileSize.unsignedIntegerValue;
-            }
-        }
+    NSDirectoryEnumerator *fileEnumerator = [self.fileManager enumeratorAtPath:self.diskCachePath];
+    for (NSString *fileName in fileEnumerator) {
+        NSString *filePath = [self.diskCachePath stringByAppendingPathComponent:fileName];
+        NSDictionary<NSString *, id> *attrs = [self.fileManager attributesOfItemAtPath:filePath error:nil];
+        size += [attrs fileSize];
     }
     return size;
 }
 
 - (NSUInteger)totalCount {
     NSUInteger count = 0;
-    @autoreleasepool {
-        NSURL *diskCacheURL = [NSURL fileURLWithPath:self.diskCachePath isDirectory:YES];
-        NSDirectoryEnumerator<NSURL *> *fileEnumerator = [self.fileManager enumeratorAtURL:diskCacheURL includingPropertiesForKeys:@[] options:(NSDirectoryEnumerationOptions)0 errorHandler:nil];
-        count = fileEnumerator.allObjects.count;
-    }
+    NSDirectoryEnumerator *fileEnumerator = [self.fileManager enumeratorAtPath:self.diskCachePath];
+    count = fileEnumerator.allObjects.count;
     return count;
 }
 
@@ -315,21 +295,13 @@ static NSString * const SDDiskCacheExtendedAttributeName = @"com.hackemist.SDDis
         }
     } else {
         // New directory exist, merge the files
-        NSURL *srcURL = [NSURL fileURLWithPath:srcPath isDirectory:YES];
-        NSDirectoryEnumerator<NSURL *> *srcDirEnumerator = [self.fileManager enumeratorAtURL:srcURL
-                                                               includingPropertiesForKeys:@[]
-                                                                                  options:(NSDirectoryEnumerationOptions)0
-                                                                             errorHandler:NULL];
-        for (NSURL *url in srcDirEnumerator) {
-            @autoreleasepool {
-                NSString *dstFilePath = [dstPath stringByAppendingPathComponent:url.lastPathComponent];
-                NSURL *dstFileURL = [NSURL fileURLWithPath:dstFilePath isDirectory:NO];
-                [self.fileManager moveItemAtURL:url toURL:dstFileURL error:nil];
-            }
+        NSDirectoryEnumerator *dirEnumerator = [self.fileManager enumeratorAtPath:srcPath];
+        NSString *file;
+        while ((file = [dirEnumerator nextObject])) {
+            [self.fileManager moveItemAtPath:[srcPath stringByAppendingPathComponent:file] toPath:[dstPath stringByAppendingPathComponent:file] error:nil];
         }
-        
         // Remove the old path
-        [self.fileManager removeItemAtURL:srcURL error:nil];
+        [self.fileManager removeItemAtPath:srcPath error:nil];
     }
 }
 

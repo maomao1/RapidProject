@@ -9,6 +9,7 @@ target 'RapidFund' do
   pod 'RxDataSources'
   pod 'Alamofire', '~> 4.9.1'
   pod 'AlamofireImage'
+  pod 'SDWebImage'
   pod 'SwiftyJSON'
   pod 'SnapKit'
   pod 'RxKeyboard'

@@ -28,7 +28,7 @@ class HomeMoneyView: UIView {
             .withTextColor(.c_232323)
             .withTextAlignment(.center)
             .withNumberOfLines(0)
-            .withText("₱50,000")
+            .withText("")
         return label
     }()
     
@@ -37,7 +37,7 @@ class HomeMoneyView: UIView {
             .withFont(.f_lightSys10)
             .withTextColor(.c_999999)
             .withTextAlignment(.right)
-            .withText("50%")
+            .withText("100%")
 
         return label
     }()
@@ -95,7 +95,7 @@ class HomeMoneyView: UIView {
         progressView.snp.makeConstraints { make in
             make.left.top.bottom.equalTo(progressBgView)
 //            self.widthConstraint = 
-            make.width.equalTo(progressBgView).multipliedBy(0.5)
+            make.width.equalTo(progressBgView).multipliedBy(1.0)
             make.bottom.equalTo(-20.rf)
 //                .constraint
         }
@@ -104,9 +104,34 @@ class HomeMoneyView: UIView {
             make.centerY.equalTo(progressBgView)
             make.right.equalTo(progressBgView.snp.left).offset(-2.rc)
         }
-//        progressView.snp.updateConstraints { make in
-//            make.width.equalTo(progressBgView).multipliedBy(0.5)
-//        }
+        
+    }
+    
+    func updateContent(model: RPFHomeHotModel){
+//        let progress = CGFloat(model.sports)
+        self.titleLabel.text = model.grown
+        self.moneyLabel.text = model.aback
+        self.moneyLabel.attributedText = changeTextFont(searchText: "₱", name: model.aback)
+
+    }
+    func changeTextFont(searchText: String, name: String) -> NSMutableAttributedString {
+        var ranges = [NSRange]()
+        name.enumerated().forEach { (index, char) in
+            searchText.enumerated().forEach({ (searchIndex, searchChar) in
+                if char == searchChar {
+                    let range = NSRange(location: index, length: 1)
+                    ranges.append(range)
+                }
+            })
+        }
+        
+        let nameAtt = NSMutableAttributedString(string: name)
+        if ranges.count > 0 {
+            ranges.forEach { (range) in
+                nameAtt.addAttributes([.font : UIFont.f_lightSys16], range: range)
+            }
+        }
+        return nameAtt
     }
     
     static func height() -> CGFloat {
@@ -123,7 +148,7 @@ class HomeMoneyRateView: UIView {
             .withFont(.f_lightSys11)
             .withTextColor(.c_232323)
             .withTextAlignment(.left)
-            .withText("eweewewlsljoi")
+            .withText("")
 //            .withNumberOfLines(0)
         return label
     }()
@@ -133,7 +158,7 @@ class HomeMoneyRateView: UIView {
             .withFont(.f_lightSys11)
             .withTextColor(.c_232323)
             .withTextAlignment(.left)
-            .withText("eweewewlsljoi")
+            .withText("")
 //            .withNumberOfLines(0)
         return label
     }()
@@ -143,7 +168,7 @@ class HomeMoneyRateView: UIView {
             .withFont(.f_lightSys11)
             .withTextColor(.c_232323)
             .withTextAlignment(.right)
-            .withText("0.000")
+            .withText("")
 //            .withNumberOfLines(0)
         return label
     }()
@@ -153,7 +178,7 @@ class HomeMoneyRateView: UIView {
             .withFont(.f_lightSys11)
             .withTextColor(.c_232323)
             .withTextAlignment(.right)
-            .withText("0.000")
+            .withText("")
 //            .withBackgroundColor(.cle)
 //            .withNumberOfLines(0)
         return label
@@ -189,14 +214,22 @@ class HomeMoneyRateView: UIView {
         
         rateLabel.snp.makeConstraints { make in
             make.left.equalTo(daysLabel)
-            make.top.equalTo(daysLabel.snp.bottom).offset(15.rf)
-            make.bottom.equalTo(-9.5.rf)
+            make.top.equalTo(daysLabel.snp.bottom).offset(10.rf)
+//            make.bottom.equalTo(-9.5.rf)
         }
         
         rateValueLabel.snp.makeConstraints { make in
             make.centerY.equalTo(rateLabel)
             make.right.equalTo(-14.rf)
         }
+    }
+    
+    func updateContent(model: RPFHomeHotModel){
+        self.daysLabel.text = model.begged
+        self.rateLabel.text = model.beable
+        self.dayValueLabel.text = model.promiseto
+        self.rateValueLabel.text = model.sports
+
     }
     
     static func height() -> CGFloat {

@@ -26,10 +26,10 @@ extension JSON {
     }
     
     var needsLogin: Bool {
-        return YaloCode == 1100014
+        return YaloCode == -2
     }
     var tokenUnused: Bool {
-        return YaloCode == 1100015
+        return YaloCode == -2
     }
     
     var resultData: JSON {

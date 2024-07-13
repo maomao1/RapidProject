@@ -3,4 +3,102 @@
    uuid = "21AD7913-6950-494E-AA14-542B48A736A1"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8418C4DD-0566-4EA1-8BC8-0790A6AF59AD"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RapidFund/Main/Home/ViewModel/RapidHomeViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
+            landmarkName = "getData()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C9BC6A83-87E9-4591-88A5-B25454EB79BA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RapidFund/Main/Home/Model/RapidHomeModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "init(json:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "326B8D77-FFA4-4F78-BF2D-AE3867D31AD7"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RapidFund/Main/Home/Model/RapidHomeModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "init(json:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4C3073CD-8CFB-48ED-98AE-F61E7D3AF790"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RapidFund/Main/Home/Model/RapidHomeModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "init(json:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4C3073CD-8CFB-48ED-98AE-F61E7D3AF790 - 9033cfb48b723651"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RapidFund.RapidHomeModel.init(json: SwiftyJSON.JSON) -&gt; RapidFund.RapidHomeModel"
+                  moduleName = "RapidFund"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maomao/Desktop/%E8%8F%B2%E5%BE%8B%E5%AE%BERapid/RapidFund/RapidFund/Main/Home/Model/RapidHomeModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "2507">
+               </Location>
+               <Location
+                  uuid = "4C3073CD-8CFB-48ED-98AE-F61E7D3AF790 - 64700a6a2d12c776"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #4 (SwiftyJSON.JSON) -&gt; RapidFund.RPFHomeReminder in RapidFund.RapidHomeModel.init(json: SwiftyJSON.JSON) -&gt; RapidFund.RapidHomeModel"
+                  moduleName = "RapidFund"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/maomao/Desktop/%E8%8F%B2%E5%BE%8B%E5%AE%BERapid/RapidFund/RapidFund/Main/Home/Model/RapidHomeModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "65">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

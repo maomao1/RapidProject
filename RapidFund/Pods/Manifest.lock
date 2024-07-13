@@ -19,6 +19,9 @@ PODS:
   - RxRelay (6.6.0):
     - RxSwift (= 6.6.0)
   - RxSwift (6.6.0)
+  - SDWebImage (5.18.3):
+    - SDWebImage/Core (= 5.18.3)
+  - SDWebImage/Core (5.18.3)
   - SnapKit (5.6.0)
   - SwiftyJSON (5.0.1)
   - XYZAlert (1.1.7)
@@ -36,6 +39,7 @@ DEPENDENCIES:
   - RxDataSources
   - RxKeyboard
   - RxSwift
+  - SDWebImage
   - SnapKit
   - SwiftyJSON
   - XYZAlert (from `https://github.com/DFTT/XYZAlertView.git`, branch `main`)
@@ -54,6 +58,7 @@ SPEC REPOS:
     - RxKeyboard
     - RxRelay
     - RxSwift
+    - SDWebImage
     - SnapKit
     - SwiftyJSON
 
@@ -85,11 +90,12 @@ SPEC CHECKSUMS:
   RxKeyboard: 4f5863f43b4ff0cbb2a20b94688d6b80c8a43c14
   RxRelay: 45eaa5db8ee4fb50e5ebd57deec0159e97fa51e6
   RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
+  SDWebImage: 96e0c18ef14010b7485210e92fac888587ebb958
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   XYZAlert: 4240e0c7abf859dcd3d7ee534a5595ba6b58f9b1
   XYZKit: 4b36427ed270de9db9ae7b6790c2365d6811c196
 
-PODFILE CHECKSUM: 3c22092a481d278d3d33afb784c0e0ab748b7695
+PODFILE CHECKSUM: b1d187ac7dcfb68f24389e323d87f82d723c085c
 
-COCOAPODS: 1.15.2
+COCOAPODS: 1.10.2

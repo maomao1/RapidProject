@@ -21,6 +21,7 @@ class RapidHomeViewModel {
     var newMessage: Driver<String> {
         return message.filter { !$0.isEmpty }.asDriver(onErrorJustReturn: "")
     }
+    let homeModel = BehaviorRelay<RapidHomeModel?>(value: nil)
 
     
     func getData(){
@@ -31,7 +32,8 @@ class RapidHomeViewModel {
         RapidApi.shared.getHomeData(para: para)
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}
-//                self.loginSuccessAction.onNext(Void())
+                self.homeModel.accept(RapidHomeModel(json: json["trouble"]))
+
             },
             onError: { [weak self] error in
                 guard let `self` = self else {return}

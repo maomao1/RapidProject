@@ -251,7 +251,38 @@ extension RapidHomeViewController {
             }
         }
         self.unLoginContainer.isHidden = true
-//        self.loginContainer.isHidden = true
+        self.loginContainer.isHidden = true
+    }
+    
+    func updateUIData(){
+        guard let model = self.viewModel.homeModel.value else {
+            return
+        }
+        
+        if  model.products?.count ?? 0 > 0 {
+            self.unLoginContainer.isHidden = true
+            self.loginContainer.isHidden = false
+        }else{
+            self.unLoginContainer.isHidden = false
+            self.loginContainer.isHidden = true
+        }
+//        guard let productList = model.products 
+//        if productList.count > 0 {
+//            self.unLoginContainer.isHidden = true
+//            self.loginContainer.isHidden = false
+//        }else{
+//            self.unLoginContainer.isHidden = false
+//            self.loginContainer.isHidden = true
+//        }
+        self.setNavImageTitleWhite(isWhite: model.products?.count ?? 0 > 0)
+        guard let hotModels = model.hotmeals, hotModels.count > 0, let hotModel = hotModels.first else {
+            return
+        }
+        
+        self.rapidNameLabel.text = hotModel.pursed
+        self.applyTitle.text = hotModel.mymorgan
+        self.homeMoneyView.updateContent(model: hotModel)
+        self.homeMoneyRateView.updateContent(model: hotModel)
     }
     
     func loginSuccessEvent() {
@@ -272,6 +303,13 @@ extension RapidHomeViewController {
                 self.loginSuccessEvent()
             })
             .disposed(by: bag)
+        
+        viewModel.homeModel.skip(1)
+            .subscribe(onNext: { [weak self] (_) in
+                guard let `self` = self else { return }
+                self.updateUIData()
+            })
+            .disposed(by: bag)
     }
     
     
@@ -280,7 +318,10 @@ extension RapidHomeViewController {
 extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 10
+        guard let model = viewModel.homeModel.value else {
+            return 0
+        }
+        return model.products?.count ?? 0
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1

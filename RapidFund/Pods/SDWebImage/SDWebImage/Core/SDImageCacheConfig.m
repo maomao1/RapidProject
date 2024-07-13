@@ -36,11 +36,7 @@ static const NSInteger kDefaultCacheMaxDiskAge = 60 * 60 * 24 * 7; // 1 week
         _maxDiskSize = 0;
         _diskCacheExpireType = SDImageCacheConfigExpireTypeModificationDate;
         _fileManager = nil;
-        if (@available(iOS 10.0, tvOS 10.0, macOS 10.12, watchOS 3.0, *)) {
-            _ioQueueAttributes = DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL; // DISPATCH_AUTORELEASE_FREQUENCY_WORK_ITEM
-        } else {
-            _ioQueueAttributes = DISPATCH_QUEUE_SERIAL; // NULL
-        }
+        _ioQueueAttributes = DISPATCH_QUEUE_SERIAL; // NULL
         _memoryCacheClass = [SDMemoryCache class];
         _diskCacheClass = [SDDiskCache class];
     }

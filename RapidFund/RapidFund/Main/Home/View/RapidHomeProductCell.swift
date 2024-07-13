@@ -6,6 +6,9 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+import SDWebImage
 
 class RapidHomeProductCell: UITableViewCell {
     
@@ -15,6 +18,7 @@ class RapidHomeProductCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .clear
+        self.selectionStyle = .none
         setUpViews()
     }
     
@@ -83,6 +87,17 @@ class RapidHomeProductCell: UITableViewCell {
             make.top.equalTo(containerView.snp.top).offset(-7.rf)
             
         }
+        
+    }
+    
+    func updateCellContent(model: RPFHomeProduct){
+        self.productImage.sd_setImage(with: model.productLogo.url, placeholderImage: nil, options: .allowInvalidSSLCertificates)
+        self.nameLabel.text = model.productName
+        self.contentLabel.text = model.productDesc
+        self.applyBtn.setTitle(model.buttonText, for: .normal)
+        self.applyBtn.setTitle(model.buttonText, for: .selected)
+//        self.applyBtn.backgroundColor = 
+//        self.soundLabel.text = model.
         
     }
     
