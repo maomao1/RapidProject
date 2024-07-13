@@ -1,3 +1,4 @@
+source ‘https://github.com/CocoaPods/Specs.git‘
 # Uncomment the next line to define a global platform for your project
  platform :ios, '12.0'
 
@@ -16,12 +17,17 @@ target 'RapidFund' do
   pod 'MJRefresh'
   pod 'MBProgressHUD'
   pod 'IQKeyboardManagerSwift'
+  pod 'HandyJSON'
+  pod 'SDWebImage'
   pod 'XYZKit', :git => 'https://github.com/DFTT/XYZKit.git', :branch => 'master'
 #  pod 'XYZKit/XYZEmptyBoard', :git => 'https://github.com/DFTT/XYZKit.git', :branch => 'master'
 #  pod 'XYZKit/XYZFloatDragView', :git => 'https://github.com/DFTT/XYZKit.git', :branch => 'master'
 #  pod 'XYZKit/XYZBadgeView', :git => 'https://github.com/DFTT/XYZKit.git', :branch => 'master'
   pod 'XYZAlert', :git => 'https://github.com/DFTT/XYZAlertView.git', :branch => 'main'
 #  pod 'XYZSheetView', :git => 'https://github.com/DFTT/XYZSheetView.git', :branch => 'main'
+  
+  pod 'JXPagingView'
+  pod 'JXSegmentedView'
   
   # Pods for RapidFund
 

@@ -278,8 +278,8 @@
     return indicator;
 }
 
-#if SD_UIKIT
-+ (SDWebImageProgressIndicator *)barIndicator API_UNAVAILABLE(tvos) {
+#if SD_IOS
++ (SDWebImageProgressIndicator *)barIndicator {
     SDWebImageProgressIndicator *indicator = [SDWebImageProgressIndicator new];
     indicator.indicatorView.progressViewStyle = UIProgressViewStyleBar;
     return indicator;

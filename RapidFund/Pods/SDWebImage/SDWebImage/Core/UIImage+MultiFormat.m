@@ -9,7 +9,6 @@
 #import "UIImage+MultiFormat.h"
 #import "SDImageCodersManager.h"
 #import "SDAnimatedImageRep.h"
-#import "UIImage+Metadata.h"
 
 @implementation UIImage (MultiFormat)
 
@@ -42,7 +41,7 @@
         }
     }
 #endif
-    return [self sd_imageDataAsFormat:self.sd_imageFormat];
+    return [self sd_imageDataAsFormat:SDImageFormatUndefined];
 }
 
 - (nullable NSData *)sd_imageDataAsFormat:(SDImageFormat)imageFormat {

@@ -5,18 +5,16 @@
 //  Created by 毛亚恒 on 2024/7/8.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
-@_exported import XYZKit
 @_exported import SnapKit
-
-
+@_exported import XYZKit
 
 class RapidBaseViewController: UIViewController {
-
     // MARK: - Properties
+
     let bag = DisposeBag()
     
     private(set) lazy var customNavView: UIView = {
@@ -62,17 +60,18 @@ class RapidBaseViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: false)
         // Do any additional setup after loading the view.
     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        navigationController?.setNavigationBarHidden(false, animated: false)
 //        setUpNoNetworkView()
     }
     
-    func setNavImageTitleWhite(isWhite: Bool){
-        backBtn.setBackgroundImage( isWhite ? .homeNavWhiteBack : .homeNavBlackBack, for: .normal)
-        backBtn.setBackgroundImage( isWhite ? .homeNavWhiteBack : .homeNavBlackBack, for: .selected)
-        rightBtn.setBackgroundImage(isWhite ? .homeNavWhiteRight: .homeNavBlackRight, for: .normal)
-        rightBtn.setBackgroundImage(isWhite ? .homeNavWhiteRight: .homeNavBlackRight, for: .selected)
+    func setNavImageTitleWhite(isWhite: Bool) {
+        backBtn.setBackgroundImage(isWhite ? .homeNavWhiteBack : .homeNavBlackBack, for: .normal)
+        backBtn.setBackgroundImage(isWhite ? .homeNavWhiteBack : .homeNavBlackBack, for: .selected)
+        rightBtn.setBackgroundImage(isWhite ? .homeNavWhiteRight : .homeNavBlackRight, for: .normal)
+        rightBtn.setBackgroundImage(isWhite ? .homeNavWhiteRight : .homeNavBlackRight, for: .selected)
         titleNav.textColor = isWhite ? .c_FFFFFF : .c_111111
         titleNav.font = isWhite ? .f_lightSys24 : .f_lightSys32
     }
@@ -81,7 +80,7 @@ class RapidBaseViewController: UIViewController {
         self.customNavView.isHidden = true
     }
     
-    func setBackBtnHidden(){
+    func setBackBtnHidden() {
         backBtn.snp.remakeConstraints { make in
             make.left.equalTo(customNavView.snp.left).offset(RapidMetrics.LeftRightMargin)
             make.centerY.equalTo(customNavView)
@@ -104,7 +103,7 @@ class RapidBaseViewController: UIViewController {
         customNavView.snp.makeConstraints { make in
             if #available(iOS 11.0, *) {
                 make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(11.5.rf)
-            } else{
+            } else {
                 make.top.equalTo(11.5.rf)
             }
             make.left.right.equalToSuperview()
@@ -128,51 +127,49 @@ class RapidBaseViewController: UIViewController {
             make.centerY.equalTo(customNavView)
             make.right.equalToSuperview()
         }
-        
     }
     
-    
-    func setBottomView(){
-        
+    func setBottomView() {
         safeAreaBottomView.backgroundColor = .white
         view.addSubview(safeAreaBottomView)
-        safeAreaBottomView.snp.makeConstraints { (make) in
+        safeAreaBottomView.snp.makeConstraints { make in
             make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(IPHONE_X ? 34 : 0)
         }
-        
-        if let vcCount = navigationController?.viewControllers.count,
-           vcCount > 1 {
+        if let navigationController = navigationController {
+            if navigationController.viewControllers.count > 1
+            {
+                safeAreaBottomView.isHidden = true
+            } else {
+                safeAreaBottomView.isHidden = false
+            }
+        } else {
             safeAreaBottomView.isHidden = true
-        }else{
-            safeAreaBottomView.isHidden = false
-
         }
     }
     
-    //设置LeftBarButtonItem 
+    // 设置LeftBarButtonItem
 
-    func setLeftBarButtonItem(image: UIImage = (.homeNavBlackBack)) {
+    func setLeftBarButtonItem(image: UIImage = .homeNavBlackBack) {
         let backButton = UIBarButtonItem(image: image.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(back))
         backButton.width = 50
         navigationItem.leftBarButtonItem = backButton
     }
     
-    func setRightBarButtonItem(image: UIImage = (.homeNavBlackRight)) {
+    func setRightBarButtonItem(image: UIImage = .homeNavBlackRight) {
 //        let rightButton = UIBarButtonItem(title: title, style: .plain, target: self, action: #selector(rightBarEvent))
 //        navigationItem.rightBarButtonItem = rightButton
         let rightButton = UIBarButtonItem(image: image.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(rightBarEvent))
         rightButton.width = 50
         navigationItem.rightBarButtonItem = rightButton
-        
     }
+
     func setBaseUpRx() {
-        
         backBtn.rx
             .tap
             .throttle(.seconds_1, scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] (_) in
-                guard let `self` = self else {return}
+            .subscribe(onNext: { [weak self] _ in
+                guard let `self` = self else { return }
                 self.back()
             })
             .disposed(by: bag)
@@ -180,48 +177,40 @@ class RapidBaseViewController: UIViewController {
         rightBtn.rx
             .tap
             .throttle(.seconds_1, scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] (_) in
-                guard let `self` = self else {return}
+            .subscribe(onNext: { [weak self] _ in
+                guard let `self` = self else { return }
                 self.rightBarEvent()
             })
             .disposed(by: bag)
         
         NotificationCenter.default
             .rx.notification(.RapidLoginSuccess)
-            .subscribe(onNext: { [weak self] (notification) in
-                guard let `self` = self else {return}
+            .subscribe(onNext: { [weak self] _ in
+                guard let `self` = self else { return }
                 self.loginSuccessAction()
             })
             .disposed(by: bag)
     }
     
     //
-    func loginSuccessAction(){
-        
-    }
+    func loginSuccessAction() {}
     
-    @objc func rightBarEvent(){
-        
-    }
-    //返回
+    @objc func rightBarEvent() {}
+
+    // 返回
     @objc func back() {
         if let vcCount = navigationController?.viewControllers.count,
-            vcCount > 1 {
+           vcCount > 1
+        {
             navigationController?.popViewController(animated: true)
         } else {
-            if (navigationController != nil) {
-                navigationController?.dismiss(animated: true, completion: {
-                    
-                })
+            if navigationController != nil {
+                navigationController?.dismiss(animated: true, completion: {})
             } else {
-                dismiss(animated: true) {
-                    
-                }
+                dismiss(animated: true) {}
             }
         }
     }
-    
-
     
     func adjustNavTitleCenter() {
         titleNav.snp.remakeConstraints { make in

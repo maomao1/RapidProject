@@ -20,5 +20,8 @@ struct RapidApiConstantUrl {
     //MARK: - mine
     static let getMineData  = "/rfapi/dream/shall/smiled"
     
+    //获取用户身份证/活体信息（第一项）
+    static let getAuthInfo1Data  = "/rfapi/handkerchief/quite/against"
+    
 
 }

@@ -109,10 +109,8 @@
 
 /// default-style progress indicator
 @property (nonatomic, class, nonnull, readonly) SDWebImageProgressIndicator *defaultIndicator;
-#if SD_UIKIT
 /// bar-style progress indicator
-@property (nonatomic, class, nonnull, readonly) SDWebImageProgressIndicator *barIndicator API_UNAVAILABLE(tvos);
-#endif
+@property (nonatomic, class, nonnull, readonly) SDWebImageProgressIndicator *barIndicator API_UNAVAILABLE(macos, tvos);
 
 @end
 

@@ -68,4 +68,15 @@ extension RapidApi {
             encoding: URLEncoding.default,
             completionHandler: { $0 })
     }
+    
+    func getAuthOneData(para: Parameters) -> Observable<JSON> {
+        return request(
+            path: BaseURl + RapidApiConstantUrl.getAuthInfo1Data,
+            parameters: para,
+            method: .get,
+            encoding: URLEncoding.default,
+            completionHandler: { $0 })
+    }
+    
+    
 }

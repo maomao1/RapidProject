@@ -63,7 +63,7 @@ class RapidApi: SessionManager {
                         let json = JSON(data)
                         debugPrint(json)
                         if json.isSuccessful {
-                            observer.onNext(completionHandler(json))
+                            observer.onNext(completionHandler(json.resultData))
                             observer.onCompleted()
                         }
                         else {
