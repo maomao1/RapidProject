@@ -8,6 +8,7 @@
 @_exported import SDWebImage
 @_exported import SnapKit
 import UIKit
+import RxSwift
 
 class RFIDDetailVC: RapidBaseViewController {
     override func viewDidLoad() {
@@ -284,4 +285,38 @@ extension RFIDDetailVC {
             face_recognitionImgV.sd_setImage(with: URL(string: model.trouble?.littleroom ?? ""), placeholderImage: "face_recognition".image, context: nil)
         }
     }
+    
+    private func uploadIDCard(data:Data, dismay:Int) {
+        let params = ["quiteexpected":"1",
+                      "putit":"",
+                      "dismay":"",
+                      "woods":"",
+                      "elf":"",
+                      "thanksmost":"",
+                      "pixie":"",
+                      "darkalmost":""]
+        /*
+         {
+         "quiteexpected": 1, // 图片来源:1相册 2:拍照上传
+         "putit": 1, // 产品id
+         "dismay": 10, //10:人像,11身份证正面 12:身份证反面
+         "woods": "xxxxxxx", // 本地上传图片地址
+         "elf": "xxxxxxxxx", // 活体 sdk 获取id
+         "thanksmost": "xxxxxxxxx", // 混淆字段
+         "pixie": "3", // 活体类型advanceLog会下发，原样给过来就行; 1.自拍 2.望为 3.adv
+         "darkalmost": "" //卡类型 UMID/SSS/TIN/PASSPORT/DRIVINGLICENSE/PRC/POSTAL/Voter/PhilHealth
+         }
+         */
+        RapidApi.shared.getIDUploadData(para: params).subscribe(onNext: { obj in
+            guard let json = obj.dictionary?["trouble"] as? [String:Any], let model = RFUploadResultModel.deserialize(from: json) else {
+                return
+            }
+            model.type = dismay
+            
+        }, onError: { err in
+            
+        }).disposed(by: bag)
+        
+    }
+    
 }
