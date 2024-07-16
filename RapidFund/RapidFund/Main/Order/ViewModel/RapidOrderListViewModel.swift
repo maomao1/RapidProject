@@ -36,8 +36,8 @@ class RapidOrderListViewModel {
     
     func getData() {
         var para = [String : Any]()
-//        para["gambolled"] = self.type.rawValue
-        para["gambolled"] = "4"
+        para["gambolled"] = self.type.rawValue
+//        para["gambolled"] = "4"
         
         RapidApi.shared.getOrderData(para: para)
             .subscribe(onNext: { [weak self] json in
