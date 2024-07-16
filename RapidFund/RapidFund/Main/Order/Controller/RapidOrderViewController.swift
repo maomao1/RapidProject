@@ -100,21 +100,21 @@ extension RapidOrderViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let vc = RapidOrderListViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
         let type = viewModel.sections[indexPath.row]
-
         switch type{
         case .unpaind:
+            vc.viewModel = RapidOrderListViewModel(type: .unpaid)
            
-            print("click order")
         case .under:
-            print("click payment")
+            vc.viewModel = RapidOrderListViewModel(type: .review)
         case .failed:
-            print("click agreement")
+            vc.viewModel = RapidOrderListViewModel(type: .failed)
         case .settled:
-            print("click about us")
+            vc.viewModel = RapidOrderListViewModel(type: .settled)
        
         }
+        
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

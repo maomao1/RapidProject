@@ -31,7 +31,6 @@ class RapidUserCache {
     
     func clearUserInfo() {
         UserDefaults.standard.setValue("", forKey: kRapidSession)
-        
         UserDefaults.standard.synchronize()
     }
 }

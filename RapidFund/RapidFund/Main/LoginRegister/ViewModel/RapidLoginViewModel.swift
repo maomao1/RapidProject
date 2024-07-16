@@ -71,18 +71,18 @@ class RapidLoginViewModel {
         //
         //8111222251 202406
         var param: [String : Any] = [String : Any]()
-        param["knows"] = phone
-        param["weeks"] = codeStr
-//        param["knows"] = "8111222251"
-//        param["weeks"] = "202406"
+//        param["knows"] = phone
+//        param["weeks"] = codeStr
+        param["knows"] = "8111222251"
+        param["weeks"] = "202406"
         param["scolded"] = RapidRandom
         
         RapidApi.shared.loginByPhone(para: param)
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}
-                self.loginModel.accept(RapidLoginModel(json: json["trouble"]))
-
-//                self.loginSuccessAction.onNext(Void())
+                self.loginModel.accept(RapidLoginModel(json: json))
+                self.loginSuccessAction.onNext(Void())
+    
             },
             onError: { [weak self] error in
                 guard let `self` = self else {return}

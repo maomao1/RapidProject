@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class RapidOrderListViewController: RapidBaseViewController {
     
@@ -13,7 +14,7 @@ class RapidOrderListViewController: RapidBaseViewController {
         static let cellId = "RapidOrderListCellIdentifier"
     }
     
-    var viewModel: RapidOrderListViewModel = RapidOrderListViewModel()
+    var viewModel: RapidOrderListViewModel!
 
     let backgroundImageView = UIImageView(image: .orderFullBg)
     let shadowImageView = UIImageView(image: .orderListShadowBg)
@@ -38,6 +39,8 @@ class RapidOrderListViewController: RapidBaseViewController {
         super.viewDidLoad()
         setNavImageTitleWhite(isWhite: true)
         setupViews()
+        requestData()
+        setUpRx()
         // Do any additional setup after loading the view.
     }
 
@@ -73,12 +76,34 @@ extension RapidOrderListViewController {
 
         }
     }
+    
+    func requestData(){
+        viewModel.getData()
+    }
+    
+    func setUpRx() {
+     
+        
+        viewModel.orderModels.skip(1)
+            .subscribe(onNext: { [weak self] (_) in
+                guard let `self` = self else { return }
+                self.tableView.reloadData()
+            })
+            .disposed(by: bag)
+        
+        viewModel.newMessage
+            .drive(onNext: { message in
+                MBProgressHUD.showMessage(message, toview: nil, afterDelay: 3)
+            })
+            .disposed(by: bag)
+    }
+    
 }
 
 extension RapidOrderListViewController: UITableViewDelegate, UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 10
+        return viewModel.orderModels.value.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -86,7 +111,12 @@ extension RapidOrderListViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellID.cellId) as! RapidOrderListCell
-        cell.setContentCell()
+        let models =  viewModel.orderModels.value
+        guard  models.count > 0  else {
+            return cell
+        }
+        
+        cell.setContentCell(model: models[indexPath.section])
         return cell
     }
     

@@ -143,8 +143,7 @@ extension RapidMineViewController: UITableViewDelegate, UITableViewDataSource{
 
         switch type{
         case .order:
-            let vc = RFPInVC(route: .personal_info)
-            self.navigationController?.pushViewController(vc, animated: true)
+            self.tabBarController?.selectedIndex = 1
             print("click order")
         case .payment:
             print("click payment")

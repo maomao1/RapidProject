@@ -80,3 +80,15 @@ extension RapidApi {
     
     
 }
+
+extension RapidApi {
+    //order
+    func getOrderData(para: Parameters) -> Observable<JSON> {
+        return request(
+            path: BaseURl + RapidApiConstantUrl.getOrderListData,
+            parameters: para,
+            method: .post,
+            encoding: URLEncoding.default,
+            completionHandler: { $0 })
+    }
+}

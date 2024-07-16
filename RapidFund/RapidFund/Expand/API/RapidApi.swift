@@ -24,11 +24,11 @@ class RapidApi: SessionManager {
 //        configuration.httpAdditionalHeaders?["device_type"] = ModelName
 //        configuration.httpAdditionalHeaders?["system_version"] = SystemVersion
 //        configuration.httpAdditionalHeaders?["device_system"] = UIDevice.current.systemName
-//        let serverTrustPolicies: [String : ServerTrustPolicy] = [
-//            "172.16.0.158": .disableEvaluation,
+        let serverTrustPolicies: [String : ServerTrustPolicy] = [
+            "8.212.152.227": .disableEvaluation,
 //            "172.16.0.159": .disableEvaluation,
-//            "loctestdtx.edocyun.com.cn": .disableEvaluation]
-        let serverTrustPolicies: [String : ServerTrustPolicy] = [String : ServerTrustPolicy]()
+            "loctestdtx.edocyun.com.cn": .disableEvaluation]
+//        let serverTrustPolicies: [String : ServerTrustPolicy] = [String : ServerTrustPolicy]()
         super.init(configuration: configuration, serverTrustPolicyManager: ServerTrustPolicyManager(policies: serverTrustPolicies))
     }
     
@@ -41,7 +41,7 @@ class RapidApi: SessionManager {
                     method: HTTPMethod = .post,
                     encoding: ParameterEncoding = JSONEncoding.default,
                     completionHandler: @escaping ((JSON) -> T)) -> Observable<T> {
-        var fullPath = path + RapidUrlParam
+        var fullPath = path + self.getParaUrl()
         debugPrint("fullpath====\(fullPath)")
         debugPrint(parameters ?? [:])
 
@@ -91,5 +91,22 @@ class RapidApi: SessionManager {
                 dataRequest.cancel()
             }
         })
+    }
+    
+    func getParaUrl()-> String {
+        var para: [String : Any] = [String : Any]()
+        para["bittengeorge"]     = OsPlatform
+        para["wobblyagain"]      = AppVersion
+        para["sick"]             = ModelName
+        para["wall"]             = DeviceID
+        para["leaning"]          = RapidSystemVersion
+        para["graze"]            = AppMarket
+        para["muchmore"]         = RapidSession
+        para["teeth"]            = RapidSingleUUID
+        para["boyfine"]          = RapidRandom
+        print("=====================")
+        print(RapidSession)
+        print("=====================")
+        return para.compentUrl()
     }
 }

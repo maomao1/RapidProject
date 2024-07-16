@@ -17,11 +17,6 @@
 		02C3BAEF2C3D46A7001B4107 /* RFFlowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAEE2C3D46A7001B4107 /* RFFlowItem.swift */; };
 		02C3BAF12C3E2148001B4107 /* RFIDDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAF02C3E2148001B4107 /* RFIDDetailVC.swift */; };
 		02C3BAF32C3E62E5001B4107 /* RFPRCIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAF22C3E62E5001B4107 /* RFPRCIDView.swift */; };
-		2E3D98952C3FF3DC00C49298 /* RapidOrderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3D98942C3FF3DC00C49298 /* RapidOrderListCell.swift */; };
-		2E3D98972C40175500C49298 /* RPFAboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3D98962C40175500C49298 /* RPFAboutUsViewController.swift */; };
-		2E3D98992C40177500C49298 /* RPFAboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3D98982C40177500C49298 /* RPFAboutCell.swift */; };
-		2E3D989B2C40178D00C49298 /* RPFAboutUsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3D989A2C40178D00C49298 /* RPFAboutUsViewModel.swift */; };
-		2E3D989D2C405C4500C49298 /* RapidHomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3D989C2C405C4500C49298 /* RapidHomeModel.swift */; };
 		02F57BEA2C3FC05B0049D21C /* RFIDVerifyAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F57BE92C3FC05B0049D21C /* RFIDVerifyAlert.swift */; };
 		02F57BEC2C3FD4F40049D21C /* RFDateSelAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F57BEB2C3FD4F40049D21C /* RFDateSelAlert.swift */; };
 		02F57BEE2C3FE6AE0049D21C /* RFAddressAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F57BED2C3FE6AE0049D21C /* RFAddressAlert.swift */; };
@@ -32,6 +27,14 @@
 		02F57BF82C4112680049D21C /* RFNextBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F57BF72C4112680049D21C /* RFNextBtn.swift */; };
 		02F57BFA2C4115500049D21C /* RFBankMgrAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F57BF92C4115500049D21C /* RFBankMgrAlert.swift */; };
 		02F57BFC2C411E460049D21C /* JXPageAss.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F57BFB2C411E460049D21C /* JXPageAss.swift */; };
+		2E2779CE2C451495007B4E74 /* RPFMineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2779CD2C451495007B4E74 /* RPFMineModel.swift */; };
+		2E2779D12C451DD6007B4E74 /* RPFReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2779D02C451DD6007B4E74 /* RPFReportManager.swift */; };
+		2E2779D32C463658007B4E74 /* RPFOrderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E2779D22C463658007B4E74 /* RPFOrderModel.swift */; };
+		2E3D98952C3FF3DC00C49298 /* RapidOrderListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3D98942C3FF3DC00C49298 /* RapidOrderListCell.swift */; };
+		2E3D98972C40175500C49298 /* RPFAboutUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3D98962C40175500C49298 /* RPFAboutUsViewController.swift */; };
+		2E3D98992C40177500C49298 /* RPFAboutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3D98982C40177500C49298 /* RPFAboutCell.swift */; };
+		2E3D989B2C40178D00C49298 /* RPFAboutUsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3D989A2C40178D00C49298 /* RPFAboutUsViewModel.swift */; };
+		2E3D989D2C405C4500C49298 /* RapidHomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E3D989C2C405C4500C49298 /* RapidHomeModel.swift */; };
 		2E4D39042C31326500C2271A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D39032C31326500C2271A /* AppDelegate.swift */; };
 		2E4D39082C31326500C2271A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E4D39072C31326500C2271A /* ViewController.swift */; };
 		2E4D390B2C31326500C2271A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E4D39092C31326500C2271A /* Main.storyboard */; };
@@ -125,6 +128,9 @@
 		02F57BFB2C411E460049D21C /* JXPageAss.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JXPageAss.swift; sourceTree = "<group>"; };
 		19F635D9772749B286942930 /* Pods-RapidFundTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFundTests.release.xcconfig"; path = "Target Support Files/Pods-RapidFundTests/Pods-RapidFundTests.release.xcconfig"; sourceTree = "<group>"; };
 		28F36B4CADBD36A283814F95 /* Pods-RapidFund-RapidFundUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RapidFund-RapidFundUITests.release.xcconfig"; path = "Target Support Files/Pods-RapidFund-RapidFundUITests/Pods-RapidFund-RapidFundUITests.release.xcconfig"; sourceTree = "<group>"; };
+		2E2779CD2C451495007B4E74 /* RPFMineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFMineModel.swift; sourceTree = "<group>"; };
+		2E2779D02C451DD6007B4E74 /* RPFReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFReportManager.swift; sourceTree = "<group>"; };
+		2E2779D22C463658007B4E74 /* RPFOrderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFOrderModel.swift; sourceTree = "<group>"; };
 		2E3D98942C3FF3DC00C49298 /* RapidOrderListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidOrderListCell.swift; sourceTree = "<group>"; };
 		2E3D98962C40175500C49298 /* RPFAboutUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFAboutUsViewController.swift; sourceTree = "<group>"; };
 		2E3D98982C40177500C49298 /* RPFAboutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFAboutCell.swift; sourceTree = "<group>"; };
@@ -262,6 +268,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		2E2779CF2C451DB0007B4E74 /* ReportData */ = {
+			isa = PBXGroup;
+			children = (
+				2E2779D02C451DD6007B4E74 /* RPFReportManager.swift */,
+			);
+			path = ReportData;
+			sourceTree = "<group>";
+		};
 		2E4D38F72C31326500C2271A = {
 			isa = PBXGroup;
 			children = (
@@ -368,6 +382,7 @@
 		2E91E8622C36A704005E2AB4 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				2E2779CF2C451DB0007B4E74 /* ReportData */,
 				024F6C412C3CFD000041F532 /* Info */,
 				2E91E86F2C36D2C1005E2AB4 /* LoginRegister */,
 				2E91E8692C36A76D005E2AB4 /* Mine */,
@@ -553,6 +568,7 @@
 		2EBDAE1D2C3D259300B3C845 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2E2779CD2C451495007B4E74 /* RPFMineModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -587,6 +603,7 @@
 		2EECB1F82C3E743D00E59A1C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2E2779D22C463658007B4E74 /* RPFOrderModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -868,6 +885,7 @@
 				2E91E8712C36D2EC005E2AB4 /* RapidLoginViewController.swift in Sources */,
 				2E4D39442C35857B00C2271A /* UIColorExtension.swift in Sources */,
 				2EECB2052C3FE87800E59A1C /* RapidOrderListViewModel.swift in Sources */,
+				2E2779D12C451DD6007B4E74 /* RPFReportManager.swift in Sources */,
 				2E4D39452C35857B00C2271A /* UIFontExtension.swift in Sources */,
 				2E3D98972C40175500C49298 /* RPFAboutUsViewController.swift in Sources */,
 				02F57BEE2C3FE6AE0049D21C /* RFAddressAlert.swift in Sources */,
@@ -884,6 +902,7 @@
 				2EBDAE202C3D2EEA00B3C845 /* RapidLoginModel.swift in Sources */,
 				02F57BF82C4112680049D21C /* RFNextBtn.swift in Sources */,
 				2E91E8612C36A684005E2AB4 /* RapidRootViewController.swift in Sources */,
+				2E2779D32C463658007B4E74 /* RPFOrderModel.swift in Sources */,
 				2EBDAE082C3AD25000B3C845 /* MBProgressHUDExtension.swift in Sources */,
 				02F57BFC2C411E460049D21C /* JXPageAss.swift in Sources */,
 				2EECB2012C3EE40500E59A1C /* RapidHomeProductCell.swift in Sources */,
@@ -901,6 +920,7 @@
 				02F57BF02C3FEB710049D21C /* RFContactCell.swift in Sources */,
 				2EECB1FF2C3EC21B00E59A1C /* HomeMoneyView.swift in Sources */,
 				2E4D39472C35857B00C2271A /* NSNumberExtension.swift in Sources */,
+				2E2779CE2C451495007B4E74 /* RPFMineModel.swift in Sources */,
 				2EBDAE042C39C7AC00B3C845 /* RapidMainApi.swift in Sources */,
 				2EECB1FB2C3E749600E59A1C /* RapidOrderViewModel.swift in Sources */,
 				2EBDAE0F2C3B9F6E00B3C845 /* CacheHelper.swift in Sources */,
@@ -1108,6 +1128,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DWMRGJDXFD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RapidFund/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1115,17 +1136,20 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.shangHaiYalo.RapidFund;
+				PRODUCT_BUNDLE_IDENTIFIER = com.edocyun.tumorDepressionPatient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1137,6 +1161,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = DWMRGJDXFD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RapidFund/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1144,17 +1169,20 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.shangHaiYalo.RapidFund;
+				PRODUCT_BUNDLE_IDENTIFIER = com.edocyun.tumorDepressionPatient;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

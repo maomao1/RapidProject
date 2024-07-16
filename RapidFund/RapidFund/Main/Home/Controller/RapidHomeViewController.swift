@@ -105,11 +105,16 @@ extension RapidHomeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        viewModel.getData()
+//        viewModel.getData()
         setBackBtnHidden()
         setUpRx()
         // Do any additional setup after loading the view.
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.getData()
     }
     
     
@@ -308,6 +313,12 @@ extension RapidHomeViewController {
             .subscribe(onNext: { [weak self] (_) in
                 guard let `self` = self else { return }
                 self.updateUIData()
+            })
+            .disposed(by: bag)
+        
+        viewModel.newMessage
+            .drive(onNext: { message in
+                MBProgressHUD.showMessage(message, toview: nil, afterDelay: 3)
             })
             .disposed(by: bag)
     }

@@ -104,14 +104,14 @@ class RapidOrderListCell: UITableViewCell {
 
     }
     
-    func setContentCell(){
-        self.iconImage.backgroundColor = .blue
-        self.nameLabel.text = "product name"
-        self.moneyLabel.text = "Tapperapperapp"
-        self.moneyValueLabel.text = "₱50,000"
-        self.dateLabel.text = "Repayment Date"
-        self.dateValueLabel.text = "12-12-2024"
-        self.soundLabel.text = "XXXXXXXXXXXXXXXXXXXX"
+    func setContentCell(model: RPFOrderModel){
+        self.iconImage.sd_setImage(with: model.decide.url, placeholderImage: nil, options: .allowInvalidSSLCertificates)
+        self.nameLabel.text = model.pursed
+        self.moneyLabel.text = model.shoes
+        self.moneyValueLabel.text = model.sweet 
+        self.dateLabel.text = model.shewas
+        self.dateValueLabel.text = model.bare
+        self.soundLabel.text = model.dirty
     }
     
     fileprivate lazy var containerView: UIView = {

@@ -26,7 +26,7 @@ class RapidOrderViewModel {
             case .failed:
                 return "Failed Loan Funding"
             case .settled:
-                return "Settled Oder`"
+                return "Settled Order"
            
             }
         }

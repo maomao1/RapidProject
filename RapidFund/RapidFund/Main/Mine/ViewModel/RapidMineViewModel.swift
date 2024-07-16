@@ -67,7 +67,8 @@ class RapidMineViewModel {
     let pageTitle = "Personal Center"
     var sections: [MenuType] = [.order, .payment, .agreement, .aboutUs, .logOut, .logOff]
 
-    
+    let mineModels: BehaviorRelay<[RPFMineModel]> = BehaviorRelay(value: [])
+
     func getData() {
         var para = [String : Any]()
         para["pot"] = RapidRandom
@@ -75,6 +76,9 @@ class RapidMineViewModel {
         RapidApi.shared.getMineData(para: para)
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}
+//                json["andcream"].
+                let datas = json["andcream"].arrayValue.map{ RPFMineModel(json: $0)}
+                self.mineModels.accept(datas)
 //                self.loginSuccessAction.onNext(Void())
             },
             onError: { [weak self] error in

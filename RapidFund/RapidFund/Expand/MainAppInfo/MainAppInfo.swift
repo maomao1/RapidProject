@@ -130,6 +130,7 @@ let RapidRandom: String = {
  *  sessionid
  */
 let RapidSession: String = {
+//    return "96561f489e6171d6e63b0312e99527dd"
     return GetInfo(kRapidSession)
 }()
 
@@ -147,7 +148,9 @@ let RapidUrlParam: String = {
     para["muchmore"]         = RapidSession
     para["teeth"]            = RapidSingleUUID
     para["boyfine"]          = RapidRandom
-   
+    print("=====================")
+   print(RapidSession)
+    print("=====================")
     return para.compentUrl()
 }()
 

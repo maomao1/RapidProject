@@ -356,13 +356,15 @@ extension RapidLoginViewController {
         viewModel.loginModel
             .subscribe(onNext: { [weak self] (_) in
                 guard let `self` = self else { return }
-                self.cacheLoginInfo()
+//                self.cacheLoginInfo()
             })
             .disposed(by: bag)
         
         viewModel.loginSuccessAction 
             .subscribe(onNext: { [weak self] in
-                self?.dismiss(animated: true, completion: nil)
+                guard let `self` = self else { return }
+                self.cacheLoginInfo()
+                
             })
             .disposed(by: disposeBag)
         
@@ -409,7 +411,10 @@ extension RapidLoginViewController {
     
     func cacheLoginInfo(){
         let model = viewModel.loginModel.value
-        SetInfo(kRapidSession, value: model?.session ?? "" )
+        print("===========")
+        print(model?.session)
+        print("===========")
+        RapidUserCache.default.cacheUserInfo(session: model?.session ?? "")
         NotificationCenter.default.post(name: .RapidLoginSuccess, object: nil, userInfo: nil)
         self.dismiss(animated: true, completion: nil)
     }

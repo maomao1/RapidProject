@@ -32,7 +32,7 @@ class RapidHomeViewModel {
         RapidApi.shared.getHomeData(para: para)
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}
-                self.homeModel.accept(RapidHomeModel(json: json["trouble"]))
+                self.homeModel.accept(RapidHomeModel(json: json))
 
             },
             onError: { [weak self] error in

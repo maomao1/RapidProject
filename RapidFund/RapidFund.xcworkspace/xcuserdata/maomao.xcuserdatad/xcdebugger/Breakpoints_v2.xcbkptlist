@@ -7,15 +7,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "8418C4DD-0566-4EA1-8BC8-0790A6AF59AD"
+            uuid = "F2219819-90BC-4D3D-AFB2-C61B9AC2B26A"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RapidFund/Main/Home/ViewModel/RapidHomeViewModel.swift"
+            filePath = "RapidFund/Main/Mine/ViewModel/RapidMineViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
             landmarkName = "getData()"
             landmarkType = "7">
          </BreakpointContent>
@@ -23,78 +23,46 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C9BC6A83-87E9-4591-88A5-B25454EB79BA"
+            uuid = "9F035468-0399-4B40-82BB-0EE2BBA28EB7"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "RapidFund/Main/Home/Model/RapidHomeModel.swift"
+            filePath = "RapidFund/Main/Order/ViewModel/RapidOrderListViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "init(json:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "326B8D77-FFA4-4F78-BF2D-AE3867D31AD7"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RapidFund/Main/Home/Model/RapidHomeModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "init(json:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4C3073CD-8CFB-48ED-98AE-F61E7D3AF790"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RapidFund/Main/Home/Model/RapidHomeModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "init(json:)"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "getData()"
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "4C3073CD-8CFB-48ED-98AE-F61E7D3AF790 - 9033cfb48b723651"
+                  uuid = "9F035468-0399-4B40-82BB-0EE2BBA28EB7 - 5a72557a1de8cf74"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "RapidFund.RapidHomeModel.init(json: SwiftyJSON.JSON) -&gt; RapidFund.RapidHomeModel"
+                  symbolName = "closure #1 (SwiftyJSON.JSON) -&gt; () in RapidFund.RapidOrderListViewModel.getData() -&gt; ()"
                   moduleName = "RapidFund"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/maomao/Desktop/%E8%8F%B2%E5%BE%8B%E5%AE%BERapid/RapidFund/RapidFund/Main/Home/Model/RapidHomeModel.swift"
+                  urlString = "file:///Users/maomao/Desktop/%E8%8F%B2%E5%BE%8B%E5%AE%BERapid/RapidFund/RapidFund/Main/Order/ViewModel/RapidOrderListViewModel.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "29"
-                  endingLineNumber = "29"
-                  offsetFromSymbolStart = "2507">
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "240">
                </Location>
                <Location
-                  uuid = "4C3073CD-8CFB-48ED-98AE-F61E7D3AF790 - 64700a6a2d12c776"
+                  uuid = "9F035468-0399-4B40-82BB-0EE2BBA28EB7 - cc0fca502dee5bd8"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #4 (SwiftyJSON.JSON) -&gt; RapidFund.RPFHomeReminder in RapidFund.RapidHomeModel.init(json: SwiftyJSON.JSON) -&gt; RapidFund.RapidHomeModel"
+                  symbolName = "closure #1 (SwiftyJSON.JSON) -&gt; RapidFund.RPFOrderModel in closure #1 (SwiftyJSON.JSON) -&gt; () in RapidFund.RapidOrderListViewModel.getData() -&gt; ()"
                   moduleName = "RapidFund"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/maomao/Desktop/%E8%8F%B2%E5%BE%8B%E5%AE%BERapid/RapidFund/RapidFund/Main/Home/Model/RapidHomeModel.swift"
+                  urlString = "file:///Users/maomao/Desktop/%E8%8F%B2%E5%BE%8B%E5%AE%BERapid/RapidFund/RapidFund/Main/Order/ViewModel/RapidOrderListViewModel.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "29"
-                  endingLineNumber = "29"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
                   offsetFromSymbolStart = "65">
                </Location>
             </Locations>
