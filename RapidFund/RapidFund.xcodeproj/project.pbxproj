@@ -11,6 +11,9 @@
 		0221C86D2C3F6C7D00896864 /* RFAuthFRModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0221C86C2C3F6C7D00896864 /* RFAuthFRModel.swift */; };
 		024F6C432C3CFD290041F532 /* RFPInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F6C422C3CFD290041F532 /* RFPInVC.swift */; };
 		024F6C462C3CFECA0041F532 /* RFInfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024F6C452C3CFECA0041F532 /* RFInfoItem.swift */; };
+		026A5B742C44B94D00B8C15C /* RFUploadResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A5B732C44B94D00B8C15C /* RFUploadResultModel.swift */; };
+		026A5B762C450D6700B8C15C /* RFTwoUserDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A5B752C450D6700B8C15C /* RFTwoUserDataModel.swift */; };
+		026A5B782C45216E00B8C15C /* RFContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A5B772C45216E00B8C15C /* RFContactModel.swift */; };
 		029A1E4F2C3FB6B900CAA29C /* RFBankAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029A1E4E2C3FB6B900CAA29C /* RFBankAlert.swift */; };
 		02C3BAEB2C3D3F9F001B4107 /* RFFlowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAEA2C3D3F9F001B4107 /* RFFlowVC.swift */; };
 		02C3BAED2C3D40DD001B4107 /* RFLoadProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAEC2C3D40DD001B4107 /* RFLoadProgressView.swift */; };
@@ -110,6 +113,9 @@
 		0221C86C2C3F6C7D00896864 /* RFAuthFRModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFAuthFRModel.swift; sourceTree = "<group>"; };
 		024F6C422C3CFD290041F532 /* RFPInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFPInVC.swift; sourceTree = "<group>"; };
 		024F6C452C3CFECA0041F532 /* RFInfoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFInfoItem.swift; sourceTree = "<group>"; };
+		026A5B732C44B94D00B8C15C /* RFUploadResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFUploadResultModel.swift; sourceTree = "<group>"; };
+		026A5B752C450D6700B8C15C /* RFTwoUserDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFTwoUserDataModel.swift; sourceTree = "<group>"; };
+		026A5B772C45216E00B8C15C /* RFContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFContactModel.swift; sourceTree = "<group>"; };
 		029A1E4E2C3FB6B900CAA29C /* RFBankAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFBankAlert.swift; sourceTree = "<group>"; };
 		02C3BAEA2C3D3F9F001B4107 /* RFFlowVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFFlowVC.swift; sourceTree = "<group>"; };
 		02C3BAEC2C3D40DD001B4107 /* RFLoadProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFLoadProgressView.swift; sourceTree = "<group>"; };
@@ -229,6 +235,9 @@
 			isa = PBXGroup;
 			children = (
 				0221C86C2C3F6C7D00896864 /* RFAuthFRModel.swift */,
+				026A5B732C44B94D00B8C15C /* RFUploadResultModel.swift */,
+				026A5B752C450D6700B8C15C /* RFTwoUserDataModel.swift */,
+				026A5B772C45216E00B8C15C /* RFContactModel.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -883,6 +892,7 @@
 				2E3D98952C3FF3DC00C49298 /* RapidOrderListCell.swift in Sources */,
 				2E91E86B2C36A77D005E2AB4 /* RapidMineViewController.swift in Sources */,
 				2E91E8712C36D2EC005E2AB4 /* RapidLoginViewController.swift in Sources */,
+				026A5B782C45216E00B8C15C /* RFContactModel.swift in Sources */,
 				2E4D39442C35857B00C2271A /* UIColorExtension.swift in Sources */,
 				2EECB2052C3FE87800E59A1C /* RapidOrderListViewModel.swift in Sources */,
 				2E2779D12C451DD6007B4E74 /* RPFReportManager.swift in Sources */,
@@ -891,6 +901,7 @@
 				02F57BEE2C3FE6AE0049D21C /* RFAddressAlert.swift in Sources */,
 				2E4D39082C31326500C2271A /* ViewController.swift in Sources */,
 				02F57BFA2C4115500049D21C /* RFBankMgrAlert.swift in Sources */,
+				026A5B762C450D6700B8C15C /* RFTwoUserDataModel.swift in Sources */,
 				2EBDADFE2C39C36400B3C845 /* ErrorExtension.swift in Sources */,
 				2EBDAE062C39CB3800B3C845 /* MainAppInfo.swift in Sources */,
 				2E91E8642C36A72A005E2AB4 /* RapidHomeViewController.swift in Sources */,
@@ -931,6 +942,7 @@
 				2E4D394B2C36A4BA00C2271A /* RapidBaseNavgationController.swift in Sources */,
 				2EBDADF62C39769E00B3C845 /* ProjectConfig.swift in Sources */,
 				2E4D39492C36A48000C2271A /* RapidBaseViewController.swift in Sources */,
+				026A5B742C44B94D00B8C15C /* RFUploadResultModel.swift in Sources */,
 				02F57BF42C40CB390049D21C /* RFBankBindVC.swift in Sources */,
 				02F57BEC2C3FD4F40049D21C /* RFDateSelAlert.swift in Sources */,
 				2EECB1F12C3D758000E59A1C /* RapidMineMenuCell.swift in Sources */,
