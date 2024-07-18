@@ -34,7 +34,7 @@ extension RapidApi {
     func getLogOutData() -> Observable<JSON> {
         return request(
             path: BaseURl + RapidApiConstantUrl.logout,
-            parameters: ["follows": RapidRandom, "herlamb": RapidRandom ],
+            parameters: ["follows": getRPFRandom(), "herlamb": getRPFRandom() ],
             method: .get,
             encoding: URLEncoding.default,
             completionHandler: { $0 })
@@ -43,7 +43,7 @@ extension RapidApi {
     func getLogOffData() -> Observable<JSON> {
         return request(
             path: BaseURl + RapidApiConstantUrl.logoff,
-            parameters: ["hides": RapidRandom],
+            parameters: ["hides": getRPFRandom()],
             method: .get,
             encoding: URLEncoding.default,
             completionHandler: { $0 })

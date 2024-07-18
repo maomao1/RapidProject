@@ -87,7 +87,7 @@ class RapidHomeViewController: RapidBaseViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.estimatedRowHeight = 60.rf
-        tableView.rowHeight = 66.rf
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         let footerView = UIView(frame: .zero)
@@ -96,6 +96,10 @@ class RapidHomeViewController: RapidBaseViewController {
         
         return tableView
     }()
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
    
     
 }
@@ -118,18 +122,17 @@ extension RapidHomeViewController {
     }
     
     
+    
 }
 
 extension RapidHomeViewController {
     
     func setupViews(){
         self.titleNav.text = viewModel.pageTitle
-//        self.view.bringSubviewToFront(self.customNavView)
-//        view.insertSubview(backgroundImageView, at: 0)
+
         view.addSubview(backgroundImageView)
         view.addSubview(circleLeftImageView)
         view.addSubview(circleTopRightImageView)
-//        view.insertSubview(circleBottomRightImageView, aboveSubview: backgroundImageView)
         view.addSubview(circleBottomRightImageView)
         view.addSubview(unLoginContainer)
         view.addSubview(loginContainer)
@@ -263,23 +266,20 @@ extension RapidHomeViewController {
         guard let model = self.viewModel.homeModel.value else {
             return
         }
+        self.setNavImageTitleWhite(isWhite: model.products?.count ?? 0 > 0)
         
         if  model.products?.count ?? 0 > 0 {
             self.unLoginContainer.isHidden = true
             self.loginContainer.isHidden = false
+            self.rightBtn.isHidden = true
+            self.titleNav.font = .f_lightSys32
+            self.tableView.reloadData()
         }else{
             self.unLoginContainer.isHidden = false
             self.loginContainer.isHidden = true
+            self.rightBtn.isHidden = false
         }
-//        guard let productList = model.products 
-//        if productList.count > 0 {
-//            self.unLoginContainer.isHidden = true
-//            self.loginContainer.isHidden = false
-//        }else{
-//            self.unLoginContainer.isHidden = false
-//            self.loginContainer.isHidden = true
-//        }
-        self.setNavImageTitleWhite(isWhite: model.products?.count ?? 0 > 0)
+
         guard let hotModels = model.hotmeals, hotModels.count > 0, let hotModel = hotModels.first else {
             return
         }
@@ -288,6 +288,7 @@ extension RapidHomeViewController {
         self.applyTitle.text = hotModel.mymorgan
         self.homeMoneyView.updateContent(model: hotModel)
         self.homeMoneyRateView.updateContent(model: hotModel)
+        
     }
     
     func loginSuccessEvent() {
@@ -344,11 +345,24 @@ extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
 ////        cell.nameLabel.text = type.titleName
 //        cell.selectionStyle = .none
 //        cell.setUpCell(type: type)
+        guard let model = self.viewModel.homeModel.value else {
+            return cell
+        }
+        guard model.products?[indexPath.section] != nil else {
+            return cell
+        }
+        cell.updateCellContent(model: model.products![indexPath.section])
+//        if  model.products?.count ?? 0 > 0 {
+//            let product = model.products[indexPath.section]
+//        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let vc = RPFWebViewController()
+        vc.viewModel = RPFWebViewModel(urlString: "https://www.baidu.com")
+        self.navigationController?.pushViewController(vc, animated: true)
        
     }
     

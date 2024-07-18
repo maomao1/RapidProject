@@ -36,6 +36,7 @@ class RapidOrderListViewModel {
     
     func getData() {
         var para = [String : Any]()
+//        para = RapidUrlParam
         para["gambolled"] = self.type.rawValue
 //        para["gambolled"] = "4"
         

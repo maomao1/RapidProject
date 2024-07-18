@@ -96,7 +96,9 @@ class RapidHomeProductCell: UITableViewCell {
         self.contentLabel.text = model.productDesc
         self.applyBtn.setTitle(model.buttonText, for: .normal)
         self.applyBtn.setTitle(model.buttonText, for: .selected)
-//        self.applyBtn.backgroundColor = 
+        if model.buttoncolor.count > 1{
+            self.applyBtn.backgroundColor = UIColor.init(webColor: model.buttoncolor)
+        }
 //        self.soundLabel.text = model.
         
     }

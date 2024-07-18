@@ -65,13 +65,13 @@ class RapidMineViewModel {
     }
     
     let pageTitle = "Personal Center"
-    var sections: [MenuType] = [.order, .payment, .agreement, .aboutUs, .logOut, .logOff]
+    var sections: [MenuType] = [.order, .agreement, .aboutUs, .logOut, .logOff]
 
     let mineModels: BehaviorRelay<[RPFMineModel]> = BehaviorRelay(value: [])
 
     func getData() {
         var para = [String : Any]()
-        para["pot"] = RapidRandom
+        para["pot"] = getRPFRandom()
         
         RapidApi.shared.getMineData(para: para)
             .subscribe(onNext: { [weak self] json in

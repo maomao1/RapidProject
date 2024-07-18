@@ -26,9 +26,8 @@ class RapidHomeViewModel {
     
     func getData(){
         var para = [String : Any]()
-        para["truant"] = RapidRandom
-        para["sdaughter"] = RapidRandom
-        
+        para["truant"] = getRPFRandom()
+        para["sdaughter"] = getRPFRandom()
         RapidApi.shared.getHomeData(para: para)
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}
@@ -37,7 +36,6 @@ class RapidHomeViewModel {
             },
             onError: { [weak self] error in
                 guard let `self` = self else {return}
-//                self.loginSuccessAction.onNext(Void())
                 self.message.onNext(error.localizedDescription)
             })
             .disposed(by: bag)

@@ -39,7 +39,7 @@ class RapidLoginViewModel {
         }
         var param: [String : Any] = [String : Any]()
         param["lonely"] = phone
-        param["thanksmost"] = RapidRandom
+        param["thanksmost"] = getRPFRandom()
         self.sendCodeIsEnable.accept(false)
         RapidApi.shared.getLoginPhoneCode(para: param)
             .subscribe(onNext: { [weak self] json in
@@ -75,7 +75,9 @@ class RapidLoginViewModel {
 //        param["weeks"] = codeStr
         param["knows"] = "8111222251"
         param["weeks"] = "202406"
-        param["scolded"] = RapidRandom
+        param["scolded"] = getRPFRandom()
+        
+       
         
         RapidApi.shared.loginByPhone(para: param)
             .subscribe(onNext: { [weak self] json in

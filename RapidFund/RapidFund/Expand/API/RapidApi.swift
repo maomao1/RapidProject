@@ -14,7 +14,7 @@ class RapidApi: SessionManager {
         let configuration = URLSessionConfiguration.default
         configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
         configuration.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
-     
+        
 //        configuration.httpAdditionalHeaders?["app_version"] = versionBuild//app_version，必传
 //        configuration.httpAdditionalHeaders?["platformType"] = "iOS"
 //        configuration.httpAdditionalHeaders?["deviceId"] = YDYSingleUUID//设备唯一标识，必传
@@ -34,6 +34,8 @@ class RapidApi: SessionManager {
     
     static let shared = RapidApi()
     
+   
+    
     //REQUEST 请求
     func request<T>(path: String,
                     parameters: Parameters? = nil,
@@ -41,17 +43,28 @@ class RapidApi: SessionManager {
                     method: HTTPMethod = .post,
                     encoding: ParameterEncoding = JSONEncoding.default,
                     completionHandler: @escaping ((JSON) -> T)) -> Observable<T> {
-        var fullPath = path + self.getParaUrl()
+        let fullPath = path + getRapidUrlParam()
+        let baseParams = getRapidUrlBaseParam()
+        var components = URLComponents(url: path.url!, resolvingAgainstBaseURL: true)!
+        components.queryItems = baseParams.map { URLQueryItem(name: $0.key, value: $0.value) }
+       let finalURL = components.url 
+            
+        print(finalURL!.absoluteString)
+        
+//        guard let finalUrl = components?.url else{
+//            return Disposables.create {
+//                
+//            } 
+//        }
         debugPrint("fullpath====\(fullPath)")
         debugPrint(parameters ?? [:])
-
         return Observable.create({ [weak self] (observer) -> Disposable in
             guard let `self` = self else {
                 observer.onCompleted()
                 return Disposables.create()
             }
             let dataRequest = self
-                .request(fullPath,
+                .request(finalURL!.absoluteString,
                          method: method,
                          parameters: parameters,
                          encoding: encoding,
@@ -93,20 +106,20 @@ class RapidApi: SessionManager {
         })
     }
     
-    func getParaUrl()-> String {
-        var para: [String : Any] = [String : Any]()
-        para["bittengeorge"]     = OsPlatform
-        para["wobblyagain"]      = AppVersion
-        para["sick"]             = ModelName
-        para["wall"]             = DeviceID
-        para["leaning"]          = RapidSystemVersion
-        para["graze"]            = AppMarket
-        para["muchmore"]         = RapidSession
-        para["teeth"]            = RapidSingleUUID
-        para["boyfine"]          = RapidRandom
-        print("=====================")
-        print(RapidSession)
-        print("=====================")
-        return para.compentUrl()
-    }
+//    func getParaUrl()-> String {
+//        var para: [String : Any] = [String : Any]()
+//        para["bittengeorge"]     = OsPlatform
+//        para["wobblyagain"]      = AppVersion
+//        para["sick"]             = ModelName
+//        para["wall"]             = DeviceID
+//        para["leaning"]          = RapidSystemVersion
+//        para["graze"]            = AppMarket
+//        para["muchmore"]         = GetInfo(kRapidSession)
+//        para["teeth"]            = RapidSingleUUID
+//        para["boyfine"]          = getRPFRandom()
+//        print("=====================")
+//        print(GetInfo(kRapidSession))
+//        print("=====================")
+//        return para.compentUrl()
+//    }
 }

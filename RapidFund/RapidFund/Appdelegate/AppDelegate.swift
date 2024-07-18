@@ -6,15 +6,19 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+    let bag = DisposeBag()
     var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         setUpRootVC()
         setUIAttribute()
+        observeMemory()
         return true
     }
     
@@ -64,5 +68,17 @@ extension AppDelegate {
         if #available(iOS 15.0, *) {
             tableViewAppearance.sectionHeaderTopPadding = 0.f
         }
+    }
+    
+    //监听内存
+    func observeMemory() {
+        #if DEBUG
+        Observable<Int>
+            .interval(.seconds_1, scheduler: MainScheduler.instance)
+            .subscribe(onNext: { (_) in
+                print("RxSwift resource count is \(RxSwift.Resources.total)")
+            })
+            .disposed(by: bag)
+        #endif
     }
 }

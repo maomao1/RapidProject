@@ -59,6 +59,12 @@
 		2E91E86B2C36A77D005E2AB4 /* RapidMineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E91E86A2C36A77D005E2AB4 /* RapidMineViewController.swift */; };
 		2E91E8712C36D2EC005E2AB4 /* RapidLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E91E8702C36D2EC005E2AB4 /* RapidLoginViewController.swift */; };
 		2E91E8772C36E2E7005E2AB4 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E91E8762C36E2E7005E2AB4 /* UILabelExtension.swift */; };
+		2E9B93942C476A8E00624609 /* RPFWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93932C476A8E00624609 /* RPFWebViewController.swift */; };
+		2E9B93B02C476EAD00624609 /* WebViewJavascriptBridge_JS.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93A82C476EAC00624609 /* WebViewJavascriptBridge_JS.m */; };
+		2E9B93B12C476EAD00624609 /* WKWebViewJavascriptBridge+Fix.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93AA2C476EAC00624609 /* WKWebViewJavascriptBridge+Fix.m */; };
+		2E9B93B22C476EAD00624609 /* WebViewJavascriptBridgeBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93AB2C476EAC00624609 /* WebViewJavascriptBridgeBase.m */; };
+		2E9B93B32C476EAD00624609 /* WKWebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93AF2C476EAD00624609 /* WKWebViewJavascriptBridge.m */; };
+		2E9B93B52C48A4D000624609 /* RPFWebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93B42C48A4D000624609 /* RPFWebViewModel.swift */; };
 		2EBDADF62C39769E00B3C845 /* ProjectConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADF52C39769E00B3C845 /* ProjectConfig.swift */; };
 		2EBDADF82C39BAEB00B3C845 /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADF72C39BAEB00B3C845 /* TimeIntervalExtension.swift */; };
 		2EBDADFA2C39BBCB00B3C845 /* RapidLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADF92C39BBCB00B3C845 /* RapidLoginViewModel.swift */; };
@@ -167,6 +173,17 @@
 		2E91E86A2C36A77D005E2AB4 /* RapidMineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidMineViewController.swift; sourceTree = "<group>"; };
 		2E91E8702C36D2EC005E2AB4 /* RapidLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidLoginViewController.swift; sourceTree = "<group>"; };
 		2E91E8762C36E2E7005E2AB4 /* UILabelExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
+		2E9B93932C476A8E00624609 /* RPFWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFWebViewController.swift; sourceTree = "<group>"; };
+		2E9B93A72C476EAB00624609 /* RapidFund-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RapidFund-Bridging-Header.h"; sourceTree = "<group>"; };
+		2E9B93A82C476EAC00624609 /* WebViewJavascriptBridge_JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge_JS.m; sourceTree = "<group>"; };
+		2E9B93A92C476EAC00624609 /* WKWebViewJavascriptBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WKWebViewJavascriptBridge.h; sourceTree = "<group>"; };
+		2E9B93AA2C476EAC00624609 /* WKWebViewJavascriptBridge+Fix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WKWebViewJavascriptBridge+Fix.m"; sourceTree = "<group>"; };
+		2E9B93AB2C476EAC00624609 /* WebViewJavascriptBridgeBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridgeBase.m; sourceTree = "<group>"; };
+		2E9B93AC2C476EAD00624609 /* WebViewJavascriptBridge_JS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridge_JS.h; sourceTree = "<group>"; };
+		2E9B93AD2C476EAD00624609 /* WKWebViewJavascriptBridge+Fix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WKWebViewJavascriptBridge+Fix.h"; sourceTree = "<group>"; };
+		2E9B93AE2C476EAD00624609 /* WebViewJavascriptBridgeBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridgeBase.h; sourceTree = "<group>"; };
+		2E9B93AF2C476EAD00624609 /* WKWebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKWebViewJavascriptBridge.m; sourceTree = "<group>"; };
+		2E9B93B42C48A4D000624609 /* RPFWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFWebViewModel.swift; sourceTree = "<group>"; };
 		2EBDADF52C39769E00B3C845 /* ProjectConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectConfig.swift; sourceTree = "<group>"; };
 		2EBDADF72C39BAEB00B3C845 /* TimeIntervalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtension.swift; sourceTree = "<group>"; };
 		2EBDADF92C39BBCB00B3C845 /* RapidLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidLoginViewModel.swift; sourceTree = "<group>"; };
@@ -310,6 +327,7 @@
 		2E4D39022C31326500C2271A /* RapidFund */ = {
 			isa = PBXGroup;
 			children = (
+				2E9B93952C476B7300624609 /* Utils */,
 				2E4D39112C31326900C2271A /* Info.plist */,
 				2E91E86D2C36AEA4005E2AB4 /* Resource */,
 				2E91E86C2C36A888005E2AB4 /* Appdelegate */,
@@ -391,6 +409,7 @@
 		2E91E8622C36A704005E2AB4 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				2E9B93902C476A1D00624609 /* Web */,
 				2E2779CF2C451DB0007B4E74 /* ReportData */,
 				024F6C412C3CFD000041F532 /* Info */,
 				2E91E86F2C36D2C1005E2AB4 /* LoginRegister */,
@@ -503,6 +522,55 @@
 			children = (
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		2E9B93902C476A1D00624609 /* Web */ = {
+			isa = PBXGroup;
+			children = (
+				2E9B93922C476A5E00624609 /* ViewModel */,
+				2E9B93912C476A5000624609 /* Controller */,
+			);
+			path = Web;
+			sourceTree = "<group>";
+		};
+		2E9B93912C476A5000624609 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2E9B93932C476A8E00624609 /* RPFWebViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		2E9B93922C476A5E00624609 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2E9B93B42C48A4D000624609 /* RPFWebViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2E9B93952C476B7300624609 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2E9B93972C476BB300624609 /* WebViewJavascriptBridge */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		2E9B93972C476BB300624609 /* WebViewJavascriptBridge */ = {
+			isa = PBXGroup;
+			children = (
+				2E9B93AC2C476EAD00624609 /* WebViewJavascriptBridge_JS.h */,
+				2E9B93A82C476EAC00624609 /* WebViewJavascriptBridge_JS.m */,
+				2E9B93AE2C476EAD00624609 /* WebViewJavascriptBridgeBase.h */,
+				2E9B93AB2C476EAC00624609 /* WebViewJavascriptBridgeBase.m */,
+				2E9B93A92C476EAC00624609 /* WKWebViewJavascriptBridge.h */,
+				2E9B93AF2C476EAD00624609 /* WKWebViewJavascriptBridge.m */,
+				2E9B93AD2C476EAD00624609 /* WKWebViewJavascriptBridge+Fix.h */,
+				2E9B93AA2C476EAC00624609 /* WKWebViewJavascriptBridge+Fix.m */,
+				2E9B93A72C476EAB00624609 /* RapidFund-Bridging-Header.h */,
+			);
+			path = WebViewJavascriptBridge;
 			sourceTree = "<group>";
 		};
 		2EBDAE0B2C3B9C0C00B3C845 /* Cache */ = {
@@ -722,6 +790,7 @@
 				TargetAttributes = {
 					2E4D38FF2C31326500C2271A = {
 						CreatedOnToolsVersion = 14.2;
+						LastSwiftMigration = 1420;
 					};
 					2E4D39152C31326900C2271A = {
 						CreatedOnToolsVersion = 14.2;
@@ -905,6 +974,7 @@
 				2EBDADFE2C39C36400B3C845 /* ErrorExtension.swift in Sources */,
 				2EBDAE062C39CB3800B3C845 /* MainAppInfo.swift in Sources */,
 				2E91E8642C36A72A005E2AB4 /* RapidHomeViewController.swift in Sources */,
+				2E9B93B32C476EAD00624609 /* WKWebViewJavascriptBridge.m in Sources */,
 				2EFF26902C3D4236003A0344 /* RapidMineViewModel.swift in Sources */,
 				2E3D98992C40177500C49298 /* RPFAboutCell.swift in Sources */,
 				2EBDAE002C39C45F00B3C845 /* JSONExtension.swift in Sources */,
@@ -944,8 +1014,13 @@
 				2E4D39492C36A48000C2271A /* RapidBaseViewController.swift in Sources */,
 				026A5B742C44B94D00B8C15C /* RFUploadResultModel.swift in Sources */,
 				02F57BF42C40CB390049D21C /* RFBankBindVC.swift in Sources */,
+				2E9B93942C476A8E00624609 /* RPFWebViewController.swift in Sources */,
 				02F57BEC2C3FD4F40049D21C /* RFDateSelAlert.swift in Sources */,
 				2EECB1F12C3D758000E59A1C /* RapidMineMenuCell.swift in Sources */,
+				2E9B93B12C476EAD00624609 /* WKWebViewJavascriptBridge+Fix.m in Sources */,
+				2E9B93B22C476EAD00624609 /* WebViewJavascriptBridgeBase.m in Sources */,
+				2E9B93B52C48A4D000624609 /* RPFWebViewModel.swift in Sources */,
+				2E9B93B02C476EAD00624609 /* WebViewJavascriptBridge_JS.m in Sources */,
 				2E4D39432C35857B00C2271A /* AppConfig.swift in Sources */,
 				2EBDAE0D2C3B9C3000B3C845 /* RapidSingleIdentifierManager.swift in Sources */,
 				2EECB2032C3FDC6E00E59A1C /* RapidOrderListViewController.swift in Sources */,
@@ -1138,6 +1213,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DWMRGJDXFD;
@@ -1160,6 +1236,8 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "RapidFund/Utils/WebViewJavascriptBridge/RapidFund-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1171,6 +1249,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = DWMRGJDXFD;
@@ -1193,6 +1272,7 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "RapidFund/Utils/WebViewJavascriptBridge/RapidFund-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

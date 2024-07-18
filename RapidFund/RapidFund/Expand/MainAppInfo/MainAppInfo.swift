@@ -118,24 +118,46 @@ let RapidSingleUUID: String = {
 /**
  *  混淆随机数字符串
  */
-let RapidRandom: String = {
-//    return "eikskjeoifj345245"
+//var RapidRandom: String = {
+////    return "eikskjeoifj345245"
+//    var randomString: String = ""
+//    for _ in 0..<20 {
+//        randomString += String(Int.random(in: 0...9))
+//    }
+//    return randomString
+//}()
+
+func getRPFRandom()-> String{
     var randomString: String = ""
     for _ in 0..<20 {
         randomString += String(Int.random(in: 0...9))
     }
     return randomString
-}()
+}
 /**
  *  sessionid
  */
-let RapidSession: String = {
-//    return "96561f489e6171d6e63b0312e99527dd"
+var RapidSession: String = {
     return GetInfo(kRapidSession)
 }()
 
+func  getRapidUrlBaseParam()-> [String: String]  {
+   
 
-let RapidUrlParam: String = {
+    var para: [String : String] = [String : String]()
+    para["bittengeorge"]     = OsPlatform
+    para["wobblyagain"]      = AppVersion
+    para["sick"]             = ModelName
+    para["wall"]             = DeviceID
+    para["leaning"]          = RapidSystemVersion
+    para["graze"]            = AppMarket
+    para["muchmore"]         = GetInfo(kRapidSession)
+    para["teeth"]            = RapidSingleUUID
+    para["boyfine"]          = getRPFRandom()
+   
+    return para
+}
+func  getRapidUrlParam()-> String  {
    
 
     var para: [String : Any] = [String : Any]()
@@ -145,14 +167,15 @@ let RapidUrlParam: String = {
     para["wall"]             = DeviceID
     para["leaning"]          = RapidSystemVersion
     para["graze"]            = AppMarket
-    para["muchmore"]         = RapidSession
+    para["muchmore"]         = GetInfo(kRapidSession)
     para["teeth"]            = RapidSingleUUID
-    para["boyfine"]          = RapidRandom
+    para["boyfine"]          = getRPFRandom()
     print("=====================")
    print(RapidSession)
     print("=====================")
     return para.compentUrl()
-}()
+//    return para
+}
 
 /**
  *  app name
