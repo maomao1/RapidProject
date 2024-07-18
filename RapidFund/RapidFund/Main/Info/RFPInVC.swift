@@ -13,7 +13,7 @@ enum RFRoute {
 }
 
 class RFPInVC: RapidBaseViewController {
-    
+    private var model:RFTwoUserDataModel?
     private let route:RFRoute
     init(route: RFRoute) {
         self.route = route
@@ -88,6 +88,9 @@ class RFPInVC: RapidBaseViewController {
             make.centerX.equalToSuperview()
             make.centerY.equalTo(bgView.snp.bottom)
         }
+        if route == .personal_info {
+            loadData()
+        }
     }
     
     private func getResourceConfig()->(UIImage?, UIImage?) {
@@ -99,5 +102,33 @@ class RFPInVC: RapidBaseViewController {
         )
     }
     
-    @objc private func nextAction() {}
+    
+    private func loadData() {
+        RapidApi.shared.getTwoUserInfo(para: ["putit":"putit"]).subscribe (onNext: { [weak self] obj in
+            guard let json = obj.dictionaryObject?["trouble"] as? [String:Any], let list = json["munched"] as? [Any], let models = [RFTwoUserDataModel].deserialize(from: list)?.compactMap({ $0 }) else {
+                return
+            }
+            guard let m = models.first else {
+                return
+            }
+            self?.render(m)
+        },onError:{ err in
+            print(err)
+        }).disposed(by: bag)
+        
+        
+    }
+    
+    private func render(_ item:RFTwoUserDataModel) {
+        self.model = item
+        if item.theboys == "1" {
+            genderItem
+        }
+        
+        
+    }
+    
+    @objc private func nextAction() {
+        navigationController?.pushViewController(RFPInVC(route: .employment_info), animated: true)
+    }
 }

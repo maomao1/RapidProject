@@ -8,6 +8,7 @@
 import UIKit
 
 class RFFRVC: RapidBaseViewController {
+    private let faceView = UIImageView(image: "".image)
     override func viewDidLoad() {
         super.viewDidLoad()
         titleNav.text = "Face Recognition"
@@ -19,6 +20,7 @@ class RFFRVC: RapidBaseViewController {
     }
     
     private let contentView = UIView()
+    private let addBtn = UIButton(type: .custom)
     private func setup() {
         view.addSubview(contentView)
         contentView.snp.makeConstraints { make in
@@ -45,7 +47,6 @@ class RFFRVC: RapidBaseViewController {
             make.height.equalTo(96.rf)
         }
         
-        let faceView = UIImageView(image: "".image)
         topImgV.addSubview(faceView)
         faceView.snp.makeConstraints { make in
             make.bottom.equalTo(-27.rf)
@@ -54,7 +55,6 @@ class RFFRVC: RapidBaseViewController {
             make.height.equalTo(255.rf)
         }
         
-        let addBtn = UIButton(type: .custom)
         addBtn.setImage("face_add".image, for: .normal)
         addBtn.addTarget(self, action: #selector(btnClick), for: .touchUpInside)
         contentView.addSubview(addBtn)
@@ -119,10 +119,85 @@ class RFFRVC: RapidBaseViewController {
             make.centerX.equalToSuperview()
             make.bottom.equalTo(-53.rf)
         }
-        
     }
+    
+    private lazy var imgPicker: UIImagePickerController = {
+        let vc = UIImagePickerController()
+        vc.sourceType = .camera
+        vc.delegate = self
+        return vc
+    }()
+    
+    private var model: RFAuthFRModel?
 }
 
 extension RFFRVC {
-    @objc private func btnClick() {}
+    private func loadData() {
+        RapidApi.shared.getAuthOneData(para: ["putit": "putit", "melted": "melted"]).subscribe(onNext: { [weak self] json in
+            guard let model = RFAuthFRModel.deserialize(from: json.dictionary) else {
+                return
+            }
+            self?.render(model: model)
+            // todo
+        }, onError: { _ in
+            
+        }).disposed(by: bag)
+    }
+    
+    private func render(model: RFAuthFRModel) {
+        self.model = model
+        
+        if model.trouble?.tyou == 1 {
+            addBtn.setImage("face_add_1".image, for: .normal)
+            addBtn.isUserInteractionEnabled = false
+        }
+        if model.trouble?.littleroom.isEmpty == false {
+            faceView.sd_setImage(with: URL(string: model.trouble?.littleroom ?? ""), placeholderImage: "face_recognition".image, context: nil)
+        }
+    }
+    
+    @objc private func btnClick() {
+        __openCamera()
+    }
+
+    private func __openCamera() {
+        self.navigationController?.present(self.imgPicker, animated: true)
+    }
+}
+
+extension RFFRVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        let img = info[.originalImage] as? UIImage
+        picker.dismiss(animated: true)
+        guard let imgData = img?.jpegData(compressionQuality: 0.5) else { return }
+    
+        uploadIDCard(source:.camera, data: imgData, dismay: 10)
+    }
+    
+    private func uploadIDCard(source: RFIDDetailVC.__FromSource, data: Data, dismay: Int) {
+        let params = ["quiteexpected": source.rawValue,
+                      "putit": "123",
+                      "dismay": dismay,
+                      "woods": data,
+                      "elf": "",
+                      "thanksmost": "xxx",
+                      "pixie": "3",
+                      "darkalmost": "UMID"] as [String: Any]
+        
+        RapidApi.shared.getIDUploadData(para: params).subscribe(onNext: { [weak self] obj in
+            guard let json = obj.dictionary?["trouble"] as? [String: Any], let model = RFUploadResultModel.deserialize(from: json) else {
+                return
+            }
+            model.type = dismay
+            self?.faceView.sd_setImage(with: URL(string: model.littleroom ?? ""))
+        }, onError: { _ in
+            
+        }).disposed(by: bag)
+    }
+    
+    
 }

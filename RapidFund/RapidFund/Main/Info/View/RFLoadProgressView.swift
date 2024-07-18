@@ -53,5 +53,17 @@ class RFLoadProgressView: UIView {
     private let progressLb = UILabel().textColor(0xffffff.color).font(12.fontBold).text("0%")
     private let progressView = UIImageView()
     private let pgBgView = UIImageView()
-    
+    func fill(_ data:RFProductDetailModel.__Sucha) {
+        
+        progressLb.text = data.decided?.falls
+        guard let text = progressLb.text else { return  }
+        let proText = text.replacingOccurrences(of: "%", with: "")
+        
+        guard let pro = Float(proText) else {
+            return
+        }
+        progressView.snp.updateConstraints { make in
+            make.width.equalTo((kScreenWidth - 70.rf) * CGFloat(pro))
+        }
+    }
 }

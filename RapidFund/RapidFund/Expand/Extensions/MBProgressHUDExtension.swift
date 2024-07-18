@@ -69,7 +69,8 @@ extension MBProgressHUD {
 
     }
     
-    static func showError(_ error: String, to view: UIView? = nil) {
+    static func showError(_ error: String?, to view: UIView? = nil) {
+        guard let error = error else { return }
         display(message: error, toView: view, withIcon: nil, forDuration: 1)
     }
     

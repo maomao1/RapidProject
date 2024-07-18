@@ -5,10 +5,10 @@
 //  Created by C on 2024/7/10.
 //
 
+import RxSwift
 @_exported import SDWebImage
 @_exported import SnapKit
 import UIKit
-import RxSwift
 
 class RFIDDetailVC: RapidBaseViewController {
     override func viewDidLoad() {
@@ -21,7 +21,14 @@ class RFIDDetailVC: RapidBaseViewController {
         view.bringSubviewToFront(customNavView)
         loadData()
     }
-    
+
+    private lazy var imgPicker: UIImagePickerController = {
+        let vc = UIImagePickerController()
+        vc.sourceType = .camera
+        vc.delegate = self
+        return vc
+    }()
+    private var model:RFAuthFRModel?
     private let contentView = UIView()
     private let scrollView = UIScrollView()
     private let cardView = UIImageView(image: "ID_bg1".image)
@@ -74,7 +81,6 @@ class RFIDDetailVC: RapidBaseViewController {
             make.width.equalTo(270.rf)
             make.height.equalTo(158.rf)
         }
-        
         
         contentView.addSubview(cardView)
         cardView.snp.makeConstraints { make in
@@ -217,6 +223,9 @@ class RFIDDetailVC: RapidBaseViewController {
             make.bottom.equalTo(-37.rf)
         }
         
+        nextimgV.addTapGesture { [weak self] in
+            self?.navigationController?.pushViewController(RFPInVC(route: .personal_info), animated: true)
+        }
         let nextLb = UILabel().font(16.font).text("Next").textColor(0xffffff.color)
         nextimgV.addSubview(nextLb)
         nextLb.snp.makeConstraints { make in
@@ -238,20 +247,56 @@ class RFIDDetailVC: RapidBaseViewController {
         
         scrollView.contentSize = CGSize(width: kScreenWidth, height: height)
     }
+    private var isFace:Bool = false
 }
 
 extension RFIDDetailVC {
     @objc private func btnClick() {
-//        let alert = RFDateSelAlert()
-//        alert.show(on: self.view)
+        let sheetView = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        isFace = false
+        let camera = UIAlertAction(title: "Camera", style: .default) { [weak self] _ in
+            self?.__openCamera()
+        }
         
-        let alert = RFBankMgrAlert()
-        alert.show(on: self.view)
-//        navigationController?.pushViewController(vc, animated: true)
+        let photo = UIAlertAction(title: "Album", style: .default) { [weak self] _ in
+            self?.__openPhoto()
+        }
+        sheetView.addAction(camera)
+        sheetView.addAction(photo)
+        navigationController?.present(sheetView, animated: true)
     }
     
     @objc private func faceClick() {
-        navigationController?.pushViewController(RFFRVC(), animated: true)
+        guard model?.trouble?.tyou == 0 else {
+            return
+        }
+        isFace = true
+        __openCamera()
+    }
+    
+    private func __openCamera() {
+        self.imgPicker.sourceType = .camera
+        self.navigationController?.present(self.imgPicker, animated: true)
+    }
+    
+    private func __openPhoto() {
+        self.imgPicker.sourceType = .photoLibrary
+        self.navigationController?.present(self.imgPicker, animated: true)
+    }
+}
+
+extension RFIDDetailVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        let img = info[.originalImage] as? UIImage
+        picker.dismiss(animated: true)
+        guard let imgData = img?.jpegData(compressionQuality: 0.5) else { return  }
+        
+        uploadIDCard(source: picker.sourceType == .camera ? .camera : .photo, data: imgData, dismay: isFace ? 10 : 11)
+        
     }
 }
 
@@ -269,6 +314,7 @@ extension RFIDDetailVC {
     }
     
     private func render(model: RFAuthFRModel) {
+        self.model = model
         if model.trouble?.carefully?.mustn == 1 {
             addBtn.setImage("id_add_1".image, for: .normal)
             addBtn.isUserInteractionEnabled = false
@@ -286,37 +332,41 @@ extension RFIDDetailVC {
         }
     }
     
-    private func uploadIDCard(data:Data, dismay:Int) {
-        let params = ["quiteexpected":"1",
-                      "putit":"",
-                      "dismay":"",
-                      "woods":"",
-                      "elf":"",
-                      "thanksmost":"",
-                      "pixie":"",
-                      "darkalmost":""]
-        /*
-         {
-         "quiteexpected": 1, // 图片来源:1相册 2:拍照上传
-         "putit": 1, // 产品id
-         "dismay": 10, //10:人像,11身份证正面 12:身份证反面
-         "woods": "xxxxxxx", // 本地上传图片地址
-         "elf": "xxxxxxxxx", // 活体 sdk 获取id
-         "thanksmost": "xxxxxxxxx", // 混淆字段
-         "pixie": "3", // 活体类型advanceLog会下发，原样给过来就行; 1.自拍 2.望为 3.adv
-         "darkalmost": "" //卡类型 UMID/SSS/TIN/PASSPORT/DRIVINGLICENSE/PRC/POSTAL/Voter/PhilHealth
-         }
-         */
-        RapidApi.shared.getIDUploadData(para: params).subscribe(onNext: { obj in
-            guard let json = obj.dictionary?["trouble"] as? [String:Any], let model = RFUploadResultModel.deserialize(from: json) else {
+    enum __FromSource: Int {
+        case photo = 1
+        case camera = 2
+    }
+
+    private func uploadIDCard(source: __FromSource, data: Data, dismay: Int) {
+        let params = ["quiteexpected": source.rawValue,
+                      "putit": "123",
+                      "dismay": dismay,
+                      "woods": data,
+                      "elf": "",
+                      "thanksmost": "xxx",
+                      "pixie": "3",
+                      "darkalmost": "UMID"] as [String: Any]
+        
+        RapidApi.shared.getIDUploadData(para: params).subscribe(onNext: { [weak self] obj in
+            guard let json = obj.dictionary?["trouble"] as? [String: Any], let model = RFUploadResultModel.deserialize(from: json) else {
                 return
             }
             model.type = dismay
-            
-        }, onError: { err in
+            self?.renderPickerResultData(data: model)
+        }, onError: { _ in
             
         }).disposed(by: bag)
-        
     }
     
+    private func renderPickerResultData(data:RFUploadResultModel) {
+        if data.type == 11 ||
+            data.type == 12 {
+            cardView.sd_setImage(with: URL(string: data.littleroom ?? ""))
+        } else {
+            face_verifyImgV.isHidden = false
+            face_recognitionLb.isHidden = true
+            face_recognitionImgV.sd_setImage(with: URL(string: data.littleroom ?? ""))
+        }
+    }
 }
+

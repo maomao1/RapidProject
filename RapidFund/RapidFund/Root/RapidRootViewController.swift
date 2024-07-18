@@ -194,7 +194,7 @@ extension RapidRootViewController {
         guard let nc = selectedViewController as? RapidBaseNavgationController else {
             return
         }
-        nc.pushViewController(RFFlowVC(), animated: true)
+        
     }
     
 }

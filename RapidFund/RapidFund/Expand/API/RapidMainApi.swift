@@ -204,6 +204,15 @@ extension RapidApi {
             completionHandler: { $0 })
     }
     
+    func productDetail(para: Parameters) -> Observable<JSON> {
+        return request(
+            path: BaseURl + RapidApiConstantUrl.productDetail,
+            parameters: para,
+            method: .post,
+            encoding: URLEncoding.default,
+            completionHandler: { $0 })
+    }
+    
     
 }
 

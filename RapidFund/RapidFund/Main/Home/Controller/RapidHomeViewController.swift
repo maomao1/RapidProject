@@ -360,9 +360,16 @@ extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let vc = RPFWebViewController()
-        vc.viewModel = RPFWebViewModel(urlString: "https://www.baidu.com")
-        self.navigationController?.pushViewController(vc, animated: true)
+        let product = self.viewModel.homeModel.value?.products?[indexPath.section]
+        guard let product = product else {
+            return
+        }
+        
+        let vc = RFFlowVC(product_id: product.id)
+        navigationController?.pushViewController(vc, animated: true)
+//        let vc = RPFWebViewController()
+//        vc.viewModel = RPFWebViewModel(urlString: "https://www.baidu.com")
+//        self.navigationController?.pushViewController(vc, animated: true)
        
     }
     
