@@ -12,9 +12,10 @@ class RFBankCardListVC: RapidBaseViewController {
     private let tb = UITableView(frame: .zero, style: .plain)
     private var dataSource: [RFBankListModel] = []
     private let order_id: String?
-    
-    init(orderId: String? = nil) {
+    private let productId:String
+    init(orderId: String? = nil, productId:String) {
         self.order_id = orderId
+        self.productId = productId
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -25,8 +26,11 @@ class RFBankCardListVC: RapidBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setLeftBarButtonItem()
         setup()
         titleNav.text = "Select Account"
+        self.rightBtn.isHidden = true
+        self.view.bringSubviewToFront(customNavView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -35,6 +39,12 @@ class RFBankCardListVC: RapidBaseViewController {
     }
     
     private func setup() {
+        let bgView = UIImageView(image: "bankcard_list_bg".image)
+        view.addSubview(bgView)
+        bgView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        tb.backgroundColor = .clear
         tb.dataSource = self
         tb.delegate = self
         tb.register(RFBankCardListCell.self, forCellReuseIdentifier: "RFBankCardListCell")
@@ -54,7 +64,7 @@ class RFBankCardListVC: RapidBaseViewController {
         nextBtn.addTapGesture {}
         view.addSubview(nextBtn)
         nextBtn.snp.makeConstraints { make in
-            make.bottom.equalTo(20.rf)
+            make.bottom.equalTo(-20.rf)
             make.centerX.equalToSuperview()
         }
     }
@@ -92,7 +102,7 @@ class RFBankCardListVC: RapidBaseViewController {
     
     private func loadData() {
         RapidApi.shared.bankList(para: [:]).subscribe(onNext: { [weak self] obj in
-            guard let json = obj.dictionaryObject, let trouble = json["trouble"] as? [String: Any], let army = trouble["army"] as? [Any], let models = [RFBankListModel].deserialize(from: army)?.compactMap({ $0 }) else { return }
+            guard let army = obj.dictionaryObject?["army"] as? [Any], let models = [RFBankListModel].deserialize(from: army)?.compactMap({ $0 }) else { return }
             self?.dataSource.removeAll()
             self?.dataSource.append(contentsOf: models)
             self?.tb.reloadData()
@@ -170,9 +180,9 @@ extension RFBankCardListVC: UITableViewDelegate, UITableViewDataSource {
     
     private func getBankConfig() {
         RapidApi.shared.getBindCardInfo(para: ["whisked": "0", "frisked": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
-            guard let json = obj.dictionaryObject, let trouble = json["trouble"] as? [String: Any], let model = RFBankCfg.deserialize(from: trouble) else { return }
+            guard let model = RFBankCfg.deserialize(from: obj.dictionaryObject) else { return }
             guard let self = self else { return }
-            let alert = RFBankMgrAlert(config: model, product_id: "1")
+            let alert = RFBankMgrAlert(config: model, product_id: self.productId)
             alert.show(on: self.view)
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)

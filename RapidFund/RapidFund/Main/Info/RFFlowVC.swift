@@ -102,7 +102,7 @@ class RFFlowVC: RapidBaseViewController {
         } else if index == 3 {
             navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: product_id), animated: true)
         } else if index == 4 {
-            navigationController?.pushViewController(RFBankCardListVC(), animated: true)
+            navigationController?.pushViewController(RFBankCardListVC(productId: product_id), animated: true)
         }
     }
     

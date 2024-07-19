@@ -195,7 +195,7 @@ extension RapidRootViewController {
             return
         }
         
-        let vc = RFContactListVC(productId: "1")
+        let vc = RFBankCardListVC(orderId: "", productId: "1")
         nc.pushViewController(vc, animated: true)
     }
     

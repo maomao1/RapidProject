@@ -51,7 +51,7 @@ class RFBankCfg: HandyJSON {
         
         
         func getCardType()->RFBankType {
-            if self.hastily == "RFBankType" {
+            if self.hastily == "E-wallet" {
                 return .Wallet
             }
             if self.hastily == "Bank" {

@@ -116,7 +116,8 @@ class RFBankEditItem:UIView {
         tf.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalTo(16.rf)
-            
+            make.top.bottom.equalToSuperview()
+            make.right.equalTo(-100.rf)
         }
         
         
@@ -132,7 +133,7 @@ class RFBankEditItem:UIView {
     
     func fill(_ text:String?) {
         guard let text = text else { return  }
-        tf.attributedPlaceholder = NSAttributedString(string: text, attributes: [.font:14.font,.foregroundColor:0x111111.color])
+        tf.attributedPlaceholder = NSAttributedString(string: text, attributes: [.font:14.font,.foregroundColor:0x999999.color])
     }
     
     @objc private func nextAction() {
@@ -172,7 +173,7 @@ class RFBankDesItem:UIView {
         textLb.snp.makeConstraints { make in
             make.left.equalTo(24.rf)
             make.right.equalTo(-5.rf)
-            make.centerY.equalToSuperview()
+            make.centerY.equalTo(self.snp.centerY).offset(-4.rf)
         }
     }
     

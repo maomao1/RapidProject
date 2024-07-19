@@ -172,7 +172,7 @@ extension RapidApi {
         return request(
             path: BaseURl + RapidApiConstantUrl.getBindBankInfo,
             parameters: para,
-            method: .post,
+            method: .get,
             encoding: URLEncoding.default,
             completionHandler: { $0 })
     }

@@ -174,7 +174,7 @@ class RFPInVC: RapidBaseViewController {
         if route == .personal_info {
             navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: productId), animated: true)
         } else {
-            navigationController?.pushViewController(RFBankCardListVC(), animated: true)
+            navigationController?.pushViewController(RFBankCardListVC(orderId: nil, productId: productId), animated: true)
         }
     }
     

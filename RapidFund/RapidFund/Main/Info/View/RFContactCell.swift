@@ -96,7 +96,7 @@ class RFContactCell: UITableViewCell {
         self.model?.bumped?.isEmpty == true else {
             return
         }
-        
+        openConatctPicker()
     }
     
     private var model:RFContactModel?
@@ -125,7 +125,7 @@ extension RFContactCell:CNContactPickerDelegate {
         let numStr = num?.label
         self.model?.bumped = numStr
         picker.dismiss(animated: true)
-        guard let numStr = numStr else { return  }
+        guard let _ = numStr else { return  }
         saveBlock?()
         
     }

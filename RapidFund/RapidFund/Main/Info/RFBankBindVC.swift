@@ -43,22 +43,22 @@ class RFBankBindVC: RapidBaseViewController {
         let stackSubs: [UIView]
 
         if category == .Wallet {
-            let wallet = self.model.munched.first(where: { $0.yourtoboggans == "chncd" })
+            let wallet = self.model.munched.first(where: { $0.yourtoboggans == "bush" })
             stackSubs = [walletItem, accountItem, numItem, walletDesItem, name1Item, name2Item, name3Item, nameDesItem]
             walletItem.model = wallet
             if let iconCfg = wallet?.snatch.first(where: { $0.dismay == self.model.dismay }) {
                 walletItem.fill(iconCfg)
             }
-            let accCfg = self.model.munched.first(where: { $0.yourtoboggans == "harbor" })
+            let accCfg = self.model.munched.first(where: { $0.yourtoboggans == "peeping" })
             accountItem.fill(accCfg?.sounding ?? "")
-            let acc2Cfg = self.model.munched.first(where: { $0.yourtoboggans == "november" })
+            let acc2Cfg = self.model.munched.first(where: { $0.yourtoboggans == "hid" })
             numItem.fill(acc2Cfg?.sounding ?? "")
             walletDesItem.fill("Ensure that the account informations are correct,other the tranfer may fail.")
-            let name1Cfg = self.model.munched.first(where: { $0.yourtoboggans == "firstName" })
+            let name1Cfg = self.model.munched.first(where: { $0.yourtoboggans == "child" })
             name1Item.fill(name1Cfg?.sounding)
-            let name2Cfg = self.model.munched.first(where: { $0.yourtoboggans == "middleName" })
+            let name2Cfg = self.model.munched.first(where: { $0.yourtoboggans == "frozen" })
             name2Item.fill(name2Cfg?.sounding)
-            let name3Cfg = self.model.munched.first(where: { $0.yourtoboggans == "lastName" })
+            let name3Cfg = self.model.munched.first(where: { $0.yourtoboggans == "beabsolutely" })
             name3Item.fill(name3Cfg?.sounding)
             nameDesItem.fill("After your confirmation,this account will be used as receipt account to receive the funds")
             self.walletItem.block = { [weak self] in
@@ -78,11 +78,11 @@ class RFBankBindVC: RapidBaseViewController {
         } else {
             stackSubs = [walletItem, accountItem, numItem, walletDesItem]
             walletItem.isHiddenIcon = true
-            let cfg1 = self.model.munched.first(where: { $0.yourtoboggans == "chncd" })
+            let cfg1 = self.model.munched.first(where: { $0.yourtoboggans == "bush" })
             walletItem.textLb.text = cfg1?.sounding
-            let cfg2 = self.model.munched.first(where: { $0.yourtoboggans == "november" })
+            let cfg2 = self.model.munched.first(where: { $0.yourtoboggans == "peeping" })
             accountItem.fill(cfg2?.sounding)
-            let cfg3 = self.model.munched.first(where: { $0.yourtoboggans == "harbor" })
+            let cfg3 = self.model.munched.first(where: { $0.yourtoboggans == "hid" })
             numItem.fill(cfg3?.sounding)
             walletDesItem.fill("After your confirmation,this account will be used as receipt account to receive the funds")
         }
