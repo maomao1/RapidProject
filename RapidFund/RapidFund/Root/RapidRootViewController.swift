@@ -195,6 +195,8 @@ extension RapidRootViewController {
             return
         }
         
+        let vc = RFContactListVC(productId: "1")
+        nc.pushViewController(vc, animated: true)
     }
     
 }

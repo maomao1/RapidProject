@@ -103,7 +103,7 @@ class RFContactCell: UITableViewCell {
     
     func fill(_ data:RFContactModel) {
         self.model = data
-        titleLb.text = "Contact\(data.indexPath.section)"
+        titleLb.text = "Contact\(data.indexPath.section + 1)"
         lb2.text = data.bumped
         lb1.text = data.knee.first(where: {$0.wasan == data.fany })?.wasan
     }

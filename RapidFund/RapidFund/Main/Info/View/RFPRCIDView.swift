@@ -43,5 +43,11 @@ class RFPRCIDView: UIView {
         }
     }
 
-    @objc private func btnClick() {}
+    func fill(_ text:String?) {
+        textLb.text = text
+    }
+    var block:(()->Void)?
+    @objc private func btnClick() {
+        self.block?()
+    }
 }

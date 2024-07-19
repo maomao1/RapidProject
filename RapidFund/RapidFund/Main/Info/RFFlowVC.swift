@@ -94,13 +94,13 @@ class RFFlowVC: RapidBaseViewController {
     
         guard let index = index else { return }
         if index == 0 {
-            navigationController?.pushViewController(RFIDDetailVC(), animated: true)
+            navigationController?.pushViewController(RFIDDetailVC(productId: product_id), animated: true)
         } else if index == 1 {
             navigationController?.pushViewController(RFFRVC(), animated: true)
         } else if index == 2 {
-            navigationController?.pushViewController(RFPInVC(route: .personal_info), animated: true)
+            navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: product_id), animated: true)
         } else if index == 3 {
-            navigationController?.pushViewController(RFPInVC(route: .employment_info), animated: true)
+            navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: product_id), animated: true)
         } else if index == 4 {
             navigationController?.pushViewController(RFBankCardListVC(), animated: true)
         }
@@ -115,8 +115,8 @@ class RFFlowVC: RapidBaseViewController {
 
 extension RFFlowVC {
     private func loadData() {
-        RapidApi.shared.productDetail(para: ["putit": self.product_id, "cheerfulindeed": getRPFRandom(), "noseoutside": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
-            guard let json = obj.dictionaryObject, let trouble = json["trouble"] as? [String: Any], let started = trouble["started"] as? [String: Any], let model = RFProductDetailModel.deserialize(from: started) else { return }
+        RapidApi.shared.productDetail(para: ["putit": self.product_id, "interrupted": getRPFRandom(), "means": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
+            guard let json = obj.dictionaryObject, let started = json["started"] as? [String: Any], let model = RFProductDetailModel.deserialize(from: started) else { return }
             self?.render(model)
         }, onError: { [weak self] err in
             MBProgressHUD.showError(err.localizedDescription)

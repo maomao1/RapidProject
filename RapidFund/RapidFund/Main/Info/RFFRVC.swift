@@ -147,12 +147,12 @@ extension RFFRVC {
     private func render(model: RFAuthFRModel) {
         self.model = model
         
-        if model.trouble?.tyou == 1 {
+        if model.tyou == 1 {
             addBtn.setImage("face_add_1".image, for: .normal)
             addBtn.isUserInteractionEnabled = false
         }
-        if model.trouble?.littleroom.isEmpty == false {
-            faceView.sd_setImage(with: URL(string: model.trouble?.littleroom ?? ""), placeholderImage: "face_recognition".image, context: nil)
+        if model.littleroom.isEmpty == false {
+            faceView.sd_setImage(with: URL(string: model.littleroom), placeholderImage: "face_recognition".image, context: nil)
         }
     }
     
@@ -189,7 +189,7 @@ extension RFFRVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
                       "darkalmost": "UMID"] as [String: Any]
         
         RapidApi.shared.getIDUploadData(para: params).subscribe(onNext: { [weak self] obj in
-            guard let json = obj.dictionary?["trouble"] as? [String: Any], let model = RFUploadResultModel.deserialize(from: json) else {
+            guard let model = RFUploadResultModel.deserialize(from: obj.dictionaryObject) else {
                 return
             }
             model.type = dismay

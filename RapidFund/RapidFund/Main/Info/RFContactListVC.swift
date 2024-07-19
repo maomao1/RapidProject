@@ -30,6 +30,7 @@ class RFContactListVC: RapidBaseViewController {
         titleNav.text = "Contact Information"
         setNavImageTitleWhite(isWhite: true)
         rightBtn.isHidden = true
+        loadData()
     }
     
     private func setup() {
@@ -62,7 +63,7 @@ class RFContactListVC: RapidBaseViewController {
 
     private func loadData() {
         RapidApi.shared.getContactsInfo(para: ["putit": productId, "bear": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
-            guard let trouble = obj.dictionaryObject?["trouble"] as? [String:Any], let onto = trouble["onto"] as? [String: Any], let army = onto["army"] as? [Any], let models = [RFContactModel].deserialize(from: army)?.compactMap({ $0 }) else {
+            guard let onto = obj.dictionaryObject?["onto"] as? [String: Any], let army = onto["army"] as? [Any], let models = [RFContactModel].deserialize(from: army)?.compactMap({ $0 }) else {
                 return
             }
             self?.dataSource.removeAll()

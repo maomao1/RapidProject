@@ -12,6 +12,10 @@ class RFInfoItem: UIView {
         self.contentView.textLb.text = des
     }
     
+    var value:String {
+        return self.contentView.textLb.text ?? ""
+    }
+    
     init(_ title: String, placeholder: String? = nil, hiddenNext: Bool = false) {
         super.init(frame: .zero)
         setup(placeholder: placeholder, hiddenNext: hiddenNext)

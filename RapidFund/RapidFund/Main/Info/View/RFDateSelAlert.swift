@@ -86,9 +86,10 @@ class RFDateSelAlert: XYZAlertView {
     @objc private func backAction() {
         dismiss(withAnimation: true)
     }
-    
+    var saveBlock:((Date)->Void)?
     @objc private func rightAction() {
-        
+        saveBlock?(datePicker.date)
+        dismiss(withAnimation: true)
     }
     
     override func show(on view: UIView) {
