@@ -13,16 +13,42 @@ class RFBankItem: UIView {
         super.init(frame: frame)
         setup()
     }
+    var canEditing = false
+    var model:RFBankCfg.__MunchedModel?
+    var snatch:RFBankCfg.__SnatchItem?
+    func fill(_ data:RFBankCfg.__SnatchItem) {
+        self.snatch = data
+        iconImgV.sd_setImage(with: URL(string: data.toy))
+        textLb.text = data.wasan
+    }
+    
+    var isHiddenIcon:Bool = false {
+        didSet {
+            if isHiddenIcon {
+                iconImgV.removeFromSuperview()
+                
+                textLb.snp.remakeConstraints { make in
+                    make.centerY.equalToSuperview()
+                    make.left.equalTo(16.rf)   
+                }
+                
+            }
+            
+            
+        }
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     private let iconImgV = UIImageView()
-    private let textLb = UILabel().font(14.font).textColor(0x111111.color)
+    let textLb = UITextField()
     private func setup() {
         self.clipsCornerRadius(Float(10.rf))
         self.backgroundColor = UIColor(rgbHex: 0x000000,alpha: 0.05)
-        
+        textLb.delegate = self
+        textLb.font = 14.font
+        textLb.textColor = 0x111111.color
         addSubview(iconImgV)
         addSubview(textLb)
         iconImgV.snp.makeConstraints { make in
@@ -49,9 +75,19 @@ class RFBankItem: UIView {
         }
     }
     
+    var block:(()->Void)?
+    
     @objc private func nextAction() {
-        
+        self.block?()
     }
+}
+
+extension RFBankItem:UITextFieldDelegate {
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        return canEditing
+    }
+    
 }
 
 class RFBankEditItem:UIView {
@@ -63,7 +99,9 @@ class RFBankEditItem:UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+    var value:String {
+        return tf.text ?? ""
+    }
     private let tf = UITextField()
     private func setup() {
         self.snp.makeConstraints { make in
@@ -92,6 +130,11 @@ class RFBankEditItem:UIView {
         }
     }
     
+    func fill(_ text:String?) {
+        guard let text = text else { return  }
+        tf.attributedPlaceholder = NSAttributedString(string: text, attributes: [.font:14.font,.foregroundColor:0x111111.color])
+    }
+    
     @objc private func nextAction() {
         
     }
@@ -99,6 +142,9 @@ class RFBankEditItem:UIView {
 
 class RFBankDesItem:UIView {
     
+    func fill(_ text:String) {
+        textLb.text = text
+    }
     private let textLb = UILabel().font(12.font).textColor(0x151515.color).numberOfLines(0)
     override init(frame: CGRect) {
         super.init(frame: frame)

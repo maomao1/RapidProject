@@ -85,15 +85,14 @@ class RFBankCardListVC: RapidBaseViewController {
             guard let self = self else {
                 return
             }
-            let bankAlert = RFBankMgrAlert()
-            bankAlert.show(on: self.view)
+            self.getBankConfig()
         }
         return view
     }
     
     private func loadData() {
         RapidApi.shared.bankList(para: [:]).subscribe(onNext: { [weak self] obj in
-            guard let json = obj.dictionary, let trouble = json["trouble"] as? [String: Any], let army = trouble["army"] as? [Any], let models = [RFBankListModel].deserialize(from: army)?.compactMap({ $0 }) else { return }
+            guard let json = obj.dictionaryObject, let trouble = json["trouble"] as? [String: Any], let army = trouble["army"] as? [Any], let models = [RFBankListModel].deserialize(from: army)?.compactMap({ $0 }) else { return }
             self?.dataSource.removeAll()
             self?.dataSource.append(contentsOf: models)
             self?.tb.reloadData()
@@ -149,7 +148,7 @@ extension RFBankCardListVC: UITableViewDelegate, UITableViewDataSource {
         let card = dataSource[indexPath.section].forgot[indexPath.row]
         RapidApi.shared.changeBankCardInfo(para: ["nosing": card.nosing, "snapped": order_id ?? ""]).subscribe(onNext: { [weak self] obj in
             self?.refreshSelectedCard(card)
-            guard let json = obj.dictionary?["trouble"] as? [String: Any], let smelt = json["smelt"] as? String, smelt.isEmpty == false else { return }
+            guard let json = obj.dictionaryObject?["trouble"] as? [String: Any], let smelt = json["smelt"] as? String, smelt.isEmpty == false else { return }
             
             let vc = RPFWebViewController()
             vc.viewModel = RPFWebViewModel(urlString: smelt)
@@ -159,12 +158,24 @@ extension RFBankCardListVC: UITableViewDelegate, UITableViewDataSource {
         }).disposed(by: bag)
     }
     
-    private func refreshSelectedCard(_ bank:RFBankListModel.__BankInfo) {
+    private func refreshSelectedCard(_ bank: RFBankListModel.__BankInfo) {
         self.dataSource.forEach { obj in
             obj.forgot.forEach { card in
                 card.isSelected = false
             }
         }
         bank.isSelected = true
+        tb.reloadData()
+    }
+    
+    private func getBankConfig() {
+        RapidApi.shared.getBindCardInfo(para: ["whisked": "0", "frisked": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
+            guard let json = obj.dictionaryObject, let trouble = json["trouble"] as? [String: Any], let model = RFBankCfg.deserialize(from: trouble) else { return }
+            guard let self = self else { return }
+            let alert = RFBankMgrAlert(config: model, product_id: "1")
+            alert.show(on: self.view)
+        }, onError: { err in
+            MBProgressHUD.showError(err.localizedDescription)
+        }).disposed(by: bag)
     }
 }

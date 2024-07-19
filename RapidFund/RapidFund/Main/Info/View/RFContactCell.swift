@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ContactsUI
 
 class RFContactCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -77,7 +78,7 @@ class RFContactCell: UITableViewCell {
         
         let btn = UIButton(type: .custom)
         btn.setImage(img, for: .normal)
-        btn.addTarget(self, action: #selector(btnClick), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(btnClick(sender:)), for: .touchUpInside)
         view.addSubview(btn)
         btn.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -86,5 +87,47 @@ class RFContactCell: UITableViewCell {
         return (view, tf, btn)
     }
     
-    @objc private func btnClick() {}
+    @objc private func btnClick(sender:UIButton) {
+        
+        if sender == btn1 {
+            return
+        }
+        guard self.model?.bumped == nil ||
+        self.model?.bumped?.isEmpty == true else {
+            return
+        }
+        
+    }
+    
+    private var model:RFContactModel?
+    
+    func fill(_ data:RFContactModel) {
+        self.model = data
+        titleLb.text = "Contact\(data.indexPath.section)"
+        lb2.text = data.bumped
+        lb1.text = data.knee.first(where: {$0.wasan == data.fany })?.wasan
+    }
+    
+    private func openConatctPicker() {
+        let picker = CNContactPickerViewController()
+        picker.delegate = self
+        self.viewController?.present(picker, animated: true)
+        
+    }
+    
+    var saveBlock:(()->Void)?
+}
+
+extension RFContactCell:CNContactPickerDelegate {
+    
+    func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
+        let num = contact.phoneNumbers.first
+        let numStr = num?.label
+        self.model?.bumped = numStr
+        picker.dismiss(animated: true)
+        guard let numStr = numStr else { return  }
+        saveBlock?()
+        
+    }
+    
 }

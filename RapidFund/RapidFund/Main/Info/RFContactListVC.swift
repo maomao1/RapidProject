@@ -5,11 +5,21 @@
 //  Created by C on 2024/7/12.
 //
 
+import MBProgressHUD
 import UIKit
 
 class RFContactListVC: RapidBaseViewController {
-
+    private let productId: String
+    init(productId: String) {
+        self.productId = productId
+        super.init(nibName: nil, bundle: nil)
+    }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private var dataSource: [RFContactModel] = []
     private let tb = UITableView(frame: .zero, style: .plain)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +30,6 @@ class RFContactListVC: RapidBaseViewController {
         titleNav.text = "Contact Information"
         setNavImageTitleWhite(isWhite: true)
         rightBtn.isHidden = true
-        
     }
     
     private func setup() {
@@ -49,22 +58,31 @@ class RFContactListVC: RapidBaseViewController {
             make.edges.equalTo(UIEdgeInsets(top: 0, left: 24.rf, bottom: 0, right: 24.rf))
         }
         tb.contentOffset = CGPoint(x: 0, y: -268.rf)
-        
-        
-        
     }
 
-   
-
+    private func loadData() {
+        RapidApi.shared.getContactsInfo(para: ["putit": productId, "bear": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
+            guard let trouble = obj.dictionaryObject?["trouble"] as? [String:Any], let onto = trouble["onto"] as? [String: Any], let army = onto["army"] as? [Any], let models = [RFContactModel].deserialize(from: army)?.compactMap({ $0 }) else {
+                return
+            }
+            self?.dataSource.removeAll()
+            self?.dataSource.append(contentsOf: models)
+            self?.tb.reloadData()
+            
+        }, onError: { [weak self] err in
+            MBProgressHUD.showError(err.localizedDescription)
+            self?.navigationController?.popViewController(animated: true)
+        }).disposed(by: bag)
+    }
 }
 
-extension RFContactListVC:UITableViewDelegate, UITableViewDataSource {
+extension RFContactListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        10
+        return dataSource.count
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -78,7 +96,26 @@ extension RFContactListVC:UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let model = dataSource[indexPath.section]
+        model.indexPath = indexPath
         let cell = tableView.dequeueReusableCell(withIdentifier: "RFContactCell", for: indexPath) as! RFContactCell
+        cell.fill(model)
+        cell.saveBlock = { [weak self] in
+            self?.saveAction()
+        }
         return cell
+    }
+    
+    private func saveAction() {
+        var json: [[String: Any]] = []
+        self.dataSource.forEach { obj in
+            json.append(["bumped": obj.bumped ?? "", "wasan": obj.wasan ?? "", "fany": obj.fany, "disappear": obj.disappear ?? ""])
+        }
+        RapidApi.shared.saveContactInfo(para: ["putit": self.productId, "trouble": json.toJSONString ?? ""]).subscribe(onNext: { [weak self] _ in
+            self?.tb.reloadData()
+        }, onError: { [weak self] err in
+            MBProgressHUD.showError(err.localizedDescription)
+            self?.loadData()
+        }).disposed(by: bag)
     }
 }

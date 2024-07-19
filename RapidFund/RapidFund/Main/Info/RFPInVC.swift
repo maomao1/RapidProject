@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 enum RFRoute {
     case personal_info
@@ -13,7 +14,7 @@ enum RFRoute {
 }
 
 class RFPInVC: RapidBaseViewController {
-    private var model:RFTwoUserDataModel?
+    private var models:[RFTwoUserDataModel] = []
     private let route:RFRoute
     init(route: RFRoute) {
         self.route = route
@@ -91,6 +92,11 @@ class RFPInVC: RapidBaseViewController {
         if route == .personal_info {
             loadData()
         }
+        
+        addressItem.btnBlock = { [weak self] in
+            self?.getAddressCfgs()
+        }
+        
     }
     
     private func getResourceConfig()->(UIImage?, UIImage?) {
@@ -108,10 +114,8 @@ class RFPInVC: RapidBaseViewController {
             guard let json = obj.dictionaryObject?["trouble"] as? [String:Any], let list = json["munched"] as? [Any], let models = [RFTwoUserDataModel].deserialize(from: list)?.compactMap({ $0 }) else {
                 return
             }
-            guard let m = models.first else {
-                return
-            }
-            self?.render(m)
+            self?.models = models
+            self?.render()
         },onError:{ err in
             print(err)
         }).disposed(by: bag)
@@ -119,16 +123,42 @@ class RFPInVC: RapidBaseViewController {
         
     }
     
-    private func render(_ item:RFTwoUserDataModel) {
-        self.model = item
-        if item.theboys == "1" {
-            genderItem
+    private func render() {
+        let genderItem = models.first(where: { $0.hastily == RFKeyValue.gender.rawValue })
+        if let genderItem = genderItem {
+            self.genderItem.isMale = genderItem.theboys == "1"
         }
-        
+        let marryItem = models.first(where: { $0.hastily == RFKeyValue.marry.rawValue })
+        if let marryItem = marryItem {
+            self.relaItem.update(marryItem.snatch.first(where: { $0.dismay == marryItem.dismay })?.wasan ?? "")
+        }
+        let passport = models.first(where: { $0.hastily == RFKeyValue.passpord.rawValue })
+        if let passport = passport {
+            passportItem.update(passport.marking ?? "")
+        }
+        let address = models.first(where: { $0.hastily == RFKeyValue.address.rawValue })
+        if let address = address {
+            addressItem.update(address.upthe ?? "")
+        }
         
     }
     
     @objc private func nextAction() {
-        navigationController?.pushViewController(RFPInVC(route: .employment_info), animated: true)
+        if route == .personal_info {
+            navigationController?.pushViewController(RFPInVC(route: .employment_info), animated: true)
+        } else {
+            navigationController?.pushViewController(RFBankCardListVC(), animated: true)
+        }
+    }
+    
+    private func getAddressCfgs() {
+        RapidApi.shared.addressDetail(para: [:]).subscribe (onNext: { [weak self] obj in
+            guard let json = obj.dictionaryObject, let trouble = json["trouble"] as? [String:Any], let army = trouble["army"] as? [Any], let models = [RFAddressDetail].deserialize(from: army)?.compactMap({ $0 }) else { return  }
+            guard let self = self else { return }
+            let alert = RFAddressAlert(address: models)
+            alert.show(on: self.view)
+        },onError: { err in
+            MBProgressHUD.showError(err.localizedDescription)
+        }).disposed(by: bag)
     }
 }

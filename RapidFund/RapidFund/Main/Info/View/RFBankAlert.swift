@@ -11,9 +11,10 @@ import UIKit
 class RFBankAlert: XYZAlertView {
     
 
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    private let contents:[String]
+    init(strings:[String]) {
+        self.contents = strings
+        super.init(frame: .zero)
         setup()
     }
     
@@ -64,6 +65,8 @@ class RFBankAlert: XYZAlertView {
             super.dismiss(withAnimation: false)
         }
     }
+    
+    var selectedBlock:((Int)->Void)?
 }
 
 
@@ -74,7 +77,7 @@ extension RFBankAlert:UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 10
+        return self.contents.count
     }
     
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
@@ -83,7 +86,7 @@ extension RFBankAlert:UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         let cont = UIView()
-        let lb = UILabel().font(20.font).textColor(0x111111.color).textAlignment(.center).text("ajshuasgiha")
+        let lb = UILabel().font(20.font).textColor(0x111111.color).textAlignment(.center).text(self.contents[row])
         cont.addSubview(lb)
         lb.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -94,5 +97,9 @@ extension RFBankAlert:UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return 52.rf
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        self.selectedBlock?(row)
     }
 }

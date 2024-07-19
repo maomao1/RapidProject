@@ -10,17 +10,29 @@ import JXSegmentedView
 import JXPagingView
 
 class RFBankMgrAlert: XYZAlertView {
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    private let cfg:RFBankCfg
+    private let productId:String
+    init(config: RFBankCfg, product_id:String) {
+        self.cfg = config
+        self.productId = product_id
+        super.init(frame: .zero)
         setup()
-        
         
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private func getTitles() -> [String] {
+        var titls = [String]()
+        cfg.munched.forEach { m in
+            titls.append(m.hastily)
+        }
+        
+        return titls
+    }
+    
     private let topView = UIView()
     private func setup() {
         self.backgroundColor = UIColor(rgbHex: 0x000000,alpha: 0.8)
@@ -61,7 +73,7 @@ class RFBankMgrAlert: XYZAlertView {
      
     fileprivate lazy var segmentedTitleDataSource: JXSegmentedTitleDataSource = {
         let dataSource = JXSegmentedTitleDataSource()
-        dataSource.titles = ["E-WALLET","BANK","Cash Pickup"]
+        dataSource.titles = getTitles()
         dataSource.titleNormalFont = 16.font
         dataSource.titleSelectedColor = 0x111111.color
         dataSource.titleNormalColor = UIColor(rgbHex: 0x111111,alpha: 0.23)
@@ -185,12 +197,7 @@ extension RFBankMgrAlert: JXSegmentedListContainerViewDataSource {
     }
 
     func listContainerView(_: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
-        if index == 0 {
-            return RFBankBindVC(bankCategory: .Wallet)
-        }
-        if index == 1 {
-            return RFBankBindVC(bankCategory: .Bank)
-        }
-       return RFBankBindVC(bankCategory: .CashPickup)
+        let model = self.cfg.munched[index]
+        return RFBankBindVC(bankCategory: model.getCardType(), data: model, productId: productId)
     }
 }

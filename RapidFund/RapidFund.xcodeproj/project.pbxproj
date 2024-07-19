@@ -18,6 +18,9 @@
 		026A7B6C2C490440008EAD52 /* RFBankCardListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A7B6B2C490440008EAD52 /* RFBankCardListVC.swift */; };
 		026A7B6E2C490586008EAD52 /* RFBankCardListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A7B6D2C490586008EAD52 /* RFBankCardListCell.swift */; };
 		026A7B702C4912EE008EAD52 /* RFBankListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A7B6F2C4912EE008EAD52 /* RFBankListModel.swift */; };
+		026A7B722C4A40B5008EAD52 /* ContactsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026A7B712C4A40B5008EAD52 /* ContactsUI.framework */; };
+		026A7B742C4A50C0008EAD52 /* RFAddressDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A7B732C4A50C0008EAD52 /* RFAddressDetail.swift */; };
+		026A7B762C4A54E0008EAD52 /* RFBankCfg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A7B752C4A54E0008EAD52 /* RFBankCfg.swift */; };
 		029A1E4F2C3FB6B900CAA29C /* RFBankAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029A1E4E2C3FB6B900CAA29C /* RFBankAlert.swift */; };
 		02C3BAEB2C3D3F9F001B4107 /* RFFlowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAEA2C3D3F9F001B4107 /* RFFlowVC.swift */; };
 		02C3BAED2C3D40DD001B4107 /* RFLoadProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAEC2C3D40DD001B4107 /* RFLoadProgressView.swift */; };
@@ -130,6 +133,9 @@
 		026A7B6B2C490440008EAD52 /* RFBankCardListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFBankCardListVC.swift; sourceTree = "<group>"; };
 		026A7B6D2C490586008EAD52 /* RFBankCardListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFBankCardListCell.swift; sourceTree = "<group>"; };
 		026A7B6F2C4912EE008EAD52 /* RFBankListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFBankListModel.swift; sourceTree = "<group>"; };
+		026A7B712C4A40B5008EAD52 /* ContactsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ContactsUI.framework; path = System/Library/Frameworks/ContactsUI.framework; sourceTree = SDKROOT; };
+		026A7B732C4A50C0008EAD52 /* RFAddressDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFAddressDetail.swift; sourceTree = "<group>"; };
+		026A7B752C4A54E0008EAD52 /* RFBankCfg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFBankCfg.swift; sourceTree = "<group>"; };
 		029A1E4E2C3FB6B900CAA29C /* RFBankAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFBankAlert.swift; sourceTree = "<group>"; };
 		02C3BAEA2C3D3F9F001B4107 /* RFFlowVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFFlowVC.swift; sourceTree = "<group>"; };
 		02C3BAEC2C3D40DD001B4107 /* RFLoadProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFLoadProgressView.swift; sourceTree = "<group>"; };
@@ -233,6 +239,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				026A7B722C4A40B5008EAD52 /* ContactsUI.framework in Frameworks */,
 				D20894E77090E15AC556F055 /* Pods_RapidFund.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,6 +272,8 @@
 				026A5B772C45216E00B8C15C /* RFContactModel.swift */,
 				026A5B7B2C48F46F00B8C15C /* RFProductDetailModel.swift */,
 				026A7B6F2C4912EE008EAD52 /* RFBankListModel.swift */,
+				026A7B732C4A50C0008EAD52 /* RFAddressDetail.swift */,
+				026A7B752C4A54E0008EAD52 /* RFBankCfg.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -709,6 +718,7 @@
 		3D93E43EAC0F0E0621C17374 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				026A7B712C4A40B5008EAD52 /* ContactsUI.framework */,
 				9A0679B2D7EE58B27A156FE6 /* Pods_RapidFund.framework */,
 				F61E2469C0BBFED2185A51D4 /* Pods_RapidFund_RapidFundUITests.framework */,
 				565CF0205FADBDEBAF62DE6C /* Pods_RapidFundTests.framework */,
@@ -976,6 +986,7 @@
 				026A5B782C45216E00B8C15C /* RFContactModel.swift in Sources */,
 				2E4D39442C35857B00C2271A /* UIColorExtension.swift in Sources */,
 				2EECB2052C3FE87800E59A1C /* RapidOrderListViewModel.swift in Sources */,
+				026A7B762C4A54E0008EAD52 /* RFBankCfg.swift in Sources */,
 				2E2779D12C451DD6007B4E74 /* RPFReportManager.swift in Sources */,
 				026A7B702C4912EE008EAD52 /* RFBankListModel.swift in Sources */,
 				2E4D39452C35857B00C2271A /* UIFontExtension.swift in Sources */,
@@ -1022,6 +1033,7 @@
 				2EBDADFA2C39BBCB00B3C845 /* RapidLoginViewModel.swift in Sources */,
 				02C3BAF12C3E2148001B4107 /* RFIDDetailVC.swift in Sources */,
 				2E4D39462C35857B00C2271A /* UIImageExtension.swift in Sources */,
+				026A7B742C4A50C0008EAD52 /* RFAddressDetail.swift in Sources */,
 				2E4D394B2C36A4BA00C2271A /* RapidBaseNavgationController.swift in Sources */,
 				2EBDADF62C39769E00B3C845 /* ProjectConfig.swift in Sources */,
 				2E4D39492C36A48000C2271A /* RapidBaseViewController.swift in Sources */,

@@ -365,7 +365,7 @@ extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
             return
         }
         
-        let vc = RFFlowVC(product_id: product.id)
+        let vc = RFFlowVC(product_id: "")
         navigationController?.pushViewController(vc, animated: true)
 //        let vc = RPFWebViewController()
 //        vc.viewModel = RPFWebViewModel(urlString: "https://www.baidu.com")

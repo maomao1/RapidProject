@@ -5,9 +5,9 @@
 //  Created by C on 2024/7/9.
 //
 import HandyJSON
+import MBProgressHUD
 import RxSwift
 import UIKit
-import MBProgressHUD
 
 class RFFlowVC: RapidBaseViewController {
     private let product_id: String
@@ -31,7 +31,8 @@ class RFFlowVC: RapidBaseViewController {
         setup()
         self.view.bringSubviewToFront(self.customNavView)
     }
-    private var items:[RFFlowItem] = []
+
+    private var items: [RFFlowItem] = []
     private let contentView = UIView()
     private let scrollView = UIScrollView()
     private let progressView = RFLoadProgressView()
@@ -75,8 +76,6 @@ class RFFlowVC: RapidBaseViewController {
             make.right.equalTo(-24.rf)
             make.height.equalTo(117.rf)
         }
-        
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -107,7 +106,7 @@ class RFFlowVC: RapidBaseViewController {
         }
     }
     
-    private var model:RFProductDetailModel?
+    private var model: RFProductDetailModel?
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         loadData()
@@ -116,16 +115,16 @@ class RFFlowVC: RapidBaseViewController {
 
 extension RFFlowVC {
     private func loadData() {
-        RapidApi.shared.productDetail(para: ["putit":self.product_id,"cheerfulindeed":getRPFRandom(), "noseoutside":getRPFRandom()]).subscribe( onNext: { [weak self] obj in
-            guard let json = obj.dictionary, let trouble = json["trouble"], let started = trouble["started"] as? [String:Any], let model = RFProductDetailModel.deserialize(from: started) else { return  }
+        RapidApi.shared.productDetail(para: ["putit": self.product_id, "cheerfulindeed": getRPFRandom(), "noseoutside": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
+            guard let json = obj.dictionaryObject, let trouble = json["trouble"] as? [String: Any], let started = trouble["started"] as? [String: Any], let model = RFProductDetailModel.deserialize(from: started) else { return }
             self?.render(model)
-        },onError: { [weak self] err in
+        }, onError: { [weak self] err in
             MBProgressHUD.showError(err.localizedDescription)
             self?.navigationController?.popViewController(animated: true)
         }).disposed(by: bag)
     }
     
-    private func render(_ data:RFProductDetailModel) {
+    private func render(_ data: RFProductDetailModel) {
         self.model = data
         guard let cfgs = data.hehad else { return }
         items.forEach { obj in
@@ -152,5 +151,4 @@ extension RFFlowVC {
             item.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction(sender:))))
         }
     }
-    
 }

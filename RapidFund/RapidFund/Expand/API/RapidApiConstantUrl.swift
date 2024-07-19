@@ -77,4 +77,7 @@ struct RapidApiConstantUrl {
     
     //产品详情
     static let productDetail = "/rfapi/waited/funny/drive"
+    
+    //地址初始化
+    static let addressDetail = "/rfapi/usually/might/gambolling"
 }

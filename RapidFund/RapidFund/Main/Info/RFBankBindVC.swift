@@ -5,9 +5,9 @@
 //  Created by C on 2024/7/12.
 //
 
-import UIKit
 import JXSegmentedView
-
+import MBProgressHUD
+import UIKit
 
 enum RFBankType {
     case Wallet
@@ -16,15 +16,21 @@ enum RFBankType {
 }
 
 class RFBankBindVC: RapidBaseViewController {
-    private let category:RFBankType
-    init(bankCategory:RFBankType) {
+    private let category: RFBankType
+    private let model: RFBankCfg.__RFMuchedModule
+    private let productId: String
+    init(bankCategory: RFBankType, data: RFBankCfg.__RFMuchedModule, productId: String) {
         self.category = bankCategory
+        self.model = data
+        self.productId = productId
         super.init(nibName: nil, bundle: nil)
     }
-    
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
     private let container = UIView()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,12 +40,53 @@ class RFBankBindVC: RapidBaseViewController {
 
     private func setup() {
         container.clipsCornerRadius(Float(24.rf))
-        let stackSubs:[UIView]
-        if category == .Bank {
-            stackSubs = [walletItem, accountItem, numItem, walletDesItem]
-        } else {
+        let stackSubs: [UIView]
+
+        if category == .Wallet {
+            let wallet = self.model.munched.first(where: { $0.yourtoboggans == "chncd" })
             stackSubs = [walletItem, accountItem, numItem, walletDesItem, name1Item, name2Item, name3Item, nameDesItem]
+            walletItem.model = wallet
+            if let iconCfg = wallet?.snatch.first(where: { $0.dismay == self.model.dismay }) {
+                walletItem.fill(iconCfg)
+            }
+            let accCfg = self.model.munched.first(where: { $0.yourtoboggans == "harbor" })
+            accountItem.fill(accCfg?.sounding ?? "")
+            let acc2Cfg = self.model.munched.first(where: { $0.yourtoboggans == "november" })
+            numItem.fill(acc2Cfg?.sounding ?? "")
+            walletDesItem.fill("Ensure that the account informations are correct,other the tranfer may fail.")
+            let name1Cfg = self.model.munched.first(where: { $0.yourtoboggans == "firstName" })
+            name1Item.fill(name1Cfg?.sounding)
+            let name2Cfg = self.model.munched.first(where: { $0.yourtoboggans == "middleName" })
+            name2Item.fill(name2Cfg?.sounding)
+            let name3Cfg = self.model.munched.first(where: { $0.yourtoboggans == "lastName" })
+            name3Item.fill(name3Cfg?.sounding)
+            nameDesItem.fill("After your confirmation,this account will be used as receipt account to receive the funds")
+            self.walletItem.block = { [weak self] in
+                guard let self = self else { return }
+
+                guard let list = wallet?.snatch.map({ $0.wasan }).compactMap({ $0 }) else {
+                    return
+                }
+                let alert = RFBankAlert(strings: list)
+                alert.selectedBlock = { index in
+                    guard let it = wallet?.snatch[index] else { return }
+                    self.walletItem.fill(it)
+                }
+                alert.show(on: self.view)
+            }
+
+        } else {
+            stackSubs = [walletItem, accountItem, numItem, walletDesItem]
+            walletItem.isHiddenIcon = true
+            let cfg1 = self.model.munched.first(where: { $0.yourtoboggans == "chncd" })
+            walletItem.textLb.text = cfg1?.sounding
+            let cfg2 = self.model.munched.first(where: { $0.yourtoboggans == "november" })
+            accountItem.fill(cfg2?.sounding)
+            let cfg3 = self.model.munched.first(where: { $0.yourtoboggans == "harbor" })
+            numItem.fill(cfg3?.sounding)
+            walletDesItem.fill("After your confirmation,this account will be used as receipt account to receive the funds")
         }
+
         container.backgroundColor = .white
         view.backgroundColor = .clear
         view.addSubview(container)
@@ -61,6 +108,9 @@ class RFBankBindVC: RapidBaseViewController {
             make.centerX.equalToSuperview()
             make.bottom.equalTo(-12.rf)
         }
+        nextBtn.addTapGesture { [weak self] in
+            self?.bindBankCard()
+        }
     }
 
     private let walletItem = RFBankItem()
@@ -72,8 +122,18 @@ class RFBankBindVC: RapidBaseViewController {
     private let name3Item = RFBankEditItem()
     private let nameDesItem = RFBankDesItem()
     private let nextBtn = RFNextBtn()
+    var dismiss: (() -> Void)?
 }
 
+extension RFBankBindVC {
+    private func bindBankCard() {
+        RapidApi.shared.commitBindCardInfo(para: ["putit": self.productId, "peeping": self.accountItem.value, "darkalmost": category == .Wallet ? "1" : "2", "bush": self.walletItem.textLb.text, "hid": "", "child": name1Item.value, "frozen": name2Item.value, "beabsolutely": name3Item.value, "its": getRPFRandom()]).subscribe(onNext: { [weak self] _ in
+            self?.dismiss?()
+        }, onError: { err in
+            MBProgressHUD.showError(err.localizedDescription)
+        }).disposed(by: bag)
+    }
+}
 
 extension RFBankBindVC: JXSegmentedListContainerViewListDelegate {
     func listView() -> UIView {

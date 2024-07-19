@@ -213,7 +213,14 @@ extension RapidApi {
             completionHandler: { $0 })
     }
     
-    
+    func addressDetail(para: Parameters) -> Observable<JSON> {
+        return request(
+            path: BaseURl + RapidApiConstantUrl.addressDetail,
+            parameters: para,
+            method: .get,
+            encoding: URLEncoding.default,
+            completionHandler: { $0 })
+    }
 }
 
 extension RapidApi {

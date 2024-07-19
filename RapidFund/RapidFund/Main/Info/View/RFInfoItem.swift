@@ -73,7 +73,11 @@ class RFInfoItem: UIView {
         }
     }
 
-    @objc private func btnClick() {}
+    var btnBlock:(()->Void)?
+    
+    @objc private func btnClick() {
+        btnBlock?()
+    }
 }
 
 extension RFInfoItem: UITextFieldDelegate {
