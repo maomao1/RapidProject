@@ -4,11 +4,22 @@
 //
 //  Created by C on 2024/7/9.
 //
-import UIKit
-import RxSwift
 import HandyJSON
+import MBProgressHUD
+import RxSwift
+import UIKit
 
 class RFFlowVC: RapidBaseViewController {
+    private let product_id: String
+    init(product_id: String) {
+        self.product_id = product_id
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +31,8 @@ class RFFlowVC: RapidBaseViewController {
         setup()
         self.view.bringSubviewToFront(self.customNavView)
     }
+
+    private var items: [RFFlowItem] = []
     private let contentView = UIView()
     private let scrollView = UIScrollView()
     private let progressView = RFLoadProgressView()
@@ -63,29 +76,6 @@ class RFFlowVC: RapidBaseViewController {
             make.right.equalTo(-24.rf)
             make.height.equalTo(117.rf)
         }
-        
-        let iconNames = ["flow_item_icon1", "flow_item_icon2", "flow_item_icon3", "flow_item_icon4", "flow_item_icon4"]
-        let itemNames = ["Identity  Details", "Facial Recognition", "Personal Information", "Employment Information", "Bank Card"]
-        
-        for i in 0 ..< iconNames.count {
-            let item = RFFlowItem(bgImg: "flow_item_bg2".image, icon: iconNames[i].image, text: itemNames[i])
-            item.tag = i
-            contentView.addSubview(item)
-            let offset = CGFloat((i / 2)) * (121.rf + 12.rf)
-            item.snp.makeConstraints { make in
-                make.width.equalTo(142.rf)
-                make.height.equalTo(121.rf)
-                make.left.equalTo(i % 2 == 1 ? 208.rf : 24.rf)
-                make.top.equalTo(progressView.snp.bottom).offset(20.rf + offset)
-                
-                if i == iconNames.count - 1 {
-                    make.bottom.equalTo(contentView.snp.bottom).offset(-12.5.rf)
-                }
-            }
-            
-            
-            item.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction(sender:))))
-        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -95,23 +85,70 @@ class RFFlowVC: RapidBaseViewController {
     }
     
     @objc private func tapAction(sender: UITapGestureRecognizer) {
-        let item = sender.view as? RFFlowItem
-        guard let item = item else { return }
-        if item.tag == 0 {
-            navigationController?.pushViewController(RFIDDetailVC(), animated: true)
-        } else if item.tag == 1 {
-            navigationController?.pushViewController(RFFRVC(), animated: true)
-        } else if item.tag == 2 {
-            navigationController?.pushViewController(RFPInVC(route: .personal_info), animated: true)
-        } else if item.tag == 3 {
-            navigationController?.pushViewController(RFPInVC(route: .employment_info), animated: true)
+        guard let cfgs = model?.hehad else { return }
+        guard let cur = model?.recovered else { return }
+        guard let curModel = cfgs.first(where: { $0.hastily == cur.hastily }) else {
+            return
         }
+        let index = cfgs.firstIndex(of: curModel)
+    
+        guard let index = index else { return }
+        if index == 0 {
+            navigationController?.pushViewController(RFIDDetailVC(productId: product_id), animated: true)
+        } else if index == 1 {
+            navigationController?.pushViewController(RFFRVC(), animated: true)
+        } else if index == 2 {
+            navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: product_id), animated: true)
+        } else if index == 3 {
+            navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: product_id), animated: true)
+        } else if index == 4 {
+            navigationController?.pushViewController(RFBankCardListVC(productId: product_id), animated: true)
+        }
+    }
+    
+    private var model: RFProductDetailModel?
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadData()
     }
 }
 
 extension RFFlowVC {
+    private func loadData() {
+        RapidApi.shared.productDetail(para: ["putit": self.product_id, "interrupted": getRPFRandom(), "means": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
+            guard let json = obj.dictionaryObject, let started = json["started"] as? [String: Any], let model = RFProductDetailModel.deserialize(from: started) else { return }
+            self?.render(model)
+        }, onError: { [weak self] err in
+            MBProgressHUD.showError(err.localizedDescription)
+            self?.navigationController?.popViewController(animated: true)
+        }).disposed(by: bag)
+    }
     
-    
-    
-    
+    private func render(_ data: RFProductDetailModel) {
+        self.model = data
+        guard let cfgs = data.hehad else { return }
+        items.forEach { obj in
+            obj.removeFromSuperview()
+        }
+        items.removeAll()
+        for i in 0 ..< cfgs.count {
+            let item = RFFlowItem(bgImg: "flow_item_bg2".image, icon: cfgs[i].glorious, text: cfgs[i].hastily)
+            item.tag = i
+            contentView.addSubview(item)
+            items.append(item)
+            let offset = CGFloat(i / 2) * (121.rf + 12.rf)
+            item.snp.makeConstraints { make in
+                make.width.equalTo(142.rf)
+                make.height.equalTo(121.rf)
+                make.left.equalTo(i % 2 == 1 ? 208.rf : 24.rf)
+                make.top.equalTo(progressView.snp.bottom).offset(20.rf + offset)
+                
+                if i == cfgs.count - 1 {
+                    make.bottom.equalTo(contentView.snp.bottom).offset(-12.5.rf)
+                }
+            }
+            
+            item.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction(sender:))))
+        }
+    }
 }

@@ -10,7 +10,7 @@ import Foundation
 class RFTwoUserDataModel: HandyJSON {
     class __Snatch: HandyJSON {
         var wasan: String = ""
-        var dismay = 1
+        var dismay = "1"
         
         required init() {}
     }
@@ -21,14 +21,21 @@ class RFTwoUserDataModel: HandyJSON {
     var yourtoboggans: String?
     var marking: String?
     var retreat: Int?
-    var snatch: [__Snatch]?
+    var snatch: [__Snatch] = []
     var talked: Int = 0
     var mustn = 1
     var getdark: String?
     var patient: Bool = false
     var upthe: String?
-    var dismay: String? // 下拉的key值
-    var theboys: String?
+    var dismay: String = "0" // 下拉的key值
+    var theboys: String = "1"
         
     required init() {}
+}
+
+enum RFKeyValue: String {
+    case gender = "Gender"
+    case marry = "Marital state"
+    case passpord
+    case address = "Residential Address"
 }

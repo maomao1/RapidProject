@@ -8,13 +8,15 @@
 import UIKit
 
 class RFInfoItem: UIView {
-    func update(_ des:String) {
+    func update(_ des: String) {
         self.contentView.textLb.text = des
-        
-        
     }
     
-    init(_ title: String,placeholder:String? = nil, hiddenNext:Bool = false) {
+    var value:String {
+        return self.contentView.textLb.text ?? ""
+    }
+    
+    init(_ title: String, placeholder: String? = nil, hiddenNext: Bool = false) {
         super.init(frame: .zero)
         setup(placeholder: placeholder, hiddenNext: hiddenNext)
         
@@ -55,10 +57,10 @@ class RFInfoItem: UIView {
         return (bgView, label, btn)
     }()
 
-    private func setup(placeholder:String?,hiddenNext:Bool) {
+    private func setup(placeholder: String?, hiddenNext: Bool) {
         addSubview(titLb)
         if let placeholder = placeholder {
-            contentView.textLb.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.font:14.font,.foregroundColor:0x999999.color])
+            contentView.textLb.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.font: 14.font, .foregroundColor: 0x999999.color])
         }
         
         contentView.btn.isHidden = hiddenNext
@@ -75,10 +77,14 @@ class RFInfoItem: UIView {
         }
     }
 
-    @objc private func btnClick() {}
+    var btnBlock:(()->Void)?
+    
+    @objc private func btnClick() {
+        btnBlock?()
+    }
 }
 
-extension RFInfoItem:UITextFieldDelegate {
+extension RFInfoItem: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         return false
     }
@@ -145,6 +151,13 @@ class RFGengerItem: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    var isMale: Bool = false {
+        didSet {
+            maleItem.selected = isMale
+            femaleItem.selected = !isMale
+        }
     }
     
     private let titLb = UILabel().textColor(0x111111.color).font(20.font).text("Gender")

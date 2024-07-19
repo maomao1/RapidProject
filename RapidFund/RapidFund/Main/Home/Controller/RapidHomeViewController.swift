@@ -327,7 +327,7 @@ extension RapidHomeViewController {
         guard let hotModels = model.hotmeals, hotModels.count > 0, let hotModel = hotModels.first else {
             return
         }
-        self.viewModel.getNextData(productId: "1")
+        self.viewModel.getNextData(productId: hotModel.disapproval)
     }
     
     func nextPush(){
@@ -335,8 +335,8 @@ extension RapidHomeViewController {
             return
         }
         if model.littleroom.isEmpty {
-            let vc = RFFlowVC()
-            self.navigationController?.pushViewController(vc, animated: true)
+//            let vc = RFFlowVC()
+//            self.navigationController?.pushViewController(vc, animated: true)
         }else{
            if model.littleroom.hasPrefix("https") ||
                 model.littleroom.hasPrefix("http"){
@@ -430,9 +430,21 @@ extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.viewModel.getNextData(productId: "1")
-//        return
-       
+//<<<<<<< HEAD
+//        self.viewModel.getNextData(productId: "1")
+////        return
+//       
+//=======
+//        let product = self.viewModel.homeModel.value?.products?[indexPath.section]
+//        guard let product = product else {
+//            return
+//        }
+//        
+//        let vc = RFFlowVC(product_id: "")
+//        navigationController?.pushViewController(vc, animated: true)
+//        let vc = RPFWebViewController()
+//        vc.viewModel = RPFWebViewModel(urlString: "https://www.baidu.com")
+//        self.navigationController?.pushViewController(vc, animated: true)
        
     }
     

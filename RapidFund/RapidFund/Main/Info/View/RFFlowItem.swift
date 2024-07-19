@@ -9,9 +9,9 @@ import UIKit
 
 class RFFlowItem: UIView {
     private let bgImg: UIImage?
-    private let icon: UIImage?
+    private let icon: String?
     private let text: String?
-    init(bgImg: UIImage?, icon: UIImage?, text: String?) {
+    init(bgImg: UIImage?, icon: String?, text: String?) {
         self.bgImg = bgImg
         self.icon = icon
         self.text = text
@@ -45,7 +45,7 @@ class RFFlowItem: UIView {
         }
         
         bgImgV.image = bgImg
-        iconImgV.image = icon
+        iconImgV.sd_setImage(with: URL(string: self.icon ?? ""))
         textLb.text = text
     }
 }

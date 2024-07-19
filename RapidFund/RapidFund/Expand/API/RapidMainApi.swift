@@ -181,7 +181,7 @@ extension RapidApi {
         return request(
             path: BaseURl + RapidApiConstantUrl.getBindBankInfo,
             parameters: para,
-            method: .post,
+            method: .get,
             encoding: URLEncoding.default,
             completionHandler: { $0 })
     }
@@ -213,7 +213,23 @@ extension RapidApi {
             completionHandler: { $0 })
     }
     
+    func productDetail(para: Parameters) -> Observable<JSON> {
+        return request(
+            path: BaseURl + RapidApiConstantUrl.productDetail,
+            parameters: para,
+            method: .post,
+            encoding: URLEncoding.default,
+            completionHandler: { $0 })
+    }
     
+    func addressDetail(para: Parameters) -> Observable<JSON> {
+        return request(
+            path: BaseURl + RapidApiConstantUrl.addressDetail,
+            parameters: para,
+            method: .get,
+            encoding: URLEncoding.default,
+            completionHandler: { $0 })
+    }
 }
 
 extension RapidApi {

@@ -48,7 +48,7 @@ xcuserdata
 ## Other
 *.xccheckout
 *.moved-aside
-*.xcuserstate
+.xcuserstate
 RapidProject/RapidProject.xcodeproj/project.xcworkspace/xcuserdata/*
 UserInterfaceState.xcuserstate
 

@@ -13,11 +13,12 @@ class RFContactModel: HandyJSON {
         required init() {}
     }
 
-    var fany: String?
+    var fany: String = ""
     var wasan: String?
     var bumped: String?
     var disappear: String?
     var falls: String?
-    var knee: [__KneeModel]?
+    var knee: [__KneeModel] = []
+    var indexPath = IndexPath(row:0, section: 0)
     required init() {}
 }

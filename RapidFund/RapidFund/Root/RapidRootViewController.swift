@@ -220,7 +220,9 @@ extension RapidRootViewController {
         guard let nc = selectedViewController as? RapidBaseNavgationController else {
             return
         }
-        nc.pushViewController(RFFlowVC(), animated: true)
+        
+        let vc = RFBankCardListVC(orderId: "", productId: "1")
+        nc.pushViewController(vc, animated: true)
     }
     
 }

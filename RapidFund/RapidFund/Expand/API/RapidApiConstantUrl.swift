@@ -75,4 +75,10 @@ struct RapidApiConstantUrl {
     
     //更换银行卡（会触发重新打款）
     static let changeBankInfo = "/rfapi/could/expect/pursed"
+    
+    //产品详情
+    static let productDetail = "/rfapi/waited/funny/drive"
+    
+    //地址初始化
+    static let addressDetail = "/rfapi/usually/might/gambolling"
 }
