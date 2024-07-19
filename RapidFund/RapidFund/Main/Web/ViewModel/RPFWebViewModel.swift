@@ -22,9 +22,11 @@ class RPFWebViewModel {
     }
     
     init(urlString: String, activityType: ActivityType = .default){
-        self.urlString = urlString
+        let basePara = getRapidUrlParam().replacingOccurrences(of: "?", with: "")
+        let fullPath = urlString + "&" + basePara
+        self.urlString = fullPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         self.activityType = activityType
-//        self.setUpRx()
+        self.setUpRx()
     }
     
     private let bag = DisposeBag()
@@ -51,5 +53,7 @@ class RPFWebViewModel {
         
     }
     
-    
+    func setUpRx() {
+        
+    }
 }

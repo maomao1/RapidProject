@@ -142,8 +142,6 @@ var RapidSession: String = {
 }()
 
 func  getRapidUrlBaseParam()-> [String: String]  {
-   
-
     var para: [String : String] = [String : String]()
     para["bittengeorge"]     = OsPlatform
     para["wobblyagain"]      = AppVersion
@@ -154,12 +152,9 @@ func  getRapidUrlBaseParam()-> [String: String]  {
     para["muchmore"]         = GetInfo(kRapidSession)
     para["teeth"]            = RapidSingleUUID
     para["boyfine"]          = getRPFRandom()
-   
     return para
 }
 func  getRapidUrlParam()-> String  {
-   
-
     var para: [String : Any] = [String : Any]()
     para["bittengeorge"]     = OsPlatform
     para["wobblyagain"]      = AppVersion
@@ -170,9 +165,6 @@ func  getRapidUrlParam()-> String  {
     para["muchmore"]         = GetInfo(kRapidSession)
     para["teeth"]            = RapidSingleUUID
     para["boyfine"]          = getRPFRandom()
-    print("=====================")
-   print(RapidSession)
-    print("=====================")
     return para.compentUrl()
 //    return para
 }

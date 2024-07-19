@@ -3,6 +3,7 @@ PODS:
   - AlamofireImage (3.6.0):
     - Alamofire (~> 4.9)
   - Differentiator (5.0.0)
+  - FSPagerView (0.8.3)
   - HandyJSON (5.0.2)
   - IQKeyboardManagerSwift (6.5.15)
   - JXPagingView (2.1.2):
@@ -39,6 +40,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.9.1)
   - AlamofireImage
+  - FSPagerView
   - HandyJSON
   - IQKeyboardManagerSwift
   - JXPagingView
@@ -60,6 +62,7 @@ SPEC REPOS:
     - Alamofire
     - AlamofireImage
     - Differentiator
+    - FSPagerView
     - HandyJSON
     - IQKeyboardManagerSwift
     - JXPagingView
@@ -95,6 +98,7 @@ SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  FSPagerView: 670405b2f18e2a87fa37f20b00de783e562c25a8
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   IQKeyboardManagerSwift: 79fab21f451441935788dc5d80ded21c32685904
   JXPagingView: 90924b364a2ff7e94db534fad1fa50925ff69ee4
@@ -112,6 +116,6 @@ SPEC CHECKSUMS:
   XYZAlert: 4240e0c7abf859dcd3d7ee534a5595ba6b58f9b1
   XYZKit: 4b36427ed270de9db9ae7b6790c2365d6811c196
 
-PODFILE CHECKSUM: f30ce6b2c2afa1bf518be7b9370a018191773727
+PODFILE CHECKSUM: d7dffd210761dc361a75e41369a925527f2516f7
 
 COCOAPODS: 1.10.2

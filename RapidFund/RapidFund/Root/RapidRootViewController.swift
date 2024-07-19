@@ -123,6 +123,31 @@ extension RapidRootViewController{
                 
             })
             .disposed(by: bag)
+        
+        //重新登录逻辑
+        RPFAPIInterceptor.shared
+            .needLogin
+            .subscribe {[weak self] _ in
+                guard let `self` = self else {return}
+                self.showAlertView()
+            }
+            .disposed(by: bag)
+    }
+    
+    
+    func showAlertView() {
+        MBProgressHUD.showMessage("Account has expired, please log in again", toview: nil, afterDelay: 3)
+        RapidUserCache.default.clearUserInfo()
+        executeAfter(seconds: 1) { [weak self] in
+            self?.presentLogin()
+        }
+
+    }
+    
+    func presentLogin() {
+        let vc = RapidLoginViewController()
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true)
     }
     
     
@@ -144,9 +169,10 @@ extension RapidRootViewController: UITabBarControllerDelegate {
             if !GetInfo(kRapidSession).isEmpty {
                 return true
             }else{
-                let vc = RapidLoginViewController()
-                vc.modalPresentationStyle = .fullScreen
-                self.present(vc, animated: true)
+//                let vc = RapidLoginViewController()
+//                vc.modalPresentationStyle = .fullScreen
+//                self.present(vc, animated: true)
+                self.presentLogin()
                 return false 
             }
         }

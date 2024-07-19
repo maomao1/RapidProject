@@ -115,14 +115,20 @@ extension RapidOrderListViewController: UITableViewDelegate, UITableViewDataSour
         guard  models.count > 0  else {
             return cell
         }
-        
         cell.setContentCell(model: models[indexPath.section])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-       
+        let models =  viewModel.orderModels.value
+        guard  models.count > 0  else {
+            return 
+        }
+        let model = models[indexPath.section]
+        let vc = RPFWebViewController()
+        vc.viewModel = RPFWebViewModel(urlString: model.singing)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

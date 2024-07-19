@@ -12,6 +12,8 @@ import UIKit
 @_exported import SnapKit
 @_exported import XYZKit
 
+
+
 class RapidBaseViewController: UIViewController {
     // MARK: - Properties
 
@@ -219,3 +221,102 @@ class RapidBaseViewController: UIViewController {
         }
     }
 }
+
+extension RapidBaseViewController {
+    
+    func setRouter(url: String) {
+        if !url.isEmpty{
+            let vc = RFFlowVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            if url.hasPrefix("https") || url.hasPrefix("http"){
+                let vc = RPFWebViewController()
+                vc.viewModel = RPFWebViewModel(urlString: url)
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else {
+                let schemeUrls = url.components(separatedBy: "?")
+                let scheme = schemeUrls.first
+                let paraStr = schemeUrls.last 
+                var param: [String: String]? = [:]
+                
+                if scheme?.contains(RPFRouterSet) == true {
+                    self.tabBarController?.selectedIndex = 2
+                    self.navigationController?.popToRootViewController(animated: false)
+                }
+                else if scheme?.contains(RPFRouterHome) == true{
+                    self.tabBarController?.selectedIndex = 0
+                    self.navigationController?.popToRootViewController(animated: false)
+                }
+                else if  scheme?.contains(RPFRouterLogin) == true{
+                    let vc = RapidLoginViewController()
+                    vc.modalPresentationStyle = .fullScreen
+                    self.navigationController?.present(vc, animated: true)
+                }
+                else if  scheme?.contains(RPFRouterOrder) == true{
+                    let vc = RapidOrderListViewController()
+                    vc.viewModel = RapidOrderListViewModel(type: .settled)
+                    self.navigationController?.pushViewController(vc, animated: true)
+
+                }
+                else if  scheme?.contains(RPFRouterProductDetail) == true{
+                    let vc = RapidOrderListViewController()
+                    vc.viewModel = RapidOrderListViewModel(type: .settled)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                else if  scheme?.contains(RPFRouterContact) == true{
+                    let vc = RapidOrderListViewController()
+                    vc.viewModel = RapidOrderListViewModel(type: .settled)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                else if  scheme?.contains(RPFRouterBank) == true{
+                    let vc = RapidOrderListViewController()
+                    vc.viewModel = RapidOrderListViewModel(type: .settled)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                
+            }
+        }        
+    }
+    
+    func parseQueryString(queryString: String) -> [String: String]? {
+        var pairs: [String: String] = [:]
+        queryString.components(separatedBy: "&").forEach { pair in
+            let keyValue = pair.split(separator: "=", maxSplits: 1, omittingEmptySubsequences: false)
+            if keyValue.count == 2 {
+                let key = keyValue[0].removingPercentEncoding
+                let value = keyValue[1].removingPercentEncoding
+                if let key = key, let value = value {
+                    pairs[key] = value
+                }
+            }
+        }
+        return pairs.isEmpty ? nil : pairs
+    }
+    
+}
+
+/**
+ scheme: rfapi://com.rapidfund.app/
+
+ 混淆前：setting 设置页（scheme + /setting）  
+ 混淆后：terrified 设置页（scheme + /terrified）  
+
+ 混淆前：main 首页（scheme + /main）  
+ 混淆后：loudest 首页（scheme + /loudest）  
+
+ 混淆前：login 登录页（scheme + /login）  
+ 混淆后：examined 登录页（scheme + /examined）
+
+ 混淆前：order 订单列表页 （scheme + /order?tab=1）  
+ 混淆后：laughing 订单列表页 （scheme + /laughing?hiscollar=1）  
+
+ 混淆前：productDetail 产品详情 （scheme + /productDetail?product_id=1）  
+ 混淆后：andfollowed 产品详情 （scheme + /andfollowed?putit=1）
+
+ 混淆前：contact 客服首页（scheme + /contact）  
+ 混淆后：absolutelysound 客服首页（scheme + /absolutelysound）
+
+ 混淆前：changeAccount 更换银行卡（scheme + /changeAccount?product_id=1&orderId=91）  
+ 混淆后：amarvellous 更换银行卡（scheme + /amarvellous?putit=1&honestly=91）
+
+ */

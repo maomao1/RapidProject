@@ -59,6 +59,15 @@ extension RapidApi {
             completionHandler: { $0 })
     }
     
+    func getProductNextData(para: Parameters) -> Observable<JSON> {
+        return request(
+            path: BaseURl + RapidApiConstantUrl.homeProductNextPath,
+            parameters: para,
+            method: .post,
+            encoding: URLEncoding.default,
+            completionHandler: { $0 })
+    }
+    
     //
     func getMineData(para: Parameters) -> Observable<JSON> {
         return request(
@@ -212,6 +221,52 @@ extension RapidApi {
     func getOrderData(para: Parameters) -> Observable<JSON> {
         return request(
             path: BaseURl + RapidApiConstantUrl.getOrderListData,
+            parameters: para,
+            method: .post,
+            encoding: URLEncoding.default,
+            completionHandler: { $0 })
+    }
+    
+    //report
+    func postLocationData(para: Parameters) -> Observable<JSON> {
+        return request(
+            path: BaseURl + RapidApiConstantUrl.updateLocation,
+            parameters: para,
+            method: .post,
+            encoding: URLEncoding.default,
+            completionHandler: { $0 })
+    }
+    
+    func postGoogleMarketData(para: Parameters) -> Observable<JSON> {
+        return request(
+            path: BaseURl + RapidApiConstantUrl.updateGoogleMarket,
+            parameters: para,
+            method: .post,
+            encoding: URLEncoding.default,
+            completionHandler: { $0 })
+    }
+    
+    func postDevicInfoData(para: Parameters) -> Observable<JSON> {
+        return request(
+            path: BaseURl + RapidApiConstantUrl.updateDeviceInfo,
+            parameters: para,
+            method: .post,
+            encoding: URLEncoding.default,
+            completionHandler: { $0 })
+    }
+    
+    func postAnalysisData(para: Parameters) -> Observable<JSON> {
+        return request(
+            path: BaseURl + RapidApiConstantUrl.uploadMaidian,
+            parameters: para,
+            method: .post,
+            encoding: URLEncoding.default,
+            completionHandler: { $0 })
+    }
+    
+    func postAdressBookData(para: Parameters) -> Observable<JSON> {
+        return request(
+            path: BaseURl + RapidApiConstantUrl.uploadAdressBook,
             parameters: para,
             method: .post,
             encoding: URLEncoding.default,

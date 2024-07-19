@@ -411,9 +411,7 @@ extension RapidLoginViewController {
     
     func cacheLoginInfo(){
         let model = viewModel.loginModel.value
-        print("===========")
-        print(model?.session)
-        print("===========")
+     
         RapidUserCache.default.cacheUserInfo(session: model?.session ?? "")
         NotificationCenter.default.post(name: .RapidLoginSuccess, object: nil, userInfo: nil)
         self.dismiss(animated: true, completion: nil)

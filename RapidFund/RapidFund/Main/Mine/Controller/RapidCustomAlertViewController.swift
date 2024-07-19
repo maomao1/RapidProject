@@ -93,7 +93,7 @@ class RapidCustomAlertViewController: RapidBaseViewController {
         let container = UIImageView()
         container.layer.masksToBounds = true
         container.layer.cornerRadius = 24.rf
-        container.backgroundColor = .white
+        container.backgroundColor = .c_E5DEFA
 //        let image = UIImage(size: CGSize(width: kPortraitScreenW, height: type == .logout ? 300.rc : 400.rc), isHorizontal: false)
 //        container.image = image
         container.contentMode = .scaleAspectFill
@@ -156,7 +156,7 @@ class RapidCustomAlertViewController: RapidBaseViewController {
     }()
     
     lazy var confirmArrow: UIImageView = {
-        let imageView = UIImageView(image: .loginSureArrowImage)
+        let imageView = UIImageView(image: .mineBlackArrow)
         imageView.isUserInteractionEnabled = false
         imageView.contentMode = .right
         return imageView
@@ -183,7 +183,7 @@ class RapidCustomAlertViewController: RapidBaseViewController {
     }()
     
     lazy var cancleArrow: UIImageView = {
-        let imageView = UIImageView(image: .loginSureArrowImage)
+        let imageView = UIImageView(image: .mineWhiteArrow)
         imageView.isUserInteractionEnabled = false
         imageView.contentMode = .right
         return imageView

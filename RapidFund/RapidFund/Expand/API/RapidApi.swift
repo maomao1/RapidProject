@@ -9,6 +9,16 @@ import Alamofire
 import RxSwift
 import SwiftyJSON
 
+//网络请求拦截器
+class RPFAPIInterceptor {
+   
+    init() { }
+    
+    static let shared = RPFAPIInterceptor()
+    let needLogin = PublishSubject<Void>()//重新登录
+   
+    
+}
 class RapidApi: SessionManager {
     init() {
         let configuration = URLSessionConfiguration.default
@@ -78,7 +88,9 @@ class RapidApi: SessionManager {
                         if json.isSuccessful {
                             observer.onNext(completionHandler(json.resultData))
                             observer.onCompleted()
-                        }
+                        }else if json.needsLogin {
+                            RPFAPIInterceptor.shared.needLogin.onNext(Void())
+                        } 
                         else {
                             let error = RapidError.other(message: json.YaloMsg)
                             observer.onError(error)

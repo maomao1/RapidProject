@@ -16,6 +16,7 @@ struct RapidApiConstantUrl {
     
     //MARK: - home
     static let homeGetData  = "/rfapi/hardly/passed/getting"
+    static let homeProductNextPath = "/rfapi/womangeorge/george/andsee"
     
     //MARK: - order
     static let getOrderListData  = "/rfapi/truth/enormous/small"
@@ -29,11 +30,11 @@ struct RapidApiConstantUrl {
     
     //数据上报
     static let updateLocation  = "/rfapi/salttimmy/upset/pointing"
+    static let updateGoogleMarket  = "/rfapi/cannot/ought/tothe"
+    static let uploadMaidian  = "/rfapi/julian/suddenlyyes/mountain-hut"
+    static let updateDeviceInfo  = "/rfapi/fiercely/funny/shorts"
+    static let uploadAdressBook = "/rfapi/nothingit/certainly/wooden"
     
-//    static let updateLocation  = "/rfapi/julian/suddenlyyes/mountain-hut" // 埋点
-//    static let updateLocation  = "/rfapi/salttimmy/upset/pointing"
-//    static let updateLocation  = "/rfapi/salttimmy/upset/pointing"
-//    static let updateLocation  = "/rfapi/salttimmy/upset/pointing"
 
     
     //获取用户身份证/活体信息（第一项）

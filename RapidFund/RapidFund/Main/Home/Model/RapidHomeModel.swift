@@ -48,6 +48,7 @@ struct RPFHomeBanner {
 }
 
 struct RPFHomeProduct {
+    var disapproval = ""  
     var id = ""
     var productName = ""       // 产品名称
     var amountRange = ""       // 产品期限
@@ -79,6 +80,7 @@ struct RPFHomeProduct {
 
     init(json: JSON){
         self.id = json["id"].stringValue
+        self.disapproval = json["disapproval"].stringValue
         self.productName = json["productName"].stringValue
         self.amountRange = json["amountRange"].stringValue
         self.productTags = json["productTags"].stringValue
@@ -162,5 +164,14 @@ struct RPFHomeReminder {
         self.icon = json["icon"].stringValue
         self.repayAmount = json["repayAmount"].stringValue
         
+    }
+}
+
+
+struct RPFHomeNextModel {
+    var littleroom = ""
+    
+    init(json: JSON) {
+        self.littleroom = json["littleroom"].stringValue
     }
 }

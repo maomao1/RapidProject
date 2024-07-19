@@ -108,6 +108,8 @@ extension UIImage {
     
     static let mineLogOutIcon  = UIImage(named: "mine_icon_logout")!
     static let mineLogOffIcon  = UIImage(named: "mine_icon_logoff")!
+    static let mineWhiteArrow = UIImage(named: "mine_white_arrow")!
+    static let mineBlackArrow = UIImage(named: "mine_black_arrow")!
     
     // MARK: - about us
     static let mineAboutUsBlackBg = UIImage(named: "mine_about_us_blackbg")!

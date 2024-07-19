@@ -9,14 +9,17 @@ import UIKit
 import RxSwift
 import RxCocoa
 import MBProgressHUD
+import FSPagerView
 class RapidHomeViewController: RapidBaseViewController {
     // MARK: - Constants
     struct AutoLayout {
         static let applyText = "Apply for a Loan"
+        
     }
     
     struct CellID {
         static let cellId = "RapidHomeProductCellIdentifier"
+        static let bannerCell = "FSPagerViewCellIdentifier"
     }
     // MARK: - Properties
     
@@ -31,7 +34,7 @@ class RapidHomeViewController: RapidBaseViewController {
     let rapidNameLabel = UILabel().withFont(.f_lightSys12)
         .withTextColor(.c_111111)
         .withTextAlignment(.center)
-        .withText("RapidFund")
+        .withText("")
     let unLoginImgBg  = UIImageView(image: .homeUnloginBg)
     let LoginTopImgBg  = UIImageView(image: .homeLoginTopBg)
     let homeMoneyView = HomeMoneyView()
@@ -76,9 +79,15 @@ class RapidHomeViewController: RapidBaseViewController {
     }()
     
     //
-    lazy var banner: UIImageView = {
-        let image = UIImageView(image: .homeLoginBanner)
-        return image
+    lazy var banner: FSPagerView = {
+        let pager = FSPagerView()
+        pager.delegate = self
+        pager.dataSource = self
+        pager.automaticSlidingInterval = 2.0
+        pager.isInfinite = false
+        pager.transformer = FSPagerViewTransformer(type: .depth)
+        pager.register(FSPagerViewCell.self, forCellWithReuseIdentifier: CellID.bannerCell)
+        return pager
     }()
     
     lazy var tableView: UITableView = {
@@ -274,12 +283,13 @@ extension RapidHomeViewController {
             self.rightBtn.isHidden = true
             self.titleNav.font = .f_lightSys32
             self.tableView.reloadData()
+            self.banner.reloadData()
         }else{
             self.unLoginContainer.isHidden = false
             self.loginContainer.isHidden = true
             self.rightBtn.isHidden = false
         }
-
+        
         guard let hotModels = model.hotmeals, hotModels.count > 0, let hotModel = hotModels.first else {
             return
         }
@@ -299,6 +309,44 @@ extension RapidHomeViewController {
         viewModel.getData()
     }
     
+    func presentLogin(){
+        let vc = RapidLoginViewController()
+        vc.modalPresentationStyle = .fullScreen
+        self.navigationController?.present(vc, animated: true)
+    }
+    
+    func requestNext() {
+        if GetInfo(kRapidSession).isEmpty {
+            self.presentLogin()
+           return 
+        }
+
+        guard let model = viewModel.homeModel.value else {
+            return
+        }
+        guard let hotModels = model.hotmeals, hotModels.count > 0, let hotModel = hotModels.first else {
+            return
+        }
+        self.viewModel.getNextData(productId: "1")
+    }
+    
+    func nextPush(){
+        guard let model = viewModel.nextModel.value else{
+            return
+        }
+        if model.littleroom.isEmpty {
+            let vc = RFFlowVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else{
+           if model.littleroom.hasPrefix("https") ||
+                model.littleroom.hasPrefix("http"){
+               let vc = RPFWebViewController()
+               vc.viewModel = RPFWebViewModel(urlString: model.littleroom)
+               self.navigationController?.pushViewController(vc, animated: true)
+           }
+        }
+    }
+    
     
     func setUpRx() {
      
@@ -310,18 +358,45 @@ extension RapidHomeViewController {
             })
             .disposed(by: bag)
         
-        viewModel.homeModel.skip(1)
+        applyBtn.rx
+            .tap
+            .throttle(.seconds_1, latest: false, scheduler: MainScheduler.instance)
             .subscribe(onNext: { [weak self] (_) in
                 guard let `self` = self else { return }
-                self.updateUIData()
+                self.requestNext()
+
             })
             .disposed(by: bag)
+        
+//        viewModel.homeModel.skip(1)
+//            .subscribe(onNext: { [weak self] (_) in
+//                guard let `self` = self else { return }
+//                self.updateUIData()
+//            })
+//            .disposed(by: bag)
         
         viewModel.newMessage
             .drive(onNext: { message in
                 MBProgressHUD.showMessage(message, toview: nil, afterDelay: 3)
             })
             .disposed(by: bag)
+        
+        viewModel.refreshAction 
+            .subscribe(onNext: { [weak self] in
+                guard let `self` = self else { return }
+                self.updateUIData()
+                
+            })
+            .disposed(by: bag)
+        
+        viewModel.nextAction 
+            .subscribe(onNext: { [weak self] in
+                guard let `self` = self else { return }
+                self.nextPush()
+                
+            })
+            .disposed(by: bag)
+        
     }
     
     
@@ -341,10 +416,7 @@ extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellID.cellId) as! RapidHomeProductCell
-//        let type = viewModel.sections[indexPath.row]
-////        cell.nameLabel.text = type.titleName
-//        cell.selectionStyle = .none
-//        cell.setUpCell(type: type)
+
         guard let model = self.viewModel.homeModel.value else {
             return cell
         }
@@ -352,17 +424,15 @@ extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         }
         cell.updateCellContent(model: model.products![indexPath.section])
-//        if  model.products?.count ?? 0 > 0 {
-//            let product = model.products[indexPath.section]
-//        }
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let vc = RPFWebViewController()
-        vc.viewModel = RPFWebViewModel(urlString: "https://www.baidu.com")
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.viewModel.getNextData(productId: "1")
+//        return
+       
        
     }
     
@@ -379,3 +449,43 @@ extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
     }
 }
 
+
+extension RapidHomeViewController: FSPagerViewDelegate, FSPagerViewDataSource {
+    
+    func numberOfItems(in pagerView: FSPagerView) -> Int {
+        guard let model = viewModel.homeModel.value else {
+            return 0
+        }
+        return model.banners?.count ?? 0
+    }
+//    
+    func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
+        let cell = pagerView.dequeueReusableCell(withReuseIdentifier: CellID.bannerCell, at: index)
+        guard let model = self.viewModel.homeModel.value else {
+            return cell
+        }
+        guard model.banners?[index] != nil else {
+            return cell
+        }
+        let bannerModel = model.banners![index]
+        cell.imageView?.sd_setImage(with: bannerModel.imageUrl.url, placeholderImage: .homeLoginBanner, options: .allowInvalidSSLCertificates)
+
+        return cell
+
+    }
+    
+    func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
+        guard let model = self.viewModel.homeModel.value else {
+            return 
+        }
+        guard model.banners?[index] != nil else {
+            return 
+        }
+        let bannerModel = model.banners![index]
+        if !bannerModel.littleroom.isEmpty{
+            let vc  = RPFWebViewController()
+            vc.viewModel = RPFWebViewModel(urlString: bannerModel.littleroom)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+}

@@ -65,6 +65,7 @@
 		2E9B93B22C476EAD00624609 /* WebViewJavascriptBridgeBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93AB2C476EAC00624609 /* WebViewJavascriptBridgeBase.m */; };
 		2E9B93B32C476EAD00624609 /* WKWebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93AF2C476EAD00624609 /* WKWebViewJavascriptBridge.m */; };
 		2E9B93B52C48A4D000624609 /* RPFWebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93B42C48A4D000624609 /* RPFWebViewModel.swift */; };
+		2E9B93B72C49120900624609 /* OtherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93B62C49120900624609 /* OtherExtension.swift */; };
 		2EBDADF62C39769E00B3C845 /* ProjectConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADF52C39769E00B3C845 /* ProjectConfig.swift */; };
 		2EBDADF82C39BAEB00B3C845 /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADF72C39BAEB00B3C845 /* TimeIntervalExtension.swift */; };
 		2EBDADFA2C39BBCB00B3C845 /* RapidLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADF92C39BBCB00B3C845 /* RapidLoginViewModel.swift */; };
@@ -184,6 +185,7 @@
 		2E9B93AE2C476EAD00624609 /* WebViewJavascriptBridgeBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewJavascriptBridgeBase.h; sourceTree = "<group>"; };
 		2E9B93AF2C476EAD00624609 /* WKWebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKWebViewJavascriptBridge.m; sourceTree = "<group>"; };
 		2E9B93B42C48A4D000624609 /* RPFWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFWebViewModel.swift; sourceTree = "<group>"; };
+		2E9B93B62C49120900624609 /* OtherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherExtension.swift; sourceTree = "<group>"; };
 		2EBDADF52C39769E00B3C845 /* ProjectConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectConfig.swift; sourceTree = "<group>"; };
 		2EBDADF72C39BAEB00B3C845 /* TimeIntervalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtension.swift; sourceTree = "<group>"; };
 		2EBDADF92C39BBCB00B3C845 /* RapidLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidLoginViewModel.swift; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 				2EBDAE092C3AD35A00B3C845 /* StringExtension.swift */,
 				2EBDAE132C3C21A100B3C845 /* UIViewExtension.swift */,
 				2EECB1F42C3E2D6C00E59A1C /* NotificationNameExtension.swift */,
+				2E9B93B62C49120900624609 /* OtherExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1035,6 +1038,7 @@
 				02F57BEA2C3FC05B0049D21C /* RFIDVerifyAlert.swift in Sources */,
 				024F6C462C3CFECA0041F532 /* RFInfoItem.swift in Sources */,
 				2EECB1F32C3D892F00E59A1C /* RapidCustomAlertViewController.swift in Sources */,
+				2E9B93B72C49120900624609 /* OtherExtension.swift in Sources */,
 				2EBDADF82C39BAEB00B3C845 /* TimeIntervalExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

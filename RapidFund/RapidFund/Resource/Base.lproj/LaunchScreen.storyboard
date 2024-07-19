@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -11,15 +14,71 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RPFLaunchImage" translatesAutoresizingMaskIntoConstraints="NO" id="7a6-fb-7gg">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="7a6-fb-7gg" secondAttribute="height" multiplier="375:812" id="9kc-tX-rX6"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reliable, Fast Professional" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBE-gZ-7Ow">
+                                <rect key="frame" x="0.0" y="487" width="375" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="wlS-PX-LX9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="22"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_confirm_btn" translatesAutoresizingMaskIntoConstraints="NO" id="Czu-FB-LUp">
+                                <rect key="frame" x="115" y="567" width="146" height="60"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="146" id="Atr-iT-5ex"/>
+                                    <constraint firstAttribute="height" constant="60" id="K4p-Sk-sT0"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_sure_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="OPT-ny-15k">
+                                <rect key="frame" x="163" y="567" width="49" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="49" id="IaI-6F-sFU"/>
+                                    <constraint firstAttribute="height" constant="60" id="pTc-6i-alN"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="7a6-fb-7gg" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="8nO-93-hhl"/>
+                            <constraint firstItem="Czu-FB-LUp" firstAttribute="top" secondItem="VBE-gZ-7Ow" secondAttribute="bottom" constant="50" id="9py-8p-Edt"/>
+                            <constraint firstItem="VBE-gZ-7Ow" firstAttribute="centerX" secondItem="Czu-FB-LUp" secondAttribute="centerX" id="DRd-sC-gDd"/>
+                            <constraint firstItem="VBE-gZ-7Ow" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="96" id="EHO-qf-Eor"/>
+                            <constraint firstItem="7a6-fb-7gg" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Uf9-bL-C4W"/>
+                            <constraint firstItem="7a6-fb-7gg" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Y12-Cu-GMw"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VBE-gZ-7Ow" secondAttribute="trailing" id="am9-mR-hEf"/>
+                            <constraint firstAttribute="bottom" secondItem="7a6-fb-7gg" secondAttribute="bottom" id="dL5-d3-Z8D"/>
+                            <constraint firstItem="VBE-gZ-7Ow" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="k64-nq-exy"/>
+                            <constraint firstItem="VBE-gZ-7Ow" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="o7C-O2-i6C"/>
+                            <constraint firstItem="7a6-fb-7gg" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="oSL-E3-qDA"/>
+                            <constraint firstItem="OPT-ny-15k" firstAttribute="centerY" secondItem="Czu-FB-LUp" secondAttribute="centerY" id="ogR-Ia-Tv2"/>
+                            <constraint firstItem="7a6-fb-7gg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qVg-Ab-jCu"/>
+                            <constraint firstItem="OPT-ny-15k" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="vRj-0O-HCF"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.6305418719212"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="RPFLaunchImage" width="375" height="812"/>
+        <image name="login_confirm_btn" width="327" height="60.666667938232422"/>
+        <image name="login_sure_arrow" width="49" height="10.666666984558105"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

@@ -186,3 +186,6 @@ class RapidHomeProductCell: UITableViewCell {
     }
 
 }
+
+
+
