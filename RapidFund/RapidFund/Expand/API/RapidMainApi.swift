@@ -88,12 +88,18 @@ extension RapidApi {
     }
     
     func getIDUploadData(para: Parameters) -> Observable<JSON> {
-        return request(
-            path: BaseURl + RapidApiConstantUrl.iDUpload,
-            parameters: para,
-            method: .post,
-            encoding: URLEncoding.default,
-            completionHandler: { $0 })
+        return
+//        request(
+//            path: BaseURl + RapidApiConstantUrl.iDUpload,
+//            parameters: para,
+//            method: .post,
+//            encoding: URLEncoding.default,
+//            completionHandler: { $0 })
+        upload(
+        path: BaseURl + RapidApiConstantUrl.iDUpload,
+        parameters: para,
+        method: .post,
+        completionHandler: { $0 })
     }
     
     func saveIDInfoData(para: Parameters) -> Observable<JSON> {

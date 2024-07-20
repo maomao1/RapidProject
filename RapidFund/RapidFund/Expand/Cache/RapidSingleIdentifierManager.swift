@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import AdSupport
+import AppTrackingTransparency
 
 class RapidSingleIdentifierManager: NSObject {
     
@@ -19,6 +21,41 @@ class RapidSingleIdentifierManager: NSObject {
             let uuid = UUID().uuidString
             if self.keyChainSaveData(data: uuid, withIdentifier: "key") {
                 return uuid
+            }
+        }
+        return "simulator"
+    }
+    
+    func getIDFA() -> String {
+        if #available(iOS 14, *) {
+            var idfaStr = ""
+            ATTrackingManager.requestTrackingAuthorization { status in
+                if status == .authorized {
+                    // Tracking is authorized
+                    let idfa = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+                    idfaStr = idfa
+                } else {
+//                    return ""
+                }
+            }
+            return idfaStr
+        } else {
+            // Fallback on earlier versions
+            let idfa = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+            
+            return idfa
+        }
+       
+        
+    }
+    
+    func getIDFV() -> String {
+        if let idfa = self.keyChainReadData(identifier: "idfvKey") as? String {
+            return idfa
+        } else {
+            let idfa = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+            if self.keyChainSaveData(data: idfa, withIdentifier: "idfvKey") {
+                return idfa
             }
         }
         return "simulator"

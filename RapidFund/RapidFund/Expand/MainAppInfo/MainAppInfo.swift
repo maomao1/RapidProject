@@ -112,7 +112,11 @@ let DeviceID: String = {
  *  IDFA设备唯一标识
  */
 let RapidSingleUUID: String = {
-    return RapidSingleIdentifierManager.manager.getUUID()
+    return RapidSingleIdentifierManager.manager.getIDFA()
+}()
+
+let RapidIDFV: String = {
+    return RapidSingleIdentifierManager.manager.getIDFV()
 }()
 
 /**

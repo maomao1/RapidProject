@@ -9,6 +9,12 @@ import Alamofire
 import RxSwift
 import SwiftyJSON
 
+struct BinaryData {
+    let data: Data
+    let mimeType: String
+    let ext: String
+}
+
 //网络请求拦截器
 class RPFAPIInterceptor {
    
@@ -58,14 +64,8 @@ class RapidApi: SessionManager {
         var components = URLComponents(url: path.url!, resolvingAgainstBaseURL: true)!
         components.queryItems = baseParams.map { URLQueryItem(name: $0.key, value: $0.value) }
        let finalURL = components.url 
-            
         print(finalURL!.absoluteString)
         
-//        guard let finalUrl = components?.url else{
-//            return Disposables.create {
-//                
-//            } 
-//        }
         debugPrint("fullpath====\(fullPath)")
         debugPrint(parameters ?? [:])
         return Observable.create({ [weak self] (observer) -> Disposable in
@@ -118,20 +118,120 @@ class RapidApi: SessionManager {
         })
     }
     
-//    func getParaUrl()-> String {
-//        var para: [String : Any] = [String : Any]()
-//        para["bittengeorge"]     = OsPlatform
-//        para["wobblyagain"]      = AppVersion
-//        para["sick"]             = ModelName
-//        para["wall"]             = DeviceID
-//        para["leaning"]          = RapidSystemVersion
-//        para["graze"]            = AppMarket
-//        para["muchmore"]         = GetInfo(kRapidSession)
-//        para["teeth"]            = RapidSingleUUID
-//        para["boyfine"]          = getRPFRandom()
-//        print("=====================")
-//        print(GetInfo(kRapidSession))
-//        print("=====================")
-//        return para.compentUrl()
-//    }
+    //upload 请求
+    func upload<T>(path: String,
+                   parameters: Parameters,
+                   method: HTTPMethod = .post,
+                   completionHandler: @escaping ((JSON) -> T)) -> Observable<T> {
+        let baseParams = getRapidUrlBaseParam()
+        var components = URLComponents(url: path.url!, resolvingAgainstBaseURL: true)!
+        components.queryItems = baseParams.map { URLQueryItem(name: $0.key, value: $0.value) }
+       let finalURL = components.url 
+        debugPrint(finalURL!.absoluteString)
+        
+        debugPrint("path====\(path)")
+        debugPrint(parameters)
+        return Observable.create({ [weak self] (observer) -> Disposable in
+            guard let `self` = self else {
+                observer.onCompleted()
+                return Disposables.create()
+            }
+            var uploadRequest: UploadRequest? = nil
+            self.upload(
+                multipartFormData: { (formData) in
+                    parameters.forEach({ (key, value) in
+                        if let images = value as? [UIImage] {
+                            let imageDatas = images.compactMap { $0.resizedImage(length: 1280).jpegData(compressionQuality: 0.8)}
+                            imageDatas.enumerated().forEach {
+                                formData
+                                    .append(
+                                        $1,
+                                        withName: key,
+                                        fileName: "\(key).jpg",
+                                        mimeType: "image/jpeg")
+                            }
+                        } else if let image = value as? UIImage {
+                            formData
+                                .append(
+                                    image.resizedImage(length: 1280).jpegData(compressionQuality: 0.8) ?? Data(),
+                                    withName: key,
+                                    fileName: "\(key).jpg",
+                                    mimeType: "image/jpeg")
+                        } else if let datas = value as? [Data] {
+                            datas.enumerated().forEach({ (index, data) in
+                                formData
+                                    .append(
+                                        data,
+                                        withName: "\(key)[\(index)]",
+                                        fileName: "\(key)[\(index)]",
+                                        mimeType: "application/octet-stream")
+                            })
+                        } else if let data = value as? Data {
+                            formData.append(data, withName: key, fileName: "\(key)", mimeType: "application/octet-stream")
+                        } else if let binaryDatas = value as? [BinaryData] {
+                            binaryDatas.enumerated().forEach { (index, binaryData) in
+                                formData
+                                    .append(
+                                        binaryData.data,
+                                        withName: "\(key)[\(index)]",
+                                        fileName: "\(key)[\(index)].\(binaryData.ext)",
+                                        mimeType: binaryData.mimeType)
+                            }
+                        } else if let binaryData = value as? BinaryData {
+                            formData.append(
+                                binaryData.data,
+                                withName: key,
+                                fileName: "\(key).\(binaryData.ext)",
+                                mimeType: binaryData.mimeType)
+                        } else {
+                            formData.append("\(value)".data(using: .utf8)!, withName: key)
+                        }
+                    })
+            },
+                to: finalURL!.absoluteString,
+                method: method,
+                headers: nil,
+                encodingCompletion: { (encodingResult) in
+                    switch encodingResult {
+                    case .success(let request, _, _):
+                        uploadRequest = request.validate().responseJSON(completionHandler: { (response) in
+                            switch response.result {
+                            case .success(let data):
+                                let json = JSON(data)
+                                debugPrint(json)
+                                if json.isSuccessful {
+                                    observer.onNext(completionHandler(json.resultData))
+                                    observer.onCompleted()
+                                } else if json.needsLogin {
+                                    RPFAPIInterceptor.shared.needLogin.onNext(Void())
+                                } else {
+                                    let error = RapidError.other(message: json.YaloMsg)
+                                    observer.onError(error)
+                                }
+                            case .failure(let error):
+                                if let _ = error as? AFError,
+                                   let json = try? JSON(data: response.data ?? Data()) {
+                                    let error = RapidError.other(message: json.YaloMsg)
+                                    observer.onError(error)
+                                } else {
+                                    let err = error as NSError
+                                    if err.code == -1009 {
+                                        let error = RapidError.noNetwork(message: err.localizedDescription)
+                                        observer.onError(error)
+                                    } else {
+                                        let error = RapidError.other(message: response.response?.statusCode.description ?? error.localizedDescription)
+                                        observer.onError(error)
+                                    }
+                                }
+                            }
+                        })
+                    case .failure(let error):
+                        observer.onError(error)
+                    }
+            })
+            return Disposables.create {
+                uploadRequest?.cancel()
+            }
+        })
+    }
 }

@@ -360,8 +360,8 @@ extension RFIDDetailVC {
                       "dismay": dismay,
                       "woods": data,
                       "elf": "",
-                      "thanksmost": "xxx",
-                      "pixie": "3",
+                      "thanksmost": getRPFRandom(),
+                      "pixie": "1",
                       "darkalmost": "UMID"] as [String: Any]
         
         RapidApi.shared.getIDUploadData(para: params).subscribe(onNext: { [weak self] obj in

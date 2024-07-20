@@ -27,19 +27,8 @@ class RPFReportManager: NSObject {
        "skipping": "Jing'an"//混淆字段
      }
      */
-    func saveLocation(){
-        var param: [String : Any] = [String : Any]()
-        param["aface"] = "省"
-        param["curls"] = "国家code"
-        param["untidy"] = "国家"
-        param["creature"] = "街道"
-        param["whichever"] = "经度"
-        param["scampering"] = "维度"
-        param["lambgambolling"] = "市"
-        param["towards"] = getRPFRandom()
-        param["skipping"] = getRPFRandom()
-        
-        RapidApi.shared.postLocationData(para: param)
+    func saveLocation(para: [String: Any]){
+        RapidApi.shared.postLocationData(para: para)
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}
                 
@@ -49,6 +38,7 @@ class RPFReportManager: NSObject {
 
             })
             .disposed(by: bag)
+
         
     }
     /**
@@ -62,8 +52,8 @@ class RPFReportManager: NSObject {
     func saveGoogleMarket(){
         var param: [String : Any] = [String : Any]()
         
-        param["clutched"] = DeviceID
-        param["pitch"] = getRPFRandom()
+        param["clutched"] = RapidSingleUUID
+        param["pitch"] = RapidIDFV
         param["pointed"] = getRPFRandom()
         
         RapidApi.shared.postGoogleMarketData(para: param)

@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         setUpRootVC()
         setUIAttribute()
+        uploadReport()
         observeMemory()
         return true
     }
@@ -69,6 +70,16 @@ extension AppDelegate {
             tableViewAppearance.sectionHeaderTopPadding = 0.f
         }
     }
+    
+    func uploadReport() {
+        executeAfter(seconds: 0.5) { 
+            RPFReportManager.shared.saveGoogleMarket()
+        }
+    }
+    
+    
+    
+    
     
     //监听内存
     func observeMemory() {

@@ -364,6 +364,7 @@ extension RapidLoginViewController {
             .subscribe(onNext: { [weak self] in
                 guard let `self` = self else { return }
                 self.cacheLoginInfo()
+                self.uploadLocation()
                 
             })
             .disposed(by: disposeBag)
@@ -419,6 +420,24 @@ extension RapidLoginViewController {
     func changeAgreementEvent() {
         self.agreeBtn.isSelected = !self.agreeBtn.isSelected
         viewModel.isAccept.accept(self.agreeBtn.isSelected)
+    }
+    
+    func uploadLocation() {
+        let manager = RPFLocationManager()
+        manager.startGettingLocation()
+        manager.locationInfoHandle = { (country, code, province, city,street,latitude,longitude) in
+            var param: [String : Any] = [String : Any]()
+            param["aface"] = province
+            param["curls"] = code
+            param["untidy"] = country
+            param["creature"] = street
+            param["whichever"] = longitude
+            param["scampering"] = latitude
+            param["lambgambolling"] = city
+            param["towards"] = getRPFRandom()
+            param["skipping"] = getRPFRandom()
+            RPFReportManager.shared.saveLocation(para: param)
+        }
     }
 }
 

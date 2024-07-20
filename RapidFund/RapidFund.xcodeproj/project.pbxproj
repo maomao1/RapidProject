@@ -73,6 +73,7 @@
 		2E9B93B32C476EAD00624609 /* WKWebViewJavascriptBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93AF2C476EAD00624609 /* WKWebViewJavascriptBridge.m */; };
 		2E9B93B52C48A4D000624609 /* RPFWebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93B42C48A4D000624609 /* RPFWebViewModel.swift */; };
 		2E9B93B72C49120900624609 /* OtherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93B62C49120900624609 /* OtherExtension.swift */; };
+		2E9B93B92C4C2CD500624609 /* RPFLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93B82C4C2CD500624609 /* RPFLocationManager.swift */; };
 		2EBDADF62C39769E00B3C845 /* ProjectConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADF52C39769E00B3C845 /* ProjectConfig.swift */; };
 		2EBDADF82C39BAEB00B3C845 /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADF72C39BAEB00B3C845 /* TimeIntervalExtension.swift */; };
 		2EBDADFA2C39BBCB00B3C845 /* RapidLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADF92C39BBCB00B3C845 /* RapidLoginViewModel.swift */; };
@@ -200,6 +201,7 @@
 		2E9B93AF2C476EAD00624609 /* WKWebViewJavascriptBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WKWebViewJavascriptBridge.m; sourceTree = "<group>"; };
 		2E9B93B42C48A4D000624609 /* RPFWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFWebViewModel.swift; sourceTree = "<group>"; };
 		2E9B93B62C49120900624609 /* OtherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherExtension.swift; sourceTree = "<group>"; };
+		2E9B93B82C4C2CD500624609 /* RPFLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFLocationManager.swift; sourceTree = "<group>"; };
 		2EBDADF52C39769E00B3C845 /* ProjectConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectConfig.swift; sourceTree = "<group>"; };
 		2EBDADF72C39BAEB00B3C845 /* TimeIntervalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtension.swift; sourceTree = "<group>"; };
 		2EBDADF92C39BBCB00B3C845 /* RapidLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidLoginViewModel.swift; sourceTree = "<group>"; };
@@ -577,6 +579,7 @@
 			isa = PBXGroup;
 			children = (
 				2E9B93972C476BB300624609 /* WebViewJavascriptBridge */,
+				2E9B93B82C4C2CD500624609 /* RPFLocationManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1016,6 +1019,7 @@
 				2EECB2012C3EE40500E59A1C /* RapidHomeProductCell.swift in Sources */,
 				2EBDAE1A2C3CF6CC00B3C845 /* RapidHomeViewModel.swift in Sources */,
 				2EBDAE022C39C59D00B3C845 /* RapidApiConstantUrl.swift in Sources */,
+				2E9B93B92C4C2CD500624609 /* RPFLocationManager.swift in Sources */,
 				2E91E8772C36E2E7005E2AB4 /* UILabelExtension.swift in Sources */,
 				2EBDAE122C3BDBC500B3C845 /* RapidTabbar.swift in Sources */,
 				2E3D989B2C40178D00C49298 /* RPFAboutUsViewModel.swift in Sources */,
@@ -1243,16 +1247,26 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9A6D32A5DE68100C616912A6 /* Pods-RapidFund.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DWMRGJDXFD;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 2F6XZMZ52M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RapidFund/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = XXXXXXXXX;
+				INFOPLIST_KEY_NSContactsUsageDescription = xxxxxxxxxxxxxxxx;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = xxxxxxxxxxxxx;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = xxxxxxxxxxxxx;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = xxxxxxxxxxx;
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = xxxxxxxxxxx;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1262,8 +1276,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.edocyun.tumorDepressionPatient;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhuanyong.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = zhuanyong_test;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1279,16 +1295,26 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D23407314EA365A791685095 /* Pods-RapidFund.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DWMRGJDXFD;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 2F6XZMZ52M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RapidFund/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = XXXXXXXXX;
+				INFOPLIST_KEY_NSContactsUsageDescription = xxxxxxxxxxxxxxxx;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = xxxxxxxxxxxxx;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = xxxxxxxxxxxxx;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = xxxxxxxxxxx;
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = xxxxxxxxxxx;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1298,8 +1324,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.edocyun.tumorDepressionPatient;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhuanyong.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = zhuanyong_test;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
