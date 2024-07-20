@@ -62,7 +62,7 @@ class RPFReportManager: NSObject {
     func saveGoogleMarket(){
         var param: [String : Any] = [String : Any]()
         
-        param["clutched"] = "市"
+        param["clutched"] = DeviceID
         param["pitch"] = getRPFRandom()
         param["pointed"] = getRPFRandom()
         

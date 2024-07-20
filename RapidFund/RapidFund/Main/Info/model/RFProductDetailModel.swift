@@ -12,16 +12,30 @@ class RFProductDetailModel: HandyJSON {
 
     // 产品信息
     
-    var goneand: [String]? // 额度范围
-    var soothingly: String = "" // 金额
-    var cannot: [Int] = [] // 借款期限
-    var sometime: String = "" // 借款金额文案
-    var dogsattacking = "" // 借款期限文案
-    var disapproval = "" // 产品id
-    var pursed: String = "" // 产品名称
-    var risking = "" // 订单号
-    var honestly = 0 // 订单id
-    var sucha: [__Sucha]?
+//    var goneand: [String]? // 额度范围
+//    var soothingly: String = "" // 金额
+//    var cannot: [Int] = [] // 借款期限
+//    var sometime: String = "" // 借款金额文案
+//    var dogsattacking = "" // 借款期限文案
+//    var disapproval = "" // 产品id
+//    var pursed: String = "" // 产品名称
+//    var risking = "" // 订单号
+//    var honestly = 0 // 订单id
+    var started: __Started?
+    class __Started: HandyJSON {
+        var goneand: [String]? // 额度范围
+        var soothingly: String = "" // 金额
+        var cannot: [Int] = [] // 借款期限
+        var sometime: String = "" // 借款金额文案
+        var dogsattacking = "" // 借款期限文案
+        var disapproval = "" // 产品id
+        var pursed: String = "" // 产品名称
+        var risking = "" // 订单号
+        var honestly = 0 // 订单id
+        var sucha: __Sucha?
+        required init() {}
+    }
+    
     
     class __Sucha: HandyJSON {
         var determinedly: __SuchaItem?
@@ -98,4 +112,22 @@ class RFProductDetailModel: HandyJSON {
     }
     
     var longed: __Longed? // 借款协议
+}
+
+
+class RFTestModel: HandyJSON {
+    required init() {}
+    
+    var hastily = "" // 标题
+    var sounding = ""
+    var dismay = ""
+    var littleroom = ""
+    var mustn = 1 // 是否已完成
+    var getdark = ""
+    var meet = ""
+    var thankfully = 1
+    var talked = 0
+    var tonight = 1
+    var aboutit = ""
+    var glorious = "" // logo
 }

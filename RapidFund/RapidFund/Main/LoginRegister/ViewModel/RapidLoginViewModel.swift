@@ -71,10 +71,10 @@ class RapidLoginViewModel {
         //
         //8111222251 202406
         var param: [String : Any] = [String : Any]()
-//        param["knows"] = phone
-//        param["weeks"] = codeStr
-        param["knows"] = "8111222251"
-        param["weeks"] = "202406"
+        param["knows"] = phone
+        param["weeks"] = codeStr
+//        param["knows"] = "8111222251"
+//        param["weeks"] = "202406"
         param["scolded"] = getRPFRandom()
         
        

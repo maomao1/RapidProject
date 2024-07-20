@@ -90,13 +90,13 @@ class RapidCustomAlertViewController: RapidBaseViewController {
     }()
     
     fileprivate lazy var containerImageView: UIImageView = {
-        let container = UIImageView()
+        let container = UIImageView(image: UIImage.image(gradientDirection: .vertical,colors: [0xE5DEFA.color,0xFFFFFF.color]))
         container.layer.masksToBounds = true
         container.layer.cornerRadius = 24.rf
-        container.backgroundColor = .c_E5DEFA
+//        container.backgroundColor = .c_E5DEFA
 //        let image = UIImage(size: CGSize(width: kPortraitScreenW, height: type == .logout ? 300.rc : 400.rc), isHorizontal: false)
 //        container.image = image
-        container.contentMode = .scaleAspectFill
+//        container.contentMode = .scaleAspectFill
         return container
     }()
     

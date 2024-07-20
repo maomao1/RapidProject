@@ -154,9 +154,9 @@ class RapidHomeProductCell: UITableViewCell {
         return label
     }()
     
-    fileprivate lazy var containerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
+    fileprivate lazy var containerView: UIImageView = {
+        let view = UIImageView(image:UIImage.image(gradientDirection: .horizontal,colors: [.c_E5DEFA,.c_FFFFFF.withAlphaComponent(0.93)]))
+//        view.backgroundColor = .white
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 24.rf
         return view

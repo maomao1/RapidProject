@@ -24,7 +24,7 @@ class RapidHomeViewModel {
     let homeModel = BehaviorRelay<RapidHomeModel?>(value: nil)
     let nextModel = BehaviorRelay<RPFHomeNextModel?>(value: nil)
     let refreshAction = PublishSubject<Void>()
-    let nextAction = PublishSubject<Void>()
+    let nextAction = PublishSubject<String>()
 
     func getData(){
         var para = [String : Any]()
@@ -53,7 +53,7 @@ class RapidHomeViewModel {
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}
                 self.nextModel.accept(RPFHomeNextModel(json: json))
-                self.refreshAction.onNext(Void())
+                self.nextAction.onNext(productId)
             },
             onError: { [weak self] error in
                 guard let `self` = self else {return}

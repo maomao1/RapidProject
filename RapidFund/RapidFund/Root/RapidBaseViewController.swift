@@ -138,16 +138,17 @@ class RapidBaseViewController: UIViewController {
             make.leading.trailing.bottom.equalToSuperview()
             make.height.equalTo(IPHONE_X ? 34 : 0)
         }
-        if let navigationController = navigationController {
-            if navigationController.viewControllers.count > 1
-            {
-                safeAreaBottomView.isHidden = true
-            } else {
-                safeAreaBottomView.isHidden = false
-            }
-        } else {
-            safeAreaBottomView.isHidden = true
-        }
+        safeAreaBottomView.isHidden = true
+//        if let navigationController = navigationController {
+//            if navigationController.viewControllers.count > 1
+//            {
+//                safeAreaBottomView.isHidden = true
+//            } else {
+//                safeAreaBottomView.isHidden = false
+//            }
+//        } else {
+//            safeAreaBottomView.isHidden = true
+//        }
     }
     
     // 设置LeftBarButtonItem
@@ -224,9 +225,9 @@ class RapidBaseViewController: UIViewController {
 
 extension RapidBaseViewController {
     
-    func setRouter(url: String) {
-        if !url.isEmpty{
-            let vc = RFFlowVC()
+    func setRouter(url: String, pId: String) {
+        if url.isEmpty{
+            let vc = RFFlowVC(product_id: pId)
             self.navigationController?.pushViewController(vc, animated: true)
         }else{
             if url.hasPrefix("https") || url.hasPrefix("http"){
@@ -238,7 +239,9 @@ extension RapidBaseViewController {
                 let scheme = schemeUrls.first
                 let paraStr = schemeUrls.last 
                 var param: [String: String]? = [:]
-                
+                if let requireStr = paraStr {
+                    param = self.parseQueryString(queryString: requireStr)
+                }
                 if scheme?.contains(RPFRouterSet) == true {
                     self.tabBarController?.selectedIndex = 2
                     self.navigationController?.popToRootViewController(animated: false)
@@ -254,7 +257,32 @@ extension RapidBaseViewController {
                 }
                 else if  scheme?.contains(RPFRouterOrder) == true{
                     let vc = RapidOrderListViewController()
-                    vc.viewModel = RapidOrderListViewModel(type: .settled)
+                    if let requirePara = param{
+                        if let orderType =  requirePara[RPFOrderKey]{
+                            if orderType == "4"{
+                                vc.viewModel = RapidOrderListViewModel(type: .all)
+                            }
+                            else if orderType == "5"{
+                                vc.viewModel = RapidOrderListViewModel(type: .settled)
+                            }
+                            else if orderType == "6"{
+                                vc.viewModel = RapidOrderListViewModel(type: .unpaid)
+                            }
+                            else if orderType == "7"{
+                                vc.viewModel = RapidOrderListViewModel(type: .review)
+                            }
+                            else if orderType == "8"{
+                                vc.viewModel = RapidOrderListViewModel(type: .failed)
+                            }else{
+                                vc.viewModel = RapidOrderListViewModel(type: .all)
+                            }
+                        }else{
+                            vc.viewModel = RapidOrderListViewModel(type: .all) 
+                        }
+                    }else{
+                        vc.viewModel = RapidOrderListViewModel(type: .all)
+                    }
+                    
                     self.navigationController?.pushViewController(vc, animated: true)
 
                 }
@@ -269,9 +297,11 @@ extension RapidBaseViewController {
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
                 else if  scheme?.contains(RPFRouterBank) == true{
-                    let vc = RapidOrderListViewController()
-                    vc.viewModel = RapidOrderListViewModel(type: .settled)
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    
+                    if let requirePara = param{
+                        let vc = RFBankCardListVC(orderId: requirePara[RPFChangeBankOrderKey], productId: requirePara[RPFChangeBankProductKey] ?? "")
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
                 }
                 
             }

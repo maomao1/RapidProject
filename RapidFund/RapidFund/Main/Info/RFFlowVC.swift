@@ -116,8 +116,13 @@ class RFFlowVC: RapidBaseViewController {
 extension RFFlowVC {
     private func loadData() {
         RapidApi.shared.productDetail(para: ["putit": self.product_id, "interrupted": getRPFRandom(), "means": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
-            guard let json = obj.dictionaryObject, let started = json["started"] as? [String: Any], let model = RFProductDetailModel.deserialize(from: started) else { return }
+//            guard let json = obj.dictionaryObject, let started = json["started"] as? [String: Any], let model = RFProductDetailModel.deserialize(from: started) else { return }
+//            model = RFProductDetailModel.deserialize(from: obj.dictionaryObject)
+            guard let model = RFProductDetailModel.deserialize(from: obj.dictionaryObject) else {
+                return
+            }
             self?.render(model)
+            
         }, onError: { [weak self] err in
             MBProgressHUD.showError(err.localizedDescription)
             self?.navigationController?.popViewController(animated: true)
@@ -150,5 +155,7 @@ extension RFFlowVC {
             
             item.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction(sender:))))
         }
+        guard let started = data.started, let pro = started.sucha  else { return }
+        progressView.fill(pro)
     }
 }

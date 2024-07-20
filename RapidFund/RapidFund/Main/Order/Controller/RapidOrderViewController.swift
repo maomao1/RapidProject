@@ -52,6 +52,7 @@ extension RapidOrderViewController {
     func setupViews(){
         self.titleNav.text = viewModel.pageTitle
         self.titleNav.font = .f_lightSys32
+        self.safeAreaBottomView.isHidden = false
         view.insertSubview(backgroundImageView, at: 0)
         view.insertSubview(topImageView, at: 1)
         view.addSubview(menuBgImageView)

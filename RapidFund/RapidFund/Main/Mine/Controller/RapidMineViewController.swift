@@ -56,7 +56,7 @@ extension RapidMineViewController {
     
     func setupViews() {
         self.titleNav.text = viewModel.pageTitle
-        
+        self.safeAreaBottomView.isHidden = false
         view.insertSubview(backgroundImageView, at: 0)
         view.addSubview(rapidImageView)
         view.addSubview(rapidNameLabel)

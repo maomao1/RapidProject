@@ -35,8 +35,10 @@ class RFLoadProgressView: UIView {
         pgBgView.image = bgImg
         pgBgView.clipsCornerRadius(Float(20.5.rf))
         addSubview(pgBgView)
-        progressView.image = bgImg
+        let progressImg = UIImage.image(colors: [0xD9D7FF .color.withAlphaComponent(0.3),0xD9D7FF .color.withAlphaComponent(0.6)])
+        progressView.image = progressImg
         addSubview(progressView)
+        addSubview(progressLb)
         progressView.clipsCornerRadius(Float(20.5.rf))
         pgBgView.snp.makeConstraints { make in
             make.height.equalTo(41.rf)
@@ -49,13 +51,22 @@ class RFLoadProgressView: UIView {
             make.left.top.bottom.equalTo(pgBgView)
             make.width.equalTo(0)
         }
+        progressLb.snp.makeConstraints { make in
+            make.left.top.bottom.equalTo(progressView)
+            make.right.equalTo(progressView.snp.right).offset(-15.rf)
+        }
     }
-    private let progressLb = UILabel().textColor(0xffffff.color).font(12.fontBold).text("0%")
+    private let progressLb = UILabel()
+        .textColor(0xffffff.color)
+        .font(12.fontBold)
+        .text("0%")
+        .textAlignment(.right)
     private let progressView = UIImageView()
     private let pgBgView = UIImageView()
     func fill(_ data:RFProductDetailModel.__Sucha) {
         
         progressLb.text = data.decided?.falls
+//        progressLb.text = "60%"
         guard let text = progressLb.text else { return  }
         let proText = text.replacingOccurrences(of: "%", with: "")
         
@@ -63,7 +74,7 @@ class RFLoadProgressView: UIView {
             return
         }
         progressView.snp.updateConstraints { make in
-            make.width.equalTo((kScreenWidth - 70.rf) * CGFloat(pro))
+            make.width.equalTo((kScreenWidth - 118.rf) * CGFloat(pro/100.00))
         }
     }
 }

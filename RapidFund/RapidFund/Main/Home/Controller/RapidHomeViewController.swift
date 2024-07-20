@@ -121,6 +121,7 @@ extension RapidHomeViewController {
 //        viewModel.getData()
         setBackBtnHidden()
         setUpRx()
+      
         // Do any additional setup after loading the view.
         
     }
@@ -138,7 +139,7 @@ extension RapidHomeViewController {
     
     func setupViews(){
         self.titleNav.text = viewModel.pageTitle
-
+        self.safeAreaBottomView.isHidden = false
         view.addSubview(backgroundImageView)
         view.addSubview(circleLeftImageView)
         view.addSubview(circleTopRightImageView)
@@ -330,21 +331,22 @@ extension RapidHomeViewController {
         self.viewModel.getNextData(productId: hotModel.disapproval)
     }
     
-    func nextPush(){
+    func nextPush(productId: String){
         guard let model = viewModel.nextModel.value else{
             return
         }
-        if model.littleroom.isEmpty {
-//            let vc = RFFlowVC()
-//            self.navigationController?.pushViewController(vc, animated: true)
-        }else{
-           if model.littleroom.hasPrefix("https") ||
-                model.littleroom.hasPrefix("http"){
-               let vc = RPFWebViewController()
-               vc.viewModel = RPFWebViewModel(urlString: model.littleroom)
-               self.navigationController?.pushViewController(vc, animated: true)
-           }
-        }
+        self.setRouter(url: model.littleroom, pId: productId)
+//        if model.littleroom.isEmpty {
+////            let vc = RFFlowVC()
+////            self.navigationController?.pushViewController(vc, animated: true)
+//        }else{
+//           if model.littleroom.hasPrefix("https") ||
+//                model.littleroom.hasPrefix("http"){
+//               let vc = RPFWebViewController()
+//               vc.viewModel = RPFWebViewModel(urlString: model.littleroom)
+//               self.navigationController?.pushViewController(vc, animated: true)
+//           }
+//        }
     }
     
     
@@ -390,9 +392,9 @@ extension RapidHomeViewController {
             .disposed(by: bag)
         
         viewModel.nextAction 
-            .subscribe(onNext: { [weak self] in
+            .subscribe(onNext: { [weak self] productId in
                 guard let `self` = self else { return }
-                self.nextPush()
+                self.nextPush(productId: productId)
                 
             })
             .disposed(by: bag)
@@ -430,21 +432,15 @@ extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-//<<<<<<< HEAD
-//        self.viewModel.getNextData(productId: "1")
-////        return
-//       
-//=======
-//        let product = self.viewModel.homeModel.value?.products?[indexPath.section]
-//        guard let product = product else {
-//            return
-//        }
-//        
-//        let vc = RFFlowVC(product_id: "")
-//        navigationController?.pushViewController(vc, animated: true)
-//        let vc = RPFWebViewController()
-//        vc.viewModel = RPFWebViewModel(urlString: "https://www.baidu.com")
-//        self.navigationController?.pushViewController(vc, animated: true)
+
+        let product = self.viewModel.homeModel.value?.products?[indexPath.section]
+        guard let product = product else {
+            return
+        }
+        let vc = RFFlowVC(product_id: product.disapproval)
+        self.navigationController?.pushViewController(vc, animated: true)
+//        self.viewModel.getNextData(productId: product.disapproval)
+
        
     }
     
