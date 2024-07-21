@@ -21,6 +21,7 @@
 		026A7B722C4A40B5008EAD52 /* ContactsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026A7B712C4A40B5008EAD52 /* ContactsUI.framework */; };
 		026A7B742C4A50C0008EAD52 /* RFAddressDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A7B732C4A50C0008EAD52 /* RFAddressDetail.swift */; };
 		026A7B762C4A54E0008EAD52 /* RFBankCfg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A7B752C4A54E0008EAD52 /* RFBankCfg.swift */; };
+		026A7B782C4CF05B008EAD52 /* RFAddressSubListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026A7B772C4CF05B008EAD52 /* RFAddressSubListView.swift */; };
 		029A1E4F2C3FB6B900CAA29C /* RFBankAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029A1E4E2C3FB6B900CAA29C /* RFBankAlert.swift */; };
 		02C3BAEB2C3D3F9F001B4107 /* RFFlowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAEA2C3D3F9F001B4107 /* RFFlowVC.swift */; };
 		02C3BAED2C3D40DD001B4107 /* RFLoadProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C3BAEC2C3D40DD001B4107 /* RFLoadProgressView.swift */; };
@@ -138,6 +139,7 @@
 		026A7B712C4A40B5008EAD52 /* ContactsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ContactsUI.framework; path = System/Library/Frameworks/ContactsUI.framework; sourceTree = SDKROOT; };
 		026A7B732C4A50C0008EAD52 /* RFAddressDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFAddressDetail.swift; sourceTree = "<group>"; };
 		026A7B752C4A54E0008EAD52 /* RFBankCfg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFBankCfg.swift; sourceTree = "<group>"; };
+		026A7B772C4CF05B008EAD52 /* RFAddressSubListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFAddressSubListView.swift; sourceTree = "<group>"; };
 		029A1E4E2C3FB6B900CAA29C /* RFBankAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFBankAlert.swift; sourceTree = "<group>"; };
 		02C3BAEA2C3D3F9F001B4107 /* RFFlowVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFFlowVC.swift; sourceTree = "<group>"; };
 		02C3BAEC2C3D40DD001B4107 /* RFLoadProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFLoadProgressView.swift; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 				02F57BE92C3FC05B0049D21C /* RFIDVerifyAlert.swift */,
 				02F57BEB2C3FD4F40049D21C /* RFDateSelAlert.swift */,
 				02F57BED2C3FE6AE0049D21C /* RFAddressAlert.swift */,
+				026A7B772C4CF05B008EAD52 /* RFAddressSubListView.swift */,
 				02F57BEF2C3FEB710049D21C /* RFContactCell.swift */,
 				02F57BF52C4106A50049D21C /* RFBankItem.swift */,
 				02F57BF72C4112680049D21C /* RFNextBtn.swift */,
@@ -1013,6 +1016,7 @@
 				2EBDAE202C3D2EEA00B3C845 /* RapidLoginModel.swift in Sources */,
 				02F57BF82C4112680049D21C /* RFNextBtn.swift in Sources */,
 				2E91E8612C36A684005E2AB4 /* RapidRootViewController.swift in Sources */,
+				026A7B782C4CF05B008EAD52 /* RFAddressSubListView.swift in Sources */,
 				2E2779D32C463658007B4E74 /* RPFOrderModel.swift in Sources */,
 				2EBDAE082C3AD25000B3C845 /* MBProgressHUDExtension.swift in Sources */,
 				02F57BFC2C411E460049D21C /* JXPageAss.swift in Sources */,

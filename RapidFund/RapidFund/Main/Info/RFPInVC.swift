@@ -123,13 +123,15 @@ class RFPInVC: RapidBaseViewController {
     
     private func loadData() {
         RapidApi.shared.getTwoUserInfo(para: ["putit": productId]).subscribe(onNext: { [weak self] obj in
-            guard let json = obj.dictionaryObject?["trouble"] as? [String: Any], let list = json["munched"] as? [Any], let models = [RFTwoUserDataModel].deserialize(from: list)?.compactMap({ $0 }) else {
+            guard let list = obj.dictionaryObject?["munched"] as? [Any], let models = [RFTwoUserDataModel].deserialize(from: list)?.compactMap({ $0 }) else {
                 return
             }
             self?.models = models
             self?.render()
-        }, onError: { err in
+        }, onError: { [weak self] err in
             print(err)
+            MBProgressHUD.showError(err.localizedDescription)
+            self?.navigationController?.popViewController(animated: true)
         }).disposed(by: bag)
     }
     
@@ -180,7 +182,7 @@ class RFPInVC: RapidBaseViewController {
     
     private func getAddressCfgs() {
         RapidApi.shared.addressDetail(para: [:]).subscribe(onNext: { [weak self] obj in
-            guard let json = obj.dictionaryObject, let trouble = json["trouble"] as? [String: Any], let army = trouble["army"] as? [Any], let models = [RFAddressDetail].deserialize(from: army)?.compactMap({ $0 }) else { return }
+            guard let army = obj.dictionaryObject?["army"] as? [Any], let models = [RFAddressDetail].deserialize(from: army)?.compactMap({ $0 }) else { return }
             guard let self = self else { return }
             let alert = RFAddressAlert(address: models)
             alert.show(on: self.view)

@@ -17,7 +17,7 @@ class RFAddressDetail: HandyJSON {
     }
     
     var yourtoboggans = ""
-    var shedid: [__ShedidItem] = []
+    var army: [__ShedidItem] = []
     var wasan = ""
     var disapproval = 0
     
