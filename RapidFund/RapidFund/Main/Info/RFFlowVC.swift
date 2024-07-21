@@ -81,7 +81,7 @@ class RFFlowVC: RapidBaseViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let height = contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        scrollView.contentSize = CGSize(width: kScreenWidth, height: height)
+        scrollView.contentSize = CGSize(width: kScreenWidth, height: max(kScreenHeight, height))
     }
     
     @objc private func tapAction(sender: UITapGestureRecognizer) {

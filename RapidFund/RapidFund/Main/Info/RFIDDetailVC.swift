@@ -399,8 +399,14 @@ extension RFIDDetailVC {
             guard let model = RFUploadResultModel.deserialize(from: obj.dictionaryObject) else {
                 return
             }
+            guard let self = self else { return  }
             model.type = dismay
-            self?.renderPickerResultData(data: model)
+            model.darkalmost = self.model?.carefully?.darkalmost
+            let alert = RFIDVerifyAlert(data: model)
+            alert.show(on: self.view)
+            alert.dismissBlock = {
+                self.renderPickerResultData(data: model)
+            }
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)

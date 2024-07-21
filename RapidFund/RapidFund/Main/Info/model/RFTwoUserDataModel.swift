@@ -16,8 +16,8 @@ class RFTwoUserDataModel: HandyJSON {
     }
 
     var disapproval: Int?
-    var hastily: String?
-    var sounding: String?
+    var hastily: String = ""
+    var sounding: String = ""
     var yourtoboggans: String?
     var marking: String?
     var retreat: Int?

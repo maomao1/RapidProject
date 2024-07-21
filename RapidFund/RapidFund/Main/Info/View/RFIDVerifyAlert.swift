@@ -6,8 +6,18 @@
 //
 
 import UIKit
+import RxSwift
+import MBProgressHUD
 
 class RFIDVerifyItem: UIView {
+    func updateValue(_ text:String?) {
+        contentView.textLb.text = text
+    }
+    
+    var value:String {
+        return self.contentView.textLb.text ?? ""
+    }
+    
     init(_ title: String, placeholder: String? = nil, hiddenNext: Bool = false) {
         super.init(frame: .zero)
         setup(placeholder: placeholder, hiddenNext: hiddenNext)
@@ -68,20 +78,42 @@ class RFIDVerifyItem: UIView {
             make.right.bottom.equalToSuperview()
         }
     }
-
-    @objc private func btnClick() {}
+    var clickBlock:(()->Void)?
+    @objc private func btnClick() {
+        clickBlock?()
+    }
+    
+    var canEditing:Bool = false
 }
 
 extension RFIDVerifyItem: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        return false
+        return canEditing
     }
 }
 
 class RFIDVerifyAlert: XYZAlertView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    private let bag = DisposeBag()
+    private let model:RFUploadResultModel
+    init(data: RFUploadResultModel) {
+        model = data
+        super.init(frame: .zero)
         setup()
+        nameItem.updateValue(data.wasan)
+        nameItem.canEditing = true
+        noItem.updateValue(data.fold)
+        noItem.canEditing = true
+        birItem.updateValue(data.toput)
+        birItem.clickBlock = {
+            guard let appDel = UIApplication.shared.delegate as? AppDelegate, let window = appDel.window else { return  }
+            let alert = RFDateSelAlert()
+            alert.saveBlock = { date in
+                let formatter = DateFormatter()
+                formatter.dateFormat = "dd/MM/yyyy"
+                data.toput = formatter.string(from: date)
+            }
+            alert.show(on: window)
+        }
     }
     
     @available(*, unavailable)
@@ -137,6 +169,9 @@ class RFIDVerifyAlert: XYZAlertView {
         }
         
         let nextimgV = UIImageView(image: "face_next_bg".image)
+        nextimgV.addTapGesture { [weak self] in
+            self?.saveAction()
+        }
         containerAlertView.addSubview(nextimgV)
         nextimgV.snp.makeConstraints { make in
             make.width.equalTo(294.rf)
@@ -191,5 +226,20 @@ class RFIDVerifyAlert: XYZAlertView {
     
     @objc private func backAction() {
         self.dismiss(withAnimation: true)
+    }
+    
+    var dismissBlock:(()->Void)?
+    private func saveAction() {
+        self.model.wasan = nameItem.value
+        self.model.fold = noItem.value
+        RapidApi.shared.saveIDInfoData(para: ["toput":model.toput ?? "", "fold":model.fold ?? "", "wasan":model.wasan ?? "",
+                                              "dismay":"\(model.type)",
+                                              "darkalmost":model.darkalmost ?? "",
+                                              "licks":getRPFRandom()]).subscribe (onNext: { [weak self] _ in
+            self?.dismissBlock?()
+            self?.dismiss(withAnimation: true)
+        },onError: { err in
+            MBProgressHUD.showError(err.localizedDescription)
+        }).disposed(by: bag)
     }
 }
