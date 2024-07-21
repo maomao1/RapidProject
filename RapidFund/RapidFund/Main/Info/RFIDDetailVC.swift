@@ -10,6 +10,7 @@ import RxSwift
 @_exported import SnapKit
 import UIKit
 import MBProgressHUD
+import PhotosUI
 
 class RFIDDetailVC: RapidBaseViewController {
     private let productId:String
@@ -88,7 +89,7 @@ class RFIDDetailVC: RapidBaseViewController {
         let cardBgView = UIImageView(image: "ID_bg".image)
         contentView.addSubview(cardBgView)
         cardBgView.snp.makeConstraints { make in
-            make.bottom.equalTo(topImgV.snp.bottom)
+            make.bottom.equalTo(topImgV.snp.bottom).offset(-18.5.rf)
             make.centerX.equalToSuperview()
             make.width.equalTo(270.rf)
             make.height.equalTo(158.rf)
@@ -167,7 +168,8 @@ class RFIDDetailVC: RapidBaseViewController {
             make.centerX.equalToSuperview()
             make.top.equalTo(cardDesLb.snp.bottom).offset(20.rf)
         }
-        
+        face_recognitionImgV.layer.masksToBounds = true
+        face_recognitionImgV.layer.cornerRadius = 10.rf
         contentView.addSubview(face_recognitionImgV)
         face_recognitionImgV.snp.makeConstraints { make in
             make.width.equalTo(327.rf)
@@ -362,7 +364,7 @@ extension RFIDDetailVC {
                       "elf": "",
                       "thanksmost": getRPFRandom(),
                       "pixie": "1",
-                      "darkalmost": "UMID"] as [String: Any]
+                      "darkalmost": self.IDView.value] as [String: Any]
         
         RapidApi.shared.getIDUploadData(para: params).subscribe(onNext: { [weak self] obj in
             guard let model = RFUploadResultModel.deserialize(from: obj.dictionaryObject) else {
@@ -379,10 +381,14 @@ extension RFIDDetailVC {
         if data.type == 11 ||
             data.type == 12 {
             cardView.sd_setImage(with: URL(string: data.littleroom ?? ""))
+            addBtn.setImage("id_add_1".image, for: .normal)
+            addBtn.isUserInteractionEnabled = false
         } else {
             face_verifyImgV.isHidden = false
             face_recognitionLb.isHidden = true
             face_recognitionImgV.sd_setImage(with: URL(string: data.littleroom ?? ""))
+            face_addBtn.setImage("face_add_1".image, for: .normal)
+            face_addBtn.isUserInteractionEnabled = false
         }
     }
     

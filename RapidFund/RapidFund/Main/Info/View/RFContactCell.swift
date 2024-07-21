@@ -26,6 +26,7 @@ class RFContactCell: UITableViewCell {
     private var btn2:UIButton!
     
     private func setup() {
+        selectionStyle = .none
         self.backgroundColor = .clear
         let bgImgV = UIImageView(image: UIImage.image(gradientDirection: .leftTopToRightBottom, colors: [0xE5DEFA.color,0xFFFFFF.color]))
         contentView.addSubview(bgImgV)
@@ -90,6 +91,22 @@ class RFContactCell: UITableViewCell {
     @objc private func btnClick(sender:UIButton) {
         
         if sender == btn1 {
+            guard let tts = model?.knee.map({ $0.wasan }), tts.isEmpty == false else {
+                return
+            }
+            
+            
+            let alert = RFBankAlert(strings: tts)
+            alert.selectedBlock = { [weak self] index in
+                let knee = self?.model?.knee[index]
+                guard let knee = knee else { return  }
+                self?.model?.fany = knee.dismay
+                self?.model?.wasan = knee.wasan
+                self?.lb1.text = knee.wasan
+                self?.saveBlock?()
+            }
+            let appDe = UIApplication.shared.delegate as! AppDelegate
+            alert.show(on: appDe.window!)
             return
         }
         guard self.model?.bumped == nil ||
@@ -105,7 +122,7 @@ class RFContactCell: UITableViewCell {
         self.model = data
         titleLb.text = "Contact\(data.indexPath.section + 1)"
         lb2.text = data.bumped
-        lb1.text = data.knee.first(where: {$0.wasan == data.fany })?.wasan
+        lb1.text = data.knee.first(where: {$0.dismay == data.fany })?.wasan
     }
     
     private func openConatctPicker() {
@@ -122,11 +139,12 @@ extension RFContactCell:CNContactPickerDelegate {
     
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
         let num = contact.phoneNumbers.first
-        let numStr = num?.label
+        let numStr = num?.value.stringValue
+        lb2.text = numStr
         self.model?.bumped = numStr
         picker.dismiss(animated: true)
         guard let _ = numStr else { return  }
-        saveBlock?()
+//        saveBlock?()
         
     }
     

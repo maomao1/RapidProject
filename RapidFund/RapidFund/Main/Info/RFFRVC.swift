@@ -6,9 +6,20 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class RFFRVC: RapidBaseViewController {
     private let faceView = UIImageView(image: "".image)
+    private let productId:String
+    init(productId: String) {
+        self.productId = productId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         titleNav.text = "Face Recognition"
@@ -119,6 +130,7 @@ class RFFRVC: RapidBaseViewController {
             make.centerX.equalToSuperview()
             make.bottom.equalTo(-53.rf)
         }
+        loadData()
     }
     
     private lazy var imgPicker: UIImagePickerController = {
@@ -133,14 +145,15 @@ class RFFRVC: RapidBaseViewController {
 
 extension RFFRVC {
     private func loadData() {
-        RapidApi.shared.getAuthOneData(para: ["putit": "putit", "melted": "melted"]).subscribe(onNext: { [weak self] json in
-            guard let model = RFAuthFRModel.deserialize(from: json.dictionary) else {
+        RapidApi.shared.getAuthOneData(para: ["putit": productId, "melted": getRPFRandom()]).subscribe(onNext: { [weak self] json in
+            guard let model = RFAuthFRModel.deserialize(from: json.dictionaryObject) else {
                 return
             }
             self?.render(model: model)
             // todo
-        }, onError: { _ in
-            
+        }, onError: { [weak self] err in
+            MBProgressHUD.showError(err.localizedDescription)
+            self?.navigationController?.popViewController(animated: true)
         }).disposed(by: bag)
     }
     
@@ -180,13 +193,13 @@ extension RFFRVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
     
     private func uploadIDCard(source: RFIDDetailVC.__FromSource, data: Data, dismay: Int) {
         let params = ["quiteexpected": source.rawValue,
-                      "putit": "123",
+                      "putit": productId,
                       "dismay": dismay,
                       "woods": data,
                       "elf": "",
                       "thanksmost": "xxx",
                       "pixie": "3",
-                      "darkalmost": "UMID"] as [String: Any]
+                      "darkalmost": ""] as [String: Any]
         
         RapidApi.shared.getIDUploadData(para: params).subscribe(onNext: { [weak self] obj in
             guard let model = RFUploadResultModel.deserialize(from: obj.dictionaryObject) else {
@@ -194,8 +207,10 @@ extension RFFRVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
             }
             model.type = dismay
             self?.faceView.sd_setImage(with: URL(string: model.littleroom ?? ""))
-        }, onError: { _ in
-            
+            self?.addBtn.setImage("face_add_1".image, for: .normal)
+            self?.addBtn.isUserInteractionEnabled = false
+        }, onError: { err in
+            MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
     }
     

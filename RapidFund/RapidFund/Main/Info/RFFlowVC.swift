@@ -96,7 +96,7 @@ class RFFlowVC: RapidBaseViewController {
         if index == 0 {
             navigationController?.pushViewController(RFIDDetailVC(productId: product_id), animated: true)
         } else if index == 1 {
-            navigationController?.pushViewController(RFFRVC(), animated: true)
+            navigationController?.pushViewController(RFFRVC(productId: product_id), animated: true)
         } else if index == 2 {
             navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: product_id), animated: true)
         } else if index == 3 {
