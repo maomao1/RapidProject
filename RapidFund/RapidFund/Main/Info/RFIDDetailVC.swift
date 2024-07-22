@@ -43,6 +43,7 @@ class RFIDDetailVC: RapidBaseViewController {
     }()
 
     private var model: RFAuthFRModel?
+    private var nextModel: RFUploadResultModel? //下一步
     private let contentView = UIView()
     private let scrollView = UIScrollView()
     private let cardView = UIImageView(image: "ID_bg1".image)
@@ -52,6 +53,8 @@ class RFIDDetailVC: RapidBaseViewController {
     private let face_recognitionLb = UILabel().text("Face Recognition").textColor(0xffffff.color).font(24.font)
     private let face_recognitionImgV = UIImageView(image: "face_recognition".image)
     private let face_verifyImgV = UIImageView(image: "face_verify".image)
+    
+    
     private func setup() {
         scrollView.bounces = false
         scrollView.frame = self.view.bounds
@@ -244,11 +247,12 @@ class RFIDDetailVC: RapidBaseViewController {
             guard let self = self else {
                 return
             }
-            RapidApi.shared.idVerifyNext(para: ["goat": self.productId, "aily": getRPFRandom()]).subscribe(onNext: { _ in
-                self.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: self.productId), animated: true)
-            }, onError: { err in
-                MBProgressHUD.showError(err.localizedDescription)
-            })
+            self.nextAction()
+//            RapidApi.shared.idVerifyNext(para: ["goat": self.productId, "aily": getRPFRandom()]).subscribe(onNext: { _ in
+//                self.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: self.productId), animated: true)
+//            }, onError: { err in
+//                MBProgressHUD.showError(err.localizedDescription)
+//            })
         }
         let nextLb = UILabel().font(16.font).text("Next").textColor(0xffffff.color)
         nextimgV.addSubview(nextLb)
@@ -309,6 +313,31 @@ extension RFIDDetailVC {
     private func __openPhoto() {
         self.imgPicker.sourceType = .photoLibrary
         self.navigationController?.present(self.imgPicker, animated: true)
+    }
+    
+    private func nextAction() {
+        guard let model = self.nextModel else { return}
+        guard let cur = model.recovered else { return }
+        
+        let cls = cur.meet
+        if cls == "public" || cls == "thinglike1" {
+            
+        }
+        else  if cls == "personal" || cls == "thinglike2" {
+            self.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: self.productId), animated: true)
+        }
+        else  if cls == "work" || cls == "thinglike3" {
+            self.navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: self.productId), animated: true)
+        }
+        else  if cls == "contacts" || cls == "thinglike4" {
+            self.navigationController?.pushViewController(RFContactListVC(productId: self.productId), animated: true)
+        }
+        else  if cls == "bank" || cls == "thinglike5" {
+            self.navigationController?.pushViewController(RFBankCardListVC(productId: self.productId), animated: true)
+        }
+        
+        
+        
     }
 }
 
@@ -378,14 +407,14 @@ extension RFIDDetailVC {
     }
 
     private func uploadIDCard(source: __FromSource, data: Data, dismay: Int) {
-        if dismay == 10 {
-            RapidApi.shared.uploadFaceUrl(para: ["putit": productId, "woods": data]).subscribe(onNext: { [weak self] _ in
-                self?.refreshFaceUrl()
-            }, onError: { err in
-                MBProgressHUD.showError(err.localizedDescription)
-            }).disposed(by: bag)
-            return
-        }
+//        if dismay == 10 {
+//            RapidApi.shared.uploadFaceUrl(para: ["putit": productId, "woods": data]).subscribe(onNext: { [weak self] _ in
+//                self?.refreshFaceUrl()
+//            }, onError: { err in
+//                MBProgressHUD.showError(err.localizedDescription)
+//            }).disposed(by: bag)
+//            return
+//        }
         let params = ["quiteexpected": source.rawValue,
                       "putit": productId,
                       "dismay": dismay,
@@ -402,6 +431,11 @@ extension RFIDDetailVC {
             guard let self = self else { return  }
             model.type = dismay
             model.darkalmost = self.model?.carefully?.darkalmost
+            self.nextModel = model
+            if model.type == 10 {
+                self.loadData()
+                return
+            }
             let alert = RFIDVerifyAlert(data: model)
             alert.show(on: self.view)
             alert.dismissBlock = {

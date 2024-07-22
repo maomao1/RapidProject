@@ -37,5 +37,15 @@ class RFUploadResultModel: HandyJSON {
     
     var type:Int = 11
     
+    class __Recovered:NSObject, HandyJSON {
+        var meet = ""
+        var littleroom = ""
+        var dismay = 0
+        var hastily = ""
+        required override init() {}
+    }
+
+    var recovered: __Recovered? // 下一步
+    
     required init() {}
 }

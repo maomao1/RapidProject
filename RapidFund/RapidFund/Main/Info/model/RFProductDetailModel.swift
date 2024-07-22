@@ -93,7 +93,7 @@ class RFProductDetailModel: HandyJSON {
     // 认证项
     
     class __Recovered:NSObject, HandyJSON {
-        var has = ""
+        var meet = ""
         var littleroom = ""
         var dismay = 0
         var hastily = ""

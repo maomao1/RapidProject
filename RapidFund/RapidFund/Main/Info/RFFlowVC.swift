@@ -87,23 +87,46 @@ class RFFlowVC: RapidBaseViewController {
     @objc private func tapAction(sender: UITapGestureRecognizer) {
         guard let cfgs = model?.hehad else { return }
         guard let cur = model?.recovered else { return }
-        guard let curModel = cfgs.first(where: { $0.hastily == cur.hastily }) else {
-            return
+        
+//        guard let curModel = cfgs.first(where: { $0.hastily == cur.hastily }) else {
+//            return
+//        }
+        let curModel = cfgs[sender.view!.tag]
+        var cls = curModel.meet
+        if curModel.mustn == 1 {
+             cls = curModel.meet
+            
+        }else{
+             cls = cur.meet
         }
-        let index = cfgs.firstIndex(of: curModel)
+        if cls == "public" || cls == "thinglike1" {
+            self.navigationController?.pushViewController(RFIDDetailVC(productId: product_id), animated: true)
+        }
+        else  if cls == "personal" || cls == "thinglike2" {
+            self.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: product_id), animated: true)
+        }
+        else  if cls == "work" || cls == "thinglike3" {
+            self.navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: product_id), animated: true)
+        }
+        else  if cls == "contacts" || cls == "thinglike4" {
+            self.navigationController?.pushViewController(RFContactListVC(productId: product_id), animated: true)
+        }
+        else  if cls == "bank" || cls == "thinglike5" {
+            self.navigationController?.pushViewController(RFBankCardListVC(productId: product_id), animated: true)
+        }
     
-        guard let index = index else { return }
-        if index == 0 {
-            navigationController?.pushViewController(RFIDDetailVC(productId: product_id), animated: true)
-        } else if index == 1 {
-            navigationController?.pushViewController(RFFRVC(productId: product_id), animated: true)
-        } else if index == 2 {
-            navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: product_id), animated: true)
-        } else if index == 3 {
-            navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: product_id), animated: true)
-        } else if index == 4 {
-            navigationController?.pushViewController(RFBankCardListVC(productId: product_id), animated: true)
-        }
+//        guard let index = index else { return }
+//        if index == 0 {
+//            navigationController?.pushViewController(RFIDDetailVC(productId: product_id), animated: true)
+//        } else if index == 1 {
+//            navigationController?.pushViewController(RFFRVC(productId: product_id), animated: true)
+//        } else if index == 2 {
+//            navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: product_id), animated: true)
+//        } else if index == 3 {
+//            navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: product_id), animated: true)
+//        } else if index == 4 {
+//            navigationController?.pushViewController(RFBankCardListVC(productId: product_id), animated: true)
+//        }
     }
     
     private var model: RFProductDetailModel?
