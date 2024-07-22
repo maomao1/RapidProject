@@ -18,6 +18,17 @@ class RFInfoItem: UIView {
 
     var model: RFTwoUserDataModel? {
         didSet {
+            if model?.hastily == "Email" || model?.hastily == "Address Details" || model?.hastily == "Company Name" || model?.hastily == "Company Phone Number" {
+                if let a = model?.upthe, a.isEmpty == false {
+                    update(a)
+                }
+                contentView.btn.isHidden = true
+                canEditing = true
+                NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: self.contentView.textLb, queue: .main) { [weak self] _ in
+                    self?.model?.upthe = self?.contentView.textLb.text
+                }
+                return
+            }
             guard let text = model?.snatch.first(where: { $0.dismay == model?.dismay ?? "" })?.wasan else {
                 return
             }
@@ -59,8 +70,8 @@ class RFInfoItem: UIView {
         }
         label.snp.makeConstraints { make in
             make.left.equalTo(24.rf)
-            make.centerY.equalToSuperview()
-//            make.right.equalTo(btn.snp.left).offset(-10.rf)
+            make.top.bottom.equalToSuperview()
+            make.right.equalTo(-50.rf)
         }
         
         return (bgView, label, btn)
@@ -91,12 +102,16 @@ class RFInfoItem: UIView {
     @objc private func btnClick() {
         btnBlock?()
     }
+    
+    private var canEditing = false
 }
 
 extension RFInfoItem: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        return false
+        return canEditing
     }
+    
+    
 }
 
 class RFGengerItem: UIView {
@@ -219,8 +234,10 @@ class RFGengerItem: UIView {
         item.selected = true
         if item == femaleItem {
             maleItem.selected = false
+            model?.theboys = "0"
         } else {
             femaleItem.selected = false
+            model?.theboys = "1"
         }
     }
 }

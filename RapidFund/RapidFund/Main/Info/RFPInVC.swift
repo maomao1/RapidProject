@@ -177,7 +177,7 @@ class RFPInVC: RapidBaseViewController {
                 stackView.addArrangedSubview(other)
                 other.btnBlock = { [weak self] in
                     guard let self = self else { return  }
-                    if item.hastily == "Address Details" {
+                    if item.hastily == "Residential Address" {
                         self.getAddressCfgs()
                     } else {
                         let strings = item.snatch.map({ $0.wasan })
@@ -200,25 +200,18 @@ class RFPInVC: RapidBaseViewController {
             self.saveWorkInfo()
             return
         }
-        /*
-         
-         "watchful": "hvfhbgd",
-         "smiledsuddenly": "53285697",
-         "laughter": "1",
-         "burst": "1",
-         "inhis": "1",
-         "neatly": "1"
-         */
-        // 参数不知道咋填
-        RapidApi.shared.saveTwoUserInfo(para: ["aily": getRPFRandom(), "putit": productId, "hare": "", "youand": ""]).subscribe(onNext: { [weak self] _ in
+        let json = models.toJSON().compactMap({ $0 })
+        RapidApi.shared.saveTwoUserInfo(para: ["munched":json, "putit":productId, "aily":getRPFRandom()]).subscribe(onNext: { [weak self] _ in
             self?.jumpNext()
         }, onError: { err in
+            print("\(err)")
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
     }
     
     private func saveWorkInfo() {
-        RapidApi.shared.saveWorkInfo(para: [:]).subscribe (onNext: { [weak self] _ in
+        let json = models.toJSON().compactMap({ $0 })
+        RapidApi.shared.saveWorkInfo(para: ["munched":json]).subscribe (onNext: { [weak self] _ in
             self?.jumpNext()
         },onError: { err in
             MBProgressHUD.showError(err.localizedDescription)

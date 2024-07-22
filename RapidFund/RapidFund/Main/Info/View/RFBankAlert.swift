@@ -44,6 +44,7 @@ class RFBankAlert: XYZAlertView {
     }
     
     override func show(on view: UIView) {
+        self.backgroundColor = UIColor(rgbHex: 0x000000, alpha: 0.8)
         view.addSubview(self)
         self.snp.makeConstraints { make in
             make.edges.equalToSuperview()
