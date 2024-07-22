@@ -18,7 +18,8 @@ class RFInfoItem: UIView {
 
     var model: RFTwoUserDataModel? {
         didSet {
-            if model?.hastily == "Email" || model?.hastily == "Address Details" || model?.hastily == "Company Name" || model?.hastily == "Company Phone Number" {
+            if model?.marking == "boyswent2" {
+//            if model?.hastily == "Email" || model?.hastily == "Address Details" || model?.hastily == "Company Name" || model?.hastily == "Company Phone Number" {
                 if let a = model?.upthe, a.isEmpty == false {
                     update(a)
                 }
