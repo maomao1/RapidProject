@@ -5,19 +5,21 @@
 //  Created by C on 2024/7/10.
 //
 
+import MBProgressHUD
+import PhotosUI
 import RxSwift
 @_exported import SDWebImage
 @_exported import SnapKit
 import UIKit
-import MBProgressHUD
 
 class RFIDDetailVC: RapidBaseViewController {
-    private let productId:String
+    private let productId: String
     init(productId: String) {
         self.productId = productId
         super.init(nibName: nil, bundle: nil)
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -39,7 +41,8 @@ class RFIDDetailVC: RapidBaseViewController {
         vc.delegate = self
         return vc
     }()
-    private var model:RFAuthFRModel?
+
+    private var model: RFAuthFRModel?
     private let contentView = UIView()
     private let scrollView = UIScrollView()
     private let cardView = UIImageView(image: "ID_bg1".image)
@@ -88,7 +91,7 @@ class RFIDDetailVC: RapidBaseViewController {
         let cardBgView = UIImageView(image: "ID_bg".image)
         contentView.addSubview(cardBgView)
         cardBgView.snp.makeConstraints { make in
-            make.bottom.equalTo(topImgV.snp.bottom)
+            make.bottom.equalTo(topImgV.snp.bottom).offset(-18.5.rf)
             make.centerX.equalToSuperview()
             make.width.equalTo(270.rf)
             make.height.equalTo(158.rf)
@@ -167,7 +170,8 @@ class RFIDDetailVC: RapidBaseViewController {
             make.centerX.equalToSuperview()
             make.top.equalTo(cardDesLb.snp.bottom).offset(20.rf)
         }
-        
+        face_recognitionImgV.layer.masksToBounds = true
+        face_recognitionImgV.layer.cornerRadius = 10.rf
         contentView.addSubview(face_recognitionImgV)
         face_recognitionImgV.snp.makeConstraints { make in
             make.width.equalTo(327.rf)
@@ -237,7 +241,14 @@ class RFIDDetailVC: RapidBaseViewController {
         }
         
         nextimgV.addTapGesture { [weak self] in
-            self?.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: self?.productId ?? ""), animated: true)
+            guard let self = self else {
+                return
+            }
+            RapidApi.shared.idVerifyNext(para: ["goat": self.productId, "aily": getRPFRandom()]).subscribe(onNext: { _ in
+                self.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: self.productId), animated: true)
+            }, onError: { err in
+                MBProgressHUD.showError(err.localizedDescription)
+            })
         }
         let nextLb = UILabel().font(16.font).text("Next").textColor(0xffffff.color)
         nextimgV.addSubview(nextLb)
@@ -260,7 +271,8 @@ class RFIDDetailVC: RapidBaseViewController {
         
         scrollView.contentSize = CGSize(width: kScreenWidth, height: height)
     }
-    private var isFace:Bool = false
+
+    private var isFace: Bool = false
 }
 
 extension RFIDDetailVC {
@@ -308,10 +320,9 @@ extension RFIDDetailVC: UIImagePickerControllerDelegate, UINavigationControllerD
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         let img = info[.originalImage] as? UIImage
         picker.dismiss(animated: true)
-        guard let imgData = img?.jpegData(compressionQuality: 0.5) else { return  }
+        guard let imgData = img?.jpegData(compressionQuality: 0.5) else { return }
         
         uploadIDCard(source: picker.sourceType == .camera ? .camera : .photo, data: imgData, dismay: isFace ? 10 : 11)
-        
     }
 }
 
@@ -326,6 +337,18 @@ extension RFIDDetailVC {
         }, onError: { [weak self] err in
             MBProgressHUD.showError(err.localizedDescription)
             self?.navigationController?.popViewController(animated: true)
+        }).disposed(by: bag)
+    }
+    
+    private func refreshFaceUrl() {
+        RapidApi.shared.getFaceUrl(para: ["goat": productId, "aily": getRPFRandom()]).subscribe(onNext: { [weak self] json in
+            guard let url = json.dictionaryObject?["afrightened"] as? String, url.isEmpty == false else {
+                return
+            }
+            self?.face_recognitionImgV.sd_setImage(with: URL(string: url))
+            // todo
+        }, onError: { err in
+            MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
     }
     
@@ -355,6 +378,14 @@ extension RFIDDetailVC {
     }
 
     private func uploadIDCard(source: __FromSource, data: Data, dismay: Int) {
+        if dismay == 10 {
+            RapidApi.shared.uploadFaceUrl(para: ["putit": productId, "woods": data]).subscribe(onNext: { [weak self] _ in
+                self?.refreshFaceUrl()
+            }, onError: { err in
+                MBProgressHUD.showError(err.localizedDescription)
+            }).disposed(by: bag)
+            return
+        }
         let params = ["quiteexpected": source.rawValue,
                       "putit": productId,
                       "dismay": dismay,
@@ -362,32 +393,43 @@ extension RFIDDetailVC {
                       "elf": "",
                       "thanksmost": getRPFRandom(),
                       "pixie": "1",
-                      "darkalmost": "UMID"] as [String: Any]
+                      "darkalmost": self.IDView.value] as [String: Any]
         
         RapidApi.shared.getIDUploadData(para: params).subscribe(onNext: { [weak self] obj in
             guard let model = RFUploadResultModel.deserialize(from: obj.dictionaryObject) else {
                 return
             }
+            guard let self = self else { return  }
             model.type = dismay
-            self?.renderPickerResultData(data: model)
+            model.darkalmost = self.model?.carefully?.darkalmost
+            let alert = RFIDVerifyAlert(data: model)
+            alert.show(on: self.view)
+            alert.dismissBlock = {
+                self.renderPickerResultData(data: model)
+            }
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
     }
     
-    private func renderPickerResultData(data:RFUploadResultModel) {
+    private func renderPickerResultData(data: RFUploadResultModel) {
         if data.type == 11 ||
-            data.type == 12 {
+            data.type == 12
+        {
             cardView.sd_setImage(with: URL(string: data.littleroom ?? ""))
+            addBtn.setImage("id_add_1".image, for: .normal)
+            addBtn.isUserInteractionEnabled = false
         } else {
             face_verifyImgV.isHidden = false
             face_recognitionLb.isHidden = true
             face_recognitionImgV.sd_setImage(with: URL(string: data.littleroom ?? ""))
+            face_addBtn.setImage("face_add_1".image, for: .normal)
+            face_addBtn.isUserInteractionEnabled = false
         }
     }
     
     private func selectedPRCCard() {
-        guard let smoke = self.model?.smoke else { return  }
+        guard let smoke = self.model?.smoke else { return }
         var list = [String]()
         for item in smoke {
             list.append(contentsOf: item)
@@ -402,4 +444,3 @@ extension RFIDDetailVC {
         alert.show(on: self.view)
     }
 }
-

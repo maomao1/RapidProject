@@ -81,4 +81,9 @@ struct RapidApiConstantUrl {
     
     //地址初始化
     static let addressDetail = "/rfapi/usually/might/gambolling"
+    
+    ///审核账号跳个人信息认证项
+    static let idVerifyNext = "/v4/index/identify_next_step"
+    
+    
 }

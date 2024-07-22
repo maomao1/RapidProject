@@ -5,10 +5,22 @@
 //  Created by C on 2024/7/10.
 //
 
+import MBProgressHUD
 import UIKit
 
 class RFFRVC: RapidBaseViewController {
     private let faceView = UIImageView(image: "".image)
+    private let productId: String
+    init(productId: String) {
+        self.productId = productId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         titleNav.text = "Face Recognition"
@@ -119,6 +131,7 @@ class RFFRVC: RapidBaseViewController {
             make.centerX.equalToSuperview()
             make.bottom.equalTo(-53.rf)
         }
+        loadData()
     }
     
     private lazy var imgPicker: UIImagePickerController = {
@@ -133,14 +146,15 @@ class RFFRVC: RapidBaseViewController {
 
 extension RFFRVC {
     private func loadData() {
-        RapidApi.shared.getAuthOneData(para: ["putit": "putit", "melted": "melted"]).subscribe(onNext: { [weak self] json in
-            guard let model = RFAuthFRModel.deserialize(from: json.dictionary) else {
+        RapidApi.shared.getAuthOneData(para: ["putit": productId, "melted": getRPFRandom()]).subscribe(onNext: { [weak self] json in
+            guard let model = RFAuthFRModel.deserialize(from: json.dictionaryObject) else {
                 return
             }
             self?.render(model: model)
             // todo
-        }, onError: { _ in
-            
+        }, onError: { [weak self] err in
+            MBProgressHUD.showError(err.localizedDescription)
+            self?.navigationController?.popViewController(animated: true)
         }).disposed(by: bag)
     }
     
@@ -175,29 +189,25 @@ extension RFFRVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
         picker.dismiss(animated: true)
         guard let imgData = img?.jpegData(compressionQuality: 0.5) else { return }
     
-        uploadIDCard(source:.camera, data: imgData, dismay: 10)
+        uploadIDCard(source: .camera, data: imgData, dismay: 10)
     }
     
-    private func uploadIDCard(source: RFIDDetailVC.__FromSource, data: Data, dismay: Int) {
-        let params = ["quiteexpected": source.rawValue,
-                      "putit": "123",
-                      "dismay": dismay,
-                      "woods": data,
-                      "elf": "",
-                      "thanksmost": "xxx",
-                      "pixie": "3",
-                      "darkalmost": "UMID"] as [String: Any]
-        
-        RapidApi.shared.getIDUploadData(para: params).subscribe(onNext: { [weak self] obj in
-            guard let model = RFUploadResultModel.deserialize(from: obj.dictionaryObject) else {
+    private func refreshFaceUrl() {
+        RapidApi.shared.getFaceUrl(para: ["goat": productId, "aily": getRPFRandom()]).subscribe(onNext: { [weak self] json in
+            guard let url = json.dictionaryObject?["afrightened"] as? String, url.isEmpty == false else {
                 return
             }
-            model.type = dismay
-            self?.faceView.sd_setImage(with: URL(string: model.littleroom ?? ""))
-        }, onError: { _ in
-            
+            self?.faceView.sd_setImage(with: URL(string: url))
+        }, onError: { err in
+            MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
     }
     
-    
+    private func uploadIDCard(source: RFIDDetailVC.__FromSource, data: Data, dismay: Int) {
+        RapidApi.shared.uploadFaceUrl(para: ["putit": productId, "woods": data]).subscribe(onNext: { [weak self] _ in
+            self?.refreshFaceUrl()
+        }, onError: { err in
+            MBProgressHUD.showError(err.localizedDescription)
+        }).disposed(by: bag)
+    }
 }

@@ -72,7 +72,8 @@ class RFBankBindVC: RapidBaseViewController {
                     guard let it = wallet?.snatch[index] else { return }
                     self.walletItem.fill(it)
                 }
-                alert.show(on: self.view)
+                let appDel = UIApplication.shared.delegate as! AppDelegate
+                alert.show(on: appDel.window!)
             }
 
         } else {
@@ -127,7 +128,7 @@ class RFBankBindVC: RapidBaseViewController {
 
 extension RFBankBindVC {
     private func bindBankCard() {
-        RapidApi.shared.commitBindCardInfo(para: ["putit": self.productId, "peeping": self.accountItem.value, "darkalmost": category == .Wallet ? "1" : "2", "bush": self.walletItem.textLb.text, "hid": "", "child": name1Item.value, "frozen": name2Item.value, "beabsolutely": name3Item.value, "its": getRPFRandom()]).subscribe(onNext: { [weak self] _ in
+        RapidApi.shared.commitBindCardInfo(para: ["putit": self.productId, "peeping": self.accountItem.value, "darkalmost": category == .Wallet ? "1" : "2", "bush": self.walletItem.textLb.text ?? "", "hid": "", "child": name1Item.value, "frozen": name2Item.value, "beabsolutely": name3Item.value, "its": getRPFRandom()]).subscribe(onNext: { [weak self] _ in
             self?.dismiss?()
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)

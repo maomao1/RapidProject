@@ -236,6 +236,17 @@ extension RapidApi {
             encoding: URLEncoding.default,
             completionHandler: { $0 })
     }
+    
+    func idVerifyNext(para: Parameters) -> Observable<JSON> {
+        return request(
+            path: BaseURl + RapidApiConstantUrl.idVerifyNext,
+            parameters: para,
+            method: .post,
+            encoding: URLEncoding.default,
+            completionHandler: { $0 })
+    }
+    
+    
 }
 
 extension RapidApi {

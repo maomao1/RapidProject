@@ -50,4 +50,7 @@ class RFPRCIDView: UIView {
     @objc private func btnClick() {
         self.block?()
     }
+    var value:String {
+        return textLb.text ?? ""
+    }
 }

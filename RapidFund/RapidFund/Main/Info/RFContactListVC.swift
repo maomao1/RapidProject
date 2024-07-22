@@ -75,6 +75,11 @@ class RFContactListVC: RapidBaseViewController {
             self?.navigationController?.popViewController(animated: true)
         }).disposed(by: bag)
     }
+    
+    override func back() {
+        super.back()
+        saveAction()
+    }
 }
 
 extension RFContactListVC: UITableViewDelegate, UITableViewDataSource {
@@ -102,7 +107,7 @@ extension RFContactListVC: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RFContactCell", for: indexPath) as! RFContactCell
         cell.fill(model)
         cell.saveBlock = { [weak self] in
-            self?.saveAction()
+//            self?.saveAction()
         }
         return cell
     }
@@ -110,13 +115,15 @@ extension RFContactListVC: UITableViewDelegate, UITableViewDataSource {
     private func saveAction() {
         var json: [[String: Any]] = []
         self.dataSource.forEach { obj in
-            json.append(["bumped": obj.bumped ?? "", "wasan": obj.wasan ?? "", "fany": obj.fany, "disappear": obj.disappear ?? ""])
+            if obj.bumped?.isEmpty == false, obj.fany.isEmpty == false {
+                json.append(["bumped": obj.bumped ?? "", "wasan": obj.wasan ?? "", "fany": obj.fany, "disappear": obj.disappear ?? ""])
+            }
         }
         RapidApi.shared.saveContactInfo(para: ["putit": self.productId, "trouble": json.toJSONString ?? ""]).subscribe(onNext: { [weak self] _ in
-            self?.tb.reloadData()
+//            self?.tb.reloadData()
         }, onError: { [weak self] err in
-            MBProgressHUD.showError(err.localizedDescription)
-            self?.loadData()
+//            MBProgressHUD.showError(err.localizedDescription)
+//            self?.loadData()
         }).disposed(by: bag)
     }
 }

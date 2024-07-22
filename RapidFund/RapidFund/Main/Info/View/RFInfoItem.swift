@@ -12,8 +12,17 @@ class RFInfoItem: UIView {
         self.contentView.textLb.text = des
     }
     
-    var value:String {
+    var value: String {
         return self.contentView.textLb.text ?? ""
+    }
+
+    var model: RFTwoUserDataModel? {
+        didSet {
+            guard let text = model?.snatch.first(where: { $0.dismay == model?.dismay ?? "" })?.wasan else {
+                return
+            }
+            update(text)
+        }
     }
     
     init(_ title: String, placeholder: String? = nil, hiddenNext: Bool = false) {
@@ -77,7 +86,7 @@ class RFInfoItem: UIView {
         }
     }
 
-    var btnBlock:(()->Void)?
+    var btnBlock: (() -> Void)?
     
     @objc private func btnClick() {
         btnBlock?()
@@ -91,6 +100,8 @@ extension RFInfoItem: UITextFieldDelegate {
 }
 
 class RFGengerItem: UIView {
+    var model: RFTwoUserDataModel?
+    
     private class __GenderView: UIView {
         var selected: Bool = false {
             didSet {

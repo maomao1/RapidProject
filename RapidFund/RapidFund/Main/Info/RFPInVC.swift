@@ -40,22 +40,33 @@ class RFPInVC: RapidBaseViewController {
         self.view.bringSubviewToFront(self.customNavView)
     }
 
-    private let genderItem = RFGengerItem()
-    private let relaItem = RFInfoItem("Marriage Status", placeholder: "Ralationship")
-    private let passportItem = RFInfoItem("Passport", placeholder: "12-12-2024")
-    private let addressItem = RFInfoItem("Address", placeholder: "Address")
-    private let phoneItem = RFInfoItem("Phone Number", placeholder: "1234567", hiddenNext: true)
-    private let inomeItem = RFInfoItem("Monthly Income", placeholder: "aaaaa")
-    
+    private let contentView = UIView()
+    private let scrollView = UIScrollView()
+    private let stackView = UIStackView(arrangedSubviews: [])
     private func setup() {
+        scrollView.bounces = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.frame = self.view.bounds
+        scrollView.contentInsetAdjustmentBehavior = .never
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        scrollView.addSubview(contentView)
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         let bottV = UIImageView(image: getResourceConfig().0)
-        view.addSubview(bottV)
+        contentView.addSubview(bottV)
+        bottV.contentMode = .scaleToFill
         bottV.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+            make.width.equalTo(kScreenWidth)
         }
         let bgImgV = UIImageView(image: getResourceConfig().1)
         bgImgV.isUserInteractionEnabled = true
-        view.addSubview(bgImgV)
+        contentView.addSubview(bgImgV)
         bgImgV.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
             make.height.equalTo(303.rf)
@@ -64,20 +75,16 @@ class RFPInVC: RapidBaseViewController {
         let bgView = UIImageView(image: UIImage.image(gradientDirection: .vertical, colors: [0xE5DEFA.color, 0xFFFFFF.color]))
         bgView.clipsCornerRadius(Float(24.rf))
         bgView.isUserInteractionEnabled = true
-        view.addSubview(bgView)
+        contentView.addSubview(bgView)
         bgView.snp.makeConstraints { make in
             make.left.equalTo(24.rf)
             make.right.equalTo(-24.rf)
             make.top.equalTo(bgImgV.snp.bottom).offset(-40.rf)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-77.rf)
         }
         
-        let stackViews: [UIView]
-        if route == .personal_info {
-            stackViews = [genderItem, relaItem, passportItem, addressItem]
-        } else {
-            stackViews = [phoneItem, inomeItem]
-        }
-        let stackView = UIStackView(arrangedSubviews: stackViews)
+        
+        
         stackView.spacing = 24.rf
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
@@ -89,28 +96,36 @@ class RFPInVC: RapidBaseViewController {
         let btn = UIButton(type: .custom)
         btn.setImage("info_next".image, for: .normal)
         btn.addTarget(self, action: #selector(nextAction), for: .touchUpInside)
-        view.addSubview(btn)
+        contentView.addSubview(btn)
         btn.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.centerY.equalTo(bgView.snp.bottom)
         }
         if route == .personal_info {
-            loadData()
+            loadUserData()
+        } else {
+            loadOtherData()
         }
         
-        addressItem.btnBlock = { [weak self] in
-            self?.getAddressCfgs()
-        }
-        passportItem.btnBlock = { [weak self] in
-            guard let self = self else { return }
-            let alert = RFDateSelAlert()
-            alert.saveBlock = { date in
-                let format = DateFormatter()
-                format.dateFormat = "dd-MM-yyyy"
-                self.passportItem.update(format.string(from: date))
-            }
-            alert.show(on: self.view)
-        }
+//        addressItem.btnBlock = { [weak self] in
+//            self?.getAddressCfgs()
+//        }
+//        passportItem.btnBlock = { [weak self] in
+//            guard let self = self else { return }
+//            let alert = RFDateSelAlert()
+//            alert.saveBlock = { date in
+//                let format = DateFormatter()
+//                format.dateFormat = "dd-MM-yyyy"
+//                self.passportItem.update(format.string(from: date))
+//            }
+//            alert.show(on: self.view)
+//        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let height = contentView.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize).height
+        scrollView.contentSize = CGSize(width: kScreenWidth, height: max(kScreenHeight, height))
     }
     
     private func getResourceConfig() -> (UIImage?, UIImage?) {
@@ -121,38 +136,70 @@ class RFPInVC: RapidBaseViewController {
         return ("em_in_bg".image, "em_in_top".image)
     }
     
-    private func loadData() {
+    private func loadUserData() {
         RapidApi.shared.getTwoUserInfo(para: ["putit": productId]).subscribe(onNext: { [weak self] obj in
-            guard let json = obj.dictionaryObject?["trouble"] as? [String: Any], let list = json["munched"] as? [Any], let models = [RFTwoUserDataModel].deserialize(from: list)?.compactMap({ $0 }) else {
+            guard let list = obj.dictionaryObject?["munched"] as? [Any], let models = [RFTwoUserDataModel].deserialize(from: list)?.compactMap({ $0 }) else {
                 return
             }
             self?.models = models
             self?.render()
-        }, onError: { err in
+        }, onError: { [weak self] err in
             print(err)
+            MBProgressHUD.showError(err.localizedDescription)
+            self?.navigationController?.popViewController(animated: true)
+        }).disposed(by: bag)
+    }
+    
+    private func loadOtherData() {
+        RapidApi.shared.getWorkInfo(para: ["putit": productId]).subscribe(onNext: { [weak self] obj in
+            guard let list = obj.dictionaryObject?["munched"] as? [Any], let models = [RFTwoUserDataModel].deserialize(from: list)?.compactMap({ $0 }) else {
+                return
+            }
+            self?.models = models
+            self?.render()
+        }, onError: { [weak self] err in
+            print(err)
+            MBProgressHUD.showError(err.localizedDescription)
+            self?.navigationController?.popViewController(animated: true)
         }).disposed(by: bag)
     }
     
     private func render() {
-        let genderItem = models.first(where: { $0.hastily == RFKeyValue.gender.rawValue })
-        if let genderItem = genderItem {
-            self.genderItem.isMale = genderItem.theboys == "1"
+        for item in models {
+            if item.hastily == "Gender" {
+                let gender = RFGengerItem()
+                stackView.addArrangedSubview(gender)
+                gender.model = item
+                gender.isMale = item.theboys == "1"
+            } else {
+                let other = RFInfoItem(item.hastily,placeholder: item.sounding)
+                other.model = item
+                stackView.addArrangedSubview(other)
+                other.btnBlock = { [weak self] in
+                    guard let self = self else { return  }
+                    if item.hastily == "Address Details" {
+                        self.getAddressCfgs()
+                    } else {
+                        let strings = item.snatch.map({ $0.wasan })
+                        guard strings.isEmpty == false else { return }
+                        let alert = RFBankAlert(strings: strings)
+                        alert.selectedBlock = { index in
+                            item.dismay = item.snatch[index].dismay
+                            other.update(strings[index])
+                        }
+                        alert.show(on: self.view)
+                    }
+                }
+            }
         }
-        let marryItem = models.first(where: { $0.hastily == RFKeyValue.marry.rawValue })
-        if let marryItem = marryItem {
-            self.relaItem.update(marryItem.snatch.first(where: { $0.dismay == marryItem.dismay })?.wasan ?? "")
-        }
-        let passport = models.first(where: { $0.hastily == RFKeyValue.passpord.rawValue })
-        if let passport = passport {
-            passportItem.update(passport.marking ?? "")
-        }
-        let address = models.first(where: { $0.hastily == RFKeyValue.address.rawValue })
-        if let address = address {
-            addressItem.update(address.upthe ?? "")
-        }
+
     }
     
     @objc private func nextAction() {
+        if route == .employment_info {
+            self.saveWorkInfo()
+            return
+        }
         /*
          
          "watchful": "hvfhbgd",
@@ -163,9 +210,17 @@ class RFPInVC: RapidBaseViewController {
          "neatly": "1"
          */
         // 参数不知道咋填
-        RapidApi.shared.saveTwoUserInfo(para: ["aily": getRPFRandom(), "putit": productId, "hare": genderItem.isMale ? "1" : "0", "youand": addressItem.value]).subscribe(onNext: { [weak self] _ in
+        RapidApi.shared.saveTwoUserInfo(para: ["aily": getRPFRandom(), "putit": productId, "hare": "", "youand": ""]).subscribe(onNext: { [weak self] _ in
             self?.jumpNext()
         }, onError: { err in
+            MBProgressHUD.showError(err.localizedDescription)
+        }).disposed(by: bag)
+    }
+    
+    private func saveWorkInfo() {
+        RapidApi.shared.saveWorkInfo(para: [:]).subscribe (onNext: { [weak self] _ in
+            self?.jumpNext()
+        },onError: { err in
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
     }
@@ -180,7 +235,7 @@ class RFPInVC: RapidBaseViewController {
     
     private func getAddressCfgs() {
         RapidApi.shared.addressDetail(para: [:]).subscribe(onNext: { [weak self] obj in
-            guard let json = obj.dictionaryObject, let trouble = json["trouble"] as? [String: Any], let army = trouble["army"] as? [Any], let models = [RFAddressDetail].deserialize(from: army)?.compactMap({ $0 }) else { return }
+            guard let army = obj.dictionaryObject?["army"] as? [Any], let models = [RFAddressDetail].deserialize(from: army)?.compactMap({ $0 }) else { return }
             guard let self = self else { return }
             let alert = RFAddressAlert(address: models)
             alert.show(on: self.view)

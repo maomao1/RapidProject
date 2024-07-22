@@ -193,7 +193,7 @@ extension RFBankMgrAlert:JXSegmentedViewDelegate {
 
 extension RFBankMgrAlert: JXSegmentedListContainerViewDataSource {
     func numberOfLists(in _: JXSegmentedListContainerView) -> Int {
-        return 3
+        return cfg.munched.count
     }
 
     func listContainerView(_: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
