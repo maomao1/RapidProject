@@ -16,7 +16,7 @@ let RPFRouterSet = "rapid://rfapi.rapidfund.app/terrified"
 let RPFRouterHome = "rapid://rfapi.rapidfund.app/loudest"
 let RPFRouterLogin = "rapid://rfapi.rapidfund.app/examined"
 let RPFRouterOrder = "rapid://rfapi.rapidfund.app/laughing"
-let RPFRouterProductDetail = "rapid://rfapi.rapidfund.app/andfollowed"
+let RPFRouterProductDetail = "rapid://rfapi.rapidfund.app/andfollowed"  // 认证流程主页
 let RPFRouterContact = "rapid://rfapi.rapidfund.app/absolutelysound"
 let RPFRouterBank = "rapid://rfapi.rapidfund.app/amarvellous"
 

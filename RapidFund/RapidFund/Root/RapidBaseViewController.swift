@@ -287,9 +287,12 @@ extension RapidBaseViewController {
 
                 }
                 else if  scheme?.contains(RPFRouterProductDetail) == true{
-                    let vc = RapidOrderListViewController()
-                    vc.viewModel = RapidOrderListViewModel(type: .settled)
-                    self.navigationController?.pushViewController(vc, animated: true)
+                    if let requirePara = param{
+                        if let pId =  requirePara[RPFOrderDetailKey]{
+                            let vc = RFFlowVC(product_id: pId)
+                            self.navigationController?.pushViewController(vc, animated: true)
+                        }
+                    }
                 }
                 else if  scheme?.contains(RPFRouterContact) == true{
                     let vc = RapidOrderListViewController()
