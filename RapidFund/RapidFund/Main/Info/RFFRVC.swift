@@ -193,19 +193,33 @@ extension RFFRVC: UIImagePickerControllerDelegate, UINavigationControllerDelegat
     }
     
     private func refreshFaceUrl() {
-        RapidApi.shared.getFaceUrl(para: ["goat": productId, "aily": getRPFRandom()]).subscribe(onNext: { [weak self] json in
-            guard let url = json.dictionaryObject?["afrightened"] as? String, url.isEmpty == false else {
+        RapidApi.shared.getAuthOneData(para: ["putit": productId, "melted": getRPFRandom()]).subscribe(onNext: { [weak self] json in
+            guard let model = RFAuthFRModel.deserialize(from: json.dictionaryObject) else {
                 return
             }
-            self?.faceView.sd_setImage(with: URL(string: url))
-        }, onError: { err in
+            self?.faceView.sd_setImage(with: URL(string: model.littleroom))
+            // todo
+        }, onError: { [weak self] err in
             MBProgressHUD.showError(err.localizedDescription)
+            self?.navigationController?.popViewController(animated: true)
         }).disposed(by: bag)
     }
     
     private func uploadIDCard(source: RFIDDetailVC.__FromSource, data: Data, dismay: Int) {
-        RapidApi.shared.uploadFaceUrl(para: ["putit": productId, "woods": data]).subscribe(onNext: { [weak self] _ in
-            self?.refreshFaceUrl()
+        let params = ["quiteexpected": source,
+                      "putit": productId,
+                      "dismay": dismay,
+                      "woods": data,
+                      "elf": "",
+                      "thanksmost": getRPFRandom(),
+                      "pixie": "1",
+                      "darkalmost": ""] as [String: Any]
+        
+        RapidApi.shared.getIDUploadData(para: params).subscribe(onNext: { [weak self] obj in
+            guard let model = RFUploadResultModel.deserialize(from: obj.dictionaryObject) else {
+                return
+            }
+            self?.faceView.sd_setImage(with: URL(string: model.littleroom ?? ""))
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)

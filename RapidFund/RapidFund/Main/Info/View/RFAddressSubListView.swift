@@ -52,9 +52,9 @@ class RFAddressCell:UITableViewCell {
 }
 
 class RFAddressSubListView: UIViewController {
-    private let model:RFAddressDetail
+    private let model:RFAddressDetail?
     var selectedBlock:((IndexPath, RFAddressDetail)->Void)?
-    init(address:RFAddressDetail) {
+    init(address:RFAddressDetail?) {
         self.model = address
         super.init(nibName: nil, bundle: nil)
         setup()
@@ -85,7 +85,8 @@ class RFAddressSubListView: UIViewController {
 
 extension RFAddressSubListView:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.model.army.count
+        
+        return self.model?.army.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -110,7 +111,10 @@ extension RFAddressSubListView:UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RFAddressCell", for: indexPath) as! RFAddressCell
-        cell.fill(self.model.army[indexPath.row])
+        guard let listModel = self.model?.army[indexPath.row]  else {
+            return cell
+        }
+        cell.fill(listModel)
         if selectedIndexPath?.row == indexPath.row {
             cell.selected_add = true
         } else {
@@ -125,7 +129,7 @@ extension RFAddressSubListView:UITableViewDelegate, UITableViewDataSource {
         }
         self.selectedIndexPath = indexPath
         self.tb.reloadData()
-        self.selectedBlock?(indexPath, model)
+        self.selectedBlock?(indexPath, model!)
     }
 }
 

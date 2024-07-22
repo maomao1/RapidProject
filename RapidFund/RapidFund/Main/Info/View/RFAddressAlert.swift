@@ -11,9 +11,14 @@ import UIKit
 
 class RFAddressAlert: XYZAlertView {
     var updateBlock: ((RFAddressDetail, Int) -> Void)?
-    private let source: [RFAddressDetail]
-    init(address: [RFAddressDetail]) {
+    private let source: RFAddressDetail
+//    private var firstData: [RFAddressDetail]?
+    private var secondData: RFAddressDetail?
+    private var thirdData: RFAddressDetail?
+    private let titles = ["chooooooooooooose","choose","choose"]
+    init(address: RFAddressDetail) {
         self.source = address
+        
         super.init(frame: .zero)
         setup()
     }
@@ -40,7 +45,12 @@ class RFAddressAlert: XYZAlertView {
         containerAlertView.addSubview(segmentView)
         segmentView.snp.makeConstraints { make in
             make.left.equalToSuperview()
-            make.top.equalTo(20.rf)
+//            make.top.equalTo(20.rf)
+            if #available(iOS 11.0, *) {
+                make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(20.rf)
+            } else {
+                make.top.equalTo( 20.rf)
+            }
             make.right.equalToSuperview()
             make.height.equalTo(44)
         }
@@ -51,9 +61,17 @@ class RFAddressAlert: XYZAlertView {
             make.top.equalTo(segmentView.snp.bottom).offset(12.rf)
         }
     }
+    
+    private func handleData(index: Int, titleIndex: Int) {
+        
+        if titleIndex == 0 {
+//            self.secondData = self.source.army[index]
+        }
+    }
 
     private func getTitles() -> [String] {
-        return source.map { $0.wasan }
+        return titles
+//        return source.map { $0.wasan }
     }
 
     fileprivate lazy var segmentedTitleDataSource: JXSegmentedTitleDataSource = {
@@ -130,7 +148,10 @@ extension RFAddressAlert: JXSegmentedViewDelegate {
     /// - Parameters:
     ///   - segmentedView: JXSegmentedView
     ///   - index: 选中的index
-    func segmentedView(_: JXSegmentedView, didSelectedItemAt _: Int) {}
+    func segmentedView(_: JXSegmentedView, didSelectedItemAt index: Int) {
+       
+        
+    }
 
     /// 点击选中的情况才会调用该方法
     ///
@@ -167,12 +188,25 @@ extension RFAddressAlert: JXSegmentedViewDelegate {
 
 extension RFAddressAlert: JXSegmentedListContainerViewDataSource {
     func numberOfLists(in _: JXSegmentedListContainerView) -> Int {
-        return source.count
+        return titles.count
     }
 
     func listContainerView(_: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
-        let container = RFAddressSubListView(address: source[index])
-        container.selectedBlock = { _, _ in
+        var listModel: RFAddressDetail?
+        if index == 0 {
+            listModel = source
+        }
+        if index == 1 {
+            listModel = secondData
+        }
+        if index == 2 {
+            listModel = thirdData
+        }
+        
+        let container = RFAddressSubListView(address: listModel)
+        container.selectedBlock = { indexPath, model in
+            print(index,indexPath,model)
+            self.handleData(index: indexPath.row, titleIndex: index)
         }
         return container
     }

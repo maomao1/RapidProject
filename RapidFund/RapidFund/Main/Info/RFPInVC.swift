@@ -202,9 +202,18 @@ class RFPInVC: RapidBaseViewController {
             return
         }
         var param = [String : Any] ()
+        param["putit"] = productId
+        param["aily"] = getRPFRandom()
         
-        let json = models.toJSON().compactMap({ $0 })
-        RapidApi.shared.saveTwoUserInfo(para: ["munched":json, "putit":productId, "aily":getRPFRandom()]).subscribe(onNext: { [weak self] _ in
+//        let json = models.toJSON().compactMap({ $0 })
+        models.forEach {
+            if let keyStr = $0.yourtoboggans {
+                param[keyStr] = $0.snatch.count > 0 ? $0.dismay : $0.theboys
+            }
+        }
+//        [item.yourtoboggans] : item[(item.snatch.count > 0 ? item.dismay : item.theboys)]
+       
+        RapidApi.shared.saveTwoUserInfo(para: param).subscribe(onNext: { [weak self] _ in
             self?.jumpNext()
         }, onError: { err in
             print("\(err)")
@@ -213,8 +222,19 @@ class RFPInVC: RapidBaseViewController {
     }
     
     private func saveWorkInfo() {
-        let json = models.toJSON().compactMap({ $0 })
-        RapidApi.shared.saveWorkInfo(para: ["munched":json,"putit":productId,"snuffling":getRPFRandom(),"hesitatingsteps":getRPFRandom()]).subscribe (onNext: { [weak self] _ in
+        var param = [String : Any] ()
+        param["putit"] = productId
+        param["snuffling"] = getRPFRandom()
+        param["hesitatingsteps"] = getRPFRandom()
+        
+//        let json = models.toJSON().compactMap({ $0 })
+        models.forEach {
+            if let keyStr = $0.yourtoboggans {
+                param[keyStr] = $0.snatch.count > 0 ? $0.dismay : $0.theboys
+            }
+        }
+//        let json = models.toJSON().compactMap({ $0 })
+        RapidApi.shared.saveWorkInfo(para: param).subscribe (onNext: { [weak self] _ in
             self?.jumpNext()
         },onError: { err in
             MBProgressHUD.showError(err.localizedDescription)
@@ -231,9 +251,12 @@ class RFPInVC: RapidBaseViewController {
     
     private func getAddressCfgs() {
         RapidApi.shared.addressDetail(para: [:]).subscribe(onNext: { [weak self] obj in
-            guard let army = obj.dictionaryObject?["army"] as? [Any], let models = [RFAddressDetail].deserialize(from: army)?.compactMap({ $0 }) else { return }
+//            guard let army = obj.dictionaryObject?["army"] as? [Any], let models = [RFAddressDetail].deserialize(from: army)?.compactMap({ $0 }) else { return }
+            guard let model = RFAddressDetail.deserialize(from: obj.dictionaryObject) else {
+                return
+            }
             guard let self = self else { return }
-            let alert = RFAddressAlert(address: models)
+            let alert = RFAddressAlert(address: model)
             alert.show(on: self.view)
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)

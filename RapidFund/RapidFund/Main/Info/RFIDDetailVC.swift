@@ -369,18 +369,6 @@ extension RFIDDetailVC {
         }).disposed(by: bag)
     }
     
-    private func refreshFaceUrl() {
-        RapidApi.shared.getFaceUrl(para: ["goat": productId, "aily": getRPFRandom()]).subscribe(onNext: { [weak self] json in
-            guard let url = json.dictionaryObject?["afrightened"] as? String, url.isEmpty == false else {
-                return
-            }
-            self?.face_recognitionImgV.sd_setImage(with: URL(string: url))
-            // todo
-        }, onError: { err in
-            MBProgressHUD.showError(err.localizedDescription)
-        }).disposed(by: bag)
-    }
-    
     private func render(model: RFAuthFRModel) {
         self.model = model
         IDView.fill(model.carefully?.darkalmost ?? "PRC ID")
@@ -407,14 +395,7 @@ extension RFIDDetailVC {
     }
 
     private func uploadIDCard(source: __FromSource, data: Data, dismay: Int) {
-//        if dismay == 10 {
-//            RapidApi.shared.uploadFaceUrl(para: ["putit": productId, "woods": data]).subscribe(onNext: { [weak self] _ in
-//                self?.refreshFaceUrl()
-//            }, onError: { err in
-//                MBProgressHUD.showError(err.localizedDescription)
-//            }).disposed(by: bag)
-//            return
-//        }
+
         let params = ["quiteexpected": source.rawValue,
                       "putit": productId,
                       "dismay": dismay,
@@ -434,6 +415,10 @@ extension RFIDDetailVC {
             self.nextModel = model
             if model.type == 10 {
                 self.loadData()
+//=======
+//            if dismay == 10 {
+//                self.renderPickerResultData(data: model)
+//>>>>>>> d41c60b67e164d1caf2711485979cde990b90622
                 return
             }
             let alert = RFIDVerifyAlert(data: model)
