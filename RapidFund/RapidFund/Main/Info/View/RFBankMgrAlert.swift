@@ -198,6 +198,6 @@ extension RFBankMgrAlert: JXSegmentedListContainerViewDataSource {
 
     func listContainerView(_: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
         let model = self.cfg.munched[index]
-        return RFBankBindVC(bankCategory: model.getCardType(), data: model, productId: productId)
+        return RFBankBindVC(bankCategory: model.getCardType(), data: model, productId: productId, dismad: model.dismay)
     }
 }

@@ -83,8 +83,6 @@ class RFPInVC: RapidBaseViewController {
             make.bottom.equalTo(contentView.snp.bottom).offset(-77.rf)
         }
         
-        
-        
         stackView.spacing = 24.rf
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
@@ -158,15 +156,15 @@ class RFPInVC: RapidBaseViewController {
                 gender.model = item
                 gender.isMale = item.theboys == "1"
             } else {
-                let other = RFInfoItem(item.hastily,placeholder: item.sounding)
+                let other = RFInfoItem(item.hastily, placeholder: item.sounding)
                 other.model = item
                 stackView.addArrangedSubview(other)
                 other.btnBlock = { [weak self] in
-                    guard let self = self else { return  }
+                    guard let self = self else { return }
                     if item.marking == "boyswent3" {
                         self.getAddressCfgs(other)
                     } else {
-                        let strings = item.snatch.map({ $0.wasan })
+                        let strings = item.snatch.map { $0.wasan }
                         guard strings.isEmpty == false else { return }
                         let alert = RFBankAlert(strings: strings)
                         alert.selectedBlock = { index in
@@ -179,7 +177,6 @@ class RFPInVC: RapidBaseViewController {
                 }
             }
         }
-
     }
     
     @objc private func nextAction() {
@@ -187,7 +184,7 @@ class RFPInVC: RapidBaseViewController {
             self.saveWorkInfo()
             return
         }
-        var param = [String : Any] ()
+        var param = [String: Any]()
         param["putit"] = productId
         param["aily"] = getRPFRandom()
         
@@ -210,7 +207,7 @@ class RFPInVC: RapidBaseViewController {
     }
     
     private func saveWorkInfo() {
-        var param = [String : Any] ()
+        var param = [String: Any]()
         param["putit"] = productId
         param["snuffling"] = getRPFRandom()
         param["hesitatingsteps"] = getRPFRandom()
@@ -220,9 +217,9 @@ class RFPInVC: RapidBaseViewController {
                 param[keyStr] = $0.snatch.count > 0 ? $0.dismay : $0.upthe
             }
         }
-        RapidApi.shared.saveWorkInfo(para: param).subscribe (onNext: { [weak self] _ in
+        RapidApi.shared.saveWorkInfo(para: param).subscribe(onNext: { [weak self] _ in
             self?.jumpNext()
-        },onError: { err in
+        }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
     }
@@ -235,13 +232,13 @@ class RFPInVC: RapidBaseViewController {
         }
     }
     
-    private func getAddressCfgs(_ item:RFInfoItem) {
+    private func getAddressCfgs(_ item: RFInfoItem) {
         RapidApi.shared.addressDetail(para: [:]).subscribe(onNext: { [weak self] obj in
             guard let army = obj.dictionaryObject?["army"] as? [Any], let models = [RFAddressDetail].deserialize(from: army)?.compactMap({ $0 }) else { return }
             guard let self = self else { return }
             let alert = RFAddressAlert(address: models)
             alert.updateBlock = { md, twoIndex, threeIndex in
-// model 一级
+                // model 一级
                 let twoModel = md.army[twoIndex]
                 let threeModel = twoModel.army[threeIndex]
                 let text = md.wasan + twoModel.wasan + threeModel.wasan
