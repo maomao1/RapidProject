@@ -32,28 +32,11 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_confirm_btn" translatesAutoresizingMaskIntoConstraints="NO" id="Czu-FB-LUp">
-                                <rect key="frame" x="115" y="567" width="146" height="60"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="146" id="Atr-iT-5ex"/>
-                                    <constraint firstAttribute="height" constant="60" id="K4p-Sk-sT0"/>
-                                </constraints>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_sure_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="OPT-ny-15k">
-                                <rect key="frame" x="163" y="567" width="49" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="49" id="IaI-6F-sFU"/>
-                                    <constraint firstAttribute="height" constant="60" id="pTc-6i-alN"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="7a6-fb-7gg" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="8nO-93-hhl"/>
-                            <constraint firstItem="Czu-FB-LUp" firstAttribute="top" secondItem="VBE-gZ-7Ow" secondAttribute="bottom" constant="50" id="9py-8p-Edt"/>
-                            <constraint firstItem="VBE-gZ-7Ow" firstAttribute="centerX" secondItem="Czu-FB-LUp" secondAttribute="centerX" id="DRd-sC-gDd"/>
                             <constraint firstItem="VBE-gZ-7Ow" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="96" id="EHO-qf-Eor"/>
                             <constraint firstItem="7a6-fb-7gg" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="Uf9-bL-C4W"/>
                             <constraint firstItem="7a6-fb-7gg" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="Y12-Cu-GMw"/>
@@ -62,9 +45,7 @@
                             <constraint firstItem="VBE-gZ-7Ow" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="k64-nq-exy"/>
                             <constraint firstItem="VBE-gZ-7Ow" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="o7C-O2-i6C"/>
                             <constraint firstItem="7a6-fb-7gg" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="oSL-E3-qDA"/>
-                            <constraint firstItem="OPT-ny-15k" firstAttribute="centerY" secondItem="Czu-FB-LUp" secondAttribute="centerY" id="ogR-Ia-Tv2"/>
                             <constraint firstItem="7a6-fb-7gg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="qVg-Ab-jCu"/>
-                            <constraint firstItem="OPT-ny-15k" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="vRj-0O-HCF"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -75,8 +56,6 @@
     </scenes>
     <resources>
         <image name="RPFLaunchImage" width="375" height="812"/>
-        <image name="login_confirm_btn" width="327" height="60.666667938232422"/>
-        <image name="login_sure_arrow" width="49" height="10.666666984558105"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
