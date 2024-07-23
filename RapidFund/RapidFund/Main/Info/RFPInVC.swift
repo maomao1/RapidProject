@@ -106,20 +106,6 @@ class RFPInVC: RapidBaseViewController {
         } else {
             loadOtherData()
         }
-        
-//        addressItem.btnBlock = { [weak self] in
-//            self?.getAddressCfgs()
-//        }
-//        passportItem.btnBlock = { [weak self] in
-//            guard let self = self else { return }
-//            let alert = RFDateSelAlert()
-//            alert.saveBlock = { date in
-//                let format = DateFormatter()
-//                format.dateFormat = "dd-MM-yyyy"
-//                self.passportItem.update(format.string(from: date))
-//            }
-//            alert.show(on: self.view)
-//        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -251,12 +237,15 @@ class RFPInVC: RapidBaseViewController {
     
     private func getAddressCfgs() {
         RapidApi.shared.addressDetail(para: [:]).subscribe(onNext: { [weak self] obj in
-//            guard let army = obj.dictionaryObject?["army"] as? [Any], let models = [RFAddressDetail].deserialize(from: army)?.compactMap({ $0 }) else { return }
-            guard let model = RFAddressDetail.deserialize(from: obj.dictionaryObject) else {
-                return
-            }
+            guard let army = obj.dictionaryObject?["army"] as? [Any], let models = [RFAddressDetail].deserialize(from: army)?.compactMap({ $0 }) else { return }
             guard let self = self else { return }
-            let alert = RFAddressAlert(address: model)
+            let alert = RFAddressAlert(address: models)
+            alert.updateBlock = { model, twoIndex, threeIndex in
+// model 一级
+                let twoModel = model.army[twoIndex]
+                let threeModel = twoModel.army[threeIndex]
+                // todo
+            }
             alert.show(on: self.view)
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)

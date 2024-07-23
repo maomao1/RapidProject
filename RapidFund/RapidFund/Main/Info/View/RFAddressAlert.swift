@@ -10,15 +10,17 @@ import JXSegmentedView
 import UIKit
 
 class RFAddressAlert: XYZAlertView {
-    var updateBlock: ((RFAddressDetail, Int) -> Void)?
-    private let source: RFAddressDetail
-//    private var firstData: [RFAddressDetail]?
-    private var secondData: RFAddressDetail?
-    private var thirdData: RFAddressDetail?
+    var updateBlock: ((RFAddressDetail, Int, Int) -> Void)?
+    private let source: [RFAddressDetail]
+
     private let titles = ["chooooooooooooose","choose","choose"]
-    init(address: RFAddressDetail) {
+    private let childVcs:[Int:RFAddressSubListView] = [0:RFAddressSubListView(level: .level_one),1:RFAddressSubListView(level: .level_two),2:RFAddressSubListView(level: .level_three)]
+    private var selectedAddress:RFAddressDetail = RFAddressDetail()
+    private var selectedLevelTowIndex:Int?
+    private var selectedLevelThreeIndex:Int?
+    init(address: [RFAddressDetail]) {
         self.source = address
-        
+        selectedAddress = address.first!
         super.init(frame: .zero)
         setup()
     }
@@ -58,25 +60,13 @@ class RFAddressAlert: XYZAlertView {
         containerAlertView.addSubview(listContainerView)
         listContainerView.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(segmentView.snp.bottom).offset(12.rf)
+            make.top.equalTo(segmentView.snp.bottom).offset(5.rf)
         }
-    }
-    
-    private func handleData(index: Int, titleIndex: Int) {
-        
-        if titleIndex == 0 {
-//            self.secondData = self.source.army[index]
-        }
-    }
-
-    private func getTitles() -> [String] {
-        return titles
-//        return source.map { $0.wasan }
     }
 
     fileprivate lazy var segmentedTitleDataSource: JXSegmentedTitleDataSource = {
         let dataSource = JXSegmentedTitleDataSource()
-        dataSource.titles = getTitles()
+        dataSource.titles = titles
         dataSource.titleNormalFont = 16.font
         dataSource.titleSelectedColor = 0x111111.color
         dataSource.titleNormalColor = UIColor(rgbHex: 0x111111, alpha: 0.23)
@@ -190,24 +180,38 @@ extension RFAddressAlert: JXSegmentedListContainerViewDataSource {
     func numberOfLists(in _: JXSegmentedListContainerView) -> Int {
         return titles.count
     }
-
+    func getNextChildVc(level:RFAddressPageLevel)->RFAddressSubListView {
+        let vc = childVcs[level.rawValue]
+        return vc!
+    }
     func listContainerView(_: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
-        var listModel: RFAddressDetail?
-        if index == 0 {
-            listModel = source
-        }
-        if index == 1 {
-            listModel = secondData
-        }
-        if index == 2 {
-            listModel = thirdData
-        }
+        let vc = childVcs[index]
         
-        let container = RFAddressSubListView(address: listModel)
-        container.selectedBlock = { indexPath, model in
-            print(index,indexPath,model)
-            self.handleData(index: indexPath.row, titleIndex: index)
+        vc?.selectedBlock = { [weak self] indexPath, level in
+            guard let self = self else { return  }
+            if level == .level_one {
+                self.selectedAddress = self.source[indexPath.row]
+                self.getNextChildVc(level: .level_two).levelTowData = self.selectedAddress.army
+                self.selectedLevelTowIndex = nil
+                self.selectedLevelThreeIndex = nil
+            } else if level == .level_two {
+                self.getNextChildVc(level: .level_three).levelThreeData = self.selectedAddress.army[self.selectedLevelTowIndex ?? 0].army
+                self.selectedLevelTowIndex = indexPath.row
+                self.selectedLevelThreeIndex = nil
+            } else {
+                self.selectedLevelThreeIndex = indexPath.row
+                self.updateAddress()
+            }
         }
-        return container
+        if index == RFAddressPageLevel.level_one.rawValue {
+            vc?.levelOneData = source
+        }
+        return vc!
+    }
+    
+    private func updateAddress() {
+        guard let selectedLevelTowIndex = selectedLevelTowIndex else { return  }
+        guard let selectedLevelThreeIndex = selectedLevelThreeIndex else { return  }
+        self.updateBlock?(self.selectedAddress, selectedLevelTowIndex, selectedLevelThreeIndex)
     }
 }
