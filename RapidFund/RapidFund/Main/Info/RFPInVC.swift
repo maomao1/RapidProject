@@ -247,6 +247,7 @@ class RFPInVC: RapidBaseViewController {
                 let text = md.wasan + twoModel.wasan + threeModel.wasan
                 item.model?.upthe = text
                 item.update(text)
+                alert.dismiss(withAnimation: true)
             }
             alert.show(on: self.view)
         }, onError: { err in
