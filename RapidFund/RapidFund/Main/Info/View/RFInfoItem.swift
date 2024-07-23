@@ -235,7 +235,7 @@ class RFGengerItem: UIView {
         item.selected = true
         if item == femaleItem {
             maleItem.selected = false
-            model?.theboys = "0"
+            model?.theboys = "2"
         } else {
             femaleItem.selected = false
             model?.theboys = "1"
