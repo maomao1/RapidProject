@@ -152,6 +152,9 @@ class RFBankEditItem: UIView {
             make.centerY.equalToSuperview()
             make.right.equalTo(-16.rf)
         }
+        NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: tf, queue: .main) { [weak self] obj in
+            self?.model?.upthe = self?.tf.text ?? ""
+        }
     }
     
     @objc private func nextAction() {}
