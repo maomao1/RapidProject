@@ -11,9 +11,7 @@ import JXSegmentedView
 
 class RFAddressCell:UITableViewCell {
     
-    func fill(_ data:RFAddressDetail.__ShedidItem) {
-        titleLb.text = data.wasan
-    }
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setup()
@@ -29,7 +27,7 @@ class RFAddressCell:UITableViewCell {
         }
     }
     
-    private let titleLb = UILabel().font(14.font).textColor(0x111111.color)
+    let titleLb = UILabel().font(14.font).textColor(0x111111.color)
     private let selBgView = UIView()
     private func setup() {
         selectionStyle = .none
@@ -51,11 +49,32 @@ class RFAddressCell:UITableViewCell {
     
 }
 
+enum RFAddressPageLevel:Int {
+    case level_one = 0
+    case level_two = 1
+    case level_three = 2
+}
+
 class RFAddressSubListView: UIViewController {
-    private let model:RFAddressDetail?
-    var selectedBlock:((IndexPath, RFAddressDetail)->Void)?
-    init(address:RFAddressDetail?) {
-        self.model = address
+    private let level:RFAddressPageLevel
+    var selectedBlock:((IndexPath, RFAddressPageLevel)->Void)?
+    var levelOneData:[RFAddressDetail] = [] {
+        didSet {
+            tb.reloadData()
+        }
+    }
+    var levelTowData:[RFAddressDetail.__ShedidItem] = [] {
+        didSet {
+            tb.reloadData()
+        }
+    }
+    var levelThreeData:[RFAddressDetail.__ShedidSubItem] = [] {
+        didSet {
+            tb.reloadData()
+        }
+    }
+    init(level:RFAddressPageLevel) {
+        self.level = level
         super.init(nibName: nil, bundle: nil)
         setup()
     }
@@ -85,8 +104,13 @@ class RFAddressSubListView: UIViewController {
 
 extension RFAddressSubListView:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return self.model?.army.count ?? 0
+        if level == .level_one {
+            return levelOneData.count
+        }
+        if level == .level_two {
+            return levelTowData.count
+        }
+        return levelThreeData.count
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -111,10 +135,15 @@ extension RFAddressSubListView:UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RFAddressCell", for: indexPath) as! RFAddressCell
-        guard let listModel = self.model?.army[indexPath.row]  else {
-            return cell
+        let text:String?
+        if level == .level_one {
+            text = levelOneData[indexPath.row].wasan
+        } else if level == .level_two {
+            text = levelTowData[indexPath.row].wasan
+        } else {
+            text = levelThreeData[indexPath.row].wasan
         }
-        cell.fill(listModel)
+        cell.titleLb.text = text
         if selectedIndexPath?.row == indexPath.row {
             cell.selected_add = true
         } else {
@@ -129,7 +158,7 @@ extension RFAddressSubListView:UITableViewDelegate, UITableViewDataSource {
         }
         self.selectedIndexPath = indexPath
         self.tb.reloadData()
-        self.selectedBlock?(indexPath, model!)
+        self.selectedBlock?(indexPath, self.level)
     }
 }
 

@@ -8,11 +8,17 @@
 import Foundation
 
 class RFAddressDetail: HandyJSON {
-    class __ShedidItem: HandyJSON {
-        var yourtoboggans = ""
-        var keeping = ""
+    
+    class __ShedidSubItem:HandyJSON {
         var wasan = ""
         var disapproval = ""
+        required init() {}
+    }
+    
+    class __ShedidItem: HandyJSON {
+        var wasan = ""
+        var disapproval = ""
+        var army:[__ShedidSubItem] = []
         required init() {}
     }
     
