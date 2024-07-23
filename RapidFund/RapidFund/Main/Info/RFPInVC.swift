@@ -194,7 +194,7 @@ class RFPInVC: RapidBaseViewController {
 //        let json = models.toJSON().compactMap({ $0 })
         models.forEach {
             if let keyStr = $0.yourtoboggans {
-                param[keyStr] = $0.snatch.count > 0 ? $0.dismay : $0.theboys
+                param[keyStr] = $0.snatch.count > 0 ? $0.dismay : $0.upthe
             }
         }
 //        [item.yourtoboggans] : item[(item.snatch.count > 0 ? item.dismay : item.theboys)]

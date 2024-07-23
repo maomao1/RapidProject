@@ -13,7 +13,7 @@ class RFAddressAlert: XYZAlertView {
     var updateBlock: ((RFAddressDetail, Int, Int) -> Void)?
     private let source: [RFAddressDetail]
 
-    private let titles = ["chooooooooooooose","choose","choose"]
+    private var titles = ["choose","choose","choose"]
     private let childVcs:[Int:RFAddressSubListView] = [0:RFAddressSubListView(level: .level_one),1:RFAddressSubListView(level: .level_two),2:RFAddressSubListView(level: .level_three)]
     private var selectedAddress:RFAddressDetail = RFAddressDetail()
     private var selectedLevelTowIndex:Int?
@@ -180,6 +180,7 @@ extension RFAddressAlert: JXSegmentedListContainerViewDataSource {
     func numberOfLists(in _: JXSegmentedListContainerView) -> Int {
         return titles.count
     }
+    
     func getNextChildVc(level:RFAddressPageLevel)->RFAddressSubListView {
         let vc = childVcs[level.rawValue]
         return vc!
@@ -194,10 +195,18 @@ extension RFAddressAlert: JXSegmentedListContainerViewDataSource {
                 self.getNextChildVc(level: .level_two).levelTowData = self.selectedAddress.army
                 self.selectedLevelTowIndex = nil
                 self.selectedLevelThreeIndex = nil
+                self.titles = [self.selectedAddress.wasan, "choose","choose"]
+                self.segmentedTitleDataSource.titles = self.titles
+                self.segmentView.dataSource = self.segmentedTitleDataSource
+                self.segmentView.reloadData()
             } else if level == .level_two {
                 self.getNextChildVc(level: .level_three).levelThreeData = self.selectedAddress.army[self.selectedLevelTowIndex ?? 0].army
                 self.selectedLevelTowIndex = indexPath.row
                 self.selectedLevelThreeIndex = nil
+                self.titles = [self.selectedAddress.wasan, self.selectedAddress.army[self.selectedLevelTowIndex ?? 0].wasan,"choose"]
+                self.segmentedTitleDataSource.titles = self.titles
+                self.segmentView.dataSource = self.segmentedTitleDataSource
+                self.segmentView.reloadData()
             } else {
                 self.selectedLevelThreeIndex = indexPath.row
                 self.updateAddress()
