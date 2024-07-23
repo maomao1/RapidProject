@@ -9,9 +9,9 @@ import JXSegmentedView
 import MBProgressHUD
 import UIKit
 
-enum RFBankType {
-    case Wallet
-    case Bank
+enum RFBankType:Int {
+    case Wallet = 1
+    case Bank = 2
     case CashPickup
 }
 
@@ -19,10 +19,12 @@ class RFBankBindVC: RapidBaseViewController {
     private let category: RFBankType
     private let model: RFBankCfg.__RFMuchedModule
     private let productId: String
-    init(bankCategory: RFBankType, data: RFBankCfg.__RFMuchedModule, productId: String) {
+    private let dismand:String
+    init(bankCategory: RFBankType, data: RFBankCfg.__RFMuchedModule, productId: String, dismad:String) {
         self.category = bankCategory
         self.model = data
         self.productId = productId
+        self.dismand = dismad
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -89,7 +91,12 @@ class RFBankBindVC: RapidBaseViewController {
 
 extension RFBankBindVC {
     private func bindBankCard() {
-        RapidApi.shared.commitBindCardInfo(para: ["putit": self.productId, "peeping": "", "darkalmost": category == .Wallet ? "1" : "2", "bush": "", "hid": "", "child": "", "frozen": "", "beabsolutely": "", "its": getRPFRandom()]).subscribe(onNext: { [weak self] _ in
+        var json:[String:Any] = ["putit":self.productId,"its":getRPFRandom(),"cardType":dismand]
+        for item in self.model.munched {
+            json[item.yourtoboggans] = item.snatch.isEmpty == true ? item.upthe : item.dismay
+        }
+        
+        RapidApi.shared.commitBindCardInfo(para: json).subscribe(onNext: { [weak self] _ in
             self?.dismiss?()
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)
