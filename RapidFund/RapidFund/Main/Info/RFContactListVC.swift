@@ -56,9 +56,20 @@ class RFContactListVC: RapidBaseViewController {
         tb.contentInsetAdjustmentBehavior = .never
         tb.contentInset = UIEdgeInsets(top: 268.rf, left: 0, bottom: 0, right: 0)
         tb.snp.makeConstraints { make in
-            make.edges.equalTo(UIEdgeInsets(top: 0, left: 24.rf, bottom: 0, right: 24.rf))
+            make.edges.equalTo(UIEdgeInsets(top: 0, left: 24.rf, bottom: 100.rf, right: 24.rf))
         }
         tb.contentOffset = CGPoint(x: 0, y: -268.rf)
+        
+        let nextBtn = RFNextBtn()
+        nextBtn.text = "Next"
+        nextBtn.addTapGesture { [weak self] in
+            self?.saveAction()
+        }
+        view.addSubview(nextBtn)
+        nextBtn.snp.makeConstraints { make in
+            make.bottom.equalTo(-20.rf)
+            make.centerX.equalToSuperview()
+        }
     }
 
     private func loadData() {
@@ -74,11 +85,6 @@ class RFContactListVC: RapidBaseViewController {
             MBProgressHUD.showError(err.localizedDescription)
             self?.navigationController?.popViewController(animated: true)
         }).disposed(by: bag)
-    }
-    
-    override func back() {
-        super.back()
-        saveAction()
     }
 }
 
@@ -106,9 +112,6 @@ extension RFContactListVC: UITableViewDelegate, UITableViewDataSource {
         model.indexPath = indexPath
         let cell = tableView.dequeueReusableCell(withIdentifier: "RFContactCell", for: indexPath) as! RFContactCell
         cell.fill(model)
-        cell.saveBlock = { [weak self] in
-//            self?.saveAction()
-        }
         return cell
     }
     
@@ -120,10 +123,10 @@ extension RFContactListVC: UITableViewDelegate, UITableViewDataSource {
             }
         }
         RapidApi.shared.saveContactInfo(para: ["putit": self.productId, "trouble": json.toJSONString ?? ""]).subscribe(onNext: { [weak self] _ in
-//            self?.tb.reloadData()
+            self?.tb.reloadData()
         }, onError: { [weak self] err in
-//            MBProgressHUD.showError(err.localizedDescription)
-//            self?.loadData()
+            MBProgressHUD.showError(err.localizedDescription)
+            
         }).disposed(by: bag)
     }
 }
