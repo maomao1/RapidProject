@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setUIAttribute()
         uploadReport()
         observeMemory()
+        registerKeyBoard()
         return true
     }
     
@@ -69,6 +71,13 @@ extension AppDelegate {
         if #available(iOS 15.0, *) {
             tableViewAppearance.sectionHeaderTopPadding = 0.f
         }
+    }
+    
+    //开启IQKeyboardManager
+    func registerKeyBoard() {
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.enableAutoToolbar = true
+        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
     }
     
     func uploadReport() {
