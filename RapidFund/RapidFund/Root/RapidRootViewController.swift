@@ -239,33 +239,40 @@ extension RapidRootViewController {
     }
     
     func buttonAction() {
-        test()
-        return
+        
         guard let nc = selectedViewController as? RapidBaseNavgationController else {
             return
         }
        
        
 
+////        let vc = RFPInVC(route: .employment_info, productId: "1")
+//        
+//        let vc = RFContactListVC( productId: "1", orderId: "1")
+//        nc.pushViewController(vc, animated: true)
+//=======
+        requestBindBankInfo("1", nc.topViewController!)
+//        test()
 //        let vc = RFPInVC(route: .employment_info, productId: "1")
-        
-        let vc = RFContactListVC( productId: "1", orderId: "1")
-        nc.pushViewController(vc, animated: true)
+//        let vc = RFContactListVC( productId: "1")
+//        nc.pushViewController(vc, animated: true)
 //        let vc = RFBankCardListVC(orderId: "", productId: "1")
 //        nc.pushViewController(vc, animated: true)
     }
     
+
     private func test() {
         
-        RapidApi.shared.getBindCardInfo(para: ["whisked": "0", "frisked": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
-            guard let model = RFBankCfg.deserialize(from: obj.dictionaryObject) else { return }
-            guard let self = self else { return }
-            let alert = RFBankMgrAlert(config: model, product_id: "1", orderId: "1")
-            alert.show(on: self.view)
-        }, onError: { err in
-            MBProgressHUD.showError(err.localizedDescription)
-        })
+//        RapidApi.shared.getBindCardInfo(para: ["whisked": "0", "frisked": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
+//            guard let model = RFBankCfg.deserialize(from: obj.dictionaryObject) else { return }
+//            guard let self = self else { return }
+//            let alert = RFBankMgrAlert(config: model, product_id: "1", orderId: "1")
+//            alert.show(on: self.view)
+//        }, onError: { err in
+//            MBProgressHUD.showError(err.localizedDescription)
+//        })
     }
+
     
     
     

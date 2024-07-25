@@ -35,7 +35,7 @@ class RapidBaseViewController: UIViewController {
         return label
     }()
     
-    fileprivate lazy var backBtn: UIButton = {
+    private(set) lazy var backBtn: UIButton = {
         let button = UIButton(type: .custom)
 //        button.setBackgroundImage(.homeNavBlackBack, for: .normal)
 //        button.setBackgroundImage(.homeNavBlackBack, for: .selected)

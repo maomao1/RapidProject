@@ -36,6 +36,7 @@ class RFBankBindVC: RapidBaseViewController {
     }
 
     private let container = UIView()
+    private let scrollView = UIScrollView()
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -43,7 +44,20 @@ class RFBankBindVC: RapidBaseViewController {
     }
 
     private func setup() {
-        container.clipsCornerRadius(Float(24.rf))
+        scrollView.bounces = false
+        scrollView.frame = self.view.bounds
+        scrollView.contentInsetAdjustmentBehavior = .never
+        scrollView.showsVerticalScrollIndicator = false
+        view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalTo(UIEdgeInsets(top: 0, left: 0, bottom: 100.rf, right: 0))
+        }
+        scrollView.addSubview(container)
+        container.bounds = CGRect(x: 0, y: 0, width: kScreenWidth, height: kScreenHeight - 100.rf)
+        container.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
         var stackSubs: [UIView] = []
         for item in model.munched {
             if item.yourtoboggans == "bush" {
@@ -60,12 +74,6 @@ class RFBankBindVC: RapidBaseViewController {
         desItem.fill("After your confirmation,this account will be used as receipt account to receive the funds")
         stackSubs.append(desItem)
 
-        container.backgroundColor = .white
-        view.backgroundColor = .clear
-        view.addSubview(container)
-        container.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview()
-        }
         let stackView = UIStackView(arrangedSubviews: stackSubs)
         stackView.spacing = 16.rf
         stackView.alignment = .center
@@ -73,17 +81,23 @@ class RFBankBindVC: RapidBaseViewController {
         container.addSubview(stackView)
         stackView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
 
-        container.addSubview(nextBtn)
+        view.addSubview(nextBtn)
         nextBtn.snp.makeConstraints { make in
-            make.top.equalTo(stackView.snp.bottom).offset(32.rf)
             make.centerX.equalToSuperview()
             make.bottom.equalTo(-12.rf)
         }
         nextBtn.addTapGesture { [weak self] in
             self?.bindBankCard()
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let height = container.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        scrollView.contentSize = CGSize(width: kScreenWidth, height: height)
     }
 
     
