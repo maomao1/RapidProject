@@ -253,6 +253,15 @@ extension RapidApi {
             completionHandler: { $0 })
     }
     
+    func getOrderProductWebAdress(para: Parameters) -> Observable<JSON> {
+        return request(
+            path: BaseURl + RapidApiConstantUrl.getOrderProductWebUrl,
+            parameters: para,
+            method: .post,
+            encoding: URLEncoding.default,
+            completionHandler: { $0 })
+    }
+    
     //report
     func postLocationData(para: Parameters) -> Observable<JSON> {
         return request(

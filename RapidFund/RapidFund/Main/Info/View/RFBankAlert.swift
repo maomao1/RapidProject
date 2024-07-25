@@ -102,5 +102,6 @@ extension RFBankAlert:UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.selectedBlock?(row)
+        self.dismiss(withAnimation: true)
     }
 }

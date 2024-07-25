@@ -182,7 +182,7 @@ extension RFBankCardListVC: UITableViewDelegate, UITableViewDataSource {
         RapidApi.shared.getBindCardInfo(para: ["whisked": "0", "frisked": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
             guard let model = RFBankCfg.deserialize(from: obj.dictionaryObject) else { return }
             guard let self = self else { return }
-            let alert = RFBankMgrAlert(config: model, product_id: self.productId)
+            let alert = RFBankMgrAlert(config: model, product_id: self.productId, orderId: self.order_id ?? "1")
             alert.show(on: self.view)
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)

@@ -14,8 +14,10 @@ import UIKit
 
 class RFIDDetailVC: RapidBaseViewController {
     private let productId: String
-    init(productId: String) {
+    private let orderId: String
+    init(productId: String, orderId: String) {
         self.productId = productId
+        self.orderId = orderId
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -269,6 +271,7 @@ class RFIDDetailVC: RapidBaseViewController {
         }
     }
     
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let height = contentView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
@@ -306,7 +309,11 @@ extension RFIDDetailVC {
     }
     
     private func __openCamera() {
+        
         self.imgPicker.sourceType = .camera
+        if isFace {
+            self.imgPicker.cameraDevice = .front
+        }
         self.navigationController?.present(self.imgPicker, animated: true)
     }
     
@@ -316,21 +323,29 @@ extension RFIDDetailVC {
     }
     
     private func nextAction() {
-        guard let model = self.nextModel else { return}
-        guard let cur = model.recovered else { return }
+        
+        if model?.carefully?.mustn == 0 || model?.tyou == 0  {
+            return
+        }
+        guard let model = self.nextModel else {
+            self.navigationController?.popViewController(animated: true)
+            return}
+        guard let cur = model.recovered else { 
+            self.navigationController?.popViewController(animated: true)
+            return }
         
         let cls = cur.meet
         if cls == "public" || cls == "thinglike1" {
             
         }
         else  if cls == "personal" || cls == "thinglike2" {
-            self.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: self.productId), animated: true)
+            self.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: self.productId, orderId: self.orderId), animated: true)
         }
         else  if cls == "work" || cls == "thinglike3" {
-            self.navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: self.productId), animated: true)
+            self.navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: self.productId, orderId: self.orderId), animated: true)
         }
         else  if cls == "contacts" || cls == "thinglike4" {
-            self.navigationController?.pushViewController(RFContactListVC(productId: self.productId), animated: true)
+            self.navigationController?.pushViewController(RFContactListVC(productId: self.productId, orderId: self.orderId), animated: true)
         }
         else  if cls == "bank" || cls == "thinglike5" {
             self.navigationController?.pushViewController(RFBankCardListVC(productId: self.productId), animated: true)
@@ -415,17 +430,15 @@ extension RFIDDetailVC {
             self.nextModel = model
             if model.type == 10 {
                 self.loadData()
-//=======
-//            if dismay == 10 {
-//                self.renderPickerResultData(data: model)
-//>>>>>>> d41c60b67e164d1caf2711485979cde990b90622
                 return
             }
+            
             let alert = RFIDVerifyAlert(data: model)
             alert.show(on: self.view)
             alert.dismissBlock = {
                 self.renderPickerResultData(data: model)
             }
+            self.scrollToBottom(scrollView: self.scrollView)
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
@@ -461,5 +474,13 @@ extension RFIDDetailVC {
             self?.IDView.fill(list[index])
         }
         alert.show(on: self.view)
+    }
+    
+    
+    func scrollToBottom(scrollView: UIScrollView) {
+        let bottomOffset = CGPoint(x: 0, y: scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom)
+        if bottomOffset.y > 0 {
+            scrollView.setContentOffset(bottomOffset, animated: true)
+        }
     }
 }

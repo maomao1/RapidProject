@@ -19,12 +19,14 @@ class RFBankBindVC: RapidBaseViewController {
     private let category: RFBankType
     private let model: RFBankCfg.__RFMuchedModule
     private let productId: String
+    private let orderId: String
     private let dismand:String
-    init(bankCategory: RFBankType, data: RFBankCfg.__RFMuchedModule, productId: String, dismad:String) {
+    init(bankCategory: RFBankType, data: RFBankCfg.__RFMuchedModule, productId: String, dismad:String, orderId: String) {
         self.category = bankCategory
         self.model = data
         self.productId = productId
         self.dismand = dismad
+        self.orderId = orderId
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -97,7 +99,21 @@ extension RFBankBindVC {
         }
         
         RapidApi.shared.commitBindCardInfo(para: json).subscribe(onNext: { [weak self] _ in
-            self?.dismiss?()
+            self?.jumpNext()
+        }, onError: { err in
+            MBProgressHUD.showError(err.localizedDescription)
+        }).disposed(by: bag)
+    }
+    
+    func jumpNext() {
+        RapidApi.shared.getOrderProductWebAdress(para: ["snapped": self.orderId,"leftover":getRPFRandom(),"poised":getRPFRandom(),"theway":getRPFRandom(),"stopping":getRPFRandom()]).subscribe(onNext: { [weak self] obj in
+            guard let url = obj.dictionaryObject?["littleroom"] as? String else {
+                return
+            }
+            let vc = RPFWebViewController()
+            vc.viewModel = RPFWebViewModel(urlString: url)
+            self?.navigationController?.pushViewController(vc, animated: true)
+            
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)

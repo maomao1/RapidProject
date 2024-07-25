@@ -67,6 +67,8 @@
 		2E91E86B2C36A77D005E2AB4 /* RapidMineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E91E86A2C36A77D005E2AB4 /* RapidMineViewController.swift */; };
 		2E91E8712C36D2EC005E2AB4 /* RapidLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E91E8702C36D2EC005E2AB4 /* RapidLoginViewController.swift */; };
 		2E91E8772C36E2E7005E2AB4 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E91E8762C36E2E7005E2AB4 /* UILabelExtension.swift */; };
+		2E95D63D2C4FF99A00E33777 /* RPFContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E95D63C2C4FF99A00E33777 /* RPFContactManager.swift */; };
+		2E95D63F2C5110E400E33777 /* RPFDeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E95D63E2C5110E300E33777 /* RPFDeviceInfo.swift */; };
 		2E9B93942C476A8E00624609 /* RPFWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93932C476A8E00624609 /* RPFWebViewController.swift */; };
 		2E9B93B02C476EAD00624609 /* WebViewJavascriptBridge_JS.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93A82C476EAC00624609 /* WebViewJavascriptBridge_JS.m */; };
 		2E9B93B12C476EAD00624609 /* WKWebViewJavascriptBridge+Fix.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93AA2C476EAC00624609 /* WKWebViewJavascriptBridge+Fix.m */; };
@@ -191,6 +193,9 @@
 		2E91E86A2C36A77D005E2AB4 /* RapidMineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidMineViewController.swift; sourceTree = "<group>"; };
 		2E91E8702C36D2EC005E2AB4 /* RapidLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidLoginViewController.swift; sourceTree = "<group>"; };
 		2E91E8762C36E2E7005E2AB4 /* UILabelExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UILabelExtension.swift; sourceTree = "<group>"; };
+		2E95D63C2C4FF99A00E33777 /* RPFContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFContactManager.swift; sourceTree = "<group>"; };
+		2E95D63E2C5110E300E33777 /* RPFDeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFDeviceInfo.swift; sourceTree = "<group>"; };
+		2E95D6402C512D8400E33777 /* RapidFund.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RapidFund.entitlements; sourceTree = "<group>"; };
 		2E9B93932C476A8E00624609 /* RPFWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFWebViewController.swift; sourceTree = "<group>"; };
 		2E9B93A72C476EAB00624609 /* RapidFund-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RapidFund-Bridging-Header.h"; sourceTree = "<group>"; };
 		2E9B93A82C476EAC00624609 /* WebViewJavascriptBridge_JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge_JS.m; sourceTree = "<group>"; };
@@ -325,7 +330,9 @@
 		2E2779CF2C451DB0007B4E74 /* ReportData */ = {
 			isa = PBXGroup;
 			children = (
+				2E9B93B82C4C2CD500624609 /* RPFLocationManager.swift */,
 				2E2779D02C451DD6007B4E74 /* RPFReportManager.swift */,
+				2E95D63C2C4FF99A00E33777 /* RPFContactManager.swift */,
 			);
 			path = ReportData;
 			sourceTree = "<group>";
@@ -355,6 +362,7 @@
 		2E4D39022C31326500C2271A /* RapidFund */ = {
 			isa = PBXGroup;
 			children = (
+				2E95D6402C512D8400E33777 /* RapidFund.entitlements */,
 				2E9B93952C476B7300624609 /* Utils */,
 				2E4D39112C31326900C2271A /* Info.plist */,
 				2E91E86D2C36AEA4005E2AB4 /* Resource */,
@@ -409,6 +417,7 @@
 			isa = PBXGroup;
 			children = (
 				2E4D393A2C35857B00C2271A /* AppConfig.swift */,
+				2E95D63E2C5110E300E33777 /* RPFDeviceInfo.swift */,
 				2EBDADF52C39769E00B3C845 /* ProjectConfig.swift */,
 				2EBDAE052C39CB3800B3C845 /* MainAppInfo.swift */,
 			);
@@ -582,7 +591,6 @@
 			isa = PBXGroup;
 			children = (
 				2E9B93972C476BB300624609 /* WebViewJavascriptBridge */,
-				2E9B93B82C4C2CD500624609 /* RPFLocationManager.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1005,6 +1013,7 @@
 				02F57BFA2C4115500049D21C /* RFBankMgrAlert.swift in Sources */,
 				026A5B762C450D6700B8C15C /* RFTwoUserDataModel.swift in Sources */,
 				2EBDADFE2C39C36400B3C845 /* ErrorExtension.swift in Sources */,
+				2E95D63D2C4FF99A00E33777 /* RPFContactManager.swift in Sources */,
 				2EBDAE062C39CB3800B3C845 /* MainAppInfo.swift in Sources */,
 				2E91E8642C36A72A005E2AB4 /* RapidHomeViewController.swift in Sources */,
 				2E9B93B32C476EAD00624609 /* WKWebViewJavascriptBridge.m in Sources */,
@@ -1041,6 +1050,7 @@
 				2EECB1FB2C3E749600E59A1C /* RapidOrderViewModel.swift in Sources */,
 				2EBDAE0F2C3B9F6E00B3C845 /* CacheHelper.swift in Sources */,
 				02C3BAEB2C3D3F9F001B4107 /* RFFlowVC.swift in Sources */,
+				2E95D63F2C5110E400E33777 /* RPFDeviceInfo.swift in Sources */,
 				2EBDADFA2C39BBCB00B3C845 /* RapidLoginViewModel.swift in Sources */,
 				02C3BAF12C3E2148001B4107 /* RFIDDetailVC.swift in Sources */,
 				2E4D39462C35857B00C2271A /* UIImageExtension.swift in Sources */,
@@ -1255,6 +1265,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = RapidFund/RapidFund.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1264,14 +1275,16 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = XXXXXXXXX;
 				INFOPLIST_KEY_NSContactsUsageDescription = xxxxxxxxxxxxxxxx;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = xxxxxxxxxxxxx;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = xxxxxxxxxxxxx;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = xxxxxxxxxxxxx;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = xxxxxxxxxxx;
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = xxxxxxxxxxx;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1300,6 +1313,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = RapidFund/RapidFund.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1309,14 +1323,16 @@
 				INFOPLIST_KEY_NSCameraUsageDescription = XXXXXXXXX;
 				INFOPLIST_KEY_NSContactsUsageDescription = xxxxxxxxxxxxxxxx;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = xxxxxxxxxxxxx;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = xxxxxxxxxxxxx;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = xxxxxxxxxxxxx;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = xxxxxxxxxxx;
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = xxxxxxxxxxx;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

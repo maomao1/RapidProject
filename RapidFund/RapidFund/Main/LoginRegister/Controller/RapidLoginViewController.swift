@@ -423,9 +423,8 @@ extension RapidLoginViewController {
     }
     
     func uploadLocation() {
-        let manager = RPFLocationManager()
-        manager.startGettingLocation()
-        manager.locationInfoHandle = { (country, code, province, city,street,latitude,longitude) in
+       
+        RPFLocationManager.manager.locationInfoHandle = { (country, code, province, city,street,latitude,longitude, item) in
             var param: [String : Any] = [String : Any]()
             param["aface"] = province
             param["curls"] = code
@@ -437,6 +436,7 @@ extension RapidLoginViewController {
             param["towards"] = getRPFRandom()
             param["skipping"] = getRPFRandom()
             RPFReportManager.shared.saveLocation(para: param)
+            RPFReportManager.shared.saveDeviceInfo()
         }
     }
 }

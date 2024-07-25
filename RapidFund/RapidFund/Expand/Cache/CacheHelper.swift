@@ -26,14 +26,14 @@ class RapidUserCache {
     //缓存用户sessionId
     func cacheUserInfo(session: String) {
         UserDefaults.standard.setValue(session, forKey: kRapidSession)
-        print("===++++++++")
-        print(session)
+        let timestamp = Int(Date().timeIntervalSince1970 * 1000)
+        UserDefaults.standard.set("\(timestamp)", forKey: kRapidLoginTime)
         UserDefaults.standard.synchronize()
     }
     
     func clearUserInfo() {
         UserDefaults.standard.setValue("", forKey: kRapidSession)
-        print("------------------")
+        UserDefaults.standard.setValue("", forKey: kRapidLoginTime)
         UserDefaults.standard.synchronize()
     }
 }

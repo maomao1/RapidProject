@@ -11,6 +11,7 @@ import UIKit
 
 class RFFlowVC: RapidBaseViewController {
     private let product_id: String
+    private var order_id: String = ""
     init(product_id: String) {
         self.product_id = product_id
         super.init(nibName: nil, bundle: nil)
@@ -86,30 +87,26 @@ class RFFlowVC: RapidBaseViewController {
     
     @objc private func tapAction(sender: UITapGestureRecognizer) {
         guard let cfgs = model?.hehad else { return }
-        guard let cur = model?.recovered else { return }
-        
-//        guard let curModel = cfgs.first(where: { $0.hastily == cur.hastily }) else {
-//            return
-//        }
         let curModel = cfgs[sender.view!.tag]
         var cls = curModel.meet
         if curModel.mustn == 1 {
              cls = curModel.meet
             
         }else{
+            guard let cur = model?.recovered else { return }
              cls = cur.meet
         }
         if cls == "public" || cls == "thinglike1" {
-            self.navigationController?.pushViewController(RFIDDetailVC(productId: product_id), animated: true)
+            self.navigationController?.pushViewController(RFIDDetailVC(productId: product_id, orderId: order_id), animated: true)
         }
         else  if cls == "personal" || cls == "thinglike2" {
-            self.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: product_id), animated: true)
+            self.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: product_id, orderId: order_id), animated: true)
         }
         else  if cls == "work" || cls == "thinglike3" {
-            self.navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: product_id), animated: true)
+            self.navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: product_id, orderId: order_id), animated: true)
         }
         else  if cls == "contacts" || cls == "thinglike4" {
-            self.navigationController?.pushViewController(RFContactListVC(productId: product_id), animated: true)
+            self.navigationController?.pushViewController(RFContactListVC(productId: product_id, orderId: order_id), animated: true)
         }
         else  if cls == "bank" || cls == "thinglike5" {
             self.navigationController?.pushViewController(RFBankCardListVC(productId: product_id), animated: true)
@@ -179,6 +176,7 @@ extension RFFlowVC {
             item.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction(sender:))))
         }
         guard let started = data.started, let pro = started.sucha  else { return }
+        self.order_id = started.disapproval
         progressView.fill(pro)
     }
 }

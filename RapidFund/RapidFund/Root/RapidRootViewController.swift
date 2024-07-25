@@ -9,9 +9,13 @@ import UIKit
 import RxSwift
 import RxCocoa
 import MBProgressHUD
+import ContactsUI
+
+
 
 class RapidRootViewController: UITabBarController {
     let bag = DisposeBag()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,9 +38,8 @@ extension RapidRootViewController {
         guard !GetInfo(kRapidSession).isEmpty else{
             return
         }
-        let manager = RPFLocationManager()
-        manager.startGettingLocation()
-        manager.locationInfoHandle = { (country, code, province, city,street,latitude,longitude) in
+        
+        RPFLocationManager.manager.locationInfoHandle = { (country, code, province, city,street,latitude,longitude, item) in
             var param: [String : Any] = [String : Any]()
             param["aface"] = province
             param["curls"] = code
@@ -48,6 +51,7 @@ extension RapidRootViewController {
             param["towards"] = getRPFRandom()
             param["skipping"] = getRPFRandom()
             RPFReportManager.shared.saveLocation(para: param)
+            RPFReportManager.shared.saveDeviceInfo()
         }
     }
     
@@ -206,7 +210,7 @@ extension RapidRootViewController: UITabBarControllerDelegate {
 extension RapidRootViewController {
     
     private func setUpDebugView() {
-      
+        
         
         let button = UIButton(type: .custom)
         button.backgroundColor = .red.withAlphaComponent(0.6)
@@ -233,28 +237,39 @@ extension RapidRootViewController {
     }
     
     func buttonAction() {
+        test()
+        return
         guard let nc = selectedViewController as? RapidBaseNavgationController else {
             return
         }
-//        test()
+       
+       
+
 //        let vc = RFPInVC(route: .employment_info, productId: "1")
-        let vc = RFContactListVC( productId: "1")
+        
+        let vc = RFContactListVC( productId: "1", orderId: "1")
         nc.pushViewController(vc, animated: true)
 //        let vc = RFBankCardListVC(orderId: "", productId: "1")
 //        nc.pushViewController(vc, animated: true)
     }
     
     private func test() {
+        
         RapidApi.shared.getBindCardInfo(para: ["whisked": "0", "frisked": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
             guard let model = RFBankCfg.deserialize(from: obj.dictionaryObject) else { return }
             guard let self = self else { return }
-            let alert = RFBankMgrAlert(config: model, product_id: "1")
+            let alert = RFBankMgrAlert(config: model, product_id: "1", orderId: "1")
             alert.show(on: self.view)
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)
         })
     }
     
+    
+    
+    
+   
+   
+    
 }
-
 

@@ -10,8 +10,11 @@ import UIKit
 
 class RFContactListVC: RapidBaseViewController {
     private let productId: String
-    init(productId: String) {
+    private let orderId: String
+    private var nextModel: RFUploadResultModel? //下一步
+    init(productId: String, orderId: String) {
         self.productId = productId
+        self.orderId = orderId
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -20,6 +23,7 @@ class RFContactListVC: RapidBaseViewController {
     }
     
     private var dataSource: [RFContactModel] = []
+    private var isFirstReportAdress = true
     private let tb = UITableView(frame: .zero, style: .plain)
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +35,7 @@ class RFContactListVC: RapidBaseViewController {
         setNavImageTitleWhite(isWhite: true)
         rightBtn.isHidden = true
         loadData()
+        removeLastVC()
     }
     
     private func setup() {
@@ -86,6 +91,42 @@ class RFContactListVC: RapidBaseViewController {
             self?.navigationController?.popViewController(animated: true)
         }).disposed(by: bag)
     }
+    
+    private func reportAdress() {
+        if isFirstReportAdress{
+            RPFContactManager.shared.fetchContacts { item, error in
+                RPFReportManager.shared.saveAdressBook(persons: item)
+                self.isFirstReportAdress = false
+            }
+        }
+    }
+    
+    private func jumpNext() {
+ 
+        guard let model = self.nextModel else {
+            self.navigationController?.popViewController(animated: true)
+            return}
+        guard let cur = model.recovered else { 
+            self.navigationController?.popViewController(animated: true)
+            return }
+        
+        let cls = cur.meet
+        if cls == "public" || cls == "thinglike1" {
+            
+        }
+        else  if cls == "personal" || cls == "thinglike2" {
+            self.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: self.productId, orderId: self.orderId), animated: true)
+        }
+        else  if cls == "work" || cls == "thinglike3" {
+            self.navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: self.productId, orderId: self.orderId), animated: true)
+        }
+        else  if cls == "contacts" || cls == "thinglike4" {
+            self.navigationController?.pushViewController(RFContactListVC(productId: self.productId, orderId: self.orderId), animated: true)
+        }
+        else  if cls == "bank" || cls == "thinglike5" {
+            self.navigationController?.pushViewController(RFBankCardListVC(productId: self.productId), animated: true)
+        }
+    }
 }
 
 extension RFContactListVC: UITableViewDelegate, UITableViewDataSource {
@@ -112,6 +153,9 @@ extension RFContactListVC: UITableViewDelegate, UITableViewDataSource {
         model.indexPath = indexPath
         let cell = tableView.dequeueReusableCell(withIdentifier: "RFContactCell", for: indexPath) as! RFContactCell
         cell.fill(model)
+        cell.reportBlock = { [weak self]  in
+            self?.reportAdress()
+        }
         return cell
     }
     
@@ -122,8 +166,14 @@ extension RFContactListVC: UITableViewDelegate, UITableViewDataSource {
                 json.append(["bumped": obj.bumped ?? "", "wasan": obj.wasan ?? "", "fany": obj.fany, "disappear": obj.disappear ?? ""])
             }
         }
-        RapidApi.shared.saveContactInfo(para: ["putit": self.productId, "trouble": json.toJSONString ?? ""]).subscribe(onNext: { [weak self] _ in
-            self?.tb.reloadData()
+        RapidApi.shared.saveContactInfo(para: ["putit": self.productId, "trouble": json.toJSONString ?? ""]).subscribe(onNext: { [weak self] obj in
+            guard let model = RFUploadResultModel.deserialize(from: obj.dictionaryObject) else {
+                return
+            }
+            guard let self = self else { return  }
+            self.nextModel = model
+            self.tb.reloadData()
+            self.jumpNext()
         }, onError: { [weak self] err in
             MBProgressHUD.showError(err.localizedDescription)
             

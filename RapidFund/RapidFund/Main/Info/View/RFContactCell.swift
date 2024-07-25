@@ -103,7 +103,7 @@ class RFContactCell: UITableViewCell {
                 self?.model?.fany = knee.dismay
                 self?.model?.wasan = knee.wasan
                 self?.lb1.text = knee.wasan
-                self?.saveBlock?()
+//                self?.saveBlock?()
             }
             let appDe = UIApplication.shared.delegate as! AppDelegate
             alert.show(on: appDe.window!)
@@ -113,16 +113,22 @@ class RFContactCell: UITableViewCell {
         self.model?.bumped?.isEmpty == true else {
             return
         }
-        openConatctPicker()
+        let status = RPFContactManager.shared.requestAccessForContacts()
+        if status {
+            openConatctPicker()
+            reportBlock?()
+        }else{
+            createAlert()
+        }
     }
     
     private var model:RFContactModel?
     
     func fill(_ data:RFContactModel) {
         self.model = data
-        titleLb.text = "Contact\(data.indexPath.section + 1)"
+        titleLb.text = data.falls
         lb2.text = data.bumped
-        lb1.text = data.knee.first(where: {$0.dismay == data.fany })?.wasan
+        lb1.text = data.knee.first(where: {$0.dismay == data.fany })?.wasan ?? "Ralationship"
     }
     
     private func openConatctPicker() {
@@ -132,7 +138,25 @@ class RFContactCell: UITableViewCell {
         
     }
     
-    var saveBlock:(()->Void)?
+    private func createAlert(){
+        let alert = UIAlertController(title: "Tips", message: "You currently do not have access to the address book. Please go to your phone settings->privacy and security->and enable access to the address book", preferredStyle: .alert)
+        // 创建UIAlertAction，用于处理用户的选择
+        let okAction = UIAlertAction(title: "sure", style: .default) { _ in
+            // 用户点击"确定"后的处理
+            RPFContactManager.shared.openSettings()
+        }
+        let cancelAction = UIAlertAction(title: "cancel", style: .cancel) { _ in
+            // 
+        }
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        self.viewController?.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    
+    var reportBlock:(()->Void)?
 }
 
 extension RFContactCell:CNContactPickerDelegate {

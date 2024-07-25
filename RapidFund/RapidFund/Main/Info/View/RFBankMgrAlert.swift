@@ -12,9 +12,11 @@ import JXPagingView
 class RFBankMgrAlert: XYZAlertView {
     private let cfg:RFBankCfg
     private let productId:String
-    init(config: RFBankCfg, product_id:String) {
+    private let orderId:String
+    init(config: RFBankCfg, product_id:String, orderId: String) {
         self.cfg = config
         self.productId = product_id
+        self.orderId = orderId
         super.init(frame: .zero)
         setup()
         
@@ -198,6 +200,6 @@ extension RFBankMgrAlert: JXSegmentedListContainerViewDataSource {
 
     func listContainerView(_: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
         let model = self.cfg.munched[index]
-        return RFBankBindVC(bankCategory: model.getCardType(), data: model, productId: productId, dismad: model.dismay)
+        return RFBankBindVC(bankCategory: model.getCardType(), data: model, productId: productId, dismad: model.dismay, orderId: orderId)
     }
 }

@@ -18,9 +18,12 @@ class RFPInVC: RapidBaseViewController {
     private var models: [RFTwoUserDataModel] = []
     private let route: RFRoute
     private let productId: String
-    init(route: RFRoute, productId: String) {
+    private let orderId: String
+    private var nextModel: RFUploadResultModel? //下一步
+    init(route: RFRoute, productId: String, orderId: String) {
         self.route = route
         self.productId = productId
+        self.orderId = orderId
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -38,6 +41,7 @@ class RFPInVC: RapidBaseViewController {
         self.rightBtn.isHidden = true
         setup()
         self.view.bringSubviewToFront(self.customNavView)
+        removeLastVC()
     }
 
     private let contentView = UIView()
@@ -105,6 +109,8 @@ class RFPInVC: RapidBaseViewController {
             loadOtherData()
         }
     }
+    
+    
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -198,8 +204,13 @@ class RFPInVC: RapidBaseViewController {
             }
         }
        
-        RapidApi.shared.saveTwoUserInfo(para: param).subscribe(onNext: { [weak self] _ in
-            self?.jumpNext()
+        RapidApi.shared.saveTwoUserInfo(para: param).subscribe(onNext: { [weak self] obj in
+            guard let model = RFUploadResultModel.deserialize(from: obj.dictionaryObject) else {
+                return
+            }
+            guard let self = self else { return  }
+            self.nextModel = model
+            self.jumpNext()
         }, onError: { err in
             print("\(err)")
             MBProgressHUD.showError(err.localizedDescription)
@@ -217,20 +228,50 @@ class RFPInVC: RapidBaseViewController {
                 param[keyStr] = $0.snatch.count > 0 ? $0.dismay : $0.upthe
             }
         }
-        RapidApi.shared.saveWorkInfo(para: param).subscribe(onNext: { [weak self] _ in
-            self?.jumpNext()
+        RapidApi.shared.saveWorkInfo(para: param).subscribe(onNext: { [weak self] obj in
+            guard let model = RFUploadResultModel.deserialize(from: obj.dictionaryObject) else {
+                return
+            }
+            guard let self = self else { return  }
+            self.nextModel = model
+            self.jumpNext()
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
     }
     
     private func jumpNext() {
-        if route == .personal_info {
-            navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: productId), animated: true)
-        } else {
-            navigationController?.pushViewController(RFBankCardListVC(orderId: nil, productId: productId), animated: true)
+//        if route == .personal_info {
+//            navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: productId, orderId: orderId), animated: true)
+//        } else {
+//            navigationController?.pushViewController(RFBankCardListVC(orderId: nil, productId: productId), animated: true)
+//        }
+        
+        guard let model = self.nextModel else {
+            self.navigationController?.popViewController(animated: true)
+            return}
+        guard let cur = model.recovered else { 
+            self.navigationController?.popViewController(animated: true)
+            return }
+        
+        let cls = cur.meet
+        if cls == "public" || cls == "thinglike1" {
+            
+        }
+        else  if cls == "personal" || cls == "thinglike2" {
+            self.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: self.productId, orderId: self.orderId), animated: true)
+        }
+        else  if cls == "work" || cls == "thinglike3" {
+            self.navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: self.productId, orderId: self.orderId), animated: true)
+        }
+        else  if cls == "contacts" || cls == "thinglike4" {
+            self.navigationController?.pushViewController(RFContactListVC(productId: self.productId, orderId: self.orderId), animated: true)
+        }
+        else  if cls == "bank" || cls == "thinglike5" {
+            self.navigationController?.pushViewController(RFBankCardListVC(productId: self.productId), animated: true)
         }
     }
+    
     
     private func getAddressCfgs(_ item: RFInfoItem) {
         RapidApi.shared.addressDetail(para: [:]).subscribe(onNext: { [weak self] obj in

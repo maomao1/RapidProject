@@ -23,6 +23,9 @@ struct RapidApiConstantUrl {
     //MARK: - mine
     static let getMineData  = "/rfapi/dream/shall/smiled"
     
+    
+    //跟进订单号获取跳转地址
+    static let getOrderProductWebUrl  = "/rfapi/believe/where/george"
     //获取用户身份证/活体信息（第一项）
     static let getAuthInfo1Data  = "/rfapi/handkerchief/quite/against"
     

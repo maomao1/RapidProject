@@ -27,6 +27,7 @@ let kScreenHeightResolution = kScreenHeight * Scale
 //MARK: - cache
 let kDeviceId = "kDeviceId"
 let kRapidSession = "kRapid_loginSession"
+let kRapidLoginTime = "kRapid_login_time"
 
 
 

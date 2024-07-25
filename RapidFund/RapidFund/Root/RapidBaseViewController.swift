@@ -131,6 +131,14 @@ class RapidBaseViewController: UIViewController {
         }
     }
     
+    func removeLastVC(){
+        if let navigationController = self.navigationController {
+            let count = navigationController.viewControllers.count
+            if navigationController.viewControllers[count - 2] is RFFlowVC { return}
+            navigationController.viewControllers.remove(at: (count - 2))
+        }
+    }
+    
     func setBottomView() {
         safeAreaBottomView.backgroundColor = .white
         view.addSubview(safeAreaBottomView)
@@ -353,3 +361,4 @@ extension RapidBaseViewController {
  混淆后：amarvellous 更换银行卡（scheme + /amarvellous?putit=1&honestly=91）
 
  */
+
