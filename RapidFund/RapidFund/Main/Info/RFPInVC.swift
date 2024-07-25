@@ -20,6 +20,7 @@ class RFPInVC: RapidBaseViewController {
     private let productId: String
     private let orderId: String
     private var nextModel: RFUploadResultModel? //下一步
+    private var isCertified = false
     init(route: RFRoute, productId: String, orderId: String) {
         self.route = route
         self.productId = productId
@@ -156,6 +157,9 @@ class RFPInVC: RapidBaseViewController {
     
     private func render() {
         for item in models {
+            if item.mustn == 0 {
+                self.isCertified = false
+            }
             if item.hastily == "Gender" {
                 let gender = RFGengerItem()
                 stackView.addArrangedSubview(gender)
@@ -186,6 +190,10 @@ class RFPInVC: RapidBaseViewController {
     }
     
     @objc private func nextAction() {
+        if isCertified {
+            self.navigationController?.popViewController(animated: true)
+            return
+        }
         if route == .employment_info {
             self.saveWorkInfo()
             return

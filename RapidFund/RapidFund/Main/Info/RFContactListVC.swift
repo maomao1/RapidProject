@@ -12,6 +12,7 @@ class RFContactListVC: RapidBaseViewController {
     private let productId: String
     private let orderId: String
     private var nextModel: RFUploadResultModel? //下一步
+    private var isCertified: Bool = false
     init(productId: String, orderId: String) {
         self.productId = productId
         self.orderId = orderId

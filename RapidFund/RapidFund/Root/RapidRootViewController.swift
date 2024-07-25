@@ -22,7 +22,9 @@ class RapidRootViewController: UITabBarController {
         setUpRootView()
         setUpRx()
         self.delegate = self
+#if DEBUG
         setUpDebugView()
+#endif
         uploadLocation()
         // Do any additional setup after loading the view.
     }

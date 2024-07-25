@@ -15,6 +15,7 @@ import UIKit
 class RFIDDetailVC: RapidBaseViewController {
     private let productId: String
     private let orderId: String
+   
     init(productId: String, orderId: String) {
         self.productId = productId
         self.orderId = orderId
