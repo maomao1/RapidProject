@@ -15,7 +15,10 @@ import UIKit
 class RFIDDetailVC: RapidBaseViewController {
     private let productId: String
     private let orderId: String
-   
+    private var selecteIDTypeTime: String = ""
+    private var clickIDTime: String = ""
+    private var clickFaceTime: String = ""
+    
     init(productId: String, orderId: String) {
         self.productId = productId
         self.orderId = orderId
@@ -285,6 +288,7 @@ class RFIDDetailVC: RapidBaseViewController {
 
 extension RFIDDetailVC {
     @objc private func btnClick() {
+        self.clickIDTime = getCurrentTime()
         let sheetView = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         isFace = false
         let camera = UIAlertAction(title: "Camera", style: .default) { [weak self] _ in
@@ -305,6 +309,7 @@ extension RFIDDetailVC {
         guard model?.tyou == 0 else {
             return
         }
+        self.clickFaceTime = getCurrentTime()
         isFace = true
         __openCamera()
     }
@@ -349,7 +354,7 @@ extension RFIDDetailVC {
             self.navigationController?.pushViewController(RFContactListVC(productId: self.productId, orderId: self.orderId), animated: true)
         }
         else  if cls == "bank" || cls == "thinglike5" {
-            self.navigationController?.pushViewController(RFBankCardListVC(productId: self.productId), animated: true)
+            requestBindBankInfo(self.productId, self.orderId,self)
         }
         
         
@@ -409,6 +414,22 @@ extension RFIDDetailVC {
         case photo = 1
         case camera = 2
     }
+    
+    private func uploadAnalysis(type: RFAnalysisScenenType){
+        var startTime = ""
+        if type == .IDType {
+            startTime = self.selecteIDTypeTime
+        }
+        else if type == .IDInformation {
+            startTime = self.clickIDTime
+        }else if type == .FacePhoto {
+            startTime = self.clickFaceTime
+        }
+        RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
+            guard let `self` = self else {return}
+            RPFReportManager.shared.saveAnalysis(pId: self.productId, type: type, startTime: startTime, longitude: longitude, latitude: latitude)
+        }
+    }
 
     private func uploadIDCard(source: __FromSource, data: Data, dismay: Int) {
 
@@ -430,6 +451,7 @@ extension RFIDDetailVC {
             model.darkalmost = self.model?.carefully?.darkalmost
             self.nextModel = model
             if model.type == 10 {
+                self.uploadAnalysis(type: .FacePhoto)
                 self.loadData()
                 return
             }
@@ -437,6 +459,7 @@ extension RFIDDetailVC {
             let alert = RFIDVerifyAlert(data: model)
             alert.show(on: self.view)
             alert.dismissBlock = {
+                self.uploadAnalysis(type: .IDInformation)
                 self.renderPickerResultData(data: model)
             }
             self.scrollToBottom(scrollView: self.scrollView)
@@ -462,6 +485,7 @@ extension RFIDDetailVC {
     }
     
     private func selectedPRCCard() {
+        self.selecteIDTypeTime = getCurrentTime()
         guard let smoke = self.model?.smoke else { return }
         var list = [String]()
         for item in smoke {
@@ -473,6 +497,7 @@ extension RFIDDetailVC {
         let alert = RFBankAlert(strings: list)
         alert.selectedBlock = { [weak self] index in
             self?.IDView.fill(list[index])
+            self?.uploadAnalysis(type: .IDType)
         }
         alert.show(on: self.view)
     }

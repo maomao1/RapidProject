@@ -13,6 +13,7 @@ import WebKit
 import SwiftyJSON
 import AVKit
 import MBProgressHUD
+import StoreKit
 
 class RPFWebViewController: RapidBaseViewController {
     
@@ -164,7 +165,91 @@ class RPFWebViewController: RapidBaseViewController {
     }
     
     func setupRx() {
+        backButton.rx
+            .tap
+            .throttle(.seconds_1, scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                guard let `self` = self else { return }
+                self.backAction()
+            })
+            .disposed(by: bag)
         
+        viewModel.goToHomeAction
+            .subscribe(onNext: { [weak self] in
+                guard let `self` = self else { return }
+                self.gotoHomePage()
+            }).disposed(by: bag)
+        
+        viewModel.closeSubject
+            .subscribe(onNext: { [weak self] in
+                guard let `self` = self else { return }
+                self.back()
+            }).disposed(by: bag)
+        
+        viewModel.gotoNewPageAction
+            .subscribe(onNext: { [weak self] url in
+                guard let `self` = self else { return }
+                self.setRouter(url: url, pId: "")
+            }).disposed(by: bag)
+        
+        viewModel.callPhoneNumberAction
+            .subscribe(onNext: { [weak self] phoneNumber in
+                guard let `self` = self else { return }
+                self.nativeCallPhone(number: phoneNumber)
+            }).disposed(by: bag)
+        
+        viewModel.goToAppGradeAction
+            .subscribe(onNext: { [weak self]  in
+                guard let `self` = self else { return }
+                self.gotoAppStoreCommit()
+            }).disposed(by: bag)
+        
+        viewModel.uploadRiskAction
+            .subscribe(onNext: { [weak self] (pId, time) in
+            guard let `self` = self else { return }
+                self.uploadAnalysis(pId: pId, start: time)
+        }).disposed(by: bag)
+    
+        
+    }
+    
+     func backAction() {
+        if webView.canGoBack {
+            webView.goBack()
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    func uploadAnalysis(pId: String, start: String){
+        RPFLocationManager.manager.analysisHandle = { (longitude,latitude) in
+            RPFReportManager.shared.saveAnalysis(pId: pId, type: .EndApply, startTime: start, longitude: longitude, latitude: latitude)
+        }
+    }
+    
+    func gotoHomePage() {
+        self.tabBarController?.selectedIndex = 0
+        self.navigationController?.popToRootViewController(animated: false)
+    }
+    
+    func nativeCallPhone(number: String){
+        let fullNumber = "tel://" + number
+        guard let url = URL(string: fullNumber), UIApplication.shared.canOpenURL(url) else {
+            print("无法拨打电话")
+            return
+        }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    func gotoAppStoreCommit() {
+        if #available(iOS 10.3, *) {
+            SKStoreReviewController.requestReview()
+        } else {
+            // 在iOS 10.3以下版本中无法直接打开评分界面，可以考虑使用URL打开应用商店页面
+            if let url = URL(string: "https://itunes.apple.com/app/id你的应用程序ID") {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }
     }
 
 }

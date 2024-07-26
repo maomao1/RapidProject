@@ -138,9 +138,22 @@ extension MBProgressHUD {
         return containerView
     }
     
-    
-    
-    
+//    static func showLoading() {
+//        
+//        guard let view = UIApplication.shared.keyWindow else {
+//            return 
+//        }
+//        if let first = view.subviews.first(where: { $0 is MBProgressHUD } ) {
+//            first.removeFromSuperview()
+//        }
+//        let hud = MBProgressHUD.showAdded(to: view, animated: true)
+//        hud.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: kScreenHeight)
+//        
+//        view.addSubview(hud)
+//        hud.show(animated: true)
+//        
+//    }
+
 }
 
 //MARK: - JSON动画HUD
@@ -152,37 +165,39 @@ extension MBProgressHUD {
 //MARK: - 扩展UIViewController
 extension UIViewController {
     
-//    private struct AssociatedKeys {
-//        static var loadingViewKey: MBProgressHUD?
-//    }
-//    
-//    var loadingView: MBProgressHUD? {
-//        get {
-//            return objc_getAssociatedObject(self, &AssociatedKeys.loadingViewKey) as? MBProgressHUD
-//        }
-//        set {
-//            objc_setAssociatedObject(self, &AssociatedKeys.loadingViewKey, newValue,objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-//        }
-//    }
+    private struct AssociatedKeys {
+        static var loadingViewKey: MBProgressHUD?
+    }
     
-    // 显示
-//    @discardableResult
-    //全局通用loading
-//    func showLoading() -> MBProgressHUD? {
-//        var loading:MBProgressHUD?
-//        if self.loadingView == nil {
-//            loading = MBProgressHUD.customViewByMessage(message: "")
-//            self.loadingView = loading
-//        }
-//        return loading
-//    }
+    var loadingView: MBProgressHUD? {
+        get {
+            return objc_getAssociatedObject(self, &AssociatedKeys.loadingViewKey) as? MBProgressHUD
+        }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.loadingViewKey, newValue,objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
     
-    // 隐藏
-//    func hiddenLoading() {
-//        if let loading = self.loadingView {
-//            loading.hide(animated:true)
-//            self.loadingView = nil
-//        }
-//    }
+//     显示
+    @discardableResult
+//    全局通用loading
+    func showLoading() {
+        guard let view = self.view else {
+            return 
+        }
+        if let first = view.subviews.first(where: { $0 is MBProgressHUD } ) {
+            first.removeFromSuperview()
+        }
+        let hud = MBProgressHUD.showAdded(to: view, animated: true)
+        hud.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: kScreenHeight)
+        
+        view.addSubview(hud)
+        hud.show(animated: true)
+    }
+    
+//     隐藏
+    func hiddenLoading() {
+        MBProgressHUD.hide(for: self.view, animated: true)
+    }
 }
 

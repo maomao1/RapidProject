@@ -33,10 +33,12 @@ class RapidHomeProductCell: UITableViewCell {
         contentView.addSubview(soundLabel)
         contentView.addSubview(applyBtn)
         contentView.addSubview(limitImg)
+        containerView.addSubview(statusBgView)
+        contentView.addSubview(statusLabel)
         
         containerView.snp.makeConstraints { make in
             make.left.equalTo(-40.rf)
-            make.top.equalTo(10.rf)
+            make.top.equalTo(12.rf)
             make.right.equalTo(-49.rf)
             make.bottom.equalTo(0)
         }
@@ -44,7 +46,7 @@ class RapidHomeProductCell: UITableViewCell {
         productImage.snp.makeConstraints { make in
             make.size.equalTo(CGSize(width: 54.rf, height: 54.rf))
             make.left.equalTo(16.rf)
-            make.top.equalTo(containerView.snp.top).offset(10.rf)
+            make.top.equalTo(containerView.snp.top).offset(12.rf)
         }
         
         applyBtn.snp.makeConstraints { make in
@@ -83,10 +85,25 @@ class RapidHomeProductCell: UITableViewCell {
         }
         
         limitImg.snp.makeConstraints { make in
-            make.right.equalTo(containerView.snp.right).inset(20.rf)
+            make.left.equalTo(productImage.snp.left)
             make.top.equalTo(containerView.snp.top).offset(-7.rf)
             
         }
+        
+        statusLabel.snp.makeConstraints { make in
+            make.right.equalTo(applyBtn.snp.left).offset(-12.rf)
+            make.top.equalTo(containerView.snp.top).offset(2.rf)
+            make.height.equalTo(12.rf)
+        }
+        
+        statusBgView.snp.makeConstraints { make in
+            make.left.equalTo(statusLabel.snp.left).offset(-12.rf)
+            make.right.equalTo(statusLabel.snp.right).offset(12.rf)
+            make.top.equalTo(containerView.snp.top).offset(-5.rf)
+            make.bottom.equalTo(statusLabel.snp.bottom).offset(2.rf)
+        }
+        
+        
         
     }
     
@@ -96,6 +113,9 @@ class RapidHomeProductCell: UITableViewCell {
         self.contentLabel.text = model.productDesc
         self.applyBtn.setTitle(model.buttonText, for: .normal)
         self.applyBtn.setTitle(model.buttonText, for: .selected)
+        self.statusLabel.text = "Amount Due"
+        self.statusBgView.backgroundColor = .red
+        
         if model.buttoncolor.count > 1{
             self.applyBtn.backgroundColor = UIColor.init(webColor: model.buttoncolor)
         }
@@ -170,8 +190,25 @@ class RapidHomeProductCell: UITableViewCell {
         return btn
     }()
     
+    fileprivate lazy var statusBgView: UIView = {
+        let view = UIView()
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = 4.5.rf
+        return view
+    }()
+    
+    fileprivate lazy var statusLabel: UILabel = {
+        let label = UILabel()
+        label.font =  .f_lightSys10
+        label.textColor = .c_111111
+        label.textAlignment = .center
+        return label
+    }()
+    
+    
+    
     static func height() -> CGFloat {
-        return 124.rf
+        return 126.rf
     }
     
     override func awakeFromNib() {

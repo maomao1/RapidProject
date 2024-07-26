@@ -23,7 +23,13 @@ class RPFWebViewModel {
     
     init(urlString: String, activityType: ActivityType = .default){
         let basePara = getRapidUrlParam().replacingOccurrences(of: "?", with: "")
-        let fullPath = urlString + "&" + basePara
+        var  fullPath = ""
+        if urlString.contains("?") {
+            fullPath = urlString + "&" + basePara
+        }else{
+            fullPath = urlString + "?" + basePara
+        }
+        
         self.urlString = fullPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         self.activityType = activityType
         self.setUpRx()
@@ -46,43 +52,63 @@ class RPFWebViewModel {
     
     /// 返回
     let backSubject = PublishSubject<Void>()
-    
+    let closeSubject = PublishSubject<Void>()
+
     let goToHomeAction = PublishSubject<Void>()
     
     let goToAppGradeAction = PublishSubject<Void>()
     
+    let gotoNewPageAction = PublishSubject<(String)>()
+    
+    let uploadRiskAction = PublishSubject<(String,String)>()
+    
+    let callPhoneNumberAction = PublishSubject<(String)>()
     /// 注册web事件
     func registerHandler(bridge: WKWebViewJavascriptBridge) {
         //回到 App 首页
         bridge.registerHandler("newBaked", handler: { [weak self] data, responseCallback in
             guard let `self` = self else { return }
+            self.goToHomeAction.onNext(Void())
             
         })
         //风控埋点
         bridge.registerHandler("getplaying", handler: { [weak self] data, responseCallback in
             guard let `self` = self else { return }
+            guard let jsonData = data as? [String: Any] else { return }
+            let json = JSON(jsonData)
+            let productId = json["andthey"].stringValue
+            let startTime = json["naps"].stringValue
+            self.uploadRiskAction.onNext((productId,startTime))
             
         })
         //跳转scheme
         bridge.registerHandler("preparations", handler: { [weak self] data, responseCallback in
             guard let `self` = self else { return }
+            guard let jsonData = data as? [String: Any] else { return }
+            let json = JSON(jsonData)
+            let url = json["littleroom"].stringValue
+            self.gotoNewPageAction.onNext(url)
             
         })
         //closeSyn
         bridge.registerHandler("acomplete", handler: { [weak self] data, responseCallback in
             guard let `self` = self else { return }
-            
+            self.closeSubject.onNext(Void())
         })
         
         //评分
         bridge.registerHandler("wheels", handler: { [weak self] data, responseCallback in
             guard let `self` = self else { return }
-            
+            self.goToAppGradeAction.onNext(Void())
         })
         
         //页面里的拨打电话  
         bridge.registerHandler("trulywellProvided", handler: { [weak self] data, responseCallback in
             guard let `self` = self else { return }
+            guard let jsonData = data as? [String: Any] else { return }
+            let json = JSON(jsonData)
+            let phoneNumber = json["shepherd"].stringValue
+            self.callPhoneNumberAction.onNext(phoneNumber)
             
         })
     }

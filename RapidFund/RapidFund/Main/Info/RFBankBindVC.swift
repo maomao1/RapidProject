@@ -37,10 +37,16 @@ class RFBankBindVC: RapidBaseViewController {
 
     private let container = UIView()
     private let scrollView = UIScrollView()
+    private var enterPageTime: String = ""
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
         setNavViewHidden()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.enterPageTime = getCurrentTime()
     }
 
     private func setup() {
@@ -113,17 +119,21 @@ extension RFBankBindVC {
         }
         
         RapidApi.shared.commitBindCardInfo(para: json).subscribe(onNext: { [weak self] _ in
-            self?.jumpNext()
+            guard let `self` = self else {return}
+            self.uploadAnalysis(type: .BankCard, time: self.enterPageTime)
+            self.jumpNext()
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
     }
     
     func jumpNext() {
+        let oderTime = getCurrentTime()
         RapidApi.shared.getOrderProductWebAdress(para: ["snapped": self.orderId,"leftover":getRPFRandom(),"poised":getRPFRandom(),"theway":getRPFRandom(),"stopping":getRPFRandom()]).subscribe(onNext: { [weak self] obj in
             guard let url = obj.dictionaryObject?["littleroom"] as? String else {
                 return
             }
+            self?.uploadAnalysis(type: .StartApply, time: oderTime)
             let vc = RPFWebViewController()
             vc.viewModel = RPFWebViewModel(urlString: url)
             self?.navigationController?.pushViewController(vc, animated: true)
@@ -131,6 +141,14 @@ extension RFBankBindVC {
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
+    }
+    
+    private func uploadAnalysis(type: RFAnalysisScenenType, time: String){
+        
+        RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
+            guard let `self` = self else {return}
+            RPFReportManager.shared.saveAnalysis(pId: self.productId, type: type, startTime: time, longitude: longitude, latitude: latitude)
+        }
     }
 }
 

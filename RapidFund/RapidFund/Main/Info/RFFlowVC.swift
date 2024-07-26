@@ -86,6 +86,7 @@ class RFFlowVC: RapidBaseViewController {
     }
     
     @objc private func tapAction(sender: UITapGestureRecognizer) {
+        
         guard let cfgs = model?.hehad else { return }
         let curModel = cfgs[sender.view!.tag]
         var cls = curModel.meet
@@ -109,7 +110,8 @@ class RFFlowVC: RapidBaseViewController {
             self.navigationController?.pushViewController(RFContactListVC(productId: product_id, orderId: order_id), animated: true)
         }
         else  if cls == "bank" || cls == "thinglike5" {
-            self.navigationController?.pushViewController(RFBankCardListVC(productId: product_id), animated: true)
+            requestBindBankInfo(product_id, order_id,self)
+            
         }
     
 //        guard let index = index else { return }
@@ -176,7 +178,7 @@ extension RFFlowVC {
             item.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction(sender:))))
         }
         guard let started = data.started, let pro = started.sucha  else { return }
-        self.order_id = started.disapproval
+        self.order_id = started.risking
         progressView.fill(pro)
     }
 }

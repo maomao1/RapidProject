@@ -21,6 +21,8 @@ class RFPInVC: RapidBaseViewController {
     private let orderId: String
     private var nextModel: RFUploadResultModel? //下一步
     private var isCertified = false
+    private var enterPageTime: String = ""
+    
     init(route: RFRoute, productId: String, orderId: String) {
         self.route = route
         self.productId = productId
@@ -43,6 +45,11 @@ class RFPInVC: RapidBaseViewController {
         setup()
         self.view.bringSubviewToFront(self.customNavView)
         removeLastVC()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.enterPageTime = getCurrentTime()
     }
 
     private let contentView = UIView()
@@ -217,6 +224,7 @@ class RFPInVC: RapidBaseViewController {
                 return
             }
             guard let self = self else { return  }
+            self.uploadAnalysis(type: .Personal)
             self.nextModel = model
             self.jumpNext()
         }, onError: { err in
@@ -241,6 +249,7 @@ class RFPInVC: RapidBaseViewController {
                 return
             }
             guard let self = self else { return  }
+            self.uploadAnalysis(type: .Work)
             self.nextModel = model
             self.jumpNext()
         }, onError: { err in
@@ -276,15 +285,17 @@ class RFPInVC: RapidBaseViewController {
             self.navigationController?.pushViewController(RFContactListVC(productId: self.productId, orderId: self.orderId), animated: true)
         }
         else  if cls == "bank" || cls == "thinglike5" {
-            self.navigationController?.pushViewController(RFBankCardListVC(productId: self.productId), animated: true)
+            requestBindBankInfo(self.productId, self.orderId,self)
         }
     }
     
     
     private func getAddressCfgs(_ item: RFInfoItem) {
+        self.showLoading()
         RapidApi.shared.addressDetail(para: [:]).subscribe(onNext: { [weak self] obj in
             guard let army = obj.dictionaryObject?["army"] as? [Any], let models = [RFAddressDetail].deserialize(from: army)?.compactMap({ $0 }) else { return }
             guard let self = self else { return }
+            self.hiddenLoading()
             let alert = RFAddressAlert(address: models)
             alert.updateBlock = { md, twoIndex, threeIndex in
                 // model 一级
@@ -297,7 +308,17 @@ class RFPInVC: RapidBaseViewController {
             }
             alert.show(on: self.view)
         }, onError: { err in
+            self.hiddenLoading()
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
+    }
+    
+    
+    private func uploadAnalysis(type: RFAnalysisScenenType){
+        
+        RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
+            guard let `self` = self else {return}
+            RPFReportManager.shared.saveAnalysis(pId: self.productId, type: type, startTime: self.enterPageTime, longitude: longitude, latitude: latitude)
+        }
     }
 }

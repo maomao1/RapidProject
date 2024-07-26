@@ -157,12 +157,12 @@ struct RPFHomeReminder {
     var repayAmount = ""
     
     init(json: JSON){
-        self.title = json["title"].stringValue
+        self.title = json["thedogs"].stringValue
         self.titleBg = json["titleBg"].stringValue
-        self.message = json["message"].stringValue
-        self.url = json["url"].stringValue
+        self.message = json["thedogs"].stringValue
+        self.url = json["littleroom"].stringValue
         self.icon = json["icon"].stringValue
-        self.repayAmount = json["repayAmount"].stringValue
+        self.repayAmount = json["repay_amount"].stringValue
         
     }
 }

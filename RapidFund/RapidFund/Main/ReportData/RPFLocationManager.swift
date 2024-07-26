@@ -11,9 +11,11 @@ import SystemConfiguration.CaptiveNetwork
 class RPFLocationManager: NSObject {
     static let manager = RPFLocationManager()
     typealias LocationInfoCall = (String,String,String,String,String,String,String,[NetworkInfo]?) -> ()
+    typealias AnalysisInfoCall = (String,String) -> ()
     var locationManager = CLLocationManager()
     var geocoder = CLGeocoder()
     var locationInfoHandle: LocationInfoCall?
+    var analysisHandle: AnalysisInfoCall?
     var status: CLAuthorizationStatus?
     
      override init() {
@@ -76,6 +78,9 @@ extension RPFLocationManager: CLLocationManagerDelegate {
                     let longitude = location.coordinate.longitude
                     if let handle = self.locationInfoHandle {
                         handle(country,countryCode,administrativeArea,locality,thoroughfare,"\(longitude)","\(latitude)",RPFDeviceManager.getWiFiName())
+                    }
+                    if let handle = self.analysisHandle {
+                        handle("\(longitude)","\(latitude)")
                     }
                     self.stopGettingLocation()
                     

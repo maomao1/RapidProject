@@ -69,6 +69,7 @@
 		2E91E8772C36E2E7005E2AB4 /* UILabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E91E8762C36E2E7005E2AB4 /* UILabelExtension.swift */; };
 		2E95D63D2C4FF99A00E33777 /* RPFContactManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E95D63C2C4FF99A00E33777 /* RPFContactManager.swift */; };
 		2E95D63F2C5110E400E33777 /* RPFDeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E95D63E2C5110E300E33777 /* RPFDeviceInfo.swift */; };
+		2E95D6422C52A5C300E33777 /* RPFReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E95D6412C52A5C300E33777 /* RPFReminderCell.swift */; };
 		2E9B93942C476A8E00624609 /* RPFWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93932C476A8E00624609 /* RPFWebViewController.swift */; };
 		2E9B93B02C476EAD00624609 /* WebViewJavascriptBridge_JS.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93A82C476EAC00624609 /* WebViewJavascriptBridge_JS.m */; };
 		2E9B93B12C476EAD00624609 /* WKWebViewJavascriptBridge+Fix.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93AA2C476EAC00624609 /* WKWebViewJavascriptBridge+Fix.m */; };
@@ -196,6 +197,7 @@
 		2E95D63C2C4FF99A00E33777 /* RPFContactManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFContactManager.swift; sourceTree = "<group>"; };
 		2E95D63E2C5110E300E33777 /* RPFDeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFDeviceInfo.swift; sourceTree = "<group>"; };
 		2E95D6402C512D8400E33777 /* RapidFund.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RapidFund.entitlements; sourceTree = "<group>"; };
+		2E95D6412C52A5C300E33777 /* RPFReminderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFReminderCell.swift; sourceTree = "<group>"; };
 		2E9B93932C476A8E00624609 /* RPFWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFWebViewController.swift; sourceTree = "<group>"; };
 		2E9B93A72C476EAB00624609 /* RapidFund-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RapidFund-Bridging-Header.h"; sourceTree = "<group>"; };
 		2E9B93A82C476EAC00624609 /* WebViewJavascriptBridge_JS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewJavascriptBridge_JS.m; sourceTree = "<group>"; };
@@ -633,6 +635,7 @@
 			children = (
 				2EECB1FE2C3EC21B00E59A1C /* HomeMoneyView.swift */,
 				2EECB2002C3EE40500E59A1C /* RapidHomeProductCell.swift */,
+				2E95D6412C52A5C300E33777 /* RPFReminderCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -997,6 +1000,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EBDAE142C3C21A100B3C845 /* UIViewExtension.swift in Sources */,
+				2E95D6422C52A5C300E33777 /* RPFReminderCell.swift in Sources */,
 				2E3D98952C3FF3DC00C49298 /* RapidOrderListCell.swift in Sources */,
 				2E91E86B2C36A77D005E2AB4 /* RapidMineViewController.swift in Sources */,
 				2E91E8712C36D2EC005E2AB4 /* RapidLoginViewController.swift in Sources */,
@@ -1267,9 +1271,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RapidFund/RapidFund.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DWMRGJDXFD;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 2F6XZMZ52M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RapidFund/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access your camera for taking photos or recording videos";
@@ -1291,9 +1297,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.edocyun.tumorDepressionPatient;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhuanyong.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = test;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1315,9 +1322,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RapidFund/RapidFund.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DWMRGJDXFD;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 2F6XZMZ52M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RapidFund/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access your camera for taking photos or recording videos";
@@ -1339,9 +1348,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.edocyun.tumorDepressionPatient;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhuanyong.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = test;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

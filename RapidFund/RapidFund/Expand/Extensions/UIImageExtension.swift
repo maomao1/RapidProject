@@ -83,9 +83,11 @@ extension UIImage {
     static let homeBtnBg   = UIImage(named: "home_btn_bg")!
     static let homeApplyArrow   = UIImage(named: "home_apply_arrow")!
     static let homeLimitIcon   = UIImage(named: "home_limit_icon")!
+    static let homeReminderImg   = UIImage(named: "home_remind_bg")!
     static let homeSoundIcon   = UIImage(named: "home_sound_icon")!
     static let homeLoginTopBg   = UIImage(named: "home_login_topBg")!
     static let homeLoginBanner   = UIImage(named: "home_banner")!
+    
 
     
     

@@ -310,8 +310,10 @@ extension RapidBaseViewController {
                 else if  scheme?.contains(RPFRouterBank) == true{
                     
                     if let requirePara = param{
-                        let vc = RFBankCardListVC(orderId: requirePara[RPFChangeBankOrderKey], productId: requirePara[RPFChangeBankProductKey] ?? "")
-                        self.navigationController?.pushViewController(vc, animated: true)
+                        if let pId =  requirePara[RPFChangeBankProductKey], let orderId = requirePara[RPFChangeBankOrderKey]{
+                            requestBindBankInfo(pId, orderId,self)
+                        }
+
                     }
                 }
                 

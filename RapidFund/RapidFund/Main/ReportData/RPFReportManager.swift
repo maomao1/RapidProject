@@ -9,6 +9,20 @@ import UIKit
 import SwiftyJSON
 import RxSwift
 import RxCocoa
+
+enum RFAnalysisScenenType:Int {
+    case Register = 1
+    case IDType = 2
+    case IDInformation = 3
+    case FacePhoto = 4
+    case Personal = 5
+    case Work = 6
+    case Contacts = 7
+    case BankCard = 8
+    case StartApply = 9
+    case EndApply = 10
+}
+
 class RPFReportManager: NSObject {
     private override init() {}
     static let shared = RPFReportManager()
@@ -271,17 +285,17 @@ class RPFReportManager: NSObject {
     "peace": 22.401038, // 混淆字段
      */
 
-    func saveAnalysis(){
+    func saveAnalysis(pId: String, type: RFAnalysisScenenType, startTime: String, longitude: String, latitude: String){
         var param: [String : Any] = [String : Any]()
-        param["andthey"] = ""
-        param["stones"] = ""
+        param["andthey"] = pId
+        param["stones"] = type.rawValue
         param["risking"] = ""
-        param["tolight"] = ""
-        param["torch"] = ""
-        param["scampering"] = ""
-        param["whichever"] = ""
-        param["naps"] = ""
-        param["yawnedtoo"] = ""
+        param["tolight"] = RapidIDFV
+        param["torch"] = RapidSingleUUID
+        param["scampering"] = longitude
+        param["whichever"] = latitude
+        param["naps"] = startTime
+        param["yawnedtoo"] = "\(Int(Date().timeIntervalSince1970) * 1000)"
         param["peace"] = getRPFRandom()
       
         RapidApi.shared.postAnalysisData(para: param)

@@ -20,6 +20,7 @@ class RapidHomeViewController: RapidBaseViewController {
     struct CellID {
         static let cellId = "RapidHomeProductCellIdentifier"
         static let bannerCell = "FSPagerViewCellIdentifier"
+        static let reminderCell = "RPFHomeReminderCellIdentifier"
     }
     // MARK: - Properties
     
@@ -90,9 +91,20 @@ class RapidHomeViewController: RapidBaseViewController {
         return pager
     }()
     
+    lazy var reminderView: FSPagerView = {
+        let reminder = FSPagerView(frame: CGRect(x: 0, y: 0, width: kPortraitScreenW, height: 81.rf))
+        reminder.scrollDirection = .vertical
+        reminder.delegate = self
+        reminder.dataSource = self
+        reminder.automaticSlidingInterval = 3.0
+        reminder.isInfinite = false
+        reminder.transformer = FSPagerViewTransformer(type: .depth)
+        reminder.register(RPFReminderCell.self, forCellWithReuseIdentifier: CellID.reminderCell)
+        return reminder
+    }()
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
-       
         tableView.delegate = self
         tableView.dataSource = self
         tableView.estimatedRowHeight = 60.rf
@@ -102,6 +114,7 @@ class RapidHomeViewController: RapidBaseViewController {
         let footerView = UIView(frame: .zero)
         tableView.tableFooterView = footerView
         tableView.register(RapidHomeProductCell.self, forCellReuseIdentifier: CellID.cellId)
+        tableView.tableHeaderView = self.reminderView
         
         return tableView
     }()
@@ -245,6 +258,7 @@ extension RapidHomeViewController {
         loginContainer.addSubview(banner)
         loginContainer.addSubview(tableView)
         
+        
         loginContainer.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -256,9 +270,9 @@ extension RapidHomeViewController {
         banner.snp.makeConstraints { make in
             make.top.equalTo(self.customNavView.snp.bottom).offset(13.rf)
             make.left.right.equalToSuperview().inset(25.rf)
-            make.height.equalTo(220.rf)
+            make.bottom.equalTo(LoginTopImgBg)
         }
-        
+
         tableView.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.top.equalTo(LoginTopImgBg.snp.bottom).offset(0)
@@ -285,10 +299,14 @@ extension RapidHomeViewController {
             self.titleNav.font = .f_lightSys32
             self.tableView.reloadData()
             self.banner.reloadData()
+            
         }else{
             self.unLoginContainer.isHidden = false
             self.loginContainer.isHidden = true
             self.rightBtn.isHidden = false
+        }
+        if model.reminder?.count ?? 0 > 0 {
+            self.reminderView.reloadData()
         }
         
         guard let hotModels = model.hotmeals, hotModels.count > 0, let hotModel = hotModels.first else {
@@ -299,6 +317,7 @@ extension RapidHomeViewController {
         self.applyTitle.text = hotModel.mymorgan
         self.homeMoneyView.updateContent(model: hotModel)
         self.homeMoneyRateView.updateContent(model: hotModel)
+        
         
     }
     
@@ -444,6 +463,20 @@ extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
        
     }
     
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let headView = UIView(frame: CGRect(x: 0, y: 0, width: kPortraitScreenW, height: 81.rf))
+//        headView.backgroundColor = .red
+//        headView.addSubview(self.reminderView)
+//        reminderView.snp.makeConstraints { make in
+//            make.edges.equalToSuperview()
+//        }
+//        
+//        guard let model = self.viewModel.homeModel.value, let reminder = model.reminder else {
+//            return nil 
+//        }
+//        return section == 0 ? nil : headView
+//    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return RapidHomeProductCell.height()
     }
@@ -454,6 +487,10 @@ extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return CGFloat.leastNormalMagnitude
+//        guard let model = self.viewModel.homeModel.value, let reminder = model.reminder else {
+//            return CGFloat.leastNormalMagnitude
+//        }
+//        return section == 0 ? 81.rf : CGFloat.leastNormalMagnitude
     }
 }
 
@@ -464,21 +501,43 @@ extension RapidHomeViewController: FSPagerViewDelegate, FSPagerViewDataSource {
         guard let model = viewModel.homeModel.value else {
             return 0
         }
-        return model.banners?.count ?? 0
+        if pagerView == self.banner {
+            return model.banners?.count ?? 0
+        }else{
+            return model.reminder?.count ?? 0
+        }
+        
     }
 //    
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell {
-        let cell = pagerView.dequeueReusableCell(withReuseIdentifier: CellID.bannerCell, at: index)
-        guard let model = self.viewModel.homeModel.value else {
-            return cell
-        }
-        guard model.banners?[index] != nil else {
-            return cell
-        }
-        let bannerModel = model.banners![index]
-        cell.imageView?.sd_setImage(with: bannerModel.imageUrl.url, placeholderImage: .homeLoginBanner, options: .allowInvalidSSLCertificates)
+        if pagerView  == self.banner {
+            let cell = pagerView.dequeueReusableCell(withReuseIdentifier: CellID.bannerCell, at: index)
+            guard let model = self.viewModel.homeModel.value else {
+                return cell
+            }
+            guard model.banners?[index] != nil else {
+                return cell
+            }
+            let bannerModel = model.banners![index]
+            cell.imageView?.sd_setImage(with: bannerModel.imageUrl.url, placeholderImage: .homeLoginBanner, options: .allowInvalidSSLCertificates)
 
-        return cell
+            return cell
+        }
+        else{
+            
+            let cell = pagerView.dequeueReusableCell(withReuseIdentifier: CellID.reminderCell, at: index) as! RPFReminderCell
+            guard let model = self.viewModel.homeModel.value else {
+                return cell
+            }
+            guard model.reminder?[index] != nil else {
+                return cell
+            }
+            let reminderModel = model.reminder![index]
+            cell.setContent(model: reminderModel)
+
+            return cell
+        }
+        
 
     }
     
@@ -486,14 +545,27 @@ extension RapidHomeViewController: FSPagerViewDelegate, FSPagerViewDataSource {
         guard let model = self.viewModel.homeModel.value else {
             return 
         }
-        guard model.banners?[index] != nil else {
-            return 
+        if pagerView == self.banner {
+            guard model.banners?[index] != nil else {
+                return 
+            }
+            let bannerModel = model.banners![index]
+            if !bannerModel.littleroom.isEmpty{
+                let vc  = RPFWebViewController()
+                vc.viewModel = RPFWebViewModel(urlString: bannerModel.littleroom)
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }else{
+            guard model.reminder?[index] != nil else {
+                return 
+            }
+            let reminderModel = model.reminder![index]
+            if !reminderModel.url.isEmpty{
+                let vc  = RPFWebViewController()
+                vc.viewModel = RPFWebViewModel(urlString: "https://www.baidu.com")
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
-        let bannerModel = model.banners![index]
-        if !bannerModel.littleroom.isEmpty{
-            let vc  = RPFWebViewController()
-            vc.viewModel = RPFWebViewModel(urlString: bannerModel.littleroom)
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        
     }
 }

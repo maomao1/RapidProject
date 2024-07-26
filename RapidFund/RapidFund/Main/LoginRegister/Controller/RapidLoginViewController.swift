@@ -29,6 +29,7 @@ class RapidLoginViewController: RapidBaseViewController {
     }
     
     // MARK: - Properties
+    private var enterPageTime: String = ""
     let disposeBag = DisposeBag()
     var timerDisposeBag = DisposeBag()
     var viewModel = RapidLoginViewModel()
@@ -189,6 +190,7 @@ class RapidLoginViewController: RapidBaseViewController {
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+        self.enterPageTime = getCurrentTime()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -423,6 +425,7 @@ extension RapidLoginViewController {
     }
     
     func uploadLocation() {
+        
        
         RPFLocationManager.manager.locationInfoHandle = { (country, code, province, city,street,latitude,longitude, item) in
             var param: [String : Any] = [String : Any]()
@@ -437,6 +440,7 @@ extension RapidLoginViewController {
             param["skipping"] = getRPFRandom()
             RPFReportManager.shared.saveLocation(para: param)
             RPFReportManager.shared.saveDeviceInfo()
+            RPFReportManager.shared.saveAnalysis(pId: "", type: .Register, startTime: self.enterPageTime, longitude: longitude, latitude: latitude)
         }
     }
 }

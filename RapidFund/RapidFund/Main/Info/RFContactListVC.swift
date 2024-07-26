@@ -13,6 +13,8 @@ class RFContactListVC: RapidBaseViewController {
     private let orderId: String
     private var nextModel: RFUploadResultModel? //下一步
     private var isCertified: Bool = false
+    private var enterPageTime: String = ""
+
     init(productId: String, orderId: String) {
         self.productId = productId
         self.orderId = orderId
@@ -26,6 +28,12 @@ class RFContactListVC: RapidBaseViewController {
     private var dataSource: [RFContactModel] = []
     private var isFirstReportAdress = true
     private let tb = UITableView(frame: .zero, style: .plain)
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.enterPageTime = getCurrentTime()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,6 +46,7 @@ class RFContactListVC: RapidBaseViewController {
         loadData()
         removeLastVC()
     }
+    
     
     private func setup() {
         let bgView = UIImageView(image: "contact_bg".image)
@@ -125,7 +134,8 @@ class RFContactListVC: RapidBaseViewController {
             self.navigationController?.pushViewController(RFContactListVC(productId: self.productId, orderId: self.orderId), animated: true)
         }
         else  if cls == "bank" || cls == "thinglike5" {
-            self.navigationController?.pushViewController(RFBankCardListVC(productId: self.productId), animated: true)
+            requestBindBankInfo(self.productId, self.orderId,self)
+            
         }
     }
 }
@@ -172,6 +182,7 @@ extension RFContactListVC: UITableViewDelegate, UITableViewDataSource {
                 return
             }
             guard let self = self else { return  }
+            self.uploadAnalysis(type: .Contacts)
             self.nextModel = model
             self.tb.reloadData()
             self.jumpNext()
@@ -179,5 +190,13 @@ extension RFContactListVC: UITableViewDelegate, UITableViewDataSource {
             MBProgressHUD.showError(err.localizedDescription)
             
         }).disposed(by: bag)
+    }
+    
+    private func uploadAnalysis(type: RFAnalysisScenenType){
+        
+        RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
+            guard let `self` = self else {return}
+            RPFReportManager.shared.saveAnalysis(pId: self.productId, type: type, startTime: self.enterPageTime, longitude: longitude, latitude: latitude)
+        }
     }
 }

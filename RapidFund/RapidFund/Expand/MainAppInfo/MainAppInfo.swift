@@ -363,6 +363,10 @@ var RapidSession: String = {
     return GetInfo(kRapidSession)
 }()
 
+func getCurrentTime() -> String{
+    return "\(Int(Date().timeIntervalSince1970) * 1000)"
+}
+
 func  getRapidUrlBaseParam()-> [String: String]  {
     var para: [String : String] = [String : String]()
     para["bittengeorge"]     = OsPlatform

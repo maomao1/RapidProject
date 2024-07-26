@@ -187,6 +187,6 @@ extension RFBankCardListVC: UITableViewDelegate, UITableViewDataSource {
 //        }, onError: { err in
 //            MBProgressHUD.showError(err.localizedDescription)
 //        }).disposed(by: bag)
-        requestBindBankInfo(productId, self)
+        requestBindBankInfo(productId, order_id ?? "", self)
     }
 }

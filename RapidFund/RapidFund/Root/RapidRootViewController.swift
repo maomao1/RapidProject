@@ -251,7 +251,7 @@ extension RapidRootViewController {
 //        let vc = RFContactListVC( productId: "1", orderId: "1")
 //        nc.pushViewController(vc, animated: true)
 //=======
-        requestBindBankInfo("1", nc.topViewController!)
+//        requestBindBankInfo("1", nc.topViewController!)
 //        test()
 //        let vc = RFPInVC(route: .employment_info, productId: "1")
 //        let vc = RFContactListVC( productId: "1")
