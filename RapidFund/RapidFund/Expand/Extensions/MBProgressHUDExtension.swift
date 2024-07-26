@@ -8,20 +8,20 @@
 import Foundation
 import MBProgressHUD
 import SnapKit
-//import Lottie
+// import Lottie
 import UIKit
 
 let loadingMessage = "loading..."
 
-//MARK: - 添加属性
+// MARK: - 添加属性
+
 extension MBProgressHUD {
-    
     enum LoadingType {
-        case toast //toast 穿透hud可点击
-        case loading //加载中
+        case toast // toast 穿透hud可点击
+        case loading // 加载中
     }
     
-    private struct AssociatedKeys {
+    private enum AssociatedKeys {
         static var loadingTypeKey: LoadingType?
     }
     
@@ -34,11 +34,12 @@ extension MBProgressHUD {
         }
     }
     
-    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+    override open func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let hitView = super.hitTest(point, with: event)
         guard let hud = hitView?.superview as? MBProgressHUD else { return hitView }
         if hitView is MBBackgroundView,
-            hud.loadingType == .toast {
+           hud.loadingType == .toast
+        {
             return nil
         }
         return hitView
@@ -59,14 +60,13 @@ extension MBProgressHUD {
     }
 }
 
-//MARK: - 文本TOAST
+// MARK: - 文本TOAST
+
 extension MBProgressHUD {
-    
     enum Autolayout {
         static let hudMaxWidth = 270.rf
         static let hudMinWidth = 70.rf
         static let hudContentMaxWidth = 240.rf
-
     }
     
     static func showError(_ error: String?, to view: UIView? = nil) {
@@ -82,7 +82,6 @@ extension MBProgressHUD {
         display(message: text, toView: view, withIcon: nil, forDuration: delay)
     }
     
-
     static func display(message: String, toView view: UIView?, withIcon icon: UIImage?, forDuration duration: TimeInterval) {
         guard !message.trim().isEmpty else {
             return
@@ -96,7 +95,7 @@ extension MBProgressHUD {
         } else {
             parentView = view!
         }
-        if let first = parentView.subviews.first(where: { $0 is MBProgressHUD } ) {
+        if let first = parentView.subviews.first(where: { $0 is MBProgressHUD }) {
             first.removeFromSuperview()
         }
         let hud = MBProgressHUD(view: parentView)
@@ -139,33 +138,65 @@ extension MBProgressHUD {
     }
     
 //    static func showLoading() {
-//        
+//
 //        guard let view = UIApplication.shared.keyWindow else {
-//            return 
+//            return
 //        }
 //        if let first = view.subviews.first(where: { $0 is MBProgressHUD } ) {
 //            first.removeFromSuperview()
 //        }
 //        let hud = MBProgressHUD.showAdded(to: view, animated: true)
 //        hud.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: kScreenHeight)
-//        
+//
 //        view.addSubview(hud)
 //        hud.show(animated: true)
-//        
+//
 //    }
-
 }
 
-//MARK: - JSON动画HUD
+// loading
 extension MBProgressHUD {
+   static func showLoading(msg: String?, inView: UIView?) {
+        let hud = createMBProgressHUDView(msg: msg, inView: inView)
+        hud?.mode = .indeterminate
+        hud?.graceTime = 0
+        hud?.show(animated: true)
+    }
     
-   
+   static func hideAllHUD(for view: UIView?) {
+        let tar_view = view != nil ? view : UIApplication.shared.delegate?.window as? UIView
+        guard let tar_view = tar_view else { return }
+        MBProgressHUD.hide(for: tar_view, animated: true)
+    }
+    
+    private static func createMBProgressHUDView(msg: String?, inView: UIView?) -> MBProgressHUD? {
+        let view = inView != nil ? inView : UIApplication.shared.delegate?.window as? UIView
+        guard let view = view else { return nil }
+        hideAllHUD(for: view)
+        let hud = MBProgressHUD(view: view)
+        hud.label.text = msg
+        hud.label.numberOfLines = 0
+        hud.removeFromSuperViewOnHide = true
+        hud.margin = 15
+        hud.label.font = 15.fontMedium
+        hud.isUserInteractionEnabled = true
+        hud.contentColor = .white
+        hud.bezelView.style = .solidColor
+        hud.bezelView.color = .black.withAlphaComponent(0.75)
+        hud.bezelView.layer.cornerRadius = 12
+        view.addSubview(hud)
+        return hud
+    }
 }
 
-//MARK: - 扩展UIViewController
+// MARK: - JSON动画HUD
+
+extension MBProgressHUD {}
+
+// MARK: - 扩展UIViewController
+
 extension UIViewController {
-    
-    private struct AssociatedKeys {
+    private enum AssociatedKeys {
         static var loadingViewKey: MBProgressHUD?
     }
     
@@ -174,7 +205,7 @@ extension UIViewController {
             return objc_getAssociatedObject(self, &AssociatedKeys.loadingViewKey) as? MBProgressHUD
         }
         set {
-            objc_setAssociatedObject(self, &AssociatedKeys.loadingViewKey, newValue,objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &AssociatedKeys.loadingViewKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
     
@@ -183,9 +214,9 @@ extension UIViewController {
 //    全局通用loading
     func showLoading() {
         guard let view = self.view else {
-            return 
+            return
         }
-        if let first = view.subviews.first(where: { $0 is MBProgressHUD } ) {
+        if let first = view.subviews.first(where: { $0 is MBProgressHUD }) {
             first.removeFromSuperview()
         }
         let hud = MBProgressHUD.showAdded(to: view, animated: true)
@@ -200,4 +231,3 @@ extension UIViewController {
         MBProgressHUD.hide(for: self.view, animated: true)
     }
 }
-

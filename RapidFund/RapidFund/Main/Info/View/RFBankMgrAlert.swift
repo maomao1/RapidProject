@@ -12,11 +12,14 @@ import UIKit
 
 
 func requestBindBankInfo(_ productId: String, _ orderId: String,  _ vc: UIViewController) {
+    MBProgressHUD.showLoading(msg: nil, inView: nil)
     RapidApi.shared.getBindCardInfo(para: ["whisked": "0", "frisked": getRPFRandom()]).subscribe(onNext: { obj in
         guard let model = RFBankCfg.deserialize(from: obj.dictionaryObject) else { return }
+        MBProgressHUD.hideAllHUD(for: nil)
         let bankVc = RFBankMgrVc(config: model, product_id: productId, order_id: orderId)
         vc.navigationController?.pushViewController(bankVc, animated: true)
     }, onError: { err in
+        MBProgressHUD.hideAllHUD(for: nil)
         MBProgressHUD.showError(err.localizedDescription)
     })
 }
