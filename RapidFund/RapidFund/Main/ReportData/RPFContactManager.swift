@@ -54,15 +54,15 @@ class RPFContactManager {
         case .restricted, .denied:
             // 访问受限或被拒绝，可以提示用户或者采取其他行动
             return false
-            print("Access denied or restricted.")
+           
         case .authorized:
             // 已经授权，可以获取通讯录数据
             return true
-            print("Access authorized.")
+           
             
         @unknown default:
             return false
-            fatalError("Unknown CNContactStore authorization status.")
+            
         }
     }
     

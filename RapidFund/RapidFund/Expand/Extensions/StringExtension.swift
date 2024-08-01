@@ -78,6 +78,16 @@ extension String {
         atts[NSAttributedString.Key.paragraphStyle] = style
         return NSMutableAttributedString(string: self, attributes: atts)
     }
+    
+    func attributedPlaceholder(color: UIColor?, font: UIFont, paraStyle: NSMutableParagraphStyle? = nil) -> NSMutableAttributedString {
+        guard let c = color else { return NSMutableAttributedString() }
+        var atts: [NSAttributedString.Key : Any] = [.font: font,
+                                                    .foregroundColor: c]
+        if let style = paraStyle {
+            atts[NSAttributedString.Key.paragraphStyle] = style
+        }
+        return NSMutableAttributedString(string: self, attributes: atts)
+    }
 }
 
 //url拼接参数

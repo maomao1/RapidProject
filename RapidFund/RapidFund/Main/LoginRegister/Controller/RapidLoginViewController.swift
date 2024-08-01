@@ -18,7 +18,7 @@ class RapidLoginViewController: RapidBaseViewController {
     struct AutoLayout {
         static let textString = "Reliable, Fast\n Professional"
         static let countryCode = "+63"
-        static let phonePlaceHolder = "Phone Number"
+        static let phonePlaceHolder = "Phone Number(eg:9123456789)"
         static let phoneCodePlaceHolder = "Verification Code"
         
         static let confirmText = "Confirm"
@@ -88,10 +88,11 @@ class RapidLoginViewController: RapidBaseViewController {
     lazy var phoneNumTF: UITextField = {
         let textField = UITextField()
         textField.delegate = self
-        textField.textColor = .c_000000.withAlphaComponent(0.3)
+        textField.textColor = .black
         textField.font =  .f_lightSys14
         textField.keyboardType = .numberPad
-        textField.placeholder = AutoLayout.phonePlaceHolder
+        textField.attributedPlaceholder = AutoLayout.phonePlaceHolder.attributedPlaceholder(color: .c_000000.withAlphaComponent(0.3), font: .f_lightSys14)
+
         textField.borderStyle = .none
         
 //        textField.attributedPlaceholder = AutoLayout.phonePlaceHolder.attributedPlaceholder(color: .c_CCCCCC, font: 0)
@@ -109,11 +110,12 @@ class RapidLoginViewController: RapidBaseViewController {
     lazy var codeTF: UITextField = {
         let textField = UITextField()
         textField.delegate = self
-        textField.textColor = .c_000000.withAlphaComponent(0.3)
+        textField.textColor = .black
+//            .c_000000.withAlphaComponent(0.3)
         textField.font =  .f_lightSys14
         textField.keyboardType = .numberPad
-        textField.placeholder = AutoLayout.phoneCodePlaceHolder
-
+//        textField.placeholder = AutoLayout.phoneCodePlaceHolder
+        textField.attributedPlaceholder = AutoLayout.phoneCodePlaceHolder.attributedPlaceholder(color: .c_000000.withAlphaComponent(0.3), font: .f_lightSys14)
 //        textField.attributedPlaceholder = "输入验证码".attributedPlaceholder(color: .c_C1C1C1, font: isStandardFontModed ? .f_sys16 : .f_sys20)
         return textField
     }()
@@ -131,7 +133,7 @@ class RapidLoginViewController: RapidBaseViewController {
         let button = UIButton(type: .custom)
         button.setImage(.loginAgreeNormalImage, for: .normal)
         button.setImage(.loginAgreeSelectedImage, for: .selected)
-        button.isSelected = false
+        button.isSelected = true
         button.contentHorizontalAlignment = .right
         return button
     }()
@@ -187,9 +189,13 @@ class RapidLoginViewController: RapidBaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        self.judgeIOSSystem()
-        IQKeyboardManager.shared.enable = true
-        IQKeyboardManager.shared.enableAutoToolbar = true
-        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+//        IQKeyboardManager.shared.enable = true
+//        IQKeyboardManager.shared.enableAutoToolbar = true
+//        IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+//        IQKeyboardManager.shared.placeholderFont = .f_boldSys15
+//        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "完成"
+
+
         self.enterPageTime = getCurrentTime()
     }
     
@@ -224,6 +230,9 @@ extension RapidLoginViewController {
         view.addSubview(confirmBtn)
         view.addSubview(btnTitle)
         view.addSubview(btnArrow)
+        self.view.bringSubviewToFront(self.customNavView)
+        self.rightBtn.isHidden = true
+        self.setNavImageTitleWhite(isWhite: true)
         
         backgroundImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -385,6 +394,19 @@ extension RapidLoginViewController {
                 self.getCodeBtn.isUserInteractionEnabled = isAble
             })
             .disposed(by: disposeBag)
+        
+        viewModel.isLoading
+            .subscribe(onNext: { [weak self] isLoad in 
+                guard let `self` = self else { return }
+                if isLoad {
+                    self.showLoading()
+                }else{
+                    self.hiddenLoading()
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        
     }
     
     //获取验证码倒计时

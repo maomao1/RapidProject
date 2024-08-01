@@ -16,11 +16,11 @@ class RapidMineViewController: RapidBaseViewController {
     var viewModel: RapidMineViewModel = RapidMineViewModel()
     
     let backgroundImageView = UIImageView(image: .mineFullBg)
-    let rapidImageView = UIImageView(image: .rapidFundLogoImg)
-    let rapidNameLabel = UILabel().withFont(.f_lightSys14)
-        .withTextColor(.c_111111)
-        .withTextAlignment(.center)
-        .withText("RapidFund")
+    let rapidImageView = UIImageView(image: .mineUserTopImg)
+//    let rapidNameLabel = UILabel().withFont(.f_lightSys14)
+//        .withTextColor(.c_111111)
+//        .withTextAlignment(.center)
+//        .withText("RapidFund")
     let centerImageView = UIImageView(image: .mineCenterBg)
     let menuBgImageView = UIImageView(image: .mineMenuBg)
     let rightBgImageView = UIImageView(image: .mineRightBg)
@@ -59,7 +59,7 @@ extension RapidMineViewController {
         self.safeAreaBottomView.isHidden = false
         view.insertSubview(backgroundImageView, at: 0)
         view.addSubview(rapidImageView)
-        view.addSubview(rapidNameLabel)
+//        view.addSubview(rapidNameLabel)
         view.addSubview(centerImageView)
         view.addSubview(rightBgImageView)
         view.addSubview(menuBgImageView)
@@ -71,21 +71,23 @@ extension RapidMineViewController {
             make.edges.equalToSuperview()
         }
         
-        rapidImageView.snp.makeConstraints { make in
-            make.left.equalTo(40.5.rf)
-            make.top.equalTo(self.customNavView.snp.bottom).offset(28.rf)
-            make.size.equalTo(CGSize(width: 90.rf, height: 90.rf))
-        }
         
-        rapidNameLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(rapidImageView)
-            make.top.equalTo(rapidImageView.snp.bottom).offset(15.rf)
-        }
+        
+//        rapidNameLabel.snp.makeConstraints { make in
+//            make.centerX.equalTo(rapidImageView)
+//            make.top.equalTo(rapidImageView.snp.bottom).offset(15.rf)
+//        }
         
         rightBgImageView.snp.makeConstraints { make in
             make.right.equalToSuperview()
             make.bottom.equalTo(-RapidMetrics.tabbarHeight - 21.5.rf)
             make.size.equalTo(CGSize(width: 80.5.rf, height: 419.rf))
+        }
+        
+        rapidImageView.snp.makeConstraints { make in
+            make.left.equalToSuperview()
+            make.bottom.equalTo(rightBgImageView.snp.top)
+            make.size.equalTo(CGSize(width: 155.rf, height: 115.rf))
         }
         
         centerImageView.snp.makeConstraints { make in
@@ -94,11 +96,15 @@ extension RapidMineViewController {
             make.right.equalTo(rightBgImageView.snp.left).offset(13.rf)
         }
         
+        
+        
         menuBgImageView.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.right.equalTo(rightBgImageView.snp.left).offset(-30.rf)
             make.top.bottom.equalTo(rightBgImageView)
         }
+        
+        
         
         tableView.snp.makeConstraints { make in
             make.left.right.equalTo(menuBgImageView)

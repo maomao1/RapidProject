@@ -63,18 +63,29 @@ class RFLoadProgressView: UIView {
         .textAlignment(.right)
     private let progressView = UIImageView()
     private let pgBgView = UIImageView()
-    func fill(_ data:RFProductDetailModel.__Sucha) {
-        
-        progressLb.text = data.decided?.falls
-//        progressLb.text = "60%"
-        guard let text = progressLb.text else { return  }
-        let proText = text.replacingOccurrences(of: "%", with: "")
-        
-        guard let pro = Float(proText) else {
-            return
-        }
+    func fill(finishCount: Int, totalCount: Int) {
+        let schedule: Double = Double(finishCount) / Double(totalCount)
+        let number = NSNumber(value: schedule)
+        let percent = NumberFormatter.localizedString(from: number, number: .percent)
+        progressLb.text = "\(percent)"
+
         progressView.snp.updateConstraints { make in
-            make.width.equalTo((kScreenWidth - 118.rf) * CGFloat(pro/100.00))
+            make.width.equalTo((kScreenWidth - 118.rf) * CGFloat(schedule))
         }
+        
+        let width = (kScreenWidth - 118.rf) * CGFloat(schedule)
+        if width < 40.rf {
+            progressLb.snp.remakeConstraints { make in
+                make.top.bottom.equalTo(progressView)
+                make.left.equalTo(progressView.snp.right).offset(0)
+                make.width.equalTo(30.rf)
+            }
+        }else {
+            progressLb.snp.makeConstraints { make in
+                make.left.top.bottom.equalTo(progressView)
+                make.right.equalTo(progressView.snp.right).offset(-15.rf)
+            }
+        }
+            
     }
 }

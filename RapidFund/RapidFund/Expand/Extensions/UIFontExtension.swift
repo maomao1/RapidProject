@@ -36,7 +36,7 @@ extension UIFont {
 
 //MARK: - app bold font
 extension UIFont {
-    
+    static let f_boldSys14 = UIFont.BoldPingFangFont(ofSize: 14.rf)
     static let f_boldSys15 = UIFont.BoldPingFangFont(ofSize: 15.rf)
     static let f_boldSys16 = UIFont.BoldPingFangFont(ofSize: 16.rf)
     static let f_boldSys17 = UIFont.BoldPingFangFont(ofSize: 17.rf)

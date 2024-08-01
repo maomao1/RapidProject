@@ -8,6 +8,7 @@
 import MBProgressHUD
 import RxSwift
 import UIKit
+import IQKeyboardManagerSwift
 
 enum RFRoute {
     case personal_info
@@ -37,7 +38,7 @@ class RFPInVC: RapidBaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.titleNav.text = route == .personal_info ? "Personal Information" : "Employment Information"
+        self.titleNav.text = route == .personal_info ? "Personal Information" : "Work Information"
         self.titleNav.textColor = .white
         adjustNavTitleCenter()
         titleNav.font = 24.font
@@ -65,6 +66,7 @@ class RFPInVC: RapidBaseViewController {
             make.edges.equalToSuperview()
         }
         scrollView.addSubview(contentView)
+       
         contentView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -135,7 +137,9 @@ class RFPInVC: RapidBaseViewController {
     }
     
     private func loadUserData() {
+        self.showLoading()
         RapidApi.shared.getTwoUserInfo(para: ["putit": productId]).subscribe(onNext: { [weak self] obj in
+            self?.hiddenLoading()
             guard let list = obj.dictionaryObject?["munched"] as? [Any], let models = [RFTwoUserDataModel].deserialize(from: list)?.compactMap({ $0 }) else {
                 return
             }
@@ -143,20 +147,23 @@ class RFPInVC: RapidBaseViewController {
             self?.render()
         }, onError: { [weak self] err in
             print(err)
+            self?.hiddenLoading()
             MBProgressHUD.showError(err.localizedDescription)
             self?.navigationController?.popViewController(animated: true)
         }).disposed(by: bag)
     }
     
     private func loadOtherData() {
+        self.showLoading()
         RapidApi.shared.getWorkInfo(para: ["putit": productId]).subscribe(onNext: { [weak self] obj in
+            self?.hiddenLoading()
             guard let list = obj.dictionaryObject?["munched"] as? [Any], let models = [RFTwoUserDataModel].deserialize(from: list)?.compactMap({ $0 }) else {
                 return
             }
             self?.models = models
             self?.render()
         }, onError: { [weak self] err in
-            print(err)
+            self?.hiddenLoading()
             MBProgressHUD.showError(err.localizedDescription)
             self?.navigationController?.popViewController(animated: true)
         }).disposed(by: bag)
@@ -171,7 +178,8 @@ class RFPInVC: RapidBaseViewController {
                 let gender = RFGengerItem()
                 stackView.addArrangedSubview(gender)
                 gender.model = item
-                gender.isMale = item.theboys == "1"
+                gender.isMale = item.upthe == "male"
+                item.dismay = item.upthe == "male" ? "1" : "2"
             } else {
                 let other = RFInfoItem(item.hastily, placeholder: item.sounding)
                 other.model = item
@@ -212,14 +220,15 @@ class RFPInVC: RapidBaseViewController {
         models.forEach {
             if let keyStr = $0.yourtoboggans {
                 if keyStr == "neatly" {
-                    param[keyStr] = $0.theboys
+                    param[keyStr] = $0.dismay
                 } else {
                     param[keyStr] = $0.snatch.count > 0 ? $0.dismay : $0.upthe
                 }
             }
         }
-       
+        self.showLoading()
         RapidApi.shared.saveTwoUserInfo(para: param).subscribe(onNext: { [weak self] obj in
+            self?.hiddenLoading()
             guard let model = RFUploadResultModel.deserialize(from: obj.dictionaryObject) else {
                 return
             }
@@ -228,7 +237,7 @@ class RFPInVC: RapidBaseViewController {
             self.nextModel = model
             self.jumpNext()
         }, onError: { err in
-            print("\(err)")
+            self.hiddenLoading()
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
     }
@@ -244,7 +253,9 @@ class RFPInVC: RapidBaseViewController {
                 param[keyStr] = $0.snatch.count > 0 ? $0.dismay : $0.upthe
             }
         }
+        self.showLoading()
         RapidApi.shared.saveWorkInfo(para: param).subscribe(onNext: { [weak self] obj in
+            self?.hiddenLoading()
             guard let model = RFUploadResultModel.deserialize(from: obj.dictionaryObject) else {
                 return
             }
@@ -253,6 +264,7 @@ class RFPInVC: RapidBaseViewController {
             self.nextModel = model
             self.jumpNext()
         }, onError: { err in
+            self.hiddenLoading()
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
     }
@@ -301,12 +313,13 @@ class RFPInVC: RapidBaseViewController {
                 // model 一级
                 let twoModel = md.army[twoIndex]
                 let threeModel = twoModel.army[threeIndex]
-                let text = md.wasan + twoModel.wasan + threeModel.wasan
+                let text = md.wasan + "-" + twoModel.wasan + "-" + threeModel.wasan
                 item.model?.upthe = text
                 item.update(text)
-                alert.dismiss(withAnimation: true)
+                
             }
             alert.show(on: self.view)
+            IQKeyboardManager.shared.resignFirstResponder()
         }, onError: { err in
             self.hiddenLoading()
             MBProgressHUD.showError(err.localizedDescription)

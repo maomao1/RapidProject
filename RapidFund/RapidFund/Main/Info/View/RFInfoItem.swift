@@ -10,6 +10,8 @@ import UIKit
 class RFInfoItem: UIView {
     func update(_ des: String) {
         self.contentView.textLb.text = des
+       
+        
     }
     
     var value: String {
@@ -19,7 +21,6 @@ class RFInfoItem: UIView {
     var model: RFTwoUserDataModel? {
         didSet {
             if model?.marking == "boyswent2" {
-//            if model?.hastily == "Email" || model?.hastily == "Address Details" || model?.hastily == "Company Name" || model?.hastily == "Company Phone Number" {
                 if let a = model?.upthe, a.isEmpty == false {
                     update(a)
                 }
@@ -30,6 +31,12 @@ class RFInfoItem: UIView {
                 }
                 return
             }
+            if model?.marking == "boyswent3" {
+                if let a = model?.upthe, a.isEmpty == false {
+                    update(a)
+                }
+            }
+            
             guard let text = model?.snatch.first(where: { $0.dismay == model?.dismay ?? "" })?.wasan else {
                 return
             }
@@ -37,11 +44,12 @@ class RFInfoItem: UIView {
         }
     }
     
-    init(_ title: String, placeholder: String? = nil, hiddenNext: Bool = false) {
+    init(_ title: String, placeholder: String? = nil, hiddenNext: Bool = false, isNumberKeyboard: Bool = false) {
         super.init(frame: .zero)
-        setup(placeholder: placeholder, hiddenNext: hiddenNext)
+        setup(placeholder: placeholder, hiddenNext: hiddenNext, isNumberKeyboard: isNumberKeyboard)
         
         titLb.text = title
+        textF.keyboardType = title.contains("Company Phone") ? .numberPad : .asciiCapable
     }
     
     @available(*, unavailable)
@@ -50,40 +58,43 @@ class RFInfoItem: UIView {
     }
 
     private let titLb = UILabel().textColor(0x111111.color).font(20.font)
+    private let textF = UITextField()
     private lazy var contentView: (container: UIView, textLb: UITextField, btn: UIButton) = {
         let bgView = UIView()
         bgView.backgroundColor = UIColor(rgbHex: 0x000000, alpha: 0.05)
         bgView.clipsCornerRadius(Float(10.rf))
         
-        let label = UITextField()
-        label.font = 14.font
-        label.textColor = 0x999999.color
-        label.delegate = self
+        
+        textF.font = 14.font
+        textF.textColor = .black
+        textF.delegate = self
         let btn = UIButton(type: .custom)
         btn.setImage("info_item_next".image, for: .normal)
+        btn.contentHorizontalAlignment = .right
         btn.addTarget(self, action: #selector(btnClick), for: .touchUpInside)
         
-        bgView.addSubview(label)
+        bgView.addSubview(textF)
         bgView.addSubview(btn)
         btn.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
+            make.left.equalToSuperview()
             make.right.equalTo(-16.rf)
         }
-        label.snp.makeConstraints { make in
+        textF.snp.makeConstraints { make in
             make.left.equalTo(24.rf)
             make.top.bottom.equalToSuperview()
-            make.right.equalTo(-50.rf)
+            make.right.equalToSuperview()
         }
         
-        return (bgView, label, btn)
+        return (bgView, textF, btn)
     }()
 
-    private func setup(placeholder: String?, hiddenNext: Bool) {
+    private func setup(placeholder: String?, hiddenNext: Bool,isNumberKeyboard: Bool = false) {
         addSubview(titLb)
         if let placeholder = placeholder {
             contentView.textLb.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.font: 14.font, .foregroundColor: 0x999999.color])
         }
-        
+        textF.keyboardType = isNumberKeyboard ? .numberPad : .asciiCapable
         contentView.btn.isHidden = hiddenNext
         addSubview(contentView.container)
         titLb.snp.makeConstraints { make in
@@ -184,6 +195,7 @@ class RFGengerItem: UIView {
         didSet {
             maleItem.selected = isMale
             femaleItem.selected = !isMale
+            
         }
     }
     
@@ -235,10 +247,10 @@ class RFGengerItem: UIView {
         item.selected = true
         if item == femaleItem {
             maleItem.selected = false
-            model?.theboys = "2"
+            model?.dismay = "2"
         } else {
             femaleItem.selected = false
-            model?.theboys = "1"
+            model?.dismay = "1"
         }
     }
 }

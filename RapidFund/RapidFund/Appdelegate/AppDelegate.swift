@@ -55,10 +55,9 @@ extension AppDelegate {
     //MARK: - 配置UI属性
     func setUIAttribute() {
         let tableViewAppearance = UITableView.appearance()
-        let scrollViewApperance = UIScrollView.appearance()
+//        let scrollViewApperance = UIScrollView.appearance()
         
-//        UITextField.appearance().tintColor = .c_0EC275
-//        UITextView.appearance().tintColor = .c_0EC275
+
         tableViewAppearance.tableFooterView = UIView()
         tableViewAppearance.separatorColor = .black.withAlphaComponent(0.08)
         if #available(iOS 11.0, *) {
@@ -66,7 +65,7 @@ extension AppDelegate {
             tableViewAppearance.estimatedSectionFooterHeight = 0
             tableViewAppearance.estimatedSectionHeaderHeight = 0
             tableViewAppearance.estimatedRowHeight = 0
-            scrollViewApperance.contentInsetAdjustmentBehavior = .never
+//            scrollViewApperance.contentInsetAdjustmentBehavior = .never
         }
         if #available(iOS 15.0, *) {
             tableViewAppearance.sectionHeaderTopPadding = 0.f
@@ -78,6 +77,13 @@ extension AppDelegate {
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.enableAutoToolbar = true
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+        IQKeyboardManager.shared.placeholderFont = .f_lightSys14
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemImage = UIImage.textToImage(text: "Done", font: .f_boldSys16)
+//        IQKeyboardManager.shared.toolbarTintColor = .c_FF942F
+//        IQToolbarHandler.titleFont = .f_boldSys15
+//        IQTitleBarButtonItem.titleFont = .f_boldSys15
+//        IQKeyboardManager.shared.to
+
     }
     
     func uploadReport() {

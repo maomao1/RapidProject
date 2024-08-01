@@ -110,7 +110,7 @@ class RapidOrderListCell: UITableViewCell {
         self.moneyLabel.text = model.shoes
         self.moneyValueLabel.text = model.sweet 
         self.dateLabel.text = model.shewas
-        self.dateValueLabel.text = model.bare
+        self.dateValueLabel.text = model.shorts
         self.soundLabel.text = model.dirty
     }
     

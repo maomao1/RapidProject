@@ -12,11 +12,11 @@ class RapidBaseNavgationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font : UIFont.f_lightSys32,NSAttributedString.Key.foregroundColor: UIColor.c_111111], for: .normal)
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font : UIFont.f_lightSys32,NSAttributedString.Key.foregroundColor: UIColor.c_111111], for: .highlighted)
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font : UIFont.f_lightSys32,NSAttributedString.Key.foregroundColor: UIColor.c_111111], for: .selected)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font : UIFont.f_lightSys20,NSAttributedString.Key.foregroundColor: UIColor.c_111111], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font : UIFont.f_lightSys20,NSAttributedString.Key.foregroundColor: UIColor.c_111111], for: .highlighted)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font : UIFont.f_lightSys20,NSAttributedString.Key.foregroundColor: UIColor.c_111111], for: .selected)
         
-        let navFont: UIFont = .f_lightSys32
+        let navFont: UIFont = .f_lightSys20
         
         if #available(iOS 13.0, *) {
             let navBarAppearance = UINavigationBarAppearance()

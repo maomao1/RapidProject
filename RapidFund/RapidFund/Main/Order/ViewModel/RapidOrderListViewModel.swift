@@ -16,6 +16,22 @@ enum OrderType: String {
     case review = "7"
     case failed = "8"
     
+    var titleName: String {
+        switch self{
+        case .unpaid:
+            return "Unpaid Order"
+        case .review:
+            return "Under Review"
+        case .failed:
+            return "Failed Loan Funding"
+        case .settled:
+            return "Settled Order"
+       
+        case .all:
+            return "Order"
+        }
+    }
+    
 }
 
 class RapidOrderListViewModel {
@@ -30,26 +46,27 @@ class RapidOrderListViewModel {
         return message.filter { !$0.isEmpty }.asDriver(onErrorJustReturn: "")
     }
     var type: OrderType = .all
-    let pageTitle = "Order"
+//    let pageTitle = "Order"
     let orderModels: BehaviorRelay<[RPFOrderModel]> = BehaviorRelay(value: [])
-
+    let isLoading = BehaviorRelay(value: false)
     
     func getData() {
         var para = [String : Any]()
 //        para = RapidUrlParam
         para["gambolled"] = self.type.rawValue
 //        para["gambolled"] = "4"
-        
+        isLoading.accept(true)
         RapidApi.shared.getOrderData(para: para)
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}
+                self.isLoading.accept(false)
                 let datas = json["army"].arrayValue.map{ RPFOrderModel(json: $0)}
                 self.orderModels.accept(datas)
 //               
             },
             onError: { [weak self] error in
                 guard let `self` = self else {return}
-
+                self.isLoading.accept(false)
                 self.message.onNext(error.localizedDescription)
             })
             .disposed(by: bag)

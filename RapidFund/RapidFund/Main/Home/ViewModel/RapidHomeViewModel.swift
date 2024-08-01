@@ -25,8 +25,11 @@ class RapidHomeViewModel {
     let nextModel = BehaviorRelay<RPFHomeNextModel?>(value: nil)
     let refreshAction = PublishSubject<Void>()
     let nextAction = PublishSubject<String>()
+    let isLoading = BehaviorRelay(value: false)
+
 
     func getData(){
+        isLoading.accept(true)
         var para = [String : Any]()
         para["truant"] = getRPFRandom()
         para["sdaughter"] = getRPFRandom()
@@ -35,10 +38,11 @@ class RapidHomeViewModel {
                 guard let `self` = self else {return}
                 self.homeModel.accept(RapidHomeModel(json: json))
                 self.refreshAction.onNext(Void())
-
+                self.isLoading.accept(false)
             },
             onError: { [weak self] error in
                 guard let `self` = self else {return}
+                self.isLoading.accept(false)
                 self.message.onNext(error.localizedDescription)
             })
             .disposed(by: bag)
@@ -49,14 +53,17 @@ class RapidHomeViewModel {
         para["putit"] = productId
         para["cheerfulindeed"] = getRPFRandom()
         para["noseoutside"] = getRPFRandom()
+        isLoading.accept(true)
         RapidApi.shared.getProductNextData(para: para)
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}
                 self.nextModel.accept(RPFHomeNextModel(json: json))
                 self.nextAction.onNext(productId)
+                self.isLoading.accept(false)
             },
             onError: { [weak self] error in
                 guard let `self` = self else {return}
+                self.isLoading.accept(false)
                 self.message.onNext(error.localizedDescription)
             })
             .disposed(by: bag)

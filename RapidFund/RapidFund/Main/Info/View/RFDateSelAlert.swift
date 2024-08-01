@@ -19,11 +19,28 @@ class RFDateSelAlert: XYZAlertView {
     }
     
     private let datePicker = UIDatePicker()
+    
+    func updatePickerDefault(_ dateStr: String?) {
+        guard let dateString = dateStr else {return}
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        if let date = formatter.date(from: dateString) {
+            // 转换成功
+            self.datePicker.setDate(date, animated: false)
+        } else {
+            // 转换失败
+           
+        }
+        
+    }
     private func setup() {
         let bgView = UIImageView(image: UIImage.image(gradientDirection: .leftTopToRightBottom,colors: [0xE5DEFA.color,0xFFFFFF.color]))
+        
         containerAlertViewMaxSize = CGSize(width: kScreenWidth, height: 381.rf)
         containerAlertView.addSubview(bgView)
         containerAlertViewRoundValue = 24.rf
+        containerAlertView.layer.borderWidth = 0.5
+        containerAlertView.layer.borderColor = UIColor.c_111111.withAlphaComponent(0.3).cgColor
         bgView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
             make.width.equalTo(kScreenWidth)
@@ -72,9 +89,10 @@ class RFDateSelAlert: XYZAlertView {
         }
         datePicker.calendar = Calendar.gregorian
         datePicker.datePickerMode = .date
-        
+        datePicker.locale = Locale(identifier: "en_GB")
         datePicker.minimumDate = Date(timeIntervalSince1970: TimeInterval(-946_800_000))
         datePicker.maximumDate = Date()
+        
         containerAlertView.addSubview(datePicker)
         datePicker.snp.makeConstraints { make in
             make.bottom.equalTo(-32.rf)

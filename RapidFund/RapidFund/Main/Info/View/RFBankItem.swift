@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import IQKeyboardManagerSwift
 
 class RFBankItem: UIView {
     override init(frame: CGRect) {
@@ -16,14 +17,24 @@ class RFBankItem: UIView {
     var canEditing = false
     var model: RFBankCfg.__MunchedModel? {
         didSet {
+           
             iconImgV.sd_setImage(with: URL(string: iconStr ?? ""))
-            textLb.text = self.model?.upthe
+//            textLb.text = self.model?.upthe
             textLb.attributedPlaceholder = NSAttributedString(string: self.model?.hastily ?? "", attributes: [.font:14.font, .foregroundColor:0x999999.color])
             if model?.snatch.first?.toy.isEmpty == false {
                 iconImgV.isHidden = false
             } else {
                 iconImgV.isHidden = true
             }
+           
+            model?.snatch.forEach {   
+                if $0.dismay == model?.upthe {
+                    textLb.text = $0.wasan
+                    iconImgV.sd_setImage(with: URL(string: $0.toy))
+                    return
+                }
+            }
+            
             
         }
     }
@@ -68,11 +79,13 @@ class RFBankItem: UIView {
         
         let nextBtn = UIButton(type: .custom)
         nextBtn.setImage("info_item_next".image, for: .normal)
+        nextBtn.contentHorizontalAlignment = .right
         nextBtn.addTarget(self, action: #selector(nextAction), for: .touchUpInside)
         addSubview(nextBtn)
         nextBtn.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalTo(-16.rf)
+            make.left.equalToSuperview()
         }
         self.snp.makeConstraints { make in
             make.width.equalTo(327.rf)
@@ -95,6 +108,7 @@ class RFBankItem: UIView {
         }
         let appDel = UIApplication.shared.delegate as! AppDelegate
         alert.show(on: appDel.window!)
+        IQKeyboardManager.shared.resignFirstResponder()
     }
 }
 
@@ -114,6 +128,8 @@ class RFBankEditItem: UIView {
         didSet {
             guard let text = model?.hastily else { return }
             tf.attributedPlaceholder = NSAttributedString(string: text, attributes: [.font: 14.font, .foregroundColor: 0x999999.color])
+            guard let name = model?.upthe else { return}
+            tf.text = name
         }
     }
     
@@ -146,18 +162,22 @@ class RFBankEditItem: UIView {
         
         let nextBtn = UIButton(type: .custom)
         nextBtn.setImage("bank_edit".image, for: .normal)
+        nextBtn.contentHorizontalAlignment = .right
         nextBtn.addTarget(self, action: #selector(nextAction), for: .touchUpInside)
         addSubview(nextBtn)
         nextBtn.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalTo(-16.rf)
+            make.left.equalToSuperview()
         }
         NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: tf, queue: .main) { [weak self] obj in
             self?.model?.upthe = self?.tf.text ?? ""
         }
     }
     
-    @objc private func nextAction() {}
+    @objc private func nextAction() {
+        self.tf.becomeFirstResponder()
+    }
 }
 
 class RFBankDesItem: UIView {

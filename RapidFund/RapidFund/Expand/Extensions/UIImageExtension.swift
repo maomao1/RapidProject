@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 extension UIImage {
     
     static func imageWith(color: UIColor,
@@ -47,6 +48,26 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return newImage
     }
+    
+    static  func textToImage(text: String, font: UIFont, color: UIColor = .c_FF942F) -> UIImage? {
+        let textColor = color // 文本颜色
+        let textSize = text.size(withAttributes: [.font: font]) // 计算文本大小
+        
+        // 开始图像上下文
+        UIGraphicsBeginImageContextWithOptions(textSize, false, 0)
+        defer { UIGraphicsEndImageContext() } // 确保上下文能被释放
+        
+        // 设置背景颜色为白色
+        UIGraphicsGetCurrentContext()?.setFillColor(UIColor.clear.cgColor)
+        UIGraphicsGetCurrentContext()?.fill(CGRect(origin: .zero, size: textSize))
+        
+        // 将文本绘制到图像上下文
+        text.draw(in: CGRect(origin: .zero, size: textSize), withAttributes: [.font: font, .foregroundColor: textColor])
+        
+        // 从图像上下文获取图片
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        return image
+    }
 }
 
 extension UIImage {
@@ -58,7 +79,7 @@ extension UIImage {
     static let rapidMineNormal = UIImage(named: "rapidTabbarMine")!
     static let rapidMineSelected = UIImage(named: "rapidTabbarMineSelected")!
     
-    
+    static let rapidIDTypeSelected = UIImage(named: "ID_type_selected")!
 
     
     //MARK: - login
@@ -71,6 +92,7 @@ extension UIImage {
     static let loginConfirmBtnImage = UIImage(named: "login_confirm_btn")!
     
     //MARK: - home
+    static let homeRapidIcon = UIImage(named: "home_rapid_icon")!
     static let homeNavBlackRight = UIImage(named: "home_nav_black_right")!
     static let homeNavBlackBack  = UIImage(named: "home_nav_black_back")!
     static let homeNavWhiteRight = UIImage(named: "home_nav_white_right")!
@@ -108,6 +130,8 @@ extension UIImage {
     static let orderListDetailBtnIcon   = UIImage(named: "orderList_detail_btn")!
 
     //MARK: - mine
+    
+    static let mineUserTopImg   = UIImage(named: "mine_user_top_image")!
     static let mineFullBg   = UIImage(named: "mine_full_bg")!
     static let mineCenterBg = UIImage(named: "mine_center_bg")!
     static let mineMenuBg  = UIImage(named: "mine_menu_bg")!

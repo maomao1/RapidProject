@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import MBProgressHUD
+import IQKeyboardManagerSwift
 
 class RFIDVerifyItem: UIView {
     func updateValue(_ text:String?) {
@@ -18,9 +19,9 @@ class RFIDVerifyItem: UIView {
         return self.contentView.textLb.text ?? ""
     }
     
-    init(_ title: String, placeholder: String? = nil, hiddenNext: Bool = false) {
+    init(_ title: String, placeholder: String? = nil, hiddenNext: Bool = false, isNumberKeyBoard: Bool = false) {
         super.init(frame: .zero)
-        setup(placeholder: placeholder, hiddenNext: hiddenNext)
+        setup(placeholder: placeholder, hiddenNext: hiddenNext,isNumberKeyBoard: isNumberKeyBoard)
         
         titLb.text = title
     }
@@ -31,38 +32,43 @@ class RFIDVerifyItem: UIView {
     }
 
     private let titLb = UILabel().textColor(0x111111.color).font(24.font)
+    private let textF = UITextField()
     private lazy var contentView: (container: UIView, textLb: UITextField, btn: UIButton) = {
         let bgView = UIView()
         bgView.backgroundColor = UIColor(rgbHex: 0x000000, alpha: 0.05)
         bgView.clipsCornerRadius(Float(10.rf))
         
-        let label = UITextField()
-        label.font = 14.font
-        label.textColor = 0x999999.color
-        label.delegate = self
+//        let label = UITextField()
+        textF.font = 14.font
+        textF.textColor = .black
+        textF.delegate = self
         let btn = UIButton(type: .custom)
         btn.setImage("info_item_next".image, for: .normal)
+        btn.contentHorizontalAlignment = .right
         btn.addTarget(self, action: #selector(btnClick), for: .touchUpInside)
         
-        bgView.addSubview(label)
+        bgView.addSubview(textF)
         bgView.addSubview(btn)
         btn.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
+            make.left.equalToSuperview()
             make.right.equalTo(-24.rf)
         }
-        label.snp.makeConstraints { make in
+        textF.snp.makeConstraints { make in
             make.left.equalTo(24.rf)
             make.centerY.equalToSuperview()
+            make.right.equalToSuperview()
         }
         
-        return (bgView, label, btn)
+        return (bgView, textF, btn)
     }()
 
-    private func setup(placeholder: String?, hiddenNext: Bool) {
+    private func setup(placeholder: String?, hiddenNext: Bool, isNumberKeyBoard: Bool) {
         addSubview(titLb)
         if let placeholder = placeholder {
             contentView.textLb.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [.font: 14.font, .foregroundColor: 0x999999.color])
         }
+        textF.keyboardType = isNumberKeyBoard ? .numberPad : .asciiCapable
         
         contentView.btn.isHidden = hiddenNext
         addSubview(contentView.container)
@@ -106,11 +112,14 @@ class RFIDVerifyAlert: XYZAlertView {
         birItem.updateValue(data.toput)
         birItem.clickBlock = {
             guard let appDel = UIApplication.shared.delegate as? AppDelegate, let window = appDel.window else { return  }
+            IQKeyboardManager.shared.resignFirstResponder()
             let alert = RFDateSelAlert()
-            alert.saveBlock = { date in
+            alert.updatePickerDefault(data.toput)
+            alert.saveBlock = { [weak self] date in
                 let formatter = DateFormatter()
-                formatter.dateFormat = "dd/MM/yyyy"
+                formatter.dateFormat = "dd-MM-yyyy"
                 data.toput = formatter.string(from: date)
+                self?.birItem.updateValue(data.toput)
             }
             alert.show(on: window)
         }
@@ -121,9 +130,9 @@ class RFIDVerifyAlert: XYZAlertView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private let nameItem = RFIDVerifyItem("Full Name", placeholder: "Santos Jose", hiddenNext: true)
-    private let noItem = RFIDVerifyItem("ID NO.", placeholder: "0028-1222980-2", hiddenNext: true)
-    private let birItem = RFIDVerifyItem("Date of Birth", placeholder: "1998-01-28")
+    private let nameItem = RFIDVerifyItem("Full Name", placeholder: "Please input Full Name", hiddenNext: true)
+    private let noItem = RFIDVerifyItem("ID NO.", placeholder: "Please input ID NO.", hiddenNext: true, isNumberKeyBoard: true)
+    private let birItem = RFIDVerifyItem("Date of Birth", placeholder: "Please selected Date of Birth")
     private func setup() {
         let bgView = UIImageView(image: UIImage.image(gradientDirection: .leftTopToRightBottom, colors: [0xe5defa.color, 0xffffff.color]))
         containerAlertViewMaxSize = CGSize(width: kScreenWidth, height: 568.rf)
@@ -202,6 +211,7 @@ class RFIDVerifyAlert: XYZAlertView {
     }
 
     override func show(on view: UIView) {
+        self.backgroundColor = UIColor(rgbHex: 0x000000, alpha: 0.8)
         view.addSubview(self)
         self.snp.makeConstraints { make in
             make.edges.equalToSuperview()

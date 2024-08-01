@@ -88,7 +88,9 @@ class RFContactListVC: RapidBaseViewController {
     }
 
     private func loadData() {
+        self.showLoading()
         RapidApi.shared.getContactsInfo(para: ["putit": productId, "bear": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
+            self?.hiddenLoading()
             guard let onto = obj.dictionaryObject?["onto"] as? [String: Any], let army = onto["army"] as? [Any], let models = [RFContactModel].deserialize(from: army)?.compactMap({ $0 }) else {
                 return
             }
@@ -97,6 +99,7 @@ class RFContactListVC: RapidBaseViewController {
             self?.tb.reloadData()
             
         }, onError: { [weak self] err in
+            self?.hiddenLoading()
             MBProgressHUD.showError(err.localizedDescription)
             self?.navigationController?.popViewController(animated: true)
         }).disposed(by: bag)

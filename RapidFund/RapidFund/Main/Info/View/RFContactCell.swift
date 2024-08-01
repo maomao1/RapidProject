@@ -37,7 +37,7 @@ class RFContactCell: UITableViewCell {
         contentView.addSubview(titleLb)
         let items = createSubItem(text: "Ralationship", img: "contact_next".image)
         
-        let items2 = createSubItem(text: "Ralationship", img: "contact".image)
+        let items2 = createSubItem(text: "Name&Phone Number", img: "contact".image)
         lb1 = items.1
         btn1 = items.2
         lb2 = items2.1
@@ -68,9 +68,9 @@ class RFContactCell: UITableViewCell {
         view.backgroundColor = UIColor(rgbHex: 0x000000, alpha: 0.05)
         view.clipsCornerRadius(Float(10.rf))
         let tf = UITextField()
-        tf.textColor = 0x999999.color
+        tf.textColor = .black
         tf.font = 14.font
-        tf.text = text
+        tf.attributedPlaceholder = NSAttributedString(string: text, attributes: [.font: 14.font, .foregroundColor: 0x999999.color])
         view.addSubview(tf)
         tf.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
@@ -80,10 +80,12 @@ class RFContactCell: UITableViewCell {
         let btn = UIButton(type: .custom)
         btn.setImage(img, for: .normal)
         btn.addTarget(self, action: #selector(btnClick(sender:)), for: .touchUpInside)
+        btn.contentHorizontalAlignment = .right
         view.addSubview(btn)
         btn.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalTo(-16.rf)
+            make.left.equalToSuperview()
         }
         return (view, tf, btn)
     }
@@ -94,7 +96,6 @@ class RFContactCell: UITableViewCell {
             guard let tts = model?.knee.map({ $0.wasan }), tts.isEmpty == false else {
                 return
             }
-            
             
             let alert = RFBankAlert(strings: tts)
             alert.selectedBlock = { [weak self] index in
@@ -109,10 +110,12 @@ class RFContactCell: UITableViewCell {
             alert.show(on: appDe.window!)
             return
         }
-        guard self.model?.bumped == nil ||
-        self.model?.bumped?.isEmpty == true else {
-            return
-        }
+        
+//        guard self.model?.bumped == nil ||
+//        self.model?.bumped?.isEmpty == true else {
+//            return
+//        }
+       
         let status = RPFContactManager.shared.requestAccessForContacts()
         if status {
             openConatctPicker()
@@ -128,12 +131,13 @@ class RFContactCell: UITableViewCell {
         self.model = data
         titleLb.text = data.falls
         lb2.text = data.bumped
-        lb1.text = data.knee.first(where: {$0.dismay == data.fany })?.wasan ?? "Ralationship"
+        lb1.text = data.knee.first(where: {$0.dismay == data.fany })?.wasan ?? ""
     }
     
     private func openConatctPicker() {
         let picker = CNContactPickerViewController()
         picker.delegate = self
+        picker.modalPresentationStyle = .overFullScreen
         self.viewController?.present(picker, animated: true)
         
     }
@@ -141,7 +145,7 @@ class RFContactCell: UITableViewCell {
     private func createAlert(){
         let alert = UIAlertController(title: "Tips", message: "You currently do not have access to the address book. Please go to your phone settings->privacy and security->and enable access to the address book", preferredStyle: .alert)
         // 创建UIAlertAction，用于处理用户的选择
-        let okAction = UIAlertAction(title: "sure", style: .default) { _ in
+        let okAction = UIAlertAction(title: "Sure", style: .default) { _ in
             // 用户点击"确定"后的处理
             RPFContactManager.shared.openSettings()
         }
@@ -162,12 +166,14 @@ class RFContactCell: UITableViewCell {
 extension RFContactCell:CNContactPickerDelegate {
     
     func contactPicker(_ picker: CNContactPickerViewController, didSelect contact: CNContact) {
+       
+        let name = "\(contact.familyName)\(contact.givenName)"
         let num = contact.phoneNumbers.first
-        let numStr = num?.value.stringValue
+        let numStr = name + "-" + (num?.value.stringValue ?? "")
         lb2.text = numStr
         self.model?.bumped = numStr
         picker.dismiss(animated: true)
-        guard let _ = numStr else { return  }
+//        guard let _ = numStr else { return  }
 //        saveBlock?()
         
     }

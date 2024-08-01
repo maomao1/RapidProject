@@ -21,6 +21,10 @@ extension JSON {
         return YaloCode == 0
     }
     
+    var upLoadSuccessful: Bool {
+        return YaloCode == 0 || YaloCode == -1
+    }
+    
     var forbidden: Bool {
         return YaloCode == 1100008
     }

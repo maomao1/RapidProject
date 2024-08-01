@@ -8,21 +8,27 @@
 import JXPagingView
 import JXSegmentedView
 import UIKit
+import RxSwift
+import RxCocoa
 
 class RFAddressAlert: XYZAlertView {
+    let bag = DisposeBag()
     var updateBlock: ((RFAddressDetail, Int, Int) -> Void)?
     private let source: [RFAddressDetail]
 
-    private var titles = ["choose","choose","choose"]
+    private var titles = ["Choose","Choose","Choose"]
     private let childVcs:[Int:RFAddressSubListView] = [0:RFAddressSubListView(level: .level_one),1:RFAddressSubListView(level: .level_two),2:RFAddressSubListView(level: .level_three)]
     private var selectedAddress:RFAddressDetail = RFAddressDetail()
     private var selectedLevelTowIndex:Int?
     private var selectedLevelThreeIndex:Int?
+   
+    
     init(address: [RFAddressDetail]) {
         self.source = address
         selectedAddress = address.first!
         super.init(frame: .zero)
         setup()
+        setUpRx()
     }
 
     @available(*, unavailable)
@@ -36,7 +42,7 @@ class RFAddressAlert: XYZAlertView {
         self.containerAlertViewMaxSize = UIScreen.main.bounds.size
         self.containerAlertView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
-            make.height.equalTo(369.rf)
+            make.height.equalTo(429.rf)
         }
         let bgView = UIImageView(image: UIImage.image(gradientDirection: .vertical, colors: [0xe5defa.color, UIColor(rgbHex: 0xfffffff, alpha: 0.93)]))
         containerAlertView.addSubview(bgView)
@@ -59,10 +65,49 @@ class RFAddressAlert: XYZAlertView {
 
         containerAlertView.addSubview(listContainerView)
         listContainerView.snp.makeConstraints { make in
-            make.left.bottom.right.equalToSuperview()
+            make.left.right.equalToSuperview()
             make.top.equalTo(segmentView.snp.bottom).offset(5.rf)
+            make.bottom.equalTo(-60.rf)
         }
+        
+        let line = UIView()
+        line.backgroundColor = .c_000000.withAlphaComponent(0.05)
+        containerAlertView.addSubview(line)
+        line.snp.makeConstraints { make in
+            make.left.equalTo(20.rf)
+            make.right.equalTo(-20.rf)
+            make.height.equalTo(0.5)
+            make.bottom.equalTo(-46.5.rf)
+        }
+        containerAlertView.addSubview(confirmButton)
+        confirmButton.snp.makeConstraints { make in
+            make.bottom.equalToSuperview()
+            make.height.equalTo(46.rf)
+            make.left.right.equalToSuperview()
+        }
+
     }
+    func setUpRx() {
+        confirmButton.rx
+            .tap
+            .throttle(.seconds_1, scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] (_) in
+                guard let `self` = self else {return}
+                self.updateAddress()
+                
+            })
+            .disposed(by: bag)
+    }
+    
+    
+    private let confirmButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.setTitle("Confirm", for: .normal)
+        button.setTitleColor(.c_FF7E00, for: .normal)
+        button.titleLabel?.font = .f_boldSys14
+//        button.backgroundColor = .c_FF7E00
+        return button
+    }()
 
     fileprivate lazy var segmentedTitleDataSource: JXSegmentedTitleDataSource = {
         let dataSource = JXSegmentedTitleDataSource()
@@ -117,7 +162,7 @@ class RFAddressAlert: XYZAlertView {
         self.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        containerAlertView.transform = CGAffineTransform(translationX: 0, y: -369.rf)
+        containerAlertView.transform = CGAffineTransform(translationX: 0, y: -429.rf)
         UIView.animate(withDuration: 0.25) {
             self.containerAlertView.transform = .identity
         }
@@ -125,7 +170,7 @@ class RFAddressAlert: XYZAlertView {
 
     override func dismiss(withAnimation _: Bool) {
         UIView.animate(withDuration: 0.25) {
-            self.containerAlertView.transform = CGAffineTransform(translationX: 0, y: -369.rf)
+            self.containerAlertView.transform = CGAffineTransform(translationX: 0, y: -429.rf)
         } completion: { _ in
             super.dismiss(withAnimation: false)
         }
@@ -195,21 +240,28 @@ extension RFAddressAlert: JXSegmentedListContainerViewDataSource {
                 self.getNextChildVc(level: .level_two).levelTowData = self.selectedAddress.army
                 self.selectedLevelTowIndex = nil
                 self.selectedLevelThreeIndex = nil
-                self.titles = [self.selectedAddress.wasan, "choose","choose"]
+                self.titles = [self.selectedAddress.wasan, "Choose","Choose"]
                 self.segmentedTitleDataSource.titles = self.titles
                 self.segmentView.dataSource = self.segmentedTitleDataSource
                 self.segmentView.reloadData()
+                self.segmentView.selectItemAt(index: 1)
             } else if level == .level_two {
                 self.getNextChildVc(level: .level_three).levelThreeData = self.selectedAddress.army[self.selectedLevelTowIndex ?? 0].army
                 self.selectedLevelTowIndex = indexPath.row
                 self.selectedLevelThreeIndex = nil
-                self.titles = [self.selectedAddress.wasan, self.selectedAddress.army[self.selectedLevelTowIndex ?? 0].wasan,"choose"]
+                self.titles = [self.selectedAddress.wasan, self.selectedAddress.army[self.selectedLevelTowIndex ?? 0].wasan,"Choose"]
                 self.segmentedTitleDataSource.titles = self.titles
                 self.segmentView.dataSource = self.segmentedTitleDataSource
                 self.segmentView.reloadData()
+                self.segmentView.selectItemAt(index: 2)
+                
             } else {
                 self.selectedLevelThreeIndex = indexPath.row
-                self.updateAddress()
+                self.titles = [self.selectedAddress.wasan, self.selectedAddress.army[self.selectedLevelTowIndex ?? 0].wasan,self.getNextChildVc(level: .level_three).levelThreeData[self.selectedLevelThreeIndex ?? 0].wasan]
+                self.segmentedTitleDataSource.titles = self.titles
+                self.segmentView.dataSource = self.segmentedTitleDataSource
+                self.segmentView.reloadData()
+//                self.updateAddress()
             }
         }
         if index == RFAddressPageLevel.level_one.rawValue {
@@ -222,5 +274,6 @@ extension RFAddressAlert: JXSegmentedListContainerViewDataSource {
         guard let selectedLevelTowIndex = selectedLevelTowIndex else { return  }
         guard let selectedLevelThreeIndex = selectedLevelThreeIndex else { return  }
         self.updateBlock?(self.selectedAddress, selectedLevelTowIndex, selectedLevelThreeIndex)
+        self.dismiss(withAnimation: true)
     }
 }

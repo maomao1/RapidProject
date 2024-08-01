@@ -7,6 +7,7 @@
 
 import UIKit
 import MBProgressHUD
+import MJRefresh
 
 class RapidOrderListViewController: RapidBaseViewController {
     
@@ -32,6 +33,15 @@ class RapidOrderListViewController: RapidBaseViewController {
         let footerView = UIView(frame: .zero)
         tableView.tableFooterView = footerView
         tableView.register(RapidOrderListCell.self, forCellReuseIdentifier: CellID.cellId)
+        let header = MJRefreshNormalHeader(){ [weak self] in
+            guard let `self` = self else { return }
+            self.requestData()
+        }
+        header.setTitle("Pull down to refresh", for: .idle)
+        header.setTitle("Release to refresh", for: .pulling)
+        header.setTitle("Loading more...", for: .refreshing)
+        
+        tableView.mj_header = header
         return tableView
     }()
     
@@ -49,7 +59,7 @@ class RapidOrderListViewController: RapidBaseViewController {
 
 extension RapidOrderListViewController {
     func setupViews(){
-        self.titleNav.text = viewModel.pageTitle
+        self.titleNav.text = viewModel.type.titleName
         view.addSubview(backgroundImageView)
         view.addSubview(shadowImageView)
         view.addSubview(rightImageView)
@@ -96,6 +106,23 @@ extension RapidOrderListViewController {
                 MBProgressHUD.showMessage(message, toview: nil, afterDelay: 3)
             })
             .disposed(by: bag)
+        
+        viewModel.isLoading
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] (isLoading) in
+                self?.handleLoading(isLoading: isLoading)
+            })
+            .disposed(by: bag)
+        
+    }
+    
+    private func handleLoading(isLoading: Bool) {
+        if isLoading {
+            self.showLoading()
+        } else {
+            self.hiddenLoading()
+            tableView.mj_header?.endRefreshing()
+        }
     }
     
 }

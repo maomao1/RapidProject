@@ -244,20 +244,21 @@ class RPFReportManager: NSObject {
                           "opening": ScreenInch,
                           "rugs": RapidSystemVersion]
         
-        param["orangeadeand"] = ["bottles":availableRAM, 
-                                 "cutlery" : totalRAM,
-                                 "towels": totalRAM,
-                                 "bedding": availableRAM]
+        param["orangeadeand"] = ["bottles":String(describing: availableRAM), 
+                                 "cutlery" : String(describing: totalRAM),
+                                 "towels": String(describing: totalRAM),
+                                 "bedding": String(describing: availableRAM)]
         
         let wifiInfo = RPFDeviceManager.getWiFiName()?.first
         let wifiPara: [String : Any] = ["wasan":wifiInfo?.ssid ?? "",
                                         "suggested" : wifiInfo?.ssid ?? "",
                                         "oil" : wifiInfo?.bssid ?? "",
                                         "whowould": wifiInfo?.bssid ?? ""] 
-        
+//        
         param["couldwrap"] = ["ofthe":deviceIP() ?? "", 
                               "finetime" : "",
                               "heat": wifiPara]
+        
         let jsonPara = ["trouble" : param.toJSONString?.base64Encode]
         RapidApi.shared.postDevicInfoData(para: jsonPara)
             .subscribe(onNext: { [weak self] json in

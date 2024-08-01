@@ -6,11 +6,11 @@
 //
 
 import MBProgressHUD
-import PhotosUI
 import RxSwift
+import UIKit
 @_exported import SDWebImage
 @_exported import SnapKit
-import UIKit
+import ZLPhotoBrowser
 
 class RFIDDetailVC: RapidBaseViewController {
     private let productId: String
@@ -41,12 +41,12 @@ class RFIDDetailVC: RapidBaseViewController {
         loadData()
     }
 
-    private lazy var imgPicker: UIImagePickerController = {
-        let vc = UIImagePickerController()
-        vc.sourceType = .camera
-        vc.delegate = self
-        return vc
-    }()
+//    private lazy var imgPicker: UIImagePickerController = {
+//        let vc = UIImagePickerController()
+//        vc.sourceType = .camera
+//        vc.delegate = self
+//        return vc
+//    }()
 
     private var model: RFAuthFRModel?
     private var nextModel: RFUploadResultModel? //下一步
@@ -112,6 +112,13 @@ class RFIDDetailVC: RapidBaseViewController {
             make.height.equalTo(163.rf)
             make.centerX.equalToSuperview()
             make.top.equalTo(cardBgView.snp.top).offset(13.5.rf)
+        }
+        
+        cardView.addTapGesture { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.btnClick()
         }
         IDView.block = { [weak self] in
             self?.selectedPRCCard()
@@ -208,6 +215,12 @@ class RFIDDetailVC: RapidBaseViewController {
             make.centerX.equalToSuperview()
             make.centerY.equalTo(face_recognitionImgV.snp.bottom)
         }
+        face_recognitionImgV.addTapGesture { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.faceClick()
+        }
         
         let face_addTitleLb = UILabel().text("Add Your Facial Information").font(16.font).textColor(0x111111.color)
         contentView.addSubview(face_addTitleLb)
@@ -288,6 +301,9 @@ class RFIDDetailVC: RapidBaseViewController {
 
 extension RFIDDetailVC {
     @objc private func btnClick() {
+        guard model?.carefully?.mustn == 0  else{
+            return
+        }
         self.clickIDTime = getCurrentTime()
         let sheetView = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         isFace = false
@@ -306,6 +322,10 @@ extension RFIDDetailVC {
     }
     
     @objc private func faceClick() {
+        guard model?.carefully?.mustn == 1  else{
+            MBProgressHUD.showMessage("Please complete the ID verification first", toview: nil, afterDelay: 3)
+            return
+        }
         guard model?.tyou == 0 else {
             return
         }
@@ -315,22 +335,54 @@ extension RFIDDetailVC {
     }
     
     private func __openCamera() {
-        
-        self.imgPicker.sourceType = .camera
+        ZLPhotoConfiguration.default().allowSelectVideo = false
+        ZLPhotoConfiguration.default().maxSelectCount = 1
+        ZLPhotoConfiguration.default().allowTakePhotoInLibrary = false
+        ZLPhotoConfiguration.default().editAfterSelectThumbnailImage = true
+        let camera = ZLCustomCamera()
         if isFace {
-            self.imgPicker.cameraDevice = .front
+            ZLPhotoConfiguration.default().cameraConfiguration.devicePosition = .front
+            ZLPhotoConfiguration.default().cameraConfiguration.allowSwitchCamera = false 
+            camera.switchCameraBtn.isHidden = true
+        }//        
+        camera.takeDoneBlock = {[weak self] (image, videoUrl) in
+            camera.dismiss(animated: false, completion: nil)
+            if let image = image {
+                guard let imgData = image.jpegData(compressionQuality: 0.5) else { return }
+                self?.uploadIDCard(source: .camera , data: imgData, dismay: self!.isFace ? 10 : 11)
+            }
         }
-        self.navigationController?.present(self.imgPicker, animated: true)
+        
+        self.navigationController?.present(camera, animated: true)
     }
     
     private func __openPhoto() {
-        self.imgPicker.sourceType = .photoLibrary
-        self.navigationController?.present(self.imgPicker, animated: true)
+        ZLPhotoConfiguration.default().allowSelectVideo = false
+        ZLPhotoConfiguration.default().maxSelectCount = 1
+        ZLPhotoConfiguration.default().allowTakePhotoInLibrary = false
+        ZLPhotoConfiguration.default().editAfterSelectThumbnailImage = true
+        
+        let ps = ZLPhotoPreviewSheet()
+        ps.selectImageBlock = {[weak self] (models, isFull) in
+            if let image = models.first?.image {
+                guard let imgData = image.jpegData(compressionQuality: 0.5) else { return }
+                self?.uploadIDCard(source: .photo , data: imgData, dismay: self!.isFace ? 10 : 11)
+                
+            }
+        }
+        ps.showPhotoLibrary(sender: self)
+
+//        self.navigationController?.present(ps, animated: true)
     }
     
     private func nextAction() {
         
-        if model?.carefully?.mustn == 0 || model?.tyou == 0  {
+        if model?.carefully?.mustn == 0 {
+            MBProgressHUD.showMessage("Please complete the ID verification first", toview: nil, afterDelay: 3)
+            return
+        }
+        if model?.tyou == 0 {
+            MBProgressHUD.showMessage("Please complete the face verification first", toview: nil, afterDelay: 3)
             return
         }
         guard let model = self.nextModel else {
@@ -362,29 +414,32 @@ extension RFIDDetailVC {
     }
 }
 
-extension RFIDDetailVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        let img = info[.originalImage] as? UIImage
-        picker.dismiss(animated: true)
-        guard let imgData = img?.jpegData(compressionQuality: 0.5) else { return }
-        
-        uploadIDCard(source: picker.sourceType == .camera ? .camera : .photo, data: imgData, dismay: isFace ? 10 : 11)
-    }
-}
+//extension RFIDDetailVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//        picker.dismiss(animated: true)
+//    }
+//    
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+//        let img = info[.originalImage] as? UIImage
+//        picker.dismiss(animated: true)
+//        guard let imgData = img?.jpegData(compressionQuality: 0.5) else { return }
+//        
+//        uploadIDCard(source: picker.sourceType == .camera ? .camera : .photo, data: imgData, dismay: isFace ? 10 : 11)
+//    }
+//}
 
 extension RFIDDetailVC {
     private func loadData() {
+        self.showLoading()
         RapidApi.shared.getAuthOneData(para: ["putit": productId, "melted": getRPFRandom()]).subscribe(onNext: { [weak self] json in
+            self?.hiddenLoading()
             guard let model = RFAuthFRModel.deserialize(from: json.dictionaryObject) else {
                 return
             }
             self?.render(model: model)
             // todo
         }, onError: { [weak self] err in
+            self?.hiddenLoading()
             MBProgressHUD.showError(err.localizedDescription)
             self?.navigationController?.popViewController(animated: true)
         }).disposed(by: bag)
@@ -392,12 +447,17 @@ extension RFIDDetailVC {
     
     private func render(model: RFAuthFRModel) {
         self.model = model
-        IDView.fill(model.carefully?.darkalmost ?? "PRC ID")
+        let imageStr = model.carefully?.darkalmost ?? "UMID"
+        IDView.fill(model.carefully?.darkalmost ?? "UMID")
+        self.cardView.image = ("ID_type_" + imageStr).image
         if model.carefully?.mustn == 1 {
             addBtn.setImage("id_add_1".image, for: .normal)
             addBtn.isUserInteractionEnabled = false
             
             cardView.sd_setImage(with: URL(string: model.carefully?.littleroom ?? ""), placeholderImage: "ID_bg1".image, context: nil)
+            self.scrollToBottom(scrollView: self.scrollView)
+        }else{
+            self.selectedPRCCard()
         }
         if model.tyou == 1 {
             face_addBtn.setImage("face_add_1".image, for: .normal)
@@ -408,6 +468,7 @@ extension RFIDDetailVC {
             face_recognitionLb.isHidden = true
             face_recognitionImgV.sd_setImage(with: URL(string: model.littleroom), placeholderImage: "face_recognition".image, context: nil)
         }
+        
     }
     
     enum __FromSource: Int {
@@ -441,29 +502,35 @@ extension RFIDDetailVC {
                       "thanksmost": getRPFRandom(),
                       "pixie": "1",
                       "darkalmost": self.IDView.value] as [String: Any]
-        
+        self.showLoading()
         RapidApi.shared.getIDUploadData(para: params).subscribe(onNext: { [weak self] obj in
+            guard let self = self else { return  }
+            self.hiddenLoading()
             guard let model = RFUploadResultModel.deserialize(from: obj.dictionaryObject) else {
                 return
             }
-            guard let self = self else { return  }
             model.type = dismay
             model.darkalmost = self.model?.carefully?.darkalmost
+            
             self.nextModel = model
             if model.type == 10 {
+                self.model?.tyou = 1
                 self.uploadAnalysis(type: .FacePhoto)
                 self.loadData()
+                self.nextAction()
                 return
             }
             
             let alert = RFIDVerifyAlert(data: model)
             alert.show(on: self.view)
             alert.dismissBlock = {
+                self.model?.carefully?.mustn = 1
                 self.uploadAnalysis(type: .IDInformation)
                 self.renderPickerResultData(data: model)
             }
             self.scrollToBottom(scrollView: self.scrollView)
-        }, onError: { err in
+        }, onError: { [weak self]  err in
+            self?.hiddenLoading()
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
     }
@@ -486,6 +553,10 @@ extension RFIDDetailVC {
     
     private func selectedPRCCard() {
         self.selecteIDTypeTime = getCurrentTime()
+        guard let imgUrl = self.model?.carefully?.littleroom, imgUrl.isEmpty == true else {
+            return
+        }
+        
         guard let smoke = self.model?.smoke else { return }
         var list = [String]()
         for item in smoke {
@@ -494,9 +565,13 @@ extension RFIDDetailVC {
         guard list.isEmpty == false else {
             return
         }
-        let alert = RFBankAlert(strings: list)
-        alert.selectedBlock = { [weak self] index in
-            self?.IDView.fill(list[index])
+        
+        
+        let alert = RFIDTypeAlert(strings: list)
+        alert.selectedContent = model?.carefully?.darkalmost ?? "UMID"
+        alert.selectedBlock = { [weak self] content in
+            self?.IDView.fill(content)
+            self?.cardView.image = ("ID_type_" + content).image
             self?.uploadAnalysis(type: .IDType)
         }
         alert.show(on: self.view)
@@ -510,3 +585,6 @@ extension RFIDDetailVC {
         }
     }
 }
+
+ 
+

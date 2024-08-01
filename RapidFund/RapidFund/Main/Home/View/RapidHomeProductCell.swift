@@ -113,7 +113,7 @@ class RapidHomeProductCell: UITableViewCell {
         self.contentLabel.text = model.productDesc
         self.applyBtn.setTitle(model.buttonText, for: .normal)
         self.applyBtn.setTitle(model.buttonText, for: .selected)
-        self.statusLabel.text = "Amount Due"
+        self.statusLabel.text = model.productTags
         self.statusBgView.backgroundColor = .red
         
         if model.buttoncolor.count > 1{
@@ -225,4 +225,141 @@ class RapidHomeProductCell: UITableViewCell {
 }
 
 
+class RapidHomeHotCell: UITableViewCell {
+    struct AutoLayout {
+        static let applyText = "Apply for a Loan"
+        
+    }
+    
+    private let bag = DisposeBag()
+    var applyBlock: (() -> Void)?
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = .clear
+        self.selectionStyle = .none
+        setUpViews()
+        setupRx()
+        
+    }
+    
+    func setupRx() {
+        applyBtn.rx
+            .tap
+            .throttle(.seconds_1, latest: false, scheduler: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] (_) in
+                guard let `self` = self else { return }
+                self.applyBlock?()
+
+            })
+            .disposed(by: bag)
+    }
+    
+    func updateCellContent(model: RPFHomeHotModel){
+        self.rapidNameLabel.text = model.pursed
+        self.applyTitle.text = model.mymorgan
+        self.homeMoneyView.updateContent(model: model)
+        self.homeMoneyRateView.updateContent(model: model)
+        
+    }
+    
+    func setUpViews(){
+        contentView.addSubview(rapidImageView)
+        contentView.addSubview(rapidNameLabel)
+        contentView.addSubview(unLoginImgBg)
+        contentView.addSubview(applyBtn)
+        contentView.addSubview(applyTitle)
+        contentView.addSubview(applyArrow)
+        contentView.addSubview(homeMoneyView)
+        contentView.addSubview(homeMoneyRateView)
+       
+        rapidImageView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(5.5.rf)
+            make.size.equalTo(CGSize(width: 78.rc, height: 78.rc))
+        }
+        rapidNameLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(rapidImageView)
+            make.top.equalTo(rapidImageView.snp.bottom).offset(2.5.rf)
+        }
+        
+        unLoginImgBg.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(rapidNameLabel.snp.bottom).offset(14.5.rf)
+            make.left.equalTo(63.5.rf)
+            make.bottom.equalTo(-70.rf)
+        }
+        
+        homeMoneyView.snp.makeConstraints { make in
+            make.left.equalTo(unLoginImgBg.snp.left).offset(29.rf)
+            make.right.equalTo(unLoginImgBg.snp.right).offset(-29.rf)
+            make.top.equalTo(unLoginImgBg.snp.top).offset(105.rf)
+            make.height.equalTo(HomeMoneyView.height())
+        }
+        
+        homeMoneyRateView.snp.makeConstraints { make in
+            make.left.equalTo(unLoginImgBg.snp.left).offset(29.rf)
+            make.right.equalTo(unLoginImgBg.snp.right).offset(-29.rf)
+            make.top.equalTo(homeMoneyView.snp.bottom).offset(11.rf)
+            make.height.equalTo(HomeMoneyRateView.height())
+        }
+        
+        applyBtn.snp.makeConstraints { make in
+            make.left.equalTo(unLoginImgBg.snp.left).offset(-23.rc)
+            make.centerX.equalToSuperview()
+            make.bottom.equalTo(unLoginImgBg.snp.bottom).offset(30.rc)
+            make.height.equalTo(60.rc)
+        }
+        
+        applyTitle.snp.makeConstraints { make in
+            make.centerY.equalTo(applyBtn)
+            make.left.equalTo(applyBtn.snp.left).offset(32.rc)
+            
+        }
+        
+        applyArrow.snp.makeConstraints { make in
+            make.centerY.equalTo(applyBtn)
+            make.right.equalTo(applyBtn.snp.right).offset(-32.rc)
+        }
+    }
+    
+    let rapidImageView = UIImageView(image: .homeRapidIcon)
+    let rapidNameLabel = UILabel().withFont(.f_lightSys12)
+        .withTextColor(.c_111111)
+        .withTextAlignment(.center)
+        .withText("")
+    let unLoginImgBg  = UIImageView(image: .homeUnloginBg)
+    let homeMoneyView = HomeMoneyView()
+    let homeMoneyRateView = HomeMoneyRateView()
+    
+    lazy var applyBtn: UIButton = {
+        let button = UIButton(type: .custom)
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 20.rf
+        button.setBackgroundImage(.homeBtnBg, for: .normal)
+        button.setBackgroundImage(.homeBtnBg, for: .selected)
+        button.setBackgroundImage(.homeBtnBg, for: .highlighted)
+        return button
+    }()
+    
+    lazy var applyTitle: UILabel = {
+        let label = UILabel()
+        label.textColor = .c_FFFFFF
+        label.textAlignment = .left
+        label.font = .f_lightSys16
+        label.text = AutoLayout.applyText
+        return label
+    }()
+    
+    lazy var applyArrow: UIImageView = {
+        let imageView = UIImageView(image: .homeApplyArrow)
+        imageView.isUserInteractionEnabled = false
+        imageView.contentMode = .right
+        return imageView
+    }()
+}
 

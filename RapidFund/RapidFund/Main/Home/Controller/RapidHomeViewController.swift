@@ -10,6 +10,9 @@ import RxSwift
 import RxCocoa
 import MBProgressHUD
 import FSPagerView
+import ContactsUI
+import MJRefresh
+
 class RapidHomeViewController: RapidBaseViewController {
     // MARK: - Constants
     struct AutoLayout {
@@ -21,6 +24,7 @@ class RapidHomeViewController: RapidBaseViewController {
         static let cellId = "RapidHomeProductCellIdentifier"
         static let bannerCell = "FSPagerViewCellIdentifier"
         static let reminderCell = "RPFHomeReminderCellIdentifier"
+        static let hotCellId = "RapidHomeHotCellIdentifier"
     }
     // MARK: - Properties
     
@@ -31,15 +35,15 @@ class RapidHomeViewController: RapidBaseViewController {
     let circleLeftImageView = UIImageView(image: .homeCircleLeft)
     let circleTopRightImageView = UIImageView(image: .homeCircleTopRight)
     let circleBottomRightImageView = UIImageView(image: .homeCircleBottomRight)
-    let rapidImageView = UIImageView(image: .rapidFundLogoImg)
-    let rapidNameLabel = UILabel().withFont(.f_lightSys12)
-        .withTextColor(.c_111111)
-        .withTextAlignment(.center)
-        .withText("")
-    let unLoginImgBg  = UIImageView(image: .homeUnloginBg)
+//    let rapidImageView = UIImageView(image: .homeRapidIcon)
+//    let rapidNameLabel = UILabel().withFont(.f_lightSys12)
+//        .withTextColor(.c_111111)
+//        .withTextAlignment(.center)
+//        .withText("")
+//    let unLoginImgBg  = UIImageView(image: .homeUnloginBg)
     let LoginTopImgBg  = UIImageView(image: .homeLoginTopBg)
-    let homeMoneyView = HomeMoneyView()
-    let homeMoneyRateView = HomeMoneyRateView()
+//    let homeMoneyView = HomeMoneyView()
+//    let homeMoneyRateView = HomeMoneyRateView()
      
     
     fileprivate lazy var loginContainer: UIView = {
@@ -53,31 +57,31 @@ class RapidHomeViewController: RapidBaseViewController {
         return view
     }()
     
-    lazy var applyBtn: UIButton = {
-        let button = UIButton(type: .custom)
-        button.layer.masksToBounds = true
-        button.layer.cornerRadius = 20.rf
-        button.setBackgroundImage(.homeBtnBg, for: .normal)
-        button.setBackgroundImage(.homeBtnBg, for: .selected)
-        button.setBackgroundImage(.homeBtnBg, for: .highlighted)
-        return button
-    }()
+//    lazy var applyBtn: UIButton = {
+//        let button = UIButton(type: .custom)
+//        button.layer.masksToBounds = true
+//        button.layer.cornerRadius = 20.rf
+//        button.setBackgroundImage(.homeBtnBg, for: .normal)
+//        button.setBackgroundImage(.homeBtnBg, for: .selected)
+//        button.setBackgroundImage(.homeBtnBg, for: .highlighted)
+//        return button
+//    }()
     
-    lazy var applyTitle: UILabel = {
-        let label = UILabel()
-        label.textColor = .c_FFFFFF
-        label.textAlignment = .left
-        label.font = .f_lightSys16
-        label.text = AutoLayout.applyText
-        return label
-    }()
-    
-    lazy var applyArrow: UIImageView = {
-        let imageView = UIImageView(image: .homeApplyArrow)
-        imageView.isUserInteractionEnabled = false
-        imageView.contentMode = .right
-        return imageView
-    }()
+//    lazy var applyTitle: UILabel = {
+//        let label = UILabel()
+//        label.textColor = .c_FFFFFF
+//        label.textAlignment = .left
+//        label.font = .f_lightSys16
+//        label.text = AutoLayout.applyText
+//        return label
+//    }()
+//    
+//    lazy var applyArrow: UIImageView = {
+//        let imageView = UIImageView(image: .homeApplyArrow)
+//        imageView.isUserInteractionEnabled = false
+//        imageView.contentMode = .right
+//        return imageView
+//    }()
     
     //
     lazy var banner: FSPagerView = {
@@ -115,6 +119,39 @@ class RapidHomeViewController: RapidBaseViewController {
         tableView.tableFooterView = footerView
         tableView.register(RapidHomeProductCell.self, forCellReuseIdentifier: CellID.cellId)
         tableView.tableHeaderView = self.reminderView
+        let header = MJRefreshNormalHeader(){ [weak self] in
+            guard let `self` = self else { return }
+            self.viewModel.getData()
+        }
+        header.setTitle("Pull down to refresh", for: .idle)
+        header.setTitle("Release to refresh", for: .pulling)
+        header.setTitle("Loading more...", for: .refreshing)
+        
+        tableView.mj_header = header
+        
+        return tableView
+    }()
+    
+    lazy var hotTableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.estimatedRowHeight = 60.rf
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        let footerView = UIView(frame: .zero)
+        tableView.tableFooterView = footerView
+        tableView.register(RapidHomeHotCell.self, forCellReuseIdentifier: CellID.hotCellId)
+        let header = MJRefreshNormalHeader(){ [weak self] in
+            guard let `self` = self else { return }
+            self.viewModel.getData()
+        }
+        header.setTitle("Pull down to refresh", for: .idle)
+        header.setTitle("Release to refresh", for: .pulling)
+        header.setTitle("Loading more...", for: .refreshing)
+        
+        tableView.mj_header = header
         
         return tableView
     }()
@@ -164,15 +201,8 @@ extension RapidHomeViewController {
         
         backgroundImageView.isUserInteractionEnabled = true
         loginContainer.isUserInteractionEnabled = true
-        
-        unLoginContainer.addSubview(rapidImageView)
-        unLoginContainer.addSubview(rapidNameLabel)
-        unLoginContainer.addSubview(unLoginImgBg)
-        unLoginContainer.addSubview(applyBtn)
-        unLoginContainer.addSubview(applyTitle)
-        unLoginContainer.addSubview(applyArrow)
-        unLoginContainer.addSubview(homeMoneyView)
-        unLoginContainer.addSubview(homeMoneyRateView)
+                
+        unLoginContainer.addSubview(hotTableView)        
         
         backgroundImageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -204,55 +234,11 @@ extension RapidHomeViewController {
             make.top.equalTo(self.customNavView.snp.bottom)
         }
         
-        rapidImageView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(unLoginContainer.snp.top).offset(5.5.rf)
-            make.size.equalTo(CGSize(width: 63.rc, height: 64.rc))
+        hotTableView.snp.makeConstraints { make in
+            make.edges.equalTo(unLoginContainer)
         }
-        rapidNameLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(rapidImageView)
-            make.top.equalTo(rapidImageView.snp.bottom).offset(11.5.rf)
-        }
-        
-        
-        unLoginImgBg.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(rapidNameLabel.snp.bottom).offset(14.5.rf)
-            make.left.equalTo(63.5.rf)
-        }
-        
-        homeMoneyView.snp.makeConstraints { make in
-            make.left.equalTo(unLoginImgBg.snp.left).offset(29.rf)
-            make.right.equalTo(unLoginImgBg.snp.right).offset(-29.rf)
-            make.top.equalTo(unLoginImgBg.snp.top).offset(105.rf)
-            make.height.equalTo(HomeMoneyView.height())
-        }
-        
-        homeMoneyRateView.snp.makeConstraints { make in
-            make.left.equalTo(unLoginImgBg.snp.left).offset(29.rf)
-            make.right.equalTo(unLoginImgBg.snp.right).offset(-29.rf)
-            make.top.equalTo(homeMoneyView.snp.bottom).offset(11.rf)
-            make.height.equalTo(HomeMoneyRateView.height())
-        }
-        
-        applyBtn.snp.makeConstraints { make in
-            make.left.equalTo(unLoginImgBg.snp.left).offset(-23.rc)
-            make.centerX.equalToSuperview()
-            make.bottom.equalTo(unLoginImgBg.snp.bottom).offset(30.rc)
-            make.height.equalTo(60.rc)
-        }
-        
-        applyTitle.snp.makeConstraints { make in
-            make.centerY.equalTo(applyBtn)
-            make.left.equalTo(applyBtn.snp.left).offset(32.rc)
-            
-        }
-        
-        applyArrow.snp.makeConstraints { make in
-            make.centerY.equalTo(applyBtn)
-            make.right.equalTo(applyBtn.snp.right).offset(-32.rc)
-        }
-        //
+
+
         
         loginContainer.addSubview(LoginTopImgBg)
         loginContainer.addSubview(banner)
@@ -312,13 +298,7 @@ extension RapidHomeViewController {
         guard let hotModels = model.hotmeals, hotModels.count > 0, let hotModel = hotModels.first else {
             return
         }
-        
-        self.rapidNameLabel.text = hotModel.pursed
-        self.applyTitle.text = hotModel.mymorgan
-        self.homeMoneyView.updateContent(model: hotModel)
-        self.homeMoneyRateView.updateContent(model: hotModel)
-        
-        
+        self.hotTableView.reloadData()        
     }
     
     func loginSuccessEvent() {
@@ -336,6 +316,7 @@ extension RapidHomeViewController {
     }
     
     func requestNext() {
+        
         if GetInfo(kRapidSession).isEmpty {
             self.presentLogin()
            return 
@@ -355,21 +336,23 @@ extension RapidHomeViewController {
             return
         }
         self.setRouter(url: model.littleroom, pId: productId)
-//        if model.littleroom.isEmpty {
-////            let vc = RFFlowVC()
-////            self.navigationController?.pushViewController(vc, animated: true)
-//        }else{
-//           if model.littleroom.hasPrefix("https") ||
-//                model.littleroom.hasPrefix("http"){
-//               let vc = RPFWebViewController()
-//               vc.viewModel = RPFWebViewModel(urlString: model.littleroom)
-//               self.navigationController?.pushViewController(vc, animated: true)
-//           }
-//        }
+
     }
     
     
     func setUpRx() {
+        RFNetManager.manager
+            .networkType
+            .skip(1)
+            .subscribe(onNext: { [weak self] type in
+                guard let `self` = self else {return}
+                if type == .unknown{
+                    
+                } else {
+                    self.viewModel.getData()
+                }
+            })
+            .disposed(by: bag)
      
         NotificationCenter.default
             .rx.notification(.RapidLoginSuccess)
@@ -379,15 +362,15 @@ extension RapidHomeViewController {
             })
             .disposed(by: bag)
         
-        applyBtn.rx
-            .tap
-            .throttle(.seconds_1, latest: false, scheduler: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] (_) in
-                guard let `self` = self else { return }
-                self.requestNext()
-
-            })
-            .disposed(by: bag)
+//        applyBtn.rx
+//            .tap
+//            .throttle(.seconds_1, latest: false, scheduler: MainScheduler.instance)
+//            .subscribe(onNext: { [weak self] (_) in
+//                guard let `self` = self else { return }
+//                self.requestNext()
+//
+//            })
+//            .disposed(by: bag)
         
 //        viewModel.homeModel.skip(1)
 //            .subscribe(onNext: { [weak self] (_) in
@@ -418,6 +401,23 @@ extension RapidHomeViewController {
             })
             .disposed(by: bag)
         
+        viewModel.isLoading
+            .distinctUntilChanged()
+            .subscribe(onNext: { [weak self] (isLoading) in
+                self?.handleLoading(isLoading: isLoading)
+            })
+            .disposed(by: bag)
+        
+    }
+    
+    private func handleLoading(isLoading: Bool) {
+        if isLoading {
+            self.showLoading()
+        } else {
+            self.hiddenLoading()
+            tableView.mj_header?.endRefreshing()
+            hotTableView.mj_header?.endRefreshing()
+        }
     }
     
     
@@ -429,6 +429,13 @@ extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
         guard let model = viewModel.homeModel.value else {
             return 0
         }
+        if tableView == hotTableView {
+            return model.hotmeals?.count ?? 0 > 0 ? 1 : 0
+//            guard let hotModels = model.hotmeals, hotModels.count > 0, let hotModel = hotModels.first else{
+//                return 0
+//            }
+//            return 1
+        }
         return model.products?.count ?? 0
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -436,22 +443,40 @@ extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellID.cellId) as! RapidHomeProductCell
+        if tableView == hotTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellID.hotCellId) as! RapidHomeHotCell
+            cell.applyBlock = { [weak self] in
+                self?.requestNext()
+            }
+            guard let model = self.viewModel.homeModel.value else {
+                return cell
+            }
+            guard let hotModels = model.hotmeals, hotModels.count > 0, let hotModel = hotModels.first else {
+                return cell
+            }
+            cell.updateCellContent(model: hotModel)
+            return cell
+        }else{
+            let cell = tableView.dequeueReusableCell(withIdentifier: CellID.cellId) as! RapidHomeProductCell
 
-        guard let model = self.viewModel.homeModel.value else {
+            guard let model = self.viewModel.homeModel.value else {
+                return cell
+            }
+            guard model.products?[indexPath.section] != nil else {
+                return cell
+            }
+            cell.updateCellContent(model: model.products![indexPath.section])
+
             return cell
         }
-        guard model.products?[indexPath.section] != nil else {
-            return cell
-        }
-        cell.updateCellContent(model: model.products![indexPath.section])
-
-        return cell
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
+        if tableView == hotTableView {
+            return
+        }
         let product = self.viewModel.homeModel.value?.products?[indexPath.section]
         guard let product = product else {
             return
@@ -463,21 +488,11 @@ extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
        
     }
     
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let headView = UIView(frame: CGRect(x: 0, y: 0, width: kPortraitScreenW, height: 81.rf))
-//        headView.backgroundColor = .red
-//        headView.addSubview(self.reminderView)
-//        reminderView.snp.makeConstraints { make in
-//            make.edges.equalToSuperview()
-//        }
-//        
-//        guard let model = self.viewModel.homeModel.value, let reminder = model.reminder else {
-//            return nil 
-//        }
-//        return section == 0 ? nil : headView
-//    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if tableView == hotTableView {
+            return UITableView.automaticDimension
+        }
         return RapidHomeProductCell.height()
     }
     
@@ -487,10 +502,6 @@ extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return CGFloat.leastNormalMagnitude
-//        guard let model = self.viewModel.homeModel.value, let reminder = model.reminder else {
-//            return CGFloat.leastNormalMagnitude
-//        }
-//        return section == 0 ? 81.rf : CGFloat.leastNormalMagnitude
     }
 }
 
@@ -569,3 +580,5 @@ extension RapidHomeViewController: FSPagerViewDelegate, FSPagerViewDataSource {
         
     }
 }
+
+

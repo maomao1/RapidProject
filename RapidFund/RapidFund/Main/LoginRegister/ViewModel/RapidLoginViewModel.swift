@@ -24,10 +24,11 @@ class RapidLoginViewModel {
     
     let loginSuccessAction = PublishSubject<Void>()
     let loginModel = BehaviorRelay<RapidLoginModel?>(value: nil)
-    let isAccept = BehaviorRelay(value: false)
+    let isAccept = BehaviorRelay(value: true)
     let sendSuccessAction = PublishSubject<Void>()
     let sendCodeIsEnable = BehaviorRelay(value: true)
 
+    let isLoading = BehaviorRelay(value: false)
 
 
     
@@ -40,15 +41,20 @@ class RapidLoginViewModel {
         var param: [String : Any] = [String : Any]()
         param["lonely"] = phone
         param["thanksmost"] = getRPFRandom()
+        self.isLoading.accept(true)
         self.sendCodeIsEnable.accept(false)
         RapidApi.shared.getLoginPhoneCode(para: param)
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}
+                self.message.onNext("OTP send successfully")
+                self.isLoading.accept(false)
+                
                 self.sendSuccessAction.onNext(Void())
             },
             onError: { [weak self] error in
                 guard let `self` = self else {return}
 //                self.loginSuccessAction.onNext(Void())
+                self.isLoading.accept(false)
                 self.sendCodeIsEnable.accept(true)
                 self.message.onNext(error.localizedDescription)
             })

@@ -36,6 +36,9 @@ PODS:
   - XYZKit (0.7.0):
     - XYZKit/Core (= 0.7.0)
   - XYZKit/Core (0.7.0)
+  - ZLPhotoBrowser (4.4.5):
+    - ZLPhotoBrowser/Core (= 4.4.5)
+  - ZLPhotoBrowser/Core (4.4.5)
 
 DEPENDENCIES:
   - Alamofire (~> 4.9.1)
@@ -56,6 +59,7 @@ DEPENDENCIES:
   - SwiftyJSON
   - XYZAlert (from `https://github.com/DFTT/XYZAlertView.git`, branch `main`)
   - XYZKit (from `https://github.com/DFTT/XYZKit.git`, branch `master`)
+  - ZLPhotoBrowser
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -77,6 +81,7 @@ SPEC REPOS:
     - SDWebImage
     - SnapKit
     - SwiftyJSON
+    - ZLPhotoBrowser
 
 EXTERNAL SOURCES:
   XYZAlert:
@@ -115,7 +120,8 @@ SPEC CHECKSUMS:
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
   XYZAlert: 4240e0c7abf859dcd3d7ee534a5595ba6b58f9b1
   XYZKit: 4b36427ed270de9db9ae7b6790c2365d6811c196
+  ZLPhotoBrowser: c517bd5ca32909ba67b02b99a558ab90756a8448
 
-PODFILE CHECKSUM: d7dffd210761dc361a75e41369a925527f2516f7
+PODFILE CHECKSUM: a012a5c5a55b8cbbd841aecc13288b24e4a274a9
 
 COCOAPODS: 1.10.2

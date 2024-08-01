@@ -58,7 +58,7 @@ extension RapidRootViewController {
     }
     
     func setUpRootView() {
-//        self.tabBar.isTranslucent = true
+
         let homeVC = RapidHomeViewController()
         homeVC.tabBarItem = UITabBarItem(title: "", image: .rapidHomeNormal.withRenderingMode(.alwaysOriginal), selectedImage: .rapidHomeSelected.withRenderingMode(.alwaysOriginal))
         homeVC.tabBarItem.imageInsets = UIEdgeInsets(top: 10.rf, left: 0, bottom: 0, right: 0)
@@ -75,6 +75,8 @@ extension RapidRootViewController {
         mineVC.tabBarItem.imageInsets = UIEdgeInsets(top: 10.rf, left: 0, bottom: 0, right: 0)
 
         let mineNVC = RapidBaseNavgationController(rootViewController: mineVC)
+        
+       
         
         viewControllers = [homeNVC, orderNVC, mineNVC]
         viewControllers?.forEach({ (vc) in
@@ -244,7 +246,10 @@ extension RapidRootViewController {
             return
         }
        
-       
+        let picker = CNContactPickerViewController()
+//        picker.delegate = self
+        
+        nc.pushViewController(picker, animated: true)
 
 ////        let vc = RFPInVC(route: .employment_info, productId: "1")
 //        

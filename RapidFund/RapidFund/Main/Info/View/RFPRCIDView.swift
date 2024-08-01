@@ -35,11 +35,13 @@ class RFPRCIDView: UIView {
 
         let btn = UIButton(type: .custom)
         btn.setImage("PRCID_Next".image, for: .normal)
+        btn.contentHorizontalAlignment = .right
         btn.addTarget(self, action: #selector(btnClick), for: .touchUpInside)
         addSubview(btn)
         btn.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.right.equalTo(-18.rf)
+            make.left.equalToSuperview()
         }
     }
 

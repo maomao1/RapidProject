@@ -199,7 +199,7 @@ class RapidApi: SessionManager {
                             case .success(let data):
                                 let json = JSON(data)
                                 debugPrint(json)
-                                if json.isSuccessful {
+                                if json.upLoadSuccessful {
                                     observer.onNext(completionHandler(json.resultData))
                                     observer.onCompleted()
                                 } else if json.needsLogin {

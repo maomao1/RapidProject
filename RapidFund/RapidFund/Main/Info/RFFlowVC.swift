@@ -8,6 +8,7 @@ import HandyJSON
 import MBProgressHUD
 import RxSwift
 import UIKit
+import MJRefresh
 
 class RFFlowVC: RapidBaseViewController {
     private let product_id: String
@@ -24,8 +25,7 @@ class RFFlowVC: RapidBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.titleNav.text = "Borrowing  Process"
-        self.titleNav.textColor = .white
+        self.titleNav.text = ""
 //        adjustNavTitleCenter()
         titleNav.font = 24.font
         self.rightBtn.isHidden = true
@@ -37,12 +37,23 @@ class RFFlowVC: RapidBaseViewController {
     private let contentView = UIView()
     private let scrollView = UIScrollView()
     private let progressView = RFLoadProgressView()
+    private let textLabel = UILabel().font(.f_lightSys10).textColor(.c_000000).numberOfLines(0).text("To ensure the security and smoothness of your transactions, we require you to provide authentic and valid information for identity verification and credit assessment. We pledge to keep your information strictly confidential and will never disclose it to any third party. Thank you for your trust and cooperation!")
+    let textImg = UIImageView(image: "flow_item_bottom".image)
     private func setup() {
-        scrollView.bounces = false
+        scrollView.bounces = true
         scrollView.showsVerticalScrollIndicator = false
         scrollView.frame = self.view.bounds
         scrollView.contentInsetAdjustmentBehavior = .never
         view.addSubview(scrollView)
+        let header = MJRefreshNormalHeader(){ [weak self] in
+            guard let `self` = self else { return }
+            self.loadData()
+        }
+        header.setTitle("Pull down to refresh", for: .idle)
+        header.setTitle("Release to refresh", for: .pulling)
+        header.setTitle("Loading more...", for: .refreshing)
+        
+        scrollView.mj_header = header
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -61,7 +72,7 @@ class RFFlowVC: RapidBaseViewController {
         topImgV.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
             make.width.equalTo(kScreenWidth)
-            make.height.equalTo(426.rf)
+            make.height.equalTo(175.5.rf)
         }
 
         let bottomImgV = UIImageView(image: "flow_bottom".image)
@@ -72,10 +83,37 @@ class RFFlowVC: RapidBaseViewController {
         
         contentView.addSubview(progressView)
         progressView.snp.makeConstraints { make in
-            make.centerY.equalTo(topImgV.snp.bottom)
+            make.top.equalTo(topImgV.snp.bottom).offset(-45.rf)
             make.left.equalTo(24.rf)
             make.right.equalTo(-24.rf)
             make.height.equalTo(117.rf)
+        }
+        
+        let nextBtn = RFNextBtn()
+        nextBtn.text = "Continue to submit"
+        nextBtn.addTapGesture { [weak self] in
+            self?.jumpNext()
+        }
+        contentView.addSubview(nextBtn)
+        nextBtn.snp.makeConstraints { make in
+            make.bottom.equalTo(-20.rf)
+            make.centerX.equalToSuperview()
+        }
+        
+        contentView.addSubview(textImg)
+        contentView.addSubview(textLabel)
+        textLabel.snp.makeConstraints { make in
+            make.left.equalTo(41.rf)
+            make.right.equalTo(-40.rf)
+            make.bottom.equalTo(nextBtn.snp.top).offset(-42.rf)
+        }
+        
+        
+        textImg.snp.makeConstraints { make in
+            make.left.equalTo(24.rf)
+            make.right.equalTo(-24.rf)
+            make.bottom.equalTo(textLabel.snp.bottom).offset(16.rf)
+            make.top.equalTo(textLabel.snp.top).offset(-18.rf)
         }
     }
     
@@ -113,20 +151,47 @@ class RFFlowVC: RapidBaseViewController {
             requestBindBankInfo(product_id, order_id,self)
             
         }
-    
-//        guard let index = index else { return }
-//        if index == 0 {
-//            navigationController?.pushViewController(RFIDDetailVC(productId: product_id), animated: true)
-//        } else if index == 1 {
-//            navigationController?.pushViewController(RFFRVC(productId: product_id), animated: true)
-//        } else if index == 2 {
-//            navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: product_id), animated: true)
-//        } else if index == 3 {
-//            navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: product_id), animated: true)
-//        } else if index == 4 {
-//            navigationController?.pushViewController(RFBankCardListVC(productId: product_id), animated: true)
-//        }
     }
+    
+    private func jumpNext() {
+       
+        guard let cur = model?.recovered else { 
+            guard let cfgs = model?.hehad else { return }
+            let finishCount = cfgs.filter { $0.mustn == 1 }.count
+            let oderTime = getCurrentTime()
+            RapidApi.shared.getOrderProductWebAdress(para: ["snapped": self.order_id,"leftover":getRPFRandom(),"poised":getRPFRandom(),"theway":getRPFRandom(),"stopping":getRPFRandom()]).subscribe(onNext: { [weak self] obj in
+                guard let url = obj.dictionaryObject?["littleroom"] as? String else {
+                    return
+                }
+                self?.uploadAnalysis(type: .StartApply, time: oderTime)
+                let vc = RPFWebViewController()
+                vc.viewModel = RPFWebViewModel(urlString: url)
+                self?.navigationController?.pushViewController(vc, animated: true)
+                
+            }, onError: { err in
+                MBProgressHUD.showError(err.localizedDescription)
+            }).disposed(by: bag)
+            return 
+        }
+        let  cls = cur.meet
+        if cls == "public" || cls == "thinglike1" {
+            self.navigationController?.pushViewController(RFIDDetailVC(productId: product_id, orderId: order_id), animated: true)
+        }
+        else  if cls == "personal" || cls == "thinglike2" {
+            self.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: product_id, orderId: order_id), animated: true)
+        }
+        else  if cls == "work" || cls == "thinglike3" {
+            self.navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: product_id, orderId: order_id), animated: true)
+        }
+        else  if cls == "contacts" || cls == "thinglike4" {
+            self.navigationController?.pushViewController(RFContactListVC(productId: product_id, orderId: order_id), animated: true)
+        }
+        else  if cls == "bank" || cls == "thinglike5" {
+            requestBindBankInfo(product_id, order_id,self)
+            
+        }
+    }
+    
     
     private var model: RFProductDetailModel?
     override func viewWillAppear(_ animated: Bool) {
@@ -137,9 +202,10 @@ class RFFlowVC: RapidBaseViewController {
 
 extension RFFlowVC {
     private func loadData() {
+        self.showLoading()
         RapidApi.shared.productDetail(para: ["putit": self.product_id, "interrupted": getRPFRandom(), "means": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
-//            guard let json = obj.dictionaryObject, let started = json["started"] as? [String: Any], let model = RFProductDetailModel.deserialize(from: started) else { return }
-//            model = RFProductDetailModel.deserialize(from: obj.dictionaryObject)
+            self?.hiddenLoading()
+            self?.scrollView.mj_header?.endRefreshing()
             guard let model = RFProductDetailModel.deserialize(from: obj.dictionaryObject) else {
                 return
             }
@@ -147,6 +213,8 @@ extension RFFlowVC {
             
         }, onError: { [weak self] err in
             MBProgressHUD.showError(err.localizedDescription)
+            self?.hiddenLoading()
+            self?.scrollView.mj_header?.endRefreshing()
             self?.navigationController?.popViewController(animated: true)
         }).disposed(by: bag)
     }
@@ -159,7 +227,7 @@ extension RFFlowVC {
         }
         items.removeAll()
         for i in 0 ..< cfgs.count {
-            let item = RFFlowItem(bgImg: "flow_item_bg2".image, icon: cfgs[i].glorious, text: cfgs[i].hastily)
+            let item = RFFlowItem(bgImg: "flow_item_bg2".image, icon: cfgs[i].glorious, text: cfgs[i].hastily, isFinish: cfgs[i].mustn == 1)
             item.tag = i
             contentView.addSubview(item)
             items.append(item)
@@ -171,14 +239,24 @@ extension RFFlowVC {
                 make.top.equalTo(progressView.snp.bottom).offset(20.rf + offset)
                 
                 if i == cfgs.count - 1 {
-                    make.bottom.equalTo(contentView.snp.bottom).offset(-12.5.rf)
+                    make.bottom.equalTo(textImg.snp.top).offset(-5.rf)
                 }
             }
             
             item.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapAction(sender:))))
         }
-        guard let started = data.started, let pro = started.sucha  else { return }
+        let finishCount = cfgs.filter { $0.mustn == 1 }.count
+        progressView.fill(finishCount: finishCount, totalCount: cfgs.count)
+        guard let started = data.started else { return }
         self.order_id = started.risking
-        progressView.fill(pro)
+        
+    }
+    
+    private func uploadAnalysis(type: RFAnalysisScenenType, time: String){
+        
+        RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
+            guard let `self` = self else {return}
+            RPFReportManager.shared.saveAnalysis(pId: self.product_id, type: type, startTime: time, longitude: longitude, latitude: latitude)
+        }
     }
 }
