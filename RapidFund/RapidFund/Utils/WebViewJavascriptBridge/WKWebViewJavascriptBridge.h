@@ -21,6 +21,8 @@
 + (void)enableLogging;
 
 - (void)registerHandler:(NSString*)handlerName handler:(WVJBHandler)handler;
+
+- (void)startRegister;
 - (void)removeHandler:(NSString*)handlerName;
 - (void)callHandler:(NSString*)handlerName;
 - (void)callHandler:(NSString*)handlerName data:(id)data;

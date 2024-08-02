@@ -111,7 +111,9 @@ class RPFWebViewModel {
             self.callPhoneNumberAction.onNext(phoneNumber)
             
         })
+        bridge.startRegister()
     }
+    
     
     func setUpRx() {
         

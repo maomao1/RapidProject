@@ -162,6 +162,8 @@ class RPFWebViewController: RapidBaseViewController {
         Constants.keyPaths.forEach { (keyPath) in
             self.webView.addObserver(self, forKeyPath: keyPath, options: .new, context: nil)
         }
+        
+        
     }
     
     func setupRx() {

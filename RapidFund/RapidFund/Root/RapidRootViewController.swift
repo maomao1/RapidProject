@@ -244,7 +244,9 @@ extension RapidRootViewController {
             return
         }
        
-       
+        let vc  = RPFWebViewController()
+         vc.viewModel = RPFWebViewModel(urlString: "http://8.212.152.227/test")
+         nc.pushViewController(vc, animated: true)
 
 ////        let vc = RFPInVC(route: .employment_info, productId: "1")
 //        
