@@ -19,6 +19,7 @@ let RPFRouterOrder = "rapid://rfapi.rapidfund.app/laughing"
 let RPFRouterProductDetail = "rapid://rfapi.rapidfund.app/andfollowed"  // 认证流程主页
 let RPFRouterContact = "rapid://rfapi.rapidfund.app/absolutelysound"
 let RPFRouterBank = "rapid://rfapi.rapidfund.app/amarvellous"
+let RPFRouterRecommend = "rapid://rfapi.rapidfund.app/stayingIn"
 
 let RPFOrderKey = "hiscollar"
 let RPFOrderDetailKey = "putit"

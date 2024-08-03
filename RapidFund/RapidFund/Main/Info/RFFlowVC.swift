@@ -253,7 +253,7 @@ extension RFFlowVC {
     }
     
     private func uploadAnalysis(type: RFAnalysisScenenType, time: String){
-        
+        RPFLocationManager.manager.requestLocationAuthorizationStatus()
         RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
             guard let `self` = self else {return}
             RPFReportManager.shared.saveAnalysis(pId: self.product_id, type: type, startTime: time, longitude: longitude, latitude: latitude)

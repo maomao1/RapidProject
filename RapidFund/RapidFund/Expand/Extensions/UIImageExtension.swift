@@ -109,6 +109,8 @@ extension UIImage {
     static let homeSoundIcon   = UIImage(named: "home_sound_icon")!
     static let homeLoginTopBg   = UIImage(named: "home_login_topBg")!
     static let homeLoginBanner   = UIImage(named: "home_banner")!
+    static let homeRecommendTopImg   = UIImage(named: "home_recommend_topImg")!
+    static let homeRecommendTextImg   = UIImage(named: "home_recommend_text")!
     
 
     

@@ -10,7 +10,26 @@ import RxSwift
 import RxCocoa
 
 class RPFAboutUsViewModel {
-   
+    enum AboutType {
+        case registration
+        case authority
+        case website
+        case adress
+        
+        var titleName: String {
+            switch self{
+            
+            case .registration:
+                return "SEC Registration"
+            case .authority:
+                return "Certificate Authorit"
+            case .website:
+                return "Website"
+            case .adress:
+                return "Address"
+            }
+        }
+    }
     init() {
         
     }
@@ -20,6 +39,6 @@ class RPFAboutUsViewModel {
     var newMessage: Driver<String> {
         return message.filter { !$0.isEmpty }.asDriver(onErrorJustReturn: "")
     }
-    
+    var sections: [AboutType] = [.registration, .authority, .website, .adress]
     let pageTitle = "About Us"
 }

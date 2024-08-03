@@ -32,7 +32,7 @@ class RapidHomeProductCell: UITableViewCell {
         contentView.addSubview(soundImg)
         contentView.addSubview(soundLabel)
         contentView.addSubview(applyBtn)
-        contentView.addSubview(limitImg)
+//        contentView.addSubview(limitImg)
         containerView.addSubview(statusBgView)
         contentView.addSubview(statusLabel)
         
@@ -84,11 +84,11 @@ class RapidHomeProductCell: UITableViewCell {
             make.right.equalTo(soundBgView)
         }
         
-        limitImg.snp.makeConstraints { make in
-            make.left.equalTo(productImage.snp.left)
-            make.top.equalTo(containerView.snp.top).offset(-7.rf)
-            
-        }
+//        limitImg.snp.makeConstraints { make in
+//            make.left.equalTo(productImage.snp.left)
+//            make.top.equalTo(containerView.snp.top).offset(-7.rf)
+//            
+//        }
         
         statusLabel.snp.makeConstraints { make in
             make.right.equalTo(applyBtn.snp.left).offset(-12.rf)
@@ -110,16 +110,17 @@ class RapidHomeProductCell: UITableViewCell {
     func updateCellContent(model: RPFHomeProduct){
         self.productImage.sd_setImage(with: model.productLogo.url, placeholderImage: nil, options: .allowInvalidSSLCertificates)
         self.nameLabel.text = model.productName
-        self.contentLabel.text = model.productDesc
+        self.contentLabel.text = model.amountRangeDes + model.amountMax
         self.applyBtn.setTitle(model.buttonText, for: .normal)
         self.applyBtn.setTitle(model.buttonText, for: .selected)
         self.statusLabel.text = model.productTags
-        self.statusBgView.backgroundColor = .red
+//        self.statusBgView.backgroundColor = .red
         
         if model.buttoncolor.count > 1{
             self.applyBtn.backgroundColor = UIColor.init(webColor: model.buttoncolor)
+            self.statusBgView.backgroundColor = UIColor.init(webColor: model.buttoncolor)
         }
-//        self.soundLabel.text = model.
+        self.soundLabel.text = model.orderRefinancingText
         
     }
     
@@ -128,7 +129,7 @@ class RapidHomeProductCell: UITableViewCell {
         image.layer.masksToBounds = true
         image.layer.cornerRadius = 16.rf
         image.contentMode = .scaleAspectFit
-        image.backgroundColor = .lightGray
+//        image.backgroundColor = .lightGray
         return image
     }()
     
@@ -156,10 +157,10 @@ class RapidHomeProductCell: UITableViewCell {
         return view
     }()
     
-    fileprivate lazy var limitImg: UIImageView = {
-        let imageview = UIImageView.init(image: .homeLimitIcon)
-        return imageview
-    }()
+//    fileprivate lazy var limitImg: UIImageView = {
+//        let imageview = UIImageView.init(image: .homeLimitIcon)
+//        return imageview
+//    }()
     
     fileprivate lazy var soundImg: UIImageView = {
         let imageview = UIImageView.init(image: .homeSoundIcon)
@@ -186,12 +187,13 @@ class RapidHomeProductCell: UITableViewCell {
         let btn = UIButton(type: .custom)
         btn.layer.masksToBounds = true
         btn.layer.cornerRadius = 18.rf
-        btn.backgroundColor = .black
+        btn.backgroundColor = .c_FFA559
         return btn
     }()
     
     fileprivate lazy var statusBgView: UIView = {
         let view = UIView()
+        view.backgroundColor = .c_FFA559
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 4.5.rf
         return view
@@ -200,7 +202,7 @@ class RapidHomeProductCell: UITableViewCell {
     fileprivate lazy var statusLabel: UILabel = {
         let label = UILabel()
         label.font =  .f_lightSys10
-        label.textColor = .c_111111
+        label.textColor = .c_000000
         label.textAlignment = .center
         return label
     }()

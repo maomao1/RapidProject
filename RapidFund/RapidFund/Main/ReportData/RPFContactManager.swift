@@ -50,7 +50,7 @@ class RPFContactManager {
 //                    return false
                 }
             }
-            return false
+            return true
         case .restricted, .denied:
             // 访问受限或被拒绝，可以提示用户或者采取其他行动
             return false

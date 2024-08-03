@@ -36,8 +36,8 @@ class RPFAboutCell: UITableViewCell {
         }
     }
     
-    func setCellContent() {
-        self.nameLabel.text = "Rapid Fund"
+    func setCellContent(type: RPFAboutUsViewModel.AboutType) {
+        self.nameLabel.text = type.titleName
         self.contentLabel.text = "NO.DF726638479"
     }
     

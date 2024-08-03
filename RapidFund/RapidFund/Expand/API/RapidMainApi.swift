@@ -59,6 +59,15 @@ extension RapidApi {
             completionHandler: { $0 })
     }
     
+    func getRecommendData(para: Parameters) -> Observable<JSON> {
+        return request(
+            path: BaseURl + RapidApiConstantUrl.homeRecommendGetData,
+            parameters: para,
+            method: .get,
+            encoding: URLEncoding.default,
+            completionHandler: { $0 })
+    }
+    
     func getProductNextData(para: Parameters) -> Observable<JSON> {
         return request(
             path: BaseURl + RapidApiConstantUrl.homeProductNextPath,

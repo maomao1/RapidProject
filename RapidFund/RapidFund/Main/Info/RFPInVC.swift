@@ -298,6 +298,7 @@ class RFPInVC: RapidBaseViewController {
         }
         else  if cls == "bank" || cls == "thinglike5" {
             requestBindBankInfo(self.productId, self.orderId,self)
+            
         }
     }
     
@@ -328,7 +329,7 @@ class RFPInVC: RapidBaseViewController {
     
     
     private func uploadAnalysis(type: RFAnalysisScenenType){
-        
+        RPFLocationManager.manager.requestLocationAuthorizationStatus()
         RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
             guard let `self` = self else {return}
             RPFReportManager.shared.saveAnalysis(pId: self.productId, type: type, startTime: self.enterPageTime, longitude: longitude, latitude: latitude)

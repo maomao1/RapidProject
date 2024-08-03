@@ -10,7 +10,6 @@ import RxSwift
 import RxCocoa
 import MBProgressHUD
 import FSPagerView
-import ContactsUI
 import MJRefresh
 
 class RapidHomeViewController: RapidBaseViewController {
@@ -481,8 +480,9 @@ extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
         guard let product = product else {
             return
         }
-        let vc = RFFlowVC(product_id: product.disapproval)
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.viewModel.getNextData(productId: product.disapproval)
+//        let vc = RFFlowVC(product_id: product.disapproval)
+//        self.navigationController?.pushViewController(vc, animated: true)
 //        self.viewModel.getNextData(productId: product.disapproval)
 
        

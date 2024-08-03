@@ -31,6 +31,8 @@ class RapidOrderListCell: UITableViewCell {
         contentView.addSubview(dateValueLabel)
         contentView.addSubview(soundImg)
         contentView.addSubview(soundLabel)
+        containerView.addSubview(statusBgView)
+        contentView.addSubview(statusLabel)
         
         containerView.snp.makeConstraints { make in
             make.left.equalTo(-40.rf)
@@ -101,6 +103,19 @@ class RapidOrderListCell: UITableViewCell {
             make.centerY.equalTo(soundLabel)
             make.size.equalTo(CGSize(width: 16.rf, height: 16.rf))
         }
+        
+        statusLabel.snp.makeConstraints { make in
+            make.right.equalTo(detailBtn.snp.left).offset(-12.rf)
+            make.top.equalTo(containerView.snp.top).offset(2.rf)
+            make.height.equalTo(12.rf)
+        }
+        
+        statusBgView.snp.makeConstraints { make in
+            make.left.equalTo(statusLabel.snp.left).offset(-12.rf)
+            make.right.equalTo(statusLabel.snp.right).offset(12.rf)
+            make.top.equalTo(containerView.snp.top).offset(-5.rf)
+            make.bottom.equalTo(statusLabel.snp.bottom).offset(2.rf)
+        }
 
     }
     
@@ -112,6 +127,14 @@ class RapidOrderListCell: UITableViewCell {
         self.dateLabel.text = model.shewas
         self.dateValueLabel.text = model.shorts
         self.soundLabel.text = model.dirty
+        self.statusLabel.text = model.mymorgan
+        self.statusBgView.backgroundColor = model.orderStatus.color
+        self.detailBtn.setTitle(model.wore, for: .normal)
+        self.detailBtn.setTitle(model.wore, for: .selected)
+        self.detailBtn.backgroundColor = model.orderStatus.color
+        self.soundLabel.isHidden = model.dirty.isEmpty
+        self.soundImg.isHidden = model.dirty.isEmpty
+        
     }
     
     fileprivate lazy var containerView: UIView = {
@@ -124,9 +147,12 @@ class RapidOrderListCell: UITableViewCell {
     
     fileprivate lazy var detailBtn: UIButton = {
         let btn = UIButton(type: .custom)
-        btn.setBackgroundImage(.orderListDetailBtnIcon, for: .normal)
-//        btn.layer.masksToBounds = true
-//        btn.layer.cornerRadius = 18.rf
+//        btn.setBackgroundImage(.orderListDetailBtnIcon, for: .normal)
+        btn.setTitleColor(.c_000000, for: .normal)
+        btn.setTitleColor(.c_000000, for: .selected)
+        btn.titleLabel?.font = .f_lightSys10
+        btn.layer.masksToBounds = true
+        btn.layer.cornerRadius = 18.rf
         return btn
     }()
     
@@ -201,6 +227,21 @@ class RapidOrderListCell: UITableViewCell {
         label.font =  .f_lightSys12
         label.textColor = .c_111111
         label.textAlignment = .right
+        return label
+    }()
+    
+    fileprivate lazy var statusBgView: UIView = {
+        let view = UIView()
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = 4.5.rf
+        return view
+    }()
+    
+    fileprivate lazy var statusLabel: UILabel = {
+        let label = UILabel()
+        label.font =  .f_lightSys10
+        label.textColor = .white
+        label.textAlignment = .center
         return label
     }()
     

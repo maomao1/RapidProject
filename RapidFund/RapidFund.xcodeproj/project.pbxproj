@@ -97,6 +97,8 @@
 		2EBDAE142C3C21A100B3C845 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE132C3C21A100B3C845 /* UIViewExtension.swift */; };
 		2EBDAE1A2C3CF6CC00B3C845 /* RapidHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE192C3CF6CC00B3C845 /* RapidHomeViewModel.swift */; };
 		2EBDAE202C3D2EEA00B3C845 /* RapidLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE1F2C3D2EEA00B3C845 /* RapidLoginModel.swift */; };
+		2ED571292C5CE6380040E3F7 /* RPFRecommendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED571282C5CE6380040E3F7 /* RPFRecommendViewController.swift */; };
+		2ED5712B2C5CE8960040E3F7 /* RPFRecommendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED5712A2C5CE8960040E3F7 /* RPFRecommendViewModel.swift */; };
 		2EECB1F12C3D758000E59A1C /* RapidMineMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECB1F02C3D758000E59A1C /* RapidMineMenuCell.swift */; };
 		2EECB1F32C3D892F00E59A1C /* RapidCustomAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECB1F22C3D892F00E59A1C /* RapidCustomAlertViewController.swift */; };
 		2EECB1F52C3E2D6C00E59A1C /* NotificationNameExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EECB1F42C3E2D6C00E59A1C /* NotificationNameExtension.swift */; };
@@ -232,6 +234,8 @@
 		2EBDAE132C3C21A100B3C845 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		2EBDAE192C3CF6CC00B3C845 /* RapidHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidHomeViewModel.swift; sourceTree = "<group>"; };
 		2EBDAE1F2C3D2EEA00B3C845 /* RapidLoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidLoginModel.swift; sourceTree = "<group>"; };
+		2ED571282C5CE6380040E3F7 /* RPFRecommendViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFRecommendViewController.swift; sourceTree = "<group>"; };
+		2ED5712A2C5CE8960040E3F7 /* RPFRecommendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFRecommendViewModel.swift; sourceTree = "<group>"; };
 		2EECB1F02C3D758000E59A1C /* RapidMineMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidMineMenuCell.swift; sourceTree = "<group>"; };
 		2EECB1F22C3D892F00E59A1C /* RapidCustomAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidCustomAlertViewController.swift; sourceTree = "<group>"; };
 		2EECB1F42C3E2D6C00E59A1C /* NotificationNameExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNameExtension.swift; sourceTree = "<group>"; };
@@ -658,6 +662,7 @@
 			isa = PBXGroup;
 			children = (
 				2EBDAE192C3CF6CC00B3C845 /* RapidHomeViewModel.swift */,
+				2ED5712A2C5CE8960040E3F7 /* RPFRecommendViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -666,6 +671,7 @@
 			isa = PBXGroup;
 			children = (
 				2E91E8632C36A72A005E2AB4 /* RapidHomeViewController.swift */,
+				2ED571282C5CE6380040E3F7 /* RPFRecommendViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1067,6 +1073,7 @@
 				2E4D39462C35857B00C2271A /* UIImageExtension.swift in Sources */,
 				026A7B742C4A50C0008EAD52 /* RFAddressDetail.swift in Sources */,
 				2E4D394B2C36A4BA00C2271A /* RapidBaseNavgationController.swift in Sources */,
+				2ED571292C5CE6380040E3F7 /* RPFRecommendViewController.swift in Sources */,
 				2EBDADF62C39769E00B3C845 /* ProjectConfig.swift in Sources */,
 				2E4D39492C36A48000C2271A /* RapidBaseViewController.swift in Sources */,
 				026A5B7C2C48F46F00B8C15C /* RFProductDetailModel.swift in Sources */,
@@ -1094,6 +1101,7 @@
 				2EBDAE0A2C3AD35A00B3C845 /* StringExtension.swift in Sources */,
 				02C3BAED2C3D40DD001B4107 /* RFLoadProgressView.swift in Sources */,
 				02F57BEA2C3FC05B0049D21C /* RFIDVerifyAlert.swift in Sources */,
+				2ED5712B2C5CE8960040E3F7 /* RPFRecommendViewModel.swift in Sources */,
 				024F6C462C3CFECA0041F532 /* RFInfoItem.swift in Sources */,
 				2EECB1F32C3D892F00E59A1C /* RapidCustomAlertViewController.swift in Sources */,
 				2E9B93B72C49120900624609 /* OtherExtension.swift in Sources */,

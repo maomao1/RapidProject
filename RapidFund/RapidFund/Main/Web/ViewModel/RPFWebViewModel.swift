@@ -16,6 +16,7 @@ import RxKeyboard
 import IQKeyboardManagerSwift
 //import Action
 class RPFWebViewModel {
+    
     enum ActivityType {
         case content // HTML字符串
         case `default`
@@ -65,7 +66,7 @@ class RPFWebViewModel {
     let callPhoneNumberAction = PublishSubject<(String)>()
     /// 注册web事件
     func registerHandler(bridge: WKWebViewJavascriptBridge) {
-        //回到 App 首页
+//        //回到 App 首页
         bridge.registerHandler("newBaked", handler: { [weak self] data, responseCallback in
             guard let `self` = self else { return }
             self.goToHomeAction.onNext(Void())
@@ -111,7 +112,44 @@ class RPFWebViewModel {
             self.callPhoneNumberAction.onNext(phoneNumber)
             
         })
+        bridge.startRegister()
+        bridge.messageHandler = { [weak self] message in
+            guard let `self` = self, let message = message else { return }
+            self.handleMessage(message: message )
+        }
+        
     }
+    
+    func handleMessage(message: WKScriptMessage) {
+        let name = message.name
+        let data = message.body
+        switch name {
+        case "newBaked":
+            self.goToHomeAction.onNext(Void())
+        case "getplaying": 
+            guard let jsonData = data as? [String] else { return }
+            let productId = jsonData.first ?? ""
+            let startTime = jsonData.last ?? ""
+            self.uploadRiskAction.onNext((productId,startTime))
+            print(data)
+        case "preparations":
+            guard let jsonData = data as? [String] else { return }
+            let url = jsonData.first ?? ""
+            self.gotoNewPageAction.onNext(url)
+        case "acomplete":
+            self.closeSubject.onNext(Void())
+        case "wheels":
+            self.goToAppGradeAction.onNext(Void())
+        case "trulywellProvided":
+            guard let jsonData = data as? [String] else { return }
+            let phoneNumber = jsonData.first ?? ""
+            self.callPhoneNumberAction.onNext(phoneNumber)
+        default:
+            break
+        }
+        
+    }
+    
     
     func setUpRx() {
         

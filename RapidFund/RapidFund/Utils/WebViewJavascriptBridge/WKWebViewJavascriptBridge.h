@@ -15,12 +15,17 @@
 #import "WebViewJavascriptBridgeBase.h"
 #import <WebKit/WebKit.h>
 
+typedef void (^CallBack)(WKScriptMessage *message);
+
 @interface WKWebViewJavascriptBridge : NSObject<WKNavigationDelegate, WebViewJavascriptBridgeBaseDelegate>
+@property (copy, nonatomic) CallBack messageHandler;
 
 + (instancetype)bridgeForWebView:(WKWebView*)webView;
 + (void)enableLogging;
 
 - (void)registerHandler:(NSString*)handlerName handler:(WVJBHandler)handler;
+
+- (void)startRegister;
 - (void)removeHandler:(NSString*)handlerName;
 - (void)callHandler:(NSString*)handlerName;
 - (void)callHandler:(NSString*)handlerName data:(id)data;

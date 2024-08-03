@@ -448,7 +448,7 @@ extension RapidLoginViewController {
     
     func uploadLocation() {
         
-       
+        RPFLocationManager.manager.requestLocationAuthorizationStatus()
         RPFLocationManager.manager.locationInfoHandle = { (country, code, province, city,street,latitude,longitude, item) in
             var param: [String : Any] = [String : Any]()
             param["aface"] = province

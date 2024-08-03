@@ -20,13 +20,11 @@ class RPFLocationManager: NSObject {
     
      override init() {
          super.init()
-         self.locationManager.delegate = self
-         requestLocationAuthorizationStatus()
     }
     
     
-    func requestLocationAuthorizationStatus() {
-        
+    func requestLocationAuthorizationStatus()  {
+        self.locationManager.delegate = self
         if #available(iOS 14.0, *) {
             status = self.locationManager.authorizationStatus
         } else {
@@ -37,7 +35,12 @@ class RPFLocationManager: NSObject {
             self.locationManager.requestWhenInUseAuthorization()
         case .denied, .restricted:
             print("")
-        
+            if let handle = self.locationInfoHandle {
+                handle("","","","","","\(0)","\(0)",RPFDeviceManager.getWiFiName())
+            }
+            if let handle = self.analysisHandle {
+                handle("\(0)","\(0)")
+            }
         case .none:
             self.startGettingLocation()
         case .some(.authorizedAlways):
@@ -57,9 +60,7 @@ class RPFLocationManager: NSObject {
     func stopGettingLocation() {
         self.locationManager.stopUpdatingLocation()
     }
-    
-   
-    
+
 }
 //
 extension RPFLocationManager: CLLocationManagerDelegate {
@@ -92,6 +93,12 @@ extension RPFLocationManager: CLLocationManagerDelegate {
         
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Failed to get user's location: \(error.localizedDescription)")
+        if let handle = self.locationInfoHandle {
+            handle("","","","","","\(0)","\(0)",RPFDeviceManager.getWiFiName())
+        }
+        if let handle = self.analysisHandle {
+            handle("\(0)","\(0)")
+        }
     }
 }
 

@@ -56,13 +56,13 @@ extension RPFAboutUsViewController {
         logoImgView.snp.makeConstraints { make in
             make.right.equalTo(-RapidMetrics.LeftRightMargin)
             make.top.equalTo(self.customNavView.snp.bottom).offset(44.5.rf)
-            make.size.equalTo(CGSize(width: 108.5.rf, height: 111.5.rf))
+            make.size.equalTo(CGSize(width: 102.rf, height: 82.5.rf))
         }
         
         menuBgImageView.snp.makeConstraints { make in
             make.right.equalToSuperview()
             make.left.equalTo(48.rf)
-            make.top.equalTo(logoImgView.snp.top).offset(44.rf)
+            make.top.equalTo(logoImgView.snp.top).offset(38.5.rf)
             make.height.equalTo((kScreenWidth - 48.rf) * 1.25)
         }
         
@@ -75,12 +75,12 @@ extension RPFAboutUsViewController {
 extension RPFAboutUsViewController: UITableViewDelegate, UITableViewDataSource{
       
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return viewModel.sections.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CellID.cellId) as! RPFAboutCell
-        cell.setCellContent()
+        cell.setCellContent(type: viewModel.sections[indexPath.row])
         return cell
     }
     

@@ -162,6 +162,8 @@ class RPFWebViewController: RapidBaseViewController {
         Constants.keyPaths.forEach { (keyPath) in
             self.webView.addObserver(self, forKeyPath: keyPath, options: .new, context: nil)
         }
+        
+        
     }
     
     func setupRx() {
@@ -221,11 +223,15 @@ class RPFWebViewController: RapidBaseViewController {
         }
     }
     
+    
+    
     func uploadAnalysis(pId: String, start: String){
+        RPFLocationManager.manager.requestLocationAuthorizationStatus()
         RPFLocationManager.manager.analysisHandle = { (longitude,latitude) in
             RPFReportManager.shared.saveAnalysis(pId: pId, type: .EndApply, startTime: start, longitude: longitude, latitude: latitude)
         }
     }
+    
     
     func gotoHomePage() {
         self.tabBarController?.selectedIndex = 0
@@ -233,7 +239,7 @@ class RPFWebViewController: RapidBaseViewController {
     }
     
     func nativeCallPhone(number: String){
-        let fullNumber = "tel://" + number
+        let fullNumber = "tel://" + "number"
         guard let url = URL(string: fullNumber), UIApplication.shared.canOpenURL(url) else {
             print("无法拨打电话")
             return

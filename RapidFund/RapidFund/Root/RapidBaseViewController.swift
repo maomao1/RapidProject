@@ -111,6 +111,15 @@ class RapidBaseViewController: UIViewController {
             make.left.right.equalToSuperview()
             make.height.equalTo(73.rf)
         }
+//        customNavView.snp.makeConstraints { make in
+//            if #available(iOS 11.0, *) {
+//                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(0.rf)
+//            } else {
+//                make.top.equalTo(0.rf)
+//            }
+//            make.left.right.equalToSuperview()
+//            make.height.equalTo(44.rf)
+//        }
         
         rightBtn.snp.makeConstraints { make in
             make.right.equalTo(customNavView.snp.right).offset(-RapidMetrics.LeftRightMargin)
@@ -311,10 +320,14 @@ extension RapidBaseViewController {
                     
                     if let requirePara = param{
                         if let pId =  requirePara[RPFChangeBankProductKey], let orderId = requirePara[RPFChangeBankOrderKey]{
-                            requestBindBankInfo(pId, orderId,self)
+                            self.navigationController?.pushViewController(RFBankCardListVC(orderId: orderId, productId: pId), animated: true)
+                            
                         }
 
                     }
+                }else if  scheme?.contains(RPFRouterRecommend) == true{
+                    let vc  = RPFRecommendViewController()
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
                 
             }

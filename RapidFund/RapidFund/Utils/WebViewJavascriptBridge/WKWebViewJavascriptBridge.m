@@ -10,6 +10,10 @@
 
 #if defined supportsWKWebView
 
+@interface WKWebViewJavascriptBridge() <WKScriptMessageHandler>
+
+@end
+
 @implementation WKWebViewJavascriptBridge {
     __weak WKWebView* _webView;
     __weak id<WKNavigationDelegate> _webViewDelegate;
@@ -51,6 +55,14 @@
 
 - (void)registerHandler:(NSString *)handlerName handler:(WVJBHandler)handler {
     _base.messageHandlers[handlerName] = [handler copy];
+}
+
+- (void)startRegister {
+    __weak typeof(self) weakSelf = self;
+    [_base.messageHandlers.allKeys enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        WKUserContentController *contro = _webView.configuration.userContentController;
+        [contro addScriptMessageHandler:weakSelf name:obj];
+    }];
 }
 
 - (void)removeHandler:(NSString *)handlerName {
@@ -190,6 +202,15 @@
     return NULL;
 }
 
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message {
+    WVJBHandler handler = _base.messageHandlers[message.name];
+    if (self.messageHandler) {
+        self.messageHandler(message);
+    }
+    
+    //TODO
+    
+}
 
 
 @end

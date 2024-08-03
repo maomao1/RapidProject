@@ -40,7 +40,7 @@ extension RapidRootViewController {
         guard !GetInfo(kRapidSession).isEmpty else{
             return
         }
-        
+        RPFLocationManager.manager.requestLocationAuthorizationStatus()
         RPFLocationManager.manager.locationInfoHandle = { (country, code, province, city,street,latitude,longitude, item) in
             var param: [String : Any] = [String : Any]()
             param["aface"] = province
@@ -246,10 +246,15 @@ extension RapidRootViewController {
             return
         }
        
-        let picker = CNContactPickerViewController()
-//        picker.delegate = self
+
+//        let vc  = RPFWebViewController()
+//         vc.viewModel = RPFWebViewModel(urlString: "http://8.212.152.227/test")
+//         nc.pushViewController(vc, animated: true)
         
-        nc.pushViewController(picker, animated: true)
+        let vc  = RPFRecommendViewController()
+        
+//         vc.viewModel = RPFWebViewModel(urlString: "http://8.212.152.227/test")
+         nc.pushViewController(vc, animated: true)
 
 ////        let vc = RFPInVC(route: .employment_info, productId: "1")
 //        

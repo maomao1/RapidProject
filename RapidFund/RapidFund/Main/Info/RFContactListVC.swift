@@ -196,7 +196,7 @@ extension RFContactListVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     private func uploadAnalysis(type: RFAnalysisScenenType){
-        
+        RPFLocationManager.manager.requestLocationAuthorizationStatus()
         RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
             guard let `self` = self else {return}
             RPFReportManager.shared.saveAnalysis(pId: self.productId, type: type, startTime: self.enterPageTime, longitude: longitude, latitude: latitude)
