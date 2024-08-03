@@ -10,6 +10,7 @@ import UIKit
 import AdSupport
 import CoreTelephony
 import SystemConfiguration.CaptiveNetwork
+import Darwin
 
 let OsPlatform: String = {
     return "ios"
@@ -102,39 +103,39 @@ var ModelName: String = {
 }()
 
 //
-var ScreenInch: Double = {
+var ScreenInch: String = {
     switch ModelName{
     
     case "iPhone 4","iPhone 4s":
-        return 3.5
+        return "3.5"
     
     case "iPhone 5","iPhone 5s","iPhone 5c":
-        return 4.0
+        return "4.0"
    
     case "iPhone 6","iPhone 6s","iPhone 7","iPhone 8","iPhone SE":
-        return 4.7
+        return "4.7"
         
     case "iPhone 12 mini","iPhone 13 mini":
-        return 5.4
+        return "5.4"
    
     case "iPhone 6 Plus","iPhone 6s Plus","iPhone 7 Plus","iPhone 8 Plus":
-        return 5.5
+        return "5.5"
         
     case "iPhone X","iPhone XS","iPhone 11 Pro":
-        return 5.8
+        return "5.8"
         
     case "iPhone 11","iPhone XR","iPhone 12","iPhone 13","iPhone 12 Pro","iPhone 13 Pro","iPhone 14","iPhone 14 Pro","iPhone 15","iPhone 15 Pro":
-        return 6.1
+        return "6.1"
         
     case "iPhone XS Max ","iPhone 11 Pro Max":
-        return 6.5
+        return "6.5"
         
     case "iPhone 12 Pro Max","iPhone 13 Pro Max","iPhone 14 Plus","iPhone 14 Pro Max","iPhone 15 Plus","iPhone 15 Pro Max":
-        return 6.7
+        return "6.7"
         
     
     default:
-        return 5.8
+        return "5.8"
     }
 }()
 
@@ -162,7 +163,7 @@ let DeviceID: String = {
  *  IDFA设备唯一标识
  */
 let RapidSingleUUID: String = {
-    return RapidSingleIdentifierManager.manager.getIDFA()
+    return RapidSingleIdentifierManager.manager.getUUID()
 }()
 
 let RapidIDFV: String = {
@@ -333,6 +334,44 @@ func totalRAM() -> Int64 {
 }
 
 
+func getMemoryInfo(total: Bool) -> Int64 {
+    var size = mach_msg_type_number_t(MemoryLayout<vm_statistics_data_t>.size / MemoryLayout<integer_t>.size)
+    var vmStats = vm_statistics_data_t()
+    let hostPort: mach_port_t = mach_host_self()
+    let kernelReturn: kern_return_t = withUnsafeMutablePointer(to: &vmStats) {
+        $0.withMemoryRebound(to: integer_t.self, capacity: Int(size)) {
+            host_statistics(hostPort, HOST_VM_INFO, $0, &size)
+        }
+    }
+    
+    if kernelReturn != KERN_SUCCESS {
+        return 0
+    }
+    
+    // 活动页数 * 页大小 = 活动内存大小
+    let activeMemory = Int(vmStats.active_count) * Int(getpagesize())
+    // 在活动内存中，未使用的内存大小可以通过活动内存减去活跃或者在使用中的内存来计算
+    let freeMemory = Int(vmStats.free_count) * Int(getpagesize())
+    
+    return Int64(total ? activeMemory : freeMemory)
+}
+
+
+
+func  getDiskSpace(total: Bool) -> Int64 {
+    let fileManager = FileManager.default
+     
+    if let systemAttributes = try? fileManager.attributesOfFileSystem(forPath: NSHomeDirectory() as String),
+       let systemSize = (systemAttributes[FileAttributeKey.systemSize] as? NSNumber)?.int64Value,
+       let systemFreeSize = (systemAttributes[FileAttributeKey.systemFreeSize] as? NSNumber)?.int64Value {
+        print("Total Disk Space: \(systemSize) bytes")
+        print("Available Disk Space: \(systemFreeSize) bytes")
+        return total ? systemSize : systemFreeSize
+    } else {
+        print("Unable to retrieve disk space information.")
+        return 0
+    }
+}
 /// 获取当前可用内存
 func availableRAM() -> Int64 {
     var fs = blankof(type: statfs.self)

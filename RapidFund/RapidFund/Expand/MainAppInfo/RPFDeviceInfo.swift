@@ -54,6 +54,37 @@ class RPFDeviceManager: NSObject {
          return nil
      }
     
+    class func getWiFiList() -> [String]? {
+        var ssidList: [String] = []
+     
+        if let interfaces = CNCopySupportedInterfaces() as NSArray? {
+            for interface in interfaces {
+                if let interfaceInfo = CNCopyCurrentNetworkInfo(interface as! CFString) as NSDictionary? {
+                    ssidList.append(interfaceInfo["SSID"] as! String)
+                }
+            }
+        }
+     
+        return ssidList.count > 0 ? ssidList : nil
+    }
+    
+    //获取 WiFi 信息
+    class func getWifiInfo() -> (ssid: String, mac: String) {
+      if let cfas: NSArray = CNCopySupportedInterfaces() {
+        for cfa in cfas {
+          if let dict = CFBridgingRetain(
+            CNCopyCurrentNetworkInfo(cfa as! CFString)
+            ) {
+            if let ssid = dict["SSID"] as? String,
+              let bssid = dict["BSSID"] as? String {
+              return (ssid, bssid)
+            }
+          }
+        }
+      }
+      return ("未知", "未知")
+    }
+    
     
     /// 无网络返回字样
     private static var notReachable: String {

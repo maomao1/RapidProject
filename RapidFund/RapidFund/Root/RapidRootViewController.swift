@@ -18,7 +18,7 @@ class RapidRootViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(RPFDeviceManager.getWifiInfo(),RPFDeviceManager.getWiFiList())
         setUpRootView()
         setUpRx()
         self.delegate = self

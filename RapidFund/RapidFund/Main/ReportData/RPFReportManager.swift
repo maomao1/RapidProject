@@ -218,16 +218,16 @@ class RPFReportManager: NSObject {
         param["yawned"] = RapidSystemVersion
         param["poet"] = GetInfo(kRapidLoginTime)
         param["dneed"] = AppProjectName
-        param["company"] = ["painting": batteryLevel, "artist": isPhoneCharging()]
-        param["imagine"] = ""
-        param["build"] = ["clutched":RapidSingleUUID, 
-                          "pitch" : RapidIDFV,
+        param["company"] = ["painting": batteryLevel, "artist": isPhoneCharging() ? 1 : 0]
+       
+        param["build"] = ["clutched":RapidIDFV, 
+                          "pitch" : RapidSingleUUID,
                           "whowould": "",
                           "covered":Int(Date().timeIntervalSince1970 * 1000),
-                          "andbiscuits": isUsedProxy(),
-                          "munching": isVPNEnabled(),
-                          "doorstep": isJailbroken(),
-                          "is_simulator": isRunningOnSimulator(),
+                          "andbiscuits": isUsedProxy() ? 1 : 0,
+                          "munching": isVPNEnabled() ? 1 : 0,
+                          "doorstep": isJailbroken() ? 1 : 0,
+                          "is_simulator": isRunningOnSimulator() ? 1 : 0,
                           "rug": deviceLanguage(),
                           "forget": RPFDeviceManager.getDeviceSupplier(),
                           "llnever": RPFDeviceManager.getNetWorkType(),
@@ -244,11 +244,10 @@ class RPFReportManager: NSObject {
                           "opening": ScreenInch,
                           "rugs": RapidSystemVersion]
         
-        param["orangeadeand"] = ["bottles":String(describing: availableRAM), 
-                                 "cutlery" : String(describing: totalRAM),
-                                 "towels": String(describing: totalRAM),
-                                 "bedding": String(describing: availableRAM)]
-        
+        param["orangeadeand"] = ["bottles": getDiskSpace(total:false), 
+                                 "cutlery" : getDiskSpace(total:true),
+                                 "towels": getMemoryInfo(total: true),
+                                 "bedding":  getDiskSpace(total: false)]
         let wifiInfo = RPFDeviceManager.getWiFiName()?.first
         let wifiPara: [String : Any] = ["wasan":wifiInfo?.ssid ?? "",
                                         "suggested" : wifiInfo?.ssid ?? "",
