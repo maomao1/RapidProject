@@ -24,6 +24,7 @@ class RapidOrderListCell: UITableViewCell {
         contentView.addSubview(nameLabel)
         contentView.addSubview(bottomImage)
         contentView.addSubview(detailBtn)
+        contentView.addSubview(arrowImg)
         contentView.addSubview(moneyContainerView)
         contentView.addSubview(moneyLabel)
         contentView.addSubview(moneyValueLabel)
@@ -44,6 +45,11 @@ class RapidOrderListCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.right.equalTo(containerView.snp.right).offset(25.rf)
             make.size.equalTo(CGSize(width: 53.rf, height: 53.rf))
+        }
+        
+        arrowImg.snp.makeConstraints { make in
+            make.center.equalTo(detailBtn)
+            make.size.equalTo(CGSize(width: 20.rf, height: 20.rf))
         }
         
         iconImage.snp.makeConstraints { make in
@@ -125,12 +131,12 @@ class RapidOrderListCell: UITableViewCell {
         self.moneyLabel.text = model.shoes
         self.moneyValueLabel.text = model.sweet 
         self.dateLabel.text = model.shewas
-        self.dateValueLabel.text = model.shorts
+        self.dateValueLabel.text = model.orderStatus == .repayment ?  model.shorts : model.ablue
         self.soundLabel.text = model.dirty
         self.statusLabel.text = model.mymorgan
         self.statusBgView.backgroundColor = model.orderStatus.color
-        self.detailBtn.setTitle(model.wore, for: .normal)
-        self.detailBtn.setTitle(model.wore, for: .selected)
+//        self.detailBtn.setTitle(model.wore, for: .normal)
+//        self.detailBtn.setTitle(model.wore, for: .selected)
         self.detailBtn.backgroundColor = model.orderStatus.color
         self.soundLabel.isHidden = model.dirty.isEmpty
         self.soundImg.isHidden = model.dirty.isEmpty
@@ -154,6 +160,12 @@ class RapidOrderListCell: UITableViewCell {
         btn.layer.masksToBounds = true
         btn.layer.cornerRadius = 18.rf
         return btn
+    }()
+    
+    fileprivate lazy var arrowImg: UIImageView = {
+        let arrow = UIImageView(image: .orderListSingleArrow)
+        arrow.isUserInteractionEnabled = false
+        return arrow
     }()
     
     fileprivate lazy var iconImage: UIImageView = {

@@ -116,11 +116,14 @@ class RFContactCell: UITableViewCell {
 //            return
 //        }
        
-        let status = RPFContactManager.shared.requestAccessForContacts()
-        if status {
+        let status = RPFContactManager.shared.requestAccessForContacts(success: { 
+            self.openConatctPicker()
+            self.reportBlock?()
+        })
+        if status == .authorized {
             openConatctPicker()
             reportBlock?()
-        }else{
+        }else if status == .denied || status == .restricted{
             createAlert()
         }
     }

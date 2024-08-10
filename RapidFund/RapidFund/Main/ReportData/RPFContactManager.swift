@@ -29,7 +29,7 @@ class RPFContactManager {
         }
     }
     
-    func requestAccessForContacts() -> Bool{
+    func requestAccessForContacts(success: @escaping (() -> Void)) -> CNAuthorizationStatus{
         
         
         let status = CNContactStore.authorizationStatus(for: .contacts)
@@ -40,28 +40,24 @@ class RPFContactManager {
             store.requestAccess(for: .contacts) { (granted, error) in
                 if let error = error {
                     print("Error requesting access: \(error.localizedDescription)")
-//                    return false
+                    
                 } else {
                     print("Access granted: \(granted)")
                     if granted {
                         // 访问被授权，可以获取通讯录数据
-//                        return true
+                        success()
                     }
-//                    return false
+                   
                 }
             }
-            return true
+            return .notDetermined
         case .restricted, .denied:
             // 访问受限或被拒绝，可以提示用户或者采取其他行动
-            return false
+            return .denied
            
         case .authorized:
             // 已经授权，可以获取通讯录数据
-            return true
-           
-            
-        @unknown default:
-            return false
+            return .authorized
             
         }
     }

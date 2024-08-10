@@ -92,7 +92,7 @@ extension UIImage {
     static let loginConfirmBtnImage = UIImage(named: "login_confirm_btn")!
     
     //MARK: - home
-    static let homeRapidIcon = UIImage(named: "home_rapid_icon")!
+    static let homeRapidIcon = UIImage(named: "home_rapid_logo")!
     static let homeNavBlackRight = UIImage(named: "home_nav_black_right")!
     static let homeNavBlackBack  = UIImage(named: "home_nav_black_back")!
     static let homeNavWhiteRight = UIImage(named: "home_nav_white_right")!
@@ -130,6 +130,9 @@ extension UIImage {
     static let orderListBottomIcon   = UIImage(named: "orderList_bottom_icon")!
     static let orderListSoundIcon   = UIImage(named: "orderList_sound_icon")!
     static let orderListDetailBtnIcon   = UIImage(named: "orderList_detail_btn")!
+    static let orderListSingleArrow   = UIImage(named: "orderList_single_arrow")!
+    static let RPFEmptyImg   = UIImage(named: "common_empty_image")!
+    
 
     //MARK: - mine
     
@@ -150,6 +153,11 @@ extension UIImage {
     static let mineLogOffIcon  = UIImage(named: "mine_icon_logoff")!
     static let mineWhiteArrow = UIImage(named: "mine_white_arrow")!
     static let mineBlackArrow = UIImage(named: "mine_black_arrow")!
+    
+    static let mineAgreementClose = UIImage(named: "agreement_close")!
+    static let mineAgreementPrivacy = UIImage(named: "agreement_privacy")!
+    static let mineAgreementBlackArrow = UIImage(named: "agreement_arrow_black")!
+    static let mineAgreementWhiteArrow = UIImage(named: "agreement_arrow_white")!
     
     // MARK: - about us
     static let mineAboutUsBlackBg = UIImage(named: "mine_about_us_blackbg")!

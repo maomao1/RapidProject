@@ -46,6 +46,7 @@ class RapidMineViewController: RapidBaseViewController {
         super.viewDidLoad()
         viewModel.getData()
         setBackBtnHidden()
+        setNavImageTitleWhite(isWhite: false)
         setupViews()
         // Do any additional setup after loading the view.
     }
@@ -116,14 +117,12 @@ extension RapidMineViewController {
     
     func alertShow(type: RapidCustomAlertViewController.AlertType){
         let vc = RapidCustomAlertViewController(type: type)
-       
-//        vc.exitHandle = { [weak self] in
-//            guard let `self` = self else {return}
-//            self.navigationController?.popToRootViewController(animated: true)
-//        }
-//        vc.continueHandle = { [weak self] in
-////            guard let `self` = self else {return}
-//        }
+    
+        present(vc, animated: true, completion: nil)
+    }
+    
+    func alertAgreement() {
+        let vc = RPFAgreeAlertViewController()
         present(vc, animated: true, completion: nil)
     }
 }
@@ -155,6 +154,7 @@ extension RapidMineViewController: UITableViewDelegate, UITableViewDataSource{
             print("click payment")
         case .agreement:
             print("click agreement")
+            alertAgreement()
         case .aboutUs:
             let vc = RPFAboutUsViewController()
             self.navigationController?.pushViewController(vc, animated: true)

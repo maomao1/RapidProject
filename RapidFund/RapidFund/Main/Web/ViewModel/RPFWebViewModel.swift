@@ -22,7 +22,7 @@ class RPFWebViewModel {
         case `default`
     }
     
-    init(urlString: String, activityType: ActivityType = .default){
+    init(urlString: String, activityType: ActivityType = .default, isAppendPara: Bool = true){
         let basePara = getRapidUrlParam().replacingOccurrences(of: "?", with: "")
         var  fullPath = ""
         if urlString.contains("?") {
@@ -30,8 +30,11 @@ class RPFWebViewModel {
         }else{
             fullPath = urlString + "?" + basePara
         }
-        
-        self.urlString = fullPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        if isAppendPara {
+            self.urlString = fullPath.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        }else {
+            self.urlString = urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        }
         self.activityType = activityType
         self.setUpRx()
     }
@@ -60,6 +63,8 @@ class RPFWebViewModel {
     let goToAppGradeAction = PublishSubject<Void>()
     
     let gotoNewPageAction = PublishSubject<(String)>()
+    
+    let showNavAction = PublishSubject<(Int)>()
     
     let uploadRiskAction = PublishSubject<(String,String)>()
     
@@ -112,6 +117,15 @@ class RPFWebViewModel {
             self.callPhoneNumberAction.onNext(phoneNumber)
             
         })
+        
+        bridge.registerHandler("showHeader", handler: { [weak self] data, responseCallback in
+            guard let `self` = self else { return }
+//            guard let jsonData = data as? [String: Any] else { return }
+//            let json = JSON(jsonData)
+//            let phoneNumber = json["shepherd"].stringValue
+//            self.callPhoneNumberAction.onNext(phoneNumber)
+            
+        })
         bridge.startRegister()
         bridge.messageHandler = { [weak self] message in
             guard let `self` = self, let message = message else { return }
@@ -144,6 +158,10 @@ class RPFWebViewModel {
             guard let jsonData = data as? [String] else { return }
             let phoneNumber = jsonData.first ?? ""
             self.callPhoneNumberAction.onNext(phoneNumber)
+        case "showHeader":
+            guard let jsonData = data as? [Int] else { return }
+            let phoneNumber = jsonData.first ?? 0
+            self.showNavAction.onNext(phoneNumber)
         default:
             break
         }

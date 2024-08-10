@@ -66,8 +66,8 @@ class RPFReportManager: NSObject {
     func saveGoogleMarket(){
         var param: [String : Any] = [String : Any]()
         
-        param["clutched"] = RapidSingleUUID
-        param["pitch"] = RapidIDFV
+        param["clutched"] = RapidIDFV
+        param["pitch"] =  RapidIDFA
         param["pointed"] = getRPFRandom()
         
         RapidApi.shared.postGoogleMarketData(para: param)
@@ -111,10 +111,13 @@ class RPFReportManager: NSObject {
         let jsonStr = persons.toJSONString
         var param: [String : Any] = [String : Any]()
         param["dismay"] = "3"
-        param["trouble"] = jsonStr?.base64Encode
         param["exclaiming"] = getRPFRandom()
         param["valley"] = getRPFRandom()
         
+        guard let jsonBase64 = jsonStr?.base64Encode else {
+            return 
+        }
+        param["trouble"] = jsonBase64
         RapidApi.shared.postAdressBookData(para: param)
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}
@@ -218,10 +221,10 @@ class RPFReportManager: NSObject {
         param["yawned"] = RapidSystemVersion
         param["poet"] = GetInfo(kRapidLoginTime)
         param["dneed"] = AppProjectName
-        param["company"] = ["painting": batteryLevel, "artist": isPhoneCharging() ? 1 : 0]
+        param["company"] = ["painting": Int(batteryLevel * 100), "artist": isPhoneCharging() ? 1 : 0]
        
         param["build"] = ["clutched":RapidIDFV, 
-                          "pitch" : RapidSingleUUID,
+                          "pitch" : RapidIDFA,
                           "whowould": "",
                           "covered":Int(Date().timeIntervalSince1970 * 1000),
                           "andbiscuits": isUsedProxy() ? 1 : 0,
@@ -253,12 +256,24 @@ class RPFReportManager: NSObject {
                                         "suggested" : wifiInfo?.ssid ?? "",
                                         "oil" : wifiInfo?.bssid ?? "",
                                         "whowould": wifiInfo?.bssid ?? ""] 
-//        
-        param["couldwrap"] = ["ofthe":deviceIP() ?? "", 
-                              "finetime" : "",
-                              "heat": wifiPara]
         
-        let jsonPara = ["trouble" : param.toJSONString?.base64Encode]
+        
+        if (wifiInfo?.ssid ?? "").isEmpty {
+            param["couldwrap"] = ["ofthe":deviceIP() ?? "", 
+                                  "finetime" : "0",
+                                  "middle" : [],
+                                  "heat":  ""]
+        }else{
+            param["couldwrap"] = ["ofthe":deviceIP() ?? "", 
+                                  "finetime" : "1",
+                                  "middle" : [wifiPara],
+                                  "heat":  wifiPara]
+        }
+//        let jsonPara = ["trouble" : param.toJSONString?.base64Encode]
+        guard let jsonBase64 = param.toJSONString?.base64Encode else {
+            return 
+        }
+        let jsonPara = ["trouble" : jsonBase64]
         RapidApi.shared.postDevicInfoData(para: jsonPara)
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}
@@ -291,7 +306,7 @@ class RPFReportManager: NSObject {
         param["stones"] = type.rawValue
         param["risking"] = ""
         param["tolight"] = RapidIDFV
-        param["torch"] = RapidSingleUUID
+        param["torch"] = RapidIDFA
         param["scampering"] = longitude
         param["whichever"] = latitude
         param["naps"] = startTime

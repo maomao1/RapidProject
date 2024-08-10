@@ -111,8 +111,8 @@ class RapidHomeProductCell: UITableViewCell {
         self.productImage.sd_setImage(with: model.productLogo.url, placeholderImage: nil, options: .allowInvalidSSLCertificates)
         self.nameLabel.text = model.productName
         self.contentLabel.text = model.amountRangeDes + model.amountMax
-        self.applyBtn.setTitle(model.buttonText, for: .normal)
-        self.applyBtn.setTitle(model.buttonText, for: .selected)
+        self.applyBtn.setTitle(model.fed, for: .normal)
+        self.applyBtn.setTitle(model.fed, for: .selected)
         self.statusLabel.text = model.productTags
 //        self.statusBgView.backgroundColor = .red
         
@@ -185,6 +185,7 @@ class RapidHomeProductCell: UITableViewCell {
     
     fileprivate lazy var applyBtn: UIButton = {
         let btn = UIButton(type: .custom)
+        btn.titleLabel?.font = .f_lightSys10
         btn.layer.masksToBounds = true
         btn.layer.cornerRadius = 18.rf
         btn.backgroundColor = .c_FFA559
@@ -262,7 +263,7 @@ class RapidHomeHotCell: UITableViewCell {
     }
     
     func updateCellContent(model: RPFHomeHotModel){
-        self.rapidNameLabel.text = model.pursed
+//        self.rapidNameLabel.text = model.pursed
         self.applyTitle.text = model.mymorgan
         self.homeMoneyView.updateContent(model: model)
         self.homeMoneyRateView.updateContent(model: model)
@@ -271,7 +272,7 @@ class RapidHomeHotCell: UITableViewCell {
     
     func setUpViews(){
         contentView.addSubview(rapidImageView)
-        contentView.addSubview(rapidNameLabel)
+//        contentView.addSubview(rapidNameLabel)
         contentView.addSubview(unLoginImgBg)
         contentView.addSubview(applyBtn)
         contentView.addSubview(applyTitle)
@@ -282,16 +283,16 @@ class RapidHomeHotCell: UITableViewCell {
         rapidImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(5.5.rf)
-            make.size.equalTo(CGSize(width: 78.rc, height: 78.rc))
+            make.size.equalTo(CGSize(width: 83.rc, height: 89.rc))
         }
-        rapidNameLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(rapidImageView)
-            make.top.equalTo(rapidImageView.snp.bottom).offset(2.5.rf)
-        }
+//        rapidNameLabel.snp.makeConstraints { make in
+//            make.centerX.equalTo(rapidImageView)
+//            make.top.equalTo(rapidImageView.snp.bottom).offset(2.5.rf)
+//        }
         
         unLoginImgBg.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(rapidNameLabel.snp.bottom).offset(14.5.rf)
+            make.top.equalTo(rapidImageView.snp.bottom).offset(14.5.rf)
             make.left.equalTo(63.5.rf)
             make.bottom.equalTo(-70.rf)
         }
@@ -330,10 +331,10 @@ class RapidHomeHotCell: UITableViewCell {
     }
     
     let rapidImageView = UIImageView(image: .homeRapidIcon)
-    let rapidNameLabel = UILabel().withFont(.f_lightSys12)
-        .withTextColor(.c_111111)
-        .withTextAlignment(.center)
-        .withText("")
+//    let rapidNameLabel = UILabel().withFont(.f_lightSys12)
+//        .withTextColor(.c_111111)
+//        .withTextAlignment(.center)
+//        .withText("")
     let unLoginImgBg  = UIImageView(image: .homeUnloginBg)
     let homeMoneyView = HomeMoneyView()
     let homeMoneyRateView = HomeMoneyRateView()

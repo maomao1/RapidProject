@@ -20,6 +20,7 @@ target 'RapidFund' do
   pod 'HandyJSON'
   pod 'FSPagerView'
   pod 'ZLPhotoBrowser'
+  pod 'LYEmptyView'
   pod 'XYZKit', :git => 'https://github.com/DFTT/XYZKit.git', :branch => 'master'
 #  pod 'XYZKit/XYZEmptyBoard', :git => 'https://github.com/DFTT/XYZKit.git', :branch => 'master'
 #  pod 'XYZKit/XYZFloatDragView', :git => 'https://github.com/DFTT/XYZKit.git', :branch => 'master'

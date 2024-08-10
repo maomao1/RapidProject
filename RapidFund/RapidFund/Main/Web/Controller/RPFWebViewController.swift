@@ -79,6 +79,7 @@ class RPFWebViewController: RapidBaseViewController {
         button.setBackgroundImage(.homeNavWhiteBack, for: .normal)
         button.setBackgroundImage(.homeNavWhiteBack, for: .selected)
         button.contentHorizontalAlignment = .left
+//        button.isHidden = true
         return button
     }()
     
@@ -87,7 +88,10 @@ class RPFWebViewController: RapidBaseViewController {
         super.viewDidLoad()
         setupProperties()
         setupViews()
+        showCustomNav(show: viewModel.urlString.contains(BaseH5Api))
         setupRx()
+        
+        
 
     }
     
@@ -98,7 +102,7 @@ class RPFWebViewController: RapidBaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.customNavView.isHidden = true
+//        self.customNavView.isHidden = true
 //        hidesBottomBarWhenPushed = true
 //        navigationController?.fd_fullscreenPopGestureRecognizer?.isEnabled = false
         
@@ -128,6 +132,10 @@ class RPFWebViewController: RapidBaseViewController {
     }
 
     func setupViews() {
+        self.customNavView.isHidden = true
+        self.customNavView.backgroundColor = .white
+        self.setNavImageTitleWhite(isWhite: false)
+        self.rightBtn.isHidden = true
         
         initWebView()
         
@@ -139,10 +147,20 @@ class RPFWebViewController: RapidBaseViewController {
         view.addSubview(webView)
         view.addSubview(progressView)
         view.addSubview(backButton)
-//        addPanGusture()
+        
+        self.customNavView.snp.remakeConstraints { make in
+            if #available(iOS 11.0, *) {
+                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10.rf)
+            } else {
+                make.top.equalTo(10.rf)
+            }
+            make.left.right.equalToSuperview()
+            make.height.equalTo(50.rf)
+        }
         
         webView.snp.makeConstraints { (maker) in
-            maker.edges.equalToSuperview()
+            maker.top.equalTo(self.customNavView.snp.bottom)
+            maker.left.right.bottom.equalToSuperview()
         }
         progressView.snp.makeConstraints { (maker) in
             maker.leading.trailing.top.equalToSuperview()
@@ -151,9 +169,9 @@ class RPFWebViewController: RapidBaseViewController {
         
         backButton.snp.makeConstraints { make in
             if #available(iOS 11.0, *) {
-                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(23.rf)
+                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(15.rf)
             } else {
-                make.top.equalTo(23.rf)
+                make.top.equalTo(15.rf)
             }
             make.left.equalTo(RapidMetrics.LeftRightMargin)
             make.size.equalTo(CGSize(width: 50.rf, height: 50.rf))
@@ -211,18 +229,65 @@ class RPFWebViewController: RapidBaseViewController {
             guard let `self` = self else { return }
                 self.uploadAnalysis(pId: pId, start: time)
         }).disposed(by: bag)
-    
         
+        viewModel.showNavAction
+            .subscribe(onNext: { [weak self] show in
+                guard let `self` = self else { return }
+//                self.showCustomNav(show: show)
+            }).disposed(by: bag)
+        
+    }
+    
+    override func back() {
+        self.backAction()
     }
     
      func backAction() {
         if webView.canGoBack {
             webView.goBack()
         } else {
-            self.navigationController?.popViewController(animated: true)
+            if let navigationController = self.navigationController {
+                
+                for (index, vc) in navigationController.viewControllers.enumerated() {
+                    if vc is RFBankCardListVC {
+                        let v = navigationController.viewControllers[index - 1] 
+                        if v is RPFWebViewController {
+                            navigationController.viewControllers.remove(at: index - 1) 
+                        }
+                    }
+                    if vc is RFFlowVC  || vc is RFBankCardListVC{
+                        navigationController.viewControllers.remove(at: index) 
+                    }
+                    
+                    if vc is RFBankMgrVc  {
+                        navigationController.viewControllers.remove(at: index) 
+                    }
+                }
+                
+                navigationController.popViewController(animated: true)
+ 
+            }
+            
+            
         }
     }
     
+    func showCustomNav(show: Bool) {
+        if show  {
+            self.backButton.isHidden = false
+            self.customNavView.isHidden = true
+            webView.snp.remakeConstraints { (maker) in
+                maker.edges.equalToSuperview()
+            }
+        }else {
+            self.backButton.isHidden = true
+            self.customNavView.isHidden = false
+            webView.snp.makeConstraints { (maker) in
+                maker.top.equalTo(self.customNavView.snp.bottom)
+                maker.left.right.bottom.equalToSuperview()
+            }
+        }
+    }
     
     
     func uploadAnalysis(pId: String, start: String){
@@ -310,6 +375,7 @@ extension RPFWebViewController {
             print("-----")
         case "title":
             let title = self.webView.title
+            self.titleNav.text = title
 //            switch viewModel.activityType {
 //            case .hiddenNavigationBar:
 //                self.navigationController?.title = ""
@@ -359,16 +425,17 @@ extension RPFWebViewController: WKNavigationDelegate, WKUIDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         webView.evaluateJavaScript("document.documentElement.style.webkitTouchCallout='none';", completionHandler: nil)
         webView.evaluateJavaScript("document.documentElement.style.webkitUserSelect='none';", completionHandler: nil)
+        self.hiddenLoading()
     }
     
     // 页面开始加载
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        
+        self.showLoading()
     }
     
     // 页面加载失败
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        
+        self.hiddenLoading()
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {

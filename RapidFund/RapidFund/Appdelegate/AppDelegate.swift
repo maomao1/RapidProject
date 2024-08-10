@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import IQKeyboardManagerSwift
+import AppTrackingTransparency
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         uploadReport()
         observeMemory()
         registerKeyBoard()
+        
         return true
     }
     
@@ -87,7 +89,13 @@ extension AppDelegate {
     }
     
     func uploadReport() {
-        executeAfter(seconds: 0.5) { 
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization { status in
+                if status == .authorized{
+                    RPFReportManager.shared.saveGoogleMarket()
+                }
+            }
+        } else {
             RPFReportManager.shared.saveGoogleMarket()
         }
     }

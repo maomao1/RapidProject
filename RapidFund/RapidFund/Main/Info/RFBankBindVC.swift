@@ -21,12 +21,14 @@ class RFBankBindVC: RapidBaseViewController {
     private let productId: String
     private let orderId: String
     private let dismand:String
-    init(bankCategory: RFBankType, data: RFBankCfg.__RFMuchedModule, productId: String, dismad:String, orderId: String) {
+    private var isAddNewCard = false
+    init(bankCategory: RFBankType, data: RFBankCfg.__RFMuchedModule, productId: String, dismad:String, orderId: String, isAddCard: Bool) {
         self.category = bankCategory
         self.model = data
         self.productId = productId
         self.dismand = dismad
         self.orderId = orderId
+        self.isAddNewCard = isAddCard
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -43,6 +45,12 @@ class RFBankBindVC: RapidBaseViewController {
         super.viewDidLoad()
         setup()
         setNavViewHidden()
+        if self.isAddNewCard {
+            
+        }else{
+            removeLastVC() 
+        }
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -120,8 +128,13 @@ extension RFBankBindVC {
         
         RapidApi.shared.commitBindCardInfo(para: json).subscribe(onNext: { [weak self] _ in
             guard let `self` = self else {return}
-            self.uploadAnalysis(type: .BankCard, time: self.enterPageTime)
-            self.jumpNext()
+            if self.isAddNewCard {
+                self.navigationController?.popViewController(animated: true)
+            }else{
+                self.uploadAnalysis(type: .BankCard, time: self.enterPageTime)
+                self.jumpNext()
+            }
+            
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
@@ -134,9 +147,10 @@ extension RFBankBindVC {
                 return
             }
             self?.uploadAnalysis(type: .StartApply, time: oderTime)
-            let vc = RPFWebViewController()
-            vc.viewModel = RPFWebViewModel(urlString: url)
-            self?.navigationController?.pushViewController(vc, animated: true)
+            self?.setRouter(url: url, pId: "")
+//            let vc = RPFWebViewController()
+//            vc.viewModel = RPFWebViewModel(urlString: url)
+//            self?.navigationController?.pushViewController(vc, animated: true)
             
         }, onError: { err in
             MBProgressHUD.showError(err.localizedDescription)

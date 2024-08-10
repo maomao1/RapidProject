@@ -42,12 +42,15 @@ class RapidOrderListViewController: RapidBaseViewController {
         header.setTitle("Loading more...", for: .refreshing)
         
         tableView.mj_header = header
+        
+        tableView.ly_emptyView = RPFEmpty.emptyDiyView(title: "No Data", detail: "", image: .RPFEmptyImg)
         return tableView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavImageTitleWhite(isWhite: true)
+        self.rightBtn.isHidden = true
         setupViews()
         requestData()
         setUpRx()
@@ -153,9 +156,10 @@ extension RapidOrderListViewController: UITableViewDelegate, UITableViewDataSour
             return 
         }
         let model = models[indexPath.section]
-        let vc = RPFWebViewController()
-        vc.viewModel = RPFWebViewModel(urlString: model.singing)
-        self.navigationController?.pushViewController(vc, animated: true)
+        setRouter(url: model.singing, pId: "")
+//        let vc = RPFWebViewController()
+//        vc.viewModel = RPFWebViewModel(urlString: model.singing)
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 //    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -163,11 +167,17 @@ extension RapidOrderListViewController: UITableViewDelegate, UITableViewDataSour
 //    }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 12.rf
+        return 16.rf
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 12.rf
+        return CGFloat.leastNormalMagnitude 
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let header = UIView(frame: CGRect(x: 0, y: 0, width: kPortraitScreenW, height: 12.rf))
+        header.backgroundColor = .clear
+        return header
     }
 }
 

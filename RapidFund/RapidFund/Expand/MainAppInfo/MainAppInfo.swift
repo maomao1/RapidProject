@@ -170,6 +170,9 @@ let RapidIDFV: String = {
     return RapidSingleIdentifierManager.manager.getIDFV()
 }()
 
+let RapidIDFA: String = {
+    return RapidSingleIdentifierManager.manager.getIDFA()
+}()
 
 /**
  *  是否充电
@@ -411,7 +414,7 @@ func  getRapidUrlBaseParam()-> [String: String]  {
     para["bittengeorge"]     = OsPlatform
     para["wobblyagain"]      = AppVersion
     para["sick"]             = ModelName
-    para["wall"]             = DeviceID
+    para["wall"]             = RapidSingleUUID
     para["leaning"]          = RapidSystemVersion
     para["graze"]            = AppMarket
     para["muchmore"]         = GetInfo(kRapidSession)
@@ -424,7 +427,7 @@ func  getRapidUrlParam()-> String  {
     para["bittengeorge"]     = OsPlatform
     para["wobblyagain"]      = AppVersion
     para["sick"]             = ModelName
-    para["wall"]             = DeviceID
+    para["wall"]             = RapidSingleUUID
     para["leaning"]          = RapidSystemVersion
     para["graze"]            = AppMarket
     para["muchmore"]         = GetInfo(kRapidSession)

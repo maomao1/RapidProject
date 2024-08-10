@@ -80,6 +80,8 @@
 		2E9B93B52C48A4D000624609 /* RPFWebViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93B42C48A4D000624609 /* RPFWebViewModel.swift */; };
 		2E9B93B72C49120900624609 /* OtherExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93B62C49120900624609 /* OtherExtension.swift */; };
 		2E9B93B92C4C2CD500624609 /* RPFLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9B93B82C4C2CD500624609 /* RPFLocationManager.swift */; };
+		2EBA9EEB2C648FA900A71991 /* RPFEmpty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBA9EEA2C648FA900A71991 /* RPFEmpty.swift */; };
+		2EBA9EED2C64920D00A71991 /* RPFAgreeAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBA9EEC2C64920D00A71991 /* RPFAgreeAlertViewController.swift */; };
 		2EBDADF62C39769E00B3C845 /* ProjectConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADF52C39769E00B3C845 /* ProjectConfig.swift */; };
 		2EBDADF82C39BAEB00B3C845 /* TimeIntervalExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADF72C39BAEB00B3C845 /* TimeIntervalExtension.swift */; };
 		2EBDADFA2C39BBCB00B3C845 /* RapidLoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDADF92C39BBCB00B3C845 /* RapidLoginViewModel.swift */; };
@@ -93,7 +95,6 @@
 		2EBDAE0A2C3AD35A00B3C845 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE092C3AD35A00B3C845 /* StringExtension.swift */; };
 		2EBDAE0D2C3B9C3000B3C845 /* RapidSingleIdentifierManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE0C2C3B9C3000B3C845 /* RapidSingleIdentifierManager.swift */; };
 		2EBDAE0F2C3B9F6E00B3C845 /* CacheHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE0E2C3B9F6E00B3C845 /* CacheHelper.swift */; };
-		2EBDAE122C3BDBC500B3C845 /* RapidTabbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE112C3BDBC500B3C845 /* RapidTabbar.swift */; };
 		2EBDAE142C3C21A100B3C845 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE132C3C21A100B3C845 /* UIViewExtension.swift */; };
 		2EBDAE1A2C3CF6CC00B3C845 /* RapidHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE192C3CF6CC00B3C845 /* RapidHomeViewModel.swift */; };
 		2EBDAE202C3D2EEA00B3C845 /* RapidLoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDAE1F2C3D2EEA00B3C845 /* RapidLoginModel.swift */; };
@@ -217,6 +218,8 @@
 		2E9B93B42C48A4D000624609 /* RPFWebViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFWebViewModel.swift; sourceTree = "<group>"; };
 		2E9B93B62C49120900624609 /* OtherExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherExtension.swift; sourceTree = "<group>"; };
 		2E9B93B82C4C2CD500624609 /* RPFLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFLocationManager.swift; sourceTree = "<group>"; };
+		2EBA9EEA2C648FA900A71991 /* RPFEmpty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFEmpty.swift; sourceTree = "<group>"; };
+		2EBA9EEC2C64920D00A71991 /* RPFAgreeAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPFAgreeAlertViewController.swift; sourceTree = "<group>"; };
 		2EBDADF52C39769E00B3C845 /* ProjectConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectConfig.swift; sourceTree = "<group>"; };
 		2EBDADF72C39BAEB00B3C845 /* TimeIntervalExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalExtension.swift; sourceTree = "<group>"; };
 		2EBDADF92C39BBCB00B3C845 /* RapidLoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidLoginViewModel.swift; sourceTree = "<group>"; };
@@ -230,7 +233,6 @@
 		2EBDAE092C3AD35A00B3C845 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		2EBDAE0C2C3B9C3000B3C845 /* RapidSingleIdentifierManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidSingleIdentifierManager.swift; sourceTree = "<group>"; };
 		2EBDAE0E2C3B9F6E00B3C845 /* CacheHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheHelper.swift; sourceTree = "<group>"; };
-		2EBDAE112C3BDBC500B3C845 /* RapidTabbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidTabbar.swift; sourceTree = "<group>"; };
 		2EBDAE132C3C21A100B3C845 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		2EBDAE192C3CF6CC00B3C845 /* RapidHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidHomeViewModel.swift; sourceTree = "<group>"; };
 		2EBDAE1F2C3D2EEA00B3C845 /* RapidLoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RapidLoginModel.swift; sourceTree = "<group>"; };
@@ -635,7 +637,7 @@
 		2EBDAE102C3BDBA200B3C845 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2EBDAE112C3BDBC500B3C845 /* RapidTabbar.swift */,
+				2EBA9EEA2C648FA900A71991 /* RPFEmpty.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -682,6 +684,7 @@
 				2E91E86A2C36A77D005E2AB4 /* RapidMineViewController.swift */,
 				2E3D98962C40175500C49298 /* RPFAboutUsViewController.swift */,
 				2EECB1F22C3D892F00E59A1C /* RapidCustomAlertViewController.swift */,
+				2EBA9EEC2C64920D00A71991 /* RPFAgreeAlertViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1045,13 +1048,13 @@
 				026A7B782C4CF05B008EAD52 /* RFAddressSubListView.swift in Sources */,
 				2E2779D32C463658007B4E74 /* RPFOrderModel.swift in Sources */,
 				2EBDAE082C3AD25000B3C845 /* MBProgressHUDExtension.swift in Sources */,
+				2EBA9EEB2C648FA900A71991 /* RPFEmpty.swift in Sources */,
 				02F57BFC2C411E460049D21C /* JXPageAss.swift in Sources */,
 				2EECB2012C3EE40500E59A1C /* RapidHomeProductCell.swift in Sources */,
 				2EBDAE1A2C3CF6CC00B3C845 /* RapidHomeViewModel.swift in Sources */,
 				2EBDAE022C39C59D00B3C845 /* RapidApiConstantUrl.swift in Sources */,
 				2E9B93B92C4C2CD500624609 /* RPFLocationManager.swift in Sources */,
 				2E91E8772C36E2E7005E2AB4 /* UILabelExtension.swift in Sources */,
-				2EBDAE122C3BDBC500B3C845 /* RapidTabbar.swift in Sources */,
 				2E3D989B2C40178D00C49298 /* RPFAboutUsViewModel.swift in Sources */,
 				2E3D989D2C405C4500C49298 /* RapidHomeModel.swift in Sources */,
 				0221C86D2C3F6C7D00896864 /* RFAuthFRModel.swift in Sources */,
@@ -1072,6 +1075,7 @@
 				02C3BAF12C3E2148001B4107 /* RFIDDetailVC.swift in Sources */,
 				2E4D39462C35857B00C2271A /* UIImageExtension.swift in Sources */,
 				026A7B742C4A50C0008EAD52 /* RFAddressDetail.swift in Sources */,
+				2EBA9EED2C64920D00A71991 /* RPFAgreeAlertViewController.swift in Sources */,
 				2E4D394B2C36A4BA00C2271A /* RapidBaseNavgationController.swift in Sources */,
 				2ED571292C5CE6380040E3F7 /* RPFRecommendViewController.swift in Sources */,
 				2EBDADF62C39769E00B3C845 /* ProjectConfig.swift in Sources */,
@@ -1283,15 +1287,19 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RapidFund/RapidFund.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DWMRGJDXFD;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 2F6XZMZ52M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RapidFund/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Fast Peso";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera permission is necessary for you to upload identification photos for identity verification. This helps us validate your identity and ensure the security and compliance of our loan services.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "The contacts permission is primarily used to help you quickly import emergency contact information, enhancing the convenience and security of the loan application process. We do not read or store the contents of your contacts unless you choose to share them.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We request access to your location information, primarily for risk assessment and because certain loan products may require location-based services. For example, our loan products are only available in the Philippines.";
@@ -1311,9 +1319,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.edocyun.tumorDepressionPatient;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhuanyong.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = test;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1331,15 +1340,19 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"ASSETCATALOG_COMPILER_APPICON_NAME[sdk=iphoneos*]" = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = RapidFund/RapidFund.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = DWMRGJDXFD;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 2F6XZMZ52M;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = RapidFund/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Fast Peso";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera permission is necessary for you to upload identification photos for identity verification. This helps us validate your identity and ensure the security and compliance of our loan services.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "The contacts permission is primarily used to help you quickly import emergency contact information, enhancing the convenience and security of the loan application process. We do not read or store the contents of your contacts unless you choose to share them.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "We request access to your location information, primarily for risk assessment and because certain loan products may require location-based services. For example, our loan products are only available in the Philippines.";
@@ -1359,9 +1372,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.edocyun.tumorDepressionPatient;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zhuanyong.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = test;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

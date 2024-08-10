@@ -35,7 +35,7 @@ class RapidLoginViewController: RapidBaseViewController {
     var viewModel = RapidLoginViewModel()
     
     let backgroundImageView = UIImageView(image: .loginBgImage)
-    let rapidImageView = UIImageView(image: .loginRapidImage)
+    let rapidImageView = UIImageView(image: .homeRapidIcon)
     
     let agreeMentTribute : NSMutableAttributedString = {
         let textAttribute = NSMutableAttributedString(string: AutoLayout.userPrivacyText)
@@ -240,8 +240,8 @@ extension RapidLoginViewController {
         
         rapidImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(backgroundImageView.snp.top).offset(180.rf)
-            make.size.equalTo(CGSize(width: 63.rf, height: 90.rf))
+            make.top.equalTo(backgroundImageView.snp.top).offset(166.rf)
+            make.size.equalTo(CGSize(width: 93.rf, height: 100.rf))
         }
         
         welcomeLab.snp.makeConstraints { make in
@@ -483,9 +483,15 @@ extension RapidLoginViewController: UITextFieldDelegate, UITextViewDelegate {
             }
         }else if textField == codeTF {
             if textField.markedTextRange == nil {
-                if let text = textField.text, text.count > 6 {
+//                if let text = textField.text, text.count > 6 {
+//                    textField.text = String(text.prefix(6))
+//                }
+                if let text = textField.text, text.count == 6 {
                     textField.text = String(text.prefix(6))
+                    self.viewModel.getLoginData(phone: self.phoneNumTF.text?.trim() ?? "", codeStr: textField.text?.trim() ?? "")
                 }
+                
+                
             }
         }
     }
@@ -497,9 +503,7 @@ extension RapidLoginViewController: UITextFieldDelegate, UITextViewDelegate {
     
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
         if URL.scheme == "rapidUserProtocol" {
-//            let webVC = YDYActivityWebViewController()
-//            webVC.viewModel = YDYActivityWebViewModel(urlString: YDYUserProtocolH5Url)
-//            navigationController?.pushViewController(webVC, animated: true)
+          
             return false
         }
 

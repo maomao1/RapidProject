@@ -19,16 +19,15 @@ enum OrderType: String {
     var titleName: String {
         switch self{
         case .unpaid:
-            return "Unpaid Order"
+            return "Pending Repayment"
         case .review:
-            return "Under Review"
+            return "In Progress"
         case .failed:
-            return "Failed Loan Funding"
+            return "Payment Fail"
         case .settled:
             return "Settled Order"
-       
         case .all:
-            return "Order"
+            return "All Orders"
         }
     }
     

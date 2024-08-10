@@ -12,6 +12,7 @@ PODS:
   - JXPagingView/Pager (2.1.2)
   - JXPagingView/Paging (2.1.2)
   - JXSegmentedView (1.3.0)
+  - LYEmptyView (1.3.1)
   - MBProgressHUD (1.2.0)
   - MJRefresh (3.7.5)
   - RxCocoa (6.6.0):
@@ -48,6 +49,7 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - JXPagingView
   - JXSegmentedView
+  - LYEmptyView
   - MBProgressHUD
   - MJRefresh
   - RxCocoa
@@ -71,6 +73,7 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - JXPagingView
     - JXSegmentedView
+    - LYEmptyView
     - MBProgressHUD
     - MJRefresh
     - RxCocoa
@@ -108,6 +111,7 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 79fab21f451441935788dc5d80ded21c32685904
   JXPagingView: 90924b364a2ff7e94db534fad1fa50925ff69ee4
   JXSegmentedView: fec0d335355b6e019c494fe2e030bde8a36d2df6
+  LYEmptyView: b6d418cfa38b78df0cf243f9a9c25ccbdc399922
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
   RxCocoa: 44a80de90e25b739b5aeaae3c8c371a32e3343cc
@@ -122,6 +126,6 @@ SPEC CHECKSUMS:
   XYZKit: 4b36427ed270de9db9ae7b6790c2365d6811c196
   ZLPhotoBrowser: c517bd5ca32909ba67b02b99a558ab90756a8448
 
-PODFILE CHECKSUM: a012a5c5a55b8cbbd841aecc13288b24e4a274a9
+PODFILE CHECKSUM: d9d473148c6120d264b0f224b0749aa7da64ca70
 
 COCOAPODS: 1.10.2

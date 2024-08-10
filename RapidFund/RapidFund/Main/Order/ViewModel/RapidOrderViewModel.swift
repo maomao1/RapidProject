@@ -12,6 +12,7 @@ import RxCocoa
 class RapidOrderViewModel {
     
     enum OrderType {
+        case all
         case unpaind
         case under
         case failed
@@ -19,12 +20,14 @@ class RapidOrderViewModel {
         
         var titleName: String {
             switch self{
+            case .all:
+                return "All Orders"
             case .unpaind:
-                return "Unpaid Order"
+                return "Pending Repayment"
             case .under:
-                return "Under Review"
+                return "In Progress"
             case .failed:
-                return "Failed Loan Funding"
+                return "Payment Fail"
             case .settled:
                 return "Settled Order"
            
@@ -33,7 +36,7 @@ class RapidOrderViewModel {
         
         var iconImage: UIImage {
             switch self{
-            case .unpaind:
+            case .unpaind, .all:
                 return .orderUnpaidIcon
             case .under:
                 return .orderUnderIcon
@@ -58,5 +61,5 @@ class RapidOrderViewModel {
     }
     
     let pageTitle = "Order"
-    var sections: [OrderType] = [.unpaind, .under, .failed, .settled]
+    var sections: [OrderType] = [.all,.unpaind, .under, .failed, .settled]
 }

@@ -21,7 +21,7 @@ class RapidMineViewModel {
         var titleName: String {
             switch self{
             case .order:
-                return "MyOder"
+                return "Loan Recoder"
             case .payment:
                 return "Payment"
             case .agreement:

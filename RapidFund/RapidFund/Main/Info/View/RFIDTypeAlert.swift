@@ -175,6 +175,8 @@ extension RFIDTypeAlert: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.selectedContent = self.contents[indexPath.item]
+        self.selectedBlock?(self.selectedContent)
+        self.dismiss(withAnimation: true)
     }
 
 }

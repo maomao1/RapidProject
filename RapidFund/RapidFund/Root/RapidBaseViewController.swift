@@ -37,16 +37,14 @@ class RapidBaseViewController: UIViewController {
     
     private(set) lazy var backBtn: UIButton = {
         let button = UIButton(type: .custom)
-//        button.setBackgroundImage(.homeNavBlackBack, for: .normal)
-//        button.setBackgroundImage(.homeNavBlackBack, for: .selected)
+       
         button.contentHorizontalAlignment = .left
         return button
     }()
     
     private(set) lazy var rightBtn: UIButton = {
         let button = UIButton(type: .custom)
-//        button.setBackgroundImage(.homeNavBlackRight, for: .normal)
-//        button.setBackgroundImage(.homeNavBlackRight, for: .selected)
+       
         button.contentHorizontalAlignment = .right
         return button
     }()
@@ -56,7 +54,7 @@ class RapidBaseViewController: UIViewController {
 //        navigationController?.navigationBar.isTranslucent = false
         setBottomView()
         setCustomNav()
-        setNavImageTitleWhite(isWhite: false)
+        setNavImageTitleWhite(isWhite: true)
         setBaseUpRx()
         
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -148,6 +146,39 @@ class RapidBaseViewController: UIViewController {
         }
     }
     
+    func removeFlowVC(){
+        if let navigationController = self.navigationController {
+            guard let first = navigationController.viewControllers.first(where: { $0 is RFFlowVC}),
+                    let index = navigationController.viewControllers.firstIndex(of: first) else { return }
+            navigationController.viewControllers.remove(at: index)
+        }
+    }
+    
+    func removeBindVC(){
+        if let navigationController = self.navigationController {
+            guard let first = navigationController.viewControllers.first(where: { $0 is RFBankMgrVc}),
+                    let index = navigationController.viewControllers.firstIndex(of: first) else { return }
+            navigationController.viewControllers.remove(at: index)
+        }
+    }
+    
+    func removeCardListVC(){
+        if let navigationController = self.navigationController {
+            guard let first = navigationController.viewControllers.first(where: { $0 is RFBankCardListVC}),
+                    let index = navigationController.viewControllers.firstIndex(of: first) else { return }
+            navigationController.viewControllers.remove(at: index)
+        }
+    }
+    
+    func removeFrontWebVC(){
+        if let navigationController = self.navigationController {
+            guard let first = navigationController.viewControllers.first(where: { $0 is RPFWebViewController}),
+                    let index = navigationController.viewControllers.firstIndex(of: first) else { return }
+            navigationController.viewControllers.remove(at: index)
+        }
+    }
+    
+    
     func setBottomView() {
         safeAreaBottomView.backgroundColor = .white
         view.addSubview(safeAreaBottomView)
@@ -156,16 +187,6 @@ class RapidBaseViewController: UIViewController {
             make.height.equalTo(IPHONE_X ? 34 : 0)
         }
         safeAreaBottomView.isHidden = true
-//        if let navigationController = navigationController {
-//            if navigationController.viewControllers.count > 1
-//            {
-//                safeAreaBottomView.isHidden = true
-//            } else {
-//                safeAreaBottomView.isHidden = false
-//            }
-//        } else {
-//            safeAreaBottomView.isHidden = true
-//        }
     }
     
     // 设置LeftBarButtonItem
@@ -251,6 +272,7 @@ extension RapidBaseViewController {
                 let vc = RPFWebViewController()
                 vc.viewModel = RPFWebViewModel(urlString: url)
                 self.navigationController?.pushViewController(vc, animated: true)
+               
             }else {
                 let schemeUrls = url.components(separatedBy: "?")
                 let scheme = schemeUrls.first
@@ -348,6 +370,7 @@ extension RapidBaseViewController {
         }
         return pairs.isEmpty ? nil : pairs
     }
+    
     
 }
 

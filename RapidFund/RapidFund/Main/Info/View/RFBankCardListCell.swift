@@ -10,6 +10,7 @@ import UIKit
 class RFBankCardListCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = .clear
         setup()
     }
     
@@ -62,6 +63,7 @@ class RFBankCardListCell: UITableViewCell {
         selBtn.setBackgroundImage("bankcard_unsel".image, for: .normal)
         selBtn.setBackgroundImage("bankcard_sel".image, for: .selected)
         contentView.addSubview(selBtn)
+        selBtn.isUserInteractionEnabled = false
         selBtn.snp.makeConstraints { make in
             make.left.equalTo(self.cardBgView.snp.right).offset(5.5.rf)
             make.centerY.equalTo(cardBgView)
@@ -75,17 +77,33 @@ class RFBankCardListCell: UITableViewCell {
     private let iconImgView = UIImageView()
     private let cardCategoryLb = UILabel().font(12.font).textColor(0x000000.color)
     private let cardNoLb = UILabel().font(20.font).textColor(0x000000.color)
-    private let accountLb = UILabel().font(12.font).textColor(0x000000.color)
+    private let accountLb = UILabel().font(12.font).textColor(0x000000.color).text("Account")
     private let selBtn = UIButton(type: .custom)
     
     func fill(_ data: RFBankListModel.__BankInfo) {
         cardBgView.image = data.attempt == 1 ? "bankcard_bg1".image : "bankcard_bg2".image
         iconImgView.sd_setImage(with: URL(string: data.toy))
-        cardNoLb.text = data.nosing
+        cardNoLb.text = data.half
         cardCategoryLb.text = data.eager
-        accountLb.text = data.half
+//        accountLb.text = data.half
         bankSelected = data.isSelected
     }
+    
+//    func handleAccount(text: String) -> String {
+//        var account = ""
+//        var first = ""
+//        var middle = ""
+//        var last = ""
+//        if text.count > 4 {
+//            first = String(text.prefix(4))
+//        }
+//        if text.count > 8 {
+//            middle = text.su
+//        }
+//        
+//        
+//        
+//    }
     
     var bankSelected:Bool = false {
         didSet {

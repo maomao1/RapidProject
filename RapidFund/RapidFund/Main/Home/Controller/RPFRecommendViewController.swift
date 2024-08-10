@@ -50,6 +50,8 @@ class RPFRecommendViewController: RapidBaseViewController {
         header.setTitle("Loading more...", for: .refreshing)
         
         tableView.mj_header = header
+        tableView.ly_emptyView = RPFEmpty.emptyDiyView(title: "No Data", detail: "", image: .RPFEmptyImg)
+
         
         return tableView
     }()

@@ -4,12 +4,12 @@
 //
 //  Created by 毛亚恒 on 2024/7/24.
 //
-
+import UIKit
 import CoreTelephony
 import SystemConfiguration
 
 class RPFDeviceManager: NSObject {
-    
+
     ///获取运营商
     class func getDeviceSupplier() -> String {
         return rf_deviceSupplier()
@@ -53,37 +53,7 @@ class RPFDeviceManager: NSObject {
          }
          return nil
      }
-    
-    class func getWiFiList() -> [String]? {
-        var ssidList: [String] = []
-     
-        if let interfaces = CNCopySupportedInterfaces() as NSArray? {
-            for interface in interfaces {
-                if let interfaceInfo = CNCopyCurrentNetworkInfo(interface as! CFString) as NSDictionary? {
-                    ssidList.append(interfaceInfo["SSID"] as! String)
-                }
-            }
-        }
-     
-        return ssidList.count > 0 ? ssidList : nil
-    }
-    
-    //获取 WiFi 信息
-    class func getWifiInfo() -> (ssid: String, mac: String) {
-      if let cfas: NSArray = CNCopySupportedInterfaces() {
-        for cfa in cfas {
-          if let dict = CFBridgingRetain(
-            CNCopyCurrentNetworkInfo(cfa as! CFString)
-            ) {
-            if let ssid = dict["SSID"] as? String,
-              let bssid = dict["BSSID"] as? String {
-              return (ssid, bssid)
-            }
-          }
-        }
-      }
-      return ("未知", "未知")
-    }
+
     
     
     /// 无网络返回字样
@@ -107,10 +77,10 @@ extension RPFDeviceManager {
         if #available(iOS 12.0, *) {
             if let carriers = info.serviceSubscriberCellularProviders {
                 if carriers.keys.count == 0 {
-                    return "无手机卡"
+                    return "no sim card"
                 } else { //获取运营商信息
                     for (index, carrier) in carriers.values.enumerated() {
-                        guard carrier.carrierName != nil else { return "无手机卡" }
+                        guard carrier.carrierName != nil else { return "no sim card" }
                         //查看运营商信息 通过CTCarrier类
                         if index == 0 {
                             supplier = carrier.carrierName!
@@ -121,14 +91,14 @@ extension RPFDeviceManager {
                     return supplier
                 }
             } else{
-                return "无手机卡"
+                return "no sim card"
             }
         } else {
             if let carrier = info.subscriberCellularProvider {
-                guard carrier.carrierName != nil else { return "无手机卡" }
+                guard carrier.carrierName != nil else { return "no sim card" }
                 return carrier.carrierName!
             } else{
-                return "无手机卡"
+                return "no sim card"
             }
         }
     }

@@ -11,6 +11,8 @@ let RapidUserProtocol = "Privacy Policy"
 
 let BaseURl = "http://8.212.152.227/rfapi"
 
+let BaseH5Api = "8.212.152.227"
+
 
 let RPFRouterSet = "rapid://rfapi.rapidfund.app/terrified"
 let RPFRouterHome = "rapid://rfapi.rapidfund.app/loudest"

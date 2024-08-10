@@ -20,6 +20,7 @@ class RPFLocationManager: NSObject {
     
      override init() {
          super.init()
+         requestLocationAuthorizationStatus()
     }
     
     
@@ -84,6 +85,8 @@ extension RPFLocationManager: CLLocationManagerDelegate {
                         handle("\(longitude)","\(latitude)")
                     }
                     self.stopGettingLocation()
+                    
+//                    print(RPFDeviceManager.getWifiInfo(),RPFDeviceManager.getWiFiList())
                     
                 }
             }

@@ -71,7 +71,7 @@ extension RapidOrderViewController {
             make.right.equalToSuperview()
             make.left.equalTo(backgroundImageView.snp.left).offset(33.rc)
             make.top.equalTo(topImageView.snp.bottom).offset(-86.rc)
-            make.height.equalTo(300.rc)
+            make.height.equalTo(368.rc)
         }
         
         tableView.snp.makeConstraints { make in
@@ -113,6 +113,8 @@ extension RapidOrderViewController: UITableViewDelegate, UITableViewDataSource{
         case .settled:
             vc.viewModel = RapidOrderListViewModel(type: .settled)
        
+        case .all:
+            vc.viewModel = RapidOrderListViewModel(type: .all)
         }
         
         self.navigationController?.pushViewController(vc, animated: true)

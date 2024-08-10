@@ -11,12 +11,12 @@ import MBProgressHUD
 import UIKit
 
 
-func requestBindBankInfo(_ productId: String, _ orderId: String,  _ vc: UIViewController) {
+func requestBindBankInfo(_ productId: String, _ orderId: String,  _ vc: UIViewController, isNew: Bool = false) {
     MBProgressHUD.showLoading(msg: nil, inView: nil)
-    RapidApi.shared.getBindCardInfo(para: ["whisked": "0", "frisked": getRPFRandom()]).subscribe(onNext: { obj in
+    RapidApi.shared.getBindCardInfo(para: ["whisked": isNew ? "1" : "0", "frisked": getRPFRandom()]).subscribe(onNext: { obj in
         guard let model = RFBankCfg.deserialize(from: obj.dictionaryObject) else { return }
         MBProgressHUD.hideAllHUD(for: nil)
-        let bankVc = RFBankMgrVc(config: model, product_id: productId, order_id: orderId)
+        let bankVc = RFBankMgrVc(config: model, product_id: productId, order_id: orderId, isNewCard: isNew)
         vc.navigationController?.pushViewController(bankVc, animated: true)
     }, onError: { err in
         MBProgressHUD.hideAllHUD(for: nil)
@@ -28,10 +28,12 @@ class RFBankMgrVc: RapidBaseViewController {
     private let cfg: RFBankCfg
     private let productId: String
     private let orderId: String
-    init(config: RFBankCfg, product_id: String, order_id: String) {
+    private var isNewCard = false
+    init(config: RFBankCfg, product_id: String, order_id: String, isNewCard: Bool) {
         self.cfg = config
         self.productId = product_id
         self.orderId = order_id
+        self.isNewCard = isNewCard
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -45,7 +47,11 @@ class RFBankMgrVc: RapidBaseViewController {
         setup()
         self.view.bringSubviewToFront(self.customNavView)
         self.rightBtn.isHidden = true
-        removeLastVC()
+        if self.isNewCard {
+            
+        }else{
+            removeLastVC()
+        }
     }
     
     private func getTitles() -> [String] {
@@ -173,6 +179,6 @@ extension RFBankMgrVc: JXSegmentedListContainerViewDataSource {
 
     func listContainerView(_: JXSegmentedListContainerView, initListAt index: Int) -> JXSegmentedListContainerViewListDelegate {
         let model = self.cfg.munched[index]
-        return RFBankBindVC(bankCategory: model.getCardType(), data: model, productId: productId, dismad: model.dismay, orderId: orderId)
+        return RFBankBindVC(bankCategory: model.getCardType(), data: model, productId: productId, dismad: model.dismay, orderId: orderId, isAddCard: self.isNewCard)
     }
 }

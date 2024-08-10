@@ -9,10 +9,12 @@ import MBProgressHUD
 import UIKit
 
 class RFBankCardListVC: RapidBaseViewController {
-    private let tb = UITableView(frame: .zero, style: .plain)
+    private let tb = UITableView(frame: .zero, style: .grouped)
     private var dataSource: [RFBankListModel] = []
     private let order_id: String?
     private let productId:String
+    
+//    var selectedIndex 
     init(orderId: String? = nil, productId:String) {
         self.order_id = orderId
         self.productId = productId
@@ -26,9 +28,10 @@ class RFBankCardListVC: RapidBaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setLeftBarButtonItem()
         setup()
         titleNav.text = "Select Account"
+        self.setNavImageTitleWhite(isWhite: false)
+        
         self.rightBtn.isHidden = true
         self.view.bringSubviewToFront(customNavView)
     }
@@ -56,16 +59,20 @@ class RFBankCardListVC: RapidBaseViewController {
         tb.snp.makeConstraints { make in
             make.top.equalTo(customNavView.snp.bottom)
             make.left.right.equalToSuperview()
-            make.bottom.equalTo(100.rf)
+            make.bottom.equalTo(-100.rf)
         }
         let nextBtn = RFNextBtn()
-        nextBtn.text = "Submit Loan"
+        nextBtn.text = "Confirm"
         nextBtn.nextImg = "bankcard_next".image
         nextBtn.addTapGesture {}
         view.addSubview(nextBtn)
         nextBtn.snp.makeConstraints { make in
             make.bottom.equalTo(-20.rf)
             make.centerX.equalToSuperview()
+        }
+        
+        nextBtn.addTapGesture { [weak self] in
+            self?.submitAction()
         }
     }
     
@@ -156,16 +163,24 @@ extension RFBankCardListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let card = dataSource[indexPath.section].forgot[indexPath.row]
-        RapidApi.shared.changeBankCardInfo(para: ["nosing": card.nosing, "snapped": order_id ?? ""]).subscribe(onNext: { [weak self] obj in
-            self?.refreshSelectedCard(card)
-            guard let json = obj.dictionaryObject?["trouble"] as? [String: Any], let smelt = json["smelt"] as? String, smelt.isEmpty == false else { return }
-            
-            let vc = RPFWebViewController()
-            vc.viewModel = RPFWebViewModel(urlString: smelt)
-            self?.navigationController?.pushViewController(vc, animated: true)
-        }, onError: { err in
-            MBProgressHUD.showError(err.localizedDescription)
-        }).disposed(by: bag)
+        self.refreshSelectedCard(card)
+        
+    }
+    
+    func submitAction() {
+        self.dataSource.forEach { obj in
+            obj.forgot.forEach { card in
+                if card.isSelected {
+                    RapidApi.shared.changeBankCardInfo(para: ["nosing": card.nosing, "snapped": order_id ?? ""]).subscribe(onNext: { [weak self] obj in
+                        guard let json = obj.dictionaryObject, let smelt = json["smelt"] as? String, smelt.isEmpty == false else { return }
+                        self?.setRouter(url: smelt, pId: "")
+                    }, onError: { err in
+                        MBProgressHUD.showError(err.localizedDescription)
+                    }).disposed(by: bag) 
+                }
+            }
+        }
+       
     }
     
     private func refreshSelectedCard(_ bank: RFBankListModel.__BankInfo) {
@@ -179,14 +194,7 @@ extension RFBankCardListVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     private func getBankConfig() {
-//        RapidApi.shared.getBindCardInfo(para: ["whisked": "0", "frisked": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
-//            guard let model = RFBankCfg.deserialize(from: obj.dictionaryObject) else { return }
-//            guard let self = self else { return }
-//            let alert = RFBankMgrAlert(config: model, product_id: self.productId, orderId: self.order_id ?? "1")
-//            alert.show(on: self.view)
-//        }, onError: { err in
-//            MBProgressHUD.showError(err.localizedDescription)
-//        }).disposed(by: bag)
-        requestBindBankInfo(productId, order_id ?? "", self)
+
+        requestBindBankInfo(productId, order_id ?? "", self, isNew: true)
     }
 }

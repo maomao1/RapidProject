@@ -50,13 +50,16 @@ class RapidSingleIdentifierManager: NSObject {
     }
     
     func getIDFV() -> String {
-        if let idfa = self.keyChainReadData(identifier: "idfvKey") as? String {
-            return idfa
+        if let idfv = self.keyChainReadData(identifier: "idfvKey") as? String {
+            return idfv
         } else {
-            let idfa = ASIdentifierManager.shared().advertisingIdentifier.uuidString
-            if self.keyChainSaveData(data: idfa, withIdentifier: "idfvKey") {
-                return idfa
+             let idfv = UIDevice.current.identifierForVendor?.uuidString 
+            if let idfa = idfv {
+                if self.keyChainSaveData(data: idfa, withIdentifier: "idfvKey") {
+                    return idfa
+                }
             }
+            
         }
         return "simulator"
     }

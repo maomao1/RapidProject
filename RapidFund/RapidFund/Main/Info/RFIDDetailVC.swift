@@ -49,7 +49,7 @@ class RFIDDetailVC: RapidBaseViewController {
 //    }()
 
     private var model: RFAuthFRModel?
-    private var nextModel: RFUploadResultModel? //下一步
+//    private var nextModel: RFUploadResultModel? //下一步
     private let contentView = UIView()
     private let scrollView = UIScrollView()
     private let cardView = UIImageView(image: "ID_bg1".image)
@@ -67,6 +67,8 @@ class RFIDDetailVC: RapidBaseViewController {
         scrollView.contentInsetAdjustmentBehavior = .never
         scrollView.showsVerticalScrollIndicator = false
         view.addSubview(scrollView)
+        cardView.layer.masksToBounds = true
+        cardView.layer.cornerRadius = 15.rf
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
@@ -107,6 +109,7 @@ class RFIDDetailVC: RapidBaseViewController {
         }
         
         contentView.addSubview(cardView)
+        
         cardView.snp.makeConstraints { make in
             make.width.equalTo(271.rf)
             make.height.equalTo(163.rf)
@@ -267,11 +270,7 @@ class RFIDDetailVC: RapidBaseViewController {
                 return
             }
             self.nextAction()
-//            RapidApi.shared.idVerifyNext(para: ["goat": self.productId, "aily": getRPFRandom()]).subscribe(onNext: { _ in
-//                self.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: self.productId), animated: true)
-//            }, onError: { err in
-//                MBProgressHUD.showError(err.localizedDescription)
-//            })
+
         }
         let nextLb = UILabel().font(16.font).text("Next").textColor(0xffffff.color)
         nextimgV.addSubview(nextLb)
@@ -339,7 +338,10 @@ extension RFIDDetailVC {
         ZLPhotoConfiguration.default().maxSelectCount = 1
         ZLPhotoConfiguration.default().allowTakePhotoInLibrary = false
         ZLPhotoConfiguration.default().editAfterSelectThumbnailImage = true
+        ZLPhotoConfiguration.default().cameraConfiguration.allowSwitchCamera = true 
+        ZLPhotoConfiguration.default().cameraConfiguration.devicePosition = .back
         let camera = ZLCustomCamera()
+        camera.switchCameraBtn.isHidden = false
         if isFace {
             ZLPhotoConfiguration.default().cameraConfiguration.devicePosition = .front
             ZLPhotoConfiguration.default().cameraConfiguration.allowSwitchCamera = false 
@@ -385,30 +387,31 @@ extension RFIDDetailVC {
             MBProgressHUD.showMessage("Please complete the face verification first", toview: nil, afterDelay: 3)
             return
         }
-        guard let model = self.nextModel else {
-            self.navigationController?.popViewController(animated: true)
-            return}
-        guard let cur = model.recovered else { 
-            self.navigationController?.popViewController(animated: true)
-            return }
-        
-        let cls = cur.meet
-        if cls == "public" || cls == "thinglike1" {
-            
-        }
-        else  if cls == "personal" || cls == "thinglike2" {
-            self.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: self.productId, orderId: self.orderId), animated: true)
-        }
-        else  if cls == "work" || cls == "thinglike3" {
-            self.navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: self.productId, orderId: self.orderId), animated: true)
-        }
-        else  if cls == "contacts" || cls == "thinglike4" {
-            self.navigationController?.pushViewController(RFContactListVC(productId: self.productId, orderId: self.orderId), animated: true)
-        }
-        else  if cls == "bank" || cls == "thinglike5" {
-            requestBindBankInfo(self.productId, self.orderId,self)
-        }
-        
+        loadNextData()
+//        guard let model = self.nextModel else {
+//            self.navigationController?.popViewController(animated: true)
+//            return}
+//        guard let cur = model.recovered else { 
+//            self.navigationController?.popViewController(animated: true)
+//            return }
+//        
+//        let cls = cur.meet
+//        if cls == "public" || cls == "thinglike1" {
+//            
+//        }
+//        else  if cls == "personal" || cls == "thinglike2" {
+//            self.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: self.productId, orderId: self.orderId), animated: true)
+//        }
+//        else  if cls == "work" || cls == "thinglike3" {
+//            self.navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: self.productId, orderId: self.orderId), animated: true)
+//        }
+//        else  if cls == "contacts" || cls == "thinglike4" {
+//            self.navigationController?.pushViewController(RFContactListVC(productId: self.productId, orderId: self.orderId), animated: true)
+//        }
+//        else  if cls == "bank" || cls == "thinglike5" {
+//            requestBindBankInfo(self.productId, self.orderId,self)
+//        }
+//        
         
         
     }
@@ -429,6 +432,45 @@ extension RFIDDetailVC {
 //}
 
 extension RFIDDetailVC {
+    private func loadNextData() {
+        self.showLoading()
+        RapidApi.shared.productDetail(para: ["putit": productId, "interrupted": getRPFRandom(), "means": getRPFRandom()]).subscribe(onNext: { [weak self] obj in
+            self?.hiddenLoading()
+
+            guard let model = RFProductDetailModel.deserialize(from: obj.dictionaryObject) else {
+                return
+            }
+            self?.handleNext(model: model)
+            
+        }, onError: { [weak self] err in
+            MBProgressHUD.showError(err.localizedDescription)
+            self?.hiddenLoading()
+        }).disposed(by: bag)
+
+    }
+      
+    private func  handleNext(model:RFProductDetailModel) {
+        guard let cur = model.recovered else { return}
+        let  cls = cur.meet
+        if cls == "public" || cls == "thinglike1" {
+            
+        }
+        else  if cls == "personal" || cls == "thinglike2" {
+            self.navigationController?.pushViewController(RFPInVC(route: .personal_info, productId: productId, orderId: orderId), animated: true)
+        }
+        else  if cls == "work" || cls == "thinglike3" {
+            self.navigationController?.pushViewController(RFPInVC(route: .employment_info, productId: productId, orderId: orderId), animated: true)
+        }
+        else  if cls == "contacts" || cls == "thinglike4" {
+            self.navigationController?.pushViewController(RFContactListVC(productId: productId, orderId: orderId), animated: true)
+        }
+        else  if cls == "bank" || cls == "thinglike5" {
+            requestBindBankInfo(productId, orderId,self)
+            
+        }
+    }                                                                                                                                                                                                                                                           
+                                                                                                                                    
+    
     private func loadData() {
         self.showLoading()
         RapidApi.shared.getAuthOneData(para: ["putit": productId, "melted": getRPFRandom()]).subscribe(onNext: { [weak self] json in
@@ -447,8 +489,8 @@ extension RFIDDetailVC {
     
     private func render(model: RFAuthFRModel) {
         self.model = model
-        let imageStr = model.carefully?.darkalmost ?? "UMID"
-        IDView.fill(model.carefully?.darkalmost ?? "UMID")
+        let imageStr = model.carefully?.darkalmost ?? ""
+        IDView.fill(model.carefully?.darkalmost ?? "")
         self.cardView.image = ("ID_type_" + imageStr).image
         if model.carefully?.mustn == 1 {
             addBtn.setImage("id_add_1".image, for: .normal)
@@ -502,7 +544,7 @@ extension RFIDDetailVC {
                       "elf": "",
                       "thanksmost": getRPFRandom(),
                       "pixie": "1",
-                      "darkalmost": self.IDView.value] as [String: Any]
+                      "darkalmost": isFace ? "" : self.IDView.value] as [String: Any]
         self.showLoading()
         RapidApi.shared.getIDUploadData(para: params).subscribe(onNext: { [weak self] obj in
             guard let self = self else { return  }
@@ -513,7 +555,6 @@ extension RFIDDetailVC {
             model.type = dismay
             model.darkalmost = self.model?.carefully?.darkalmost
             
-            self.nextModel = model
             if model.type == 10 {
                 self.model?.tyou = 1
                 self.uploadAnalysis(type: .FacePhoto)
@@ -527,6 +568,7 @@ extension RFIDDetailVC {
             alert.dismissBlock = {
                 self.model?.carefully?.mustn = 1
                 self.uploadAnalysis(type: .IDInformation)
+//                self.loadData()
                 self.renderPickerResultData(data: model)
             }
             self.scrollToBottom(scrollView: self.scrollView)
@@ -569,7 +611,7 @@ extension RFIDDetailVC {
         
         
         let alert = RFIDTypeAlert(strings: list)
-        alert.selectedContent = model?.carefully?.darkalmost ?? "UMID"
+        alert.selectedContent = model?.carefully?.darkalmost ?? ""
         alert.selectedBlock = { [weak self] content in
             self?.IDView.fill(content)
             self?.cardView.image = ("ID_type_" + content).image

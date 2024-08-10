@@ -18,7 +18,6 @@ class RapidRootViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(RPFDeviceManager.getWifiInfo(),RPFDeviceManager.getWiFiList())
         setUpRootView()
         setUpRx()
         self.delegate = self
@@ -40,21 +39,25 @@ extension RapidRootViewController {
         guard !GetInfo(kRapidSession).isEmpty else{
             return
         }
-        RPFLocationManager.manager.requestLocationAuthorizationStatus()
-        RPFLocationManager.manager.locationInfoHandle = { (country, code, province, city,street,latitude,longitude, item) in
-            var param: [String : Any] = [String : Any]()
-            param["aface"] = province
-            param["curls"] = code
-            param["untidy"] = country
-            param["creature"] = street
-            param["whichever"] = longitude
-            param["scampering"] = latitude
-            param["lambgambolling"] = city
-            param["towards"] = getRPFRandom()
-            param["skipping"] = getRPFRandom()
-            RPFReportManager.shared.saveLocation(para: param)
-            RPFReportManager.shared.saveDeviceInfo()
-        }
+        if let visibleVC = self.navigationController?.visibleViewController {
+            if visibleVC is RapidHomeViewController {
+                RPFLocationManager.manager.requestLocationAuthorizationStatus()
+                RPFLocationManager.manager.locationInfoHandle = { (country, code, province, city,street,latitude,longitude, item) in
+                    var param: [String : Any] = [String : Any]()
+                    param["aface"] = province
+                    param["curls"] = code
+                    param["untidy"] = country
+                    param["creature"] = street
+                    param["whichever"] = longitude
+                    param["scampering"] = latitude
+                    param["lambgambolling"] = city
+                    param["towards"] = getRPFRandom()
+                    param["skipping"] = getRPFRandom()
+                    RPFReportManager.shared.saveLocation(para: param)
+                    RPFReportManager.shared.saveDeviceInfo()
+                }
+            } 
+        } 
     }
     
     func setUpRootView() {
@@ -247,14 +250,14 @@ extension RapidRootViewController {
         }
        
 
-//        let vc  = RPFWebViewController()
-//         vc.viewModel = RPFWebViewModel(urlString: "http://8.212.152.227/test")
-//         nc.pushViewController(vc, animated: true)
-        
-        let vc  = RPFRecommendViewController()
-        
-//         vc.viewModel = RPFWebViewModel(urlString: "http://8.212.152.227/test")
+        let vc  = RPFWebViewController()
+         vc.viewModel = RPFWebViewModel(urlString: "http://www.baidu.com", isAppendPara: false)
          nc.pushViewController(vc, animated: true)
+        return
+//        let vc  = RPFRecommendViewController()
+//        
+////         vc.viewModel = RPFWebViewModel(urlString: "http://8.212.152.227/test")
+//         nc.pushViewController(vc, animated: true)
 
 ////        let vc = RFPInVC(route: .employment_info, productId: "1")
 //        
