@@ -253,10 +253,14 @@ extension RFFlowVC {
     }
     
     private func uploadAnalysis(type: RFAnalysisScenenType, time: String){
-        RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: false)
-        RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
-            guard let `self` = self else {return}
-            RPFReportManager.shared.saveAnalysis(pId: self.product_id, type: type, startTime: time, longitude: longitude, latitude: latitude)
+        
+        RPFLocationManager.manager.analysisBackList.append {  (longitude,latitude) in
+            RPFReportManager.shared.saveAnalysis(pId: self.productId, type: .EndApply, startTime: time, longitude: longitude, latitude: latitude)
         }
+        RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: false)
+//        RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
+//            guard let `self` = self else {return}
+//            RPFReportManager.shared.saveAnalysis(pId: self.product_id, type: type, startTime: time, longitude: longitude, latitude: latitude)
+//        }
     }
 }

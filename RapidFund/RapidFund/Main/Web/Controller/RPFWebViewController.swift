@@ -299,10 +299,14 @@ class RPFWebViewController: RapidBaseViewController {
     
     
     func uploadAnalysis(pId: String, start: String){
-        RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: false)
-        RPFLocationManager.manager.analysisHandle = { (longitude,latitude) in
+        
+        RPFLocationManager.manager.analysisBackList.append { (longitude,latitude) in
             RPFReportManager.shared.saveAnalysis(pId: pId, type: .EndApply, startTime: start, longitude: longitude, latitude: latitude)
         }
+        RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: false)
+//        RPFLocationManager.manager.analysisHandle = { (longitude,latitude) in
+//            RPFReportManager.shared.saveAnalysis(pId: pId, type: .EndApply, startTime: start, longitude: longitude, latitude: latitude)
+//        }
     }
     
     

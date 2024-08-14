@@ -528,11 +528,16 @@ extension RFIDDetailVC {
         }else if type == .FacePhoto {
             startTime = self.clickFaceTime
         }
-        RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: false)
-        RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
-            guard let `self` = self else {return}
+        
+        RPFLocationManager.manager.analysisBackList.append {  (longitude,latitude) in
             RPFReportManager.shared.saveAnalysis(pId: self.productId, type: type, startTime: startTime, longitude: longitude, latitude: latitude)
         }
+        RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: false)
+        
+//        RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
+//            guard let `self` = self else {return}
+//            RPFReportManager.shared.saveAnalysis(pId: self.productId, type: type, startTime: startTime, longitude: longitude, latitude: latitude)
+//        }
     }
 
     private func uploadIDCard(source: __FromSource, data: Data, dismay: Int) {

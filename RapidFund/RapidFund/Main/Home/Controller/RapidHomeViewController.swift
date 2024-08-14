@@ -382,7 +382,7 @@ extension RapidHomeViewController {
     }
     
     func uploadLocation(time: String) {
-        RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: true)
+       
         RPFLocationManager.manager.locationInfoHandle = { (country, code, province, city,street,latitude,longitude, item) in
             var param: [String : Any] = [String : Any]()
             param["aface"] = province
@@ -398,6 +398,8 @@ extension RapidHomeViewController {
             RPFReportManager.shared.saveDeviceInfo()
             RPFReportManager.shared.saveAnalysis(pId: "", type: .Register, startTime: time, longitude: longitude, latitude: latitude)
         }
+        
+        RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: true)
     }
     
     private func handleLoading(isLoading: Bool) {

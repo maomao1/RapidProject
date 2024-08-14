@@ -41,7 +41,6 @@ extension RapidRootViewController {
         }
         let visibleVC = self.navigationController?.visibleViewController
         if visibleVC == nil  {
-            RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: true)
             RPFLocationManager.manager.locationInfoHandle = { (country, code, province, city,street,latitude,longitude, item) in
                 var param: [String : Any] = [String : Any]()
                 param["aface"] = province
@@ -56,6 +55,7 @@ extension RapidRootViewController {
                 RPFReportManager.shared.saveLocation(para: param)
                 RPFReportManager.shared.saveDeviceInfo()
             }
+            RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: true)
         }
         
     }

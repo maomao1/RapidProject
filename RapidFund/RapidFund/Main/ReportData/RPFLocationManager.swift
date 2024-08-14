@@ -18,6 +18,8 @@ class RPFLocationManager: NSObject {
     var analysisHandle: AnalysisInfoCall?
     var status: CLAuthorizationStatus?
     
+    var analysisBackList = [AnalysisInfoCall]()
+    
     var isUploadLocation = true
     
      override init() {
@@ -46,9 +48,13 @@ class RPFLocationManager: NSObject {
                     handle("","","","","","\(0)","\(0)",RPFDeviceManager.getWiFiName())
                 }
             }else{
-                if let handle = self.analysisHandle {
-                    handle("\(0)","\(0)")
+//                if let handle = self.analysisHandle {
+//                    handle("\(0)","\(0)")
+//                }
+                self.analysisBackList.forEach { callBack in
+                    callBack("\(0)","\(0)")
                 }
+                self.analysisBackList.removeAll()
             }
             
             
@@ -94,9 +100,14 @@ extension RPFLocationManager: CLLocationManagerDelegate {
                             handle(country,countryCode,administrativeArea,locality,thoroughfare,"\(longitude)","\(latitude)",RPFDeviceManager.getWiFiName())
                         }
                     }else{
-                        if let handle = self.analysisHandle {
-                            handle("\(longitude)","\(latitude)")
+//                        if let handle = self.analysisHandle {
+//                            handle("\(longitude)","\(latitude)")
+//                        }
+                        
+                        self.analysisBackList.forEach { callBack in
+                            callBack("\(longitude)","\(latitude)")
                         }
+                        self.analysisBackList.removeAll()
                     }
                     
                     

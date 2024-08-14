@@ -329,15 +329,17 @@ class RFPInVC: RapidBaseViewController {
     
     
     private func uploadAnalysis(type: RFAnalysisScenenType){
-        RPFReportManager.shared.saveAnalysis(pId: self.productId, type: type, startTime: self.enterPageTime, longitude: "0", latitude: "0")
-        return
         
-        RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: false)
-        RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
-            guard let `self` = self else {return}
-           
-            
-            RPFReportManager.shared.saveAnalysis(pId: self.productId, type: type, startTime: self.enterPageTime, longitude: longitude, latitude: latitude)
+        
+        RPFLocationManager.manager.analysisBackList.append { (longitude,latitude) in
+            RPFReportManager.shared.saveAnalysis(pId: self.productId, type: .EndApply, startTime: self.enterPageTime, longitude: longitude, latitude: latitude)
         }
+        RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: false)
+//        RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
+//            guard let `self` = self else {return}
+//           
+//            
+//            RPFReportManager.shared.saveAnalysis(pId: self.productId, type: type, startTime: self.enterPageTime, longitude: longitude, latitude: latitude)
+//        }
     }
 }
