@@ -15,16 +15,26 @@ import AppTrackingTransparency
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let bag = DisposeBag()
+    var isFirstOpenApp = true
     var window: UIWindow?
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+
         setUpRootVC()
         setUIAttribute()
-        uploadReport()
         observeMemory()
         registerKeyBoard()
         
         return true
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        if isFirstOpenApp {
+            executeAfter(seconds: 1) { [weak self] in
+                self?.uploadReport()
+                
+            } 
+        }
+        
     }
     
 
@@ -81,18 +91,17 @@ extension AppDelegate {
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
         IQKeyboardManager.shared.placeholderFont = .f_lightSys14
         IQKeyboardManager.shared.toolbarDoneBarButtonItemImage = UIImage.textToImage(text: "Done", font: .f_boldSys16)
-//        IQKeyboardManager.shared.toolbarTintColor = .c_FF942F
-//        IQToolbarHandler.titleFont = .f_boldSys15
-//        IQTitleBarButtonItem.titleFont = .f_boldSys15
-//        IQKeyboardManager.shared.to
+
 
     }
     
     func uploadReport() {
+       
         if #available(iOS 14, *) {
             ATTrackingManager.requestTrackingAuthorization { status in
                 if status == .authorized{
                     RPFReportManager.shared.saveGoogleMarket()
+                    self.isFirstOpenApp = false
                 }
             }
         } else {

@@ -125,9 +125,10 @@ extension RFBankBindVC {
         for item in self.model.munched {
             json[item.yourtoboggans] = item.snatch.isEmpty == true ? item.upthe : item.dismay
         }
-        
+        self.showLoading()
         RapidApi.shared.commitBindCardInfo(para: json).subscribe(onNext: { [weak self] _ in
             guard let `self` = self else {return}
+            self.hiddenLoading()
             if self.isAddNewCard {
                 self.navigationController?.popViewController(animated: true)
             }else{
@@ -136,13 +137,16 @@ extension RFBankBindVC {
             }
             
         }, onError: { err in
+            self.hiddenLoading()
             MBProgressHUD.showError(err.localizedDescription)
         }).disposed(by: bag)
     }
     
     func jumpNext() {
         let oderTime = getCurrentTime()
+        self.showLoading()
         RapidApi.shared.getOrderProductWebAdress(para: ["snapped": self.orderId,"leftover":getRPFRandom(),"poised":getRPFRandom(),"theway":getRPFRandom(),"stopping":getRPFRandom()]).subscribe(onNext: { [weak self] obj in
+            self?.hiddenLoading()
             guard let url = obj.dictionaryObject?["littleroom"] as? String else {
                 return
             }
@@ -158,7 +162,9 @@ extension RFBankBindVC {
     }
     
     private func uploadAnalysis(type: RFAnalysisScenenType, time: String){
-        RPFLocationManager.manager.requestLocationAuthorizationStatus()
+        RPFReportManager.shared.saveAnalysis(pId: self.productId, type: type, startTime: time, longitude: "0", latitude: "0")
+        return
+        RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: false)
         RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
             guard let `self` = self else {return}
             RPFReportManager.shared.saveAnalysis(pId: self.productId, type: type, startTime: time, longitude: longitude, latitude: latitude)

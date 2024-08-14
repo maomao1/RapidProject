@@ -168,13 +168,16 @@ extension RFBankCardListVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func submitAction() {
+        self.showLoading()
         self.dataSource.forEach { obj in
             obj.forgot.forEach { card in
                 if card.isSelected {
                     RapidApi.shared.changeBankCardInfo(para: ["nosing": card.nosing, "snapped": order_id ?? ""]).subscribe(onNext: { [weak self] obj in
+                        self?.hiddenLoading()
                         guard let json = obj.dictionaryObject, let smelt = json["smelt"] as? String, smelt.isEmpty == false else { return }
                         self?.setRouter(url: smelt, pId: "")
                     }, onError: { err in
+                        self.hiddenLoading()
                         MBProgressHUD.showError(err.localizedDescription)
                     }).disposed(by: bag) 
                 }

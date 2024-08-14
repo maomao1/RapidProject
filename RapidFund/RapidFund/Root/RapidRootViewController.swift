@@ -39,25 +39,25 @@ extension RapidRootViewController {
         guard !GetInfo(kRapidSession).isEmpty else{
             return
         }
-        if let visibleVC = self.navigationController?.visibleViewController {
-            if visibleVC is RapidHomeViewController {
-                RPFLocationManager.manager.requestLocationAuthorizationStatus()
-                RPFLocationManager.manager.locationInfoHandle = { (country, code, province, city,street,latitude,longitude, item) in
-                    var param: [String : Any] = [String : Any]()
-                    param["aface"] = province
-                    param["curls"] = code
-                    param["untidy"] = country
-                    param["creature"] = street
-                    param["whichever"] = longitude
-                    param["scampering"] = latitude
-                    param["lambgambolling"] = city
-                    param["towards"] = getRPFRandom()
-                    param["skipping"] = getRPFRandom()
-                    RPFReportManager.shared.saveLocation(para: param)
-                    RPFReportManager.shared.saveDeviceInfo()
-                }
-            } 
-        } 
+        let visibleVC = self.navigationController?.visibleViewController
+        if visibleVC == nil  {
+            RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: true)
+            RPFLocationManager.manager.locationInfoHandle = { (country, code, province, city,street,latitude,longitude, item) in
+                var param: [String : Any] = [String : Any]()
+                param["aface"] = province
+                param["curls"] = code
+                param["untidy"] = country
+                param["creature"] = street
+                param["whichever"] = longitude
+                param["scampering"] = latitude
+                param["lambgambolling"] = city
+                param["towards"] = getRPFRandom()
+                param["skipping"] = getRPFRandom()
+                RPFReportManager.shared.saveLocation(para: param)
+                RPFReportManager.shared.saveDeviceInfo()
+            }
+        }
+        
     }
     
     func setUpRootView() {
@@ -172,9 +172,16 @@ extension RapidRootViewController{
     }
     
     func presentLogin() {
-        let vc = RapidLoginViewController()
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true)
+//        let vc = RapidLoginViewController()
+//        vc.modalPresentationStyle = .fullScreen
+//        self.present(vc, animated: true)
+        
+        DispatchQueue.main.async {
+            let loginNVC = RapidBaseNavgationController(rootViewController: RapidLoginViewController())
+            loginNVC.modalPresentationStyle = .overFullScreen
+            loginNVC.modalTransitionStyle = .crossDissolve
+            self.present(loginNVC, animated: true, completion: nil)
+        }
     }
     
     

@@ -9,6 +9,7 @@ import UIKit
 import SwiftyJSON
 import RxSwift
 import RxCocoa
+import MBProgressHUD
 
 enum RFAnalysisScenenType:Int {
     case Register = 1
@@ -312,7 +313,7 @@ class RPFReportManager: NSObject {
         param["naps"] = startTime
         param["yawnedtoo"] = "\(Int(Date().timeIntervalSince1970) * 1000)"
         param["peace"] = getRPFRandom()
-      
+        
         RapidApi.shared.postAnalysisData(para: param)
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}

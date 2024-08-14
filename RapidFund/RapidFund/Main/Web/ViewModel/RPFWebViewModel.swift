@@ -137,15 +137,16 @@ class RPFWebViewModel {
     func handleMessage(message: WKScriptMessage) {
         let name = message.name
         let data = message.body
+       
         switch name {
         case "newBaked":
             self.goToHomeAction.onNext(Void())
         case "getplaying": 
-            guard let jsonData = data as? [String] else { return }
-            let productId = jsonData.first ?? ""
-            let startTime = jsonData.last ?? ""
+            guard let jsonData = data as? [Any] else { return }
+            let productId = "\(jsonData.first ?? 0)" 
+            let startTime = "\(jsonData.last ?? 0)"  
             self.uploadRiskAction.onNext((productId,startTime))
-            print(data)
+            
         case "preparations":
             guard let jsonData = data as? [String] else { return }
             let url = jsonData.first ?? ""

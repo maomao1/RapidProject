@@ -167,7 +167,7 @@ let RapidSingleUUID: String = {
 }()
 
 let RapidIDFV: String = {
-    return RapidSingleIdentifierManager.manager.getIDFV()
+    return RapidSingleIdentifierManager.manager.getUUID()
 }()
 
 let RapidIDFA: String = {

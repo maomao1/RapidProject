@@ -123,7 +123,21 @@ extension RapidMineViewController {
     
     func alertAgreement() {
         let vc = RPFAgreeAlertViewController()
+//        vc.loanCall = { [weak self] in
+//            guard let self = self else {return}
+//            let vc = RPFWebViewController()
+//            vc.viewModel = RPFWebViewModel(urlString: BaseURl + LoanProtocolUrl)
+//            self.navigationController?.pushViewController(vc, animated: true)
+//        }
+//        
+//        vc.userCall = { [weak self] in
+//            guard let self = self else {return}
+//            let vc = RPFWebViewController()
+//            vc.viewModel = RPFWebViewModel(urlString: BaseURl + UserProtocolUrl)
+//            self.navigationController?.pushViewController(vc, animated: true)
+//        }
         present(vc, animated: true, completion: nil)
+
     }
 }
 

@@ -137,7 +137,7 @@ class RapidOrderListCell: UITableViewCell {
         self.statusBgView.backgroundColor = model.orderStatus.color
 //        self.detailBtn.setTitle(model.wore, for: .normal)
 //        self.detailBtn.setTitle(model.wore, for: .selected)
-        self.detailBtn.backgroundColor = model.orderStatus.color
+        self.detailBtn.backgroundColor = model.orderStatus.btnColor
         self.soundLabel.isHidden = model.dirty.isEmpty
         self.soundImg.isHidden = model.dirty.isEmpty
         
@@ -159,6 +159,7 @@ class RapidOrderListCell: UITableViewCell {
         btn.titleLabel?.font = .f_lightSys10
         btn.layer.masksToBounds = true
         btn.layer.cornerRadius = 18.rf
+        btn.isUserInteractionEnabled = false
         return btn
     }()
     

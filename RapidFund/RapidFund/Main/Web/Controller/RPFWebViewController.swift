@@ -14,6 +14,7 @@ import SwiftyJSON
 import AVKit
 import MBProgressHUD
 import StoreKit
+import MessageUI
 
 class RPFWebViewController: RapidBaseViewController {
     
@@ -76,8 +77,11 @@ class RPFWebViewController: RapidBaseViewController {
     
     lazy var backButton: UIButton = {
         let button = UIButton(type: .custom)
-        button.setBackgroundImage(.homeNavWhiteBack, for: .normal)
-        button.setBackgroundImage(.homeNavWhiteBack, for: .selected)
+        button.setBackgroundImage(.homeNavBlackBack, for: .normal)
+        button.setBackgroundImage(.homeNavBlackBack, for: .selected)
+        button.backgroundColor = .white.withAlphaComponent(0.3)
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 15.rf
         button.contentHorizontalAlignment = .left
 //        button.isHidden = true
         return button
@@ -169,9 +173,9 @@ class RPFWebViewController: RapidBaseViewController {
         
         backButton.snp.makeConstraints { make in
             if #available(iOS 11.0, *) {
-                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(15.rf)
+                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(10.rf)
             } else {
-                make.top.equalTo(15.rf)
+                make.top.equalTo(10.rf)
             }
             make.left.equalTo(RapidMetrics.LeftRightMargin)
             make.size.equalTo(CGSize(width: 50.rf, height: 50.rf))
@@ -266,6 +270,8 @@ class RPFWebViewController: RapidBaseViewController {
                 
                 navigationController.popViewController(animated: true)
  
+            }else {
+                self.dismiss(animated: true)
             }
             
             
@@ -282,7 +288,9 @@ class RPFWebViewController: RapidBaseViewController {
         }else {
             self.backButton.isHidden = true
             self.customNavView.isHidden = false
-            webView.snp.makeConstraints { (maker) in
+            self.titleNav.font = .f_lightSys24
+            self.view.bringSubviewToFront(self.customNavView)
+            webView.snp.remakeConstraints { (maker) in
                 maker.top.equalTo(self.customNavView.snp.bottom)
                 maker.left.right.bottom.equalToSuperview()
             }
@@ -291,7 +299,7 @@ class RPFWebViewController: RapidBaseViewController {
     
     
     func uploadAnalysis(pId: String, start: String){
-        RPFLocationManager.manager.requestLocationAuthorizationStatus()
+        RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: false)
         RPFLocationManager.manager.analysisHandle = { (longitude,latitude) in
             RPFReportManager.shared.saveAnalysis(pId: pId, type: .EndApply, startTime: start, longitude: longitude, latitude: latitude)
         }
@@ -304,13 +312,37 @@ class RPFWebViewController: RapidBaseViewController {
     }
     
     func nativeCallPhone(number: String){
-        let fullNumber = "tel://" + "number"
-        guard let url = URL(string: fullNumber), UIApplication.shared.canOpenURL(url) else {
+        if number.contains("mailto") {
+            let mail = number.components(separatedBy: "//").last ?? ""
+            if MFMailComposeViewController.canSendMail() {
+                let mailComposeViewController = MFMailComposeViewController()
+                mailComposeViewController.mailComposeDelegate = self
+                
+                mailComposeViewController.setToRecipients([mail])
+                mailComposeViewController.setSubject("")
+                mailComposeViewController.setMessageBody("Fast Peso Account:" + GetInfo(kRapidMobileNumber), isHTML: false)
+                
+                present(mailComposeViewController, animated: true, completion: nil)
+                return
+            } else {
+                // 提示用户设备没有配置邮箱
+                print("No email account found")
+            }
+            
+        }
+        guard let url = URL(string: number), UIApplication.shared.canOpenURL(url) else {
             print("无法拨打电话")
             return
         }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
+    
+    func canSendMail() -> Bool {
+        return MFMailComposeViewController.canSendMail()
+    }
+ 
+ 
+    
     
     func gotoAppStoreCommit() {
         if #available(iOS 10.3, *) {
@@ -425,12 +457,16 @@ extension RPFWebViewController: WKNavigationDelegate, WKUIDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         webView.evaluateJavaScript("document.documentElement.style.webkitTouchCallout='none';", completionHandler: nil)
         webView.evaluateJavaScript("document.documentElement.style.webkitUserSelect='none';", completionHandler: nil)
+        
+//        showCustomNav(show: viewModel.urlString.contains(BaseH5Api))
         self.hiddenLoading()
     }
     
     // 页面开始加载
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         self.showLoading()
+        guard let url = webView.url?.absoluteString else {return}
+        showCustomNav(show: url.contains(BaseH5Api))
     }
     
     // 页面加载失败
@@ -475,25 +511,10 @@ extension RPFWebViewController: WKNavigationDelegate, WKUIDelegate {
         present(alert, animated: true, completion: nil)
     }
     
-//    func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-//        // 判断服务器采用的验证方法
-//        if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
-//            if challenge.previousFailureCount == 0 {
-//                // 如果没有错误的情况下 创建一个凭证，并使用证书
-//                let credential = URLCredential(trust: challenge.protectionSpace.serverTrust!)
-//                DispatchQueue.main.async {
-//                    completionHandler(.useCredential, credential)
-//                }
-//            } else {
-//                // 验证失败，取消本次验证
-//                DispatchQueue.main.async {
-//                    completionHandler(.cancelAuthenticationChallenge, nil)
-//                }
-//            }
-//        } else {
-//            DispatchQueue.main.async {
-//                completionHandler(.cancelAuthenticationChallenge, nil)
-//            }
-//        }
-//    }
+}
+extension RPFWebViewController: MFMailComposeViewControllerDelegate {
+    // MARK: MFMailComposeViewControllerDelegate
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true, completion: nil)
+    }
 }

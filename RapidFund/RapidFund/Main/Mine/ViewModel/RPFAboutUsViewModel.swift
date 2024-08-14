@@ -20,13 +20,27 @@ class RPFAboutUsViewModel {
             switch self{
             
             case .registration:
-                return "SEC Registration"
+                return "Loan Service Provider:"
             case .authority:
-                return "Certificate Authorit"
+                return "SEC Registration Number:"
             case .website:
-                return "Website"
+                return "Certificate of Authority (CA):"
             case .adress:
-                return "Address"
+                return "Address:"
+            }
+        }
+        
+        var content: String {
+            switch self{
+            
+            case .registration:
+                return "Cashxpress South East Asia Lending Inc."
+            case .authority:
+                return "CS201951088"
+            case .website:
+                return "1309"
+            case .adress:
+                return "Eastwood Cyberpark Bagumbayan Metro Manila PH 1100"
             }
         }
     }

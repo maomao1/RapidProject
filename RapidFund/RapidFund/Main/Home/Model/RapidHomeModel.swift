@@ -15,6 +15,7 @@ struct RapidHomeModel {
     var products: [RPFHomeProduct]? 
     var hotmeals: [RPFHomeHotModel]?
     var reminder: [RPFHomeReminder]? 
+    var serviceCenter = ""
     
     init(json: JSON) {
         self.anddishes = json["anddishes"].stringValue
@@ -27,6 +28,9 @@ struct RapidHomeModel {
         self.hotmeals = json["hotmeals","forgot"].arrayValue.map{ RPFHomeHotModel(json: $0)} 
         
         self.reminder = json["knives","forgot"].arrayValue.map{ RPFHomeReminder(json: $0)}
+        
+        self.serviceCenter = json["picking","tray"].stringValue
+        
     }
 }
 
@@ -80,25 +84,25 @@ struct RPFHomeProduct {
 
     init(json: JSON){
         self.id = json["id"].stringValue
-        self.disapproval = json["disapproval"].stringValue
-        self.productName = json["productName"].stringValue
-        self.amountRange = json["amountRange"].stringValue
+        self.disapproval = json["id"].stringValue
+        self.productName = json["pursed"].stringValue
+        self.amountRange = json["aback"].stringValue
         self.productTags = json["productTags"].stringValue
         self.productDesc = json["productDesc"].stringValue
-        self.productLogo = json["productLogo"].stringValue
-        self.productCode = json["product_code"].stringValue
-        self.buttonText = json["buttonText"].stringValue
+        self.productLogo = json["decide"].stringValue
+        self.productCode = json["lookinganxious"].stringValue
+        self.buttonText = json["mymorgan"].stringValue
         self.buttoncolor = json["buttoncolor"].stringValue
-        self.amountRangeDes = json["amountRangeDes"].stringValue
-        self.loanRateDes = json["loanRateDes"].stringValue
+        self.amountRangeDes = json["grown"].stringValue
+        self.loanRateDes = json["beable"].stringValue
         self.fed = json["fed"].stringValue
         self.achair = json["achair"].stringValue
-        self.inside = json["inside"].stringValue
-        self.term = json["term"].stringValue
-        self.productType = json["productType"].stringValue
+        self.inside = json["plate"].stringValue
+        self.term = json["feed"].stringValue
+        self.productType = json["stubbornly"].stringValue
         self.isCopyPhone = json["isCopyPhone"].stringValue
         self.loanRate = json["loan_rate"].stringValue
-        self.url = json["url"].stringValue
+        self.url = json["littleroom"].stringValue
         self.todayClicked = json["todayClicked"].stringValue
         self.demolish = json["demolish"].stringValue
         self.inthis = json["inthis"].stringValue

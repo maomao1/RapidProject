@@ -375,7 +375,7 @@ extension RapidLoginViewController {
             .subscribe(onNext: { [weak self] in
                 guard let `self` = self else { return }
                 self.cacheLoginInfo()
-                self.uploadLocation()
+//                self.uploadLocation()
                 
             })
             .disposed(by: disposeBag)
@@ -438,7 +438,7 @@ extension RapidLoginViewController {
         let model = viewModel.loginModel.value
      
         RapidUserCache.default.cacheUserInfo(session: model?.session ?? "")
-        NotificationCenter.default.post(name: .RapidLoginSuccess, object: nil, userInfo: nil)
+        NotificationCenter.default.post(name: .RapidLoginSuccess, object: nil, userInfo: ["time": self.enterPageTime])
         self.dismiss(animated: true, completion: nil)
     }
     func changeAgreementEvent() {
@@ -448,7 +448,7 @@ extension RapidLoginViewController {
     
     func uploadLocation() {
         
-        RPFLocationManager.manager.requestLocationAuthorizationStatus()
+        RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: true)
         RPFLocationManager.manager.locationInfoHandle = { (country, code, province, city,street,latitude,longitude, item) in
             var param: [String : Any] = [String : Any]()
             param["aface"] = province
@@ -503,7 +503,9 @@ extension RapidLoginViewController: UITextFieldDelegate, UITextViewDelegate {
     
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange) -> Bool {
         if URL.scheme == "rapidUserProtocol" {
-          
+            let vc = RPFWebViewController()
+            vc.viewModel = RPFWebViewModel(urlString: BaseH5Url + UserProtocolUrl)
+            self.navigationController?.pushViewController(vc, animated: true)
             return false
         }
 

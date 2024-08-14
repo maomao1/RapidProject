@@ -38,7 +38,7 @@ class RPFAboutCell: UITableViewCell {
     
     func setCellContent(type: RPFAboutUsViewModel.AboutType) {
         self.nameLabel.text = type.titleName
-        self.contentLabel.text = "NO.DF726638479"
+        self.contentLabel.text = type.content
     }
     
     fileprivate lazy var nameLabel: UILabel = {

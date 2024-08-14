@@ -112,6 +112,9 @@ extension UIImage {
     static let homeRecommendTopImg   = UIImage(named: "home_recommend_topImg")!
     static let homeRecommendTextImg   = UIImage(named: "home_recommend_text")!
     
+    static let homeBottomBgImg   = UIImage(named: "home_bottom_bg")!
+    static let homeBottomLeftImg   = UIImage(named: "home_bottom_left")!
+    static let homeBottomRightImg   = UIImage(named: "home_bottom_right")!
 
     
     

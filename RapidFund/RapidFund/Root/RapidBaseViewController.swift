@@ -236,7 +236,14 @@ class RapidBaseViewController: UIViewController {
     //
     func loginSuccessAction() {}
     
-    @objc func rightBarEvent() {}
+    @objc func rightBarEvent() {
+       let url = GetInfo(kRapidServiceCenter)
+        if !url.isEmpty {
+            let vc = RPFWebViewController()
+            vc.viewModel = RPFWebViewModel(urlString: url)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 
     // 返回
     @objc func back() {

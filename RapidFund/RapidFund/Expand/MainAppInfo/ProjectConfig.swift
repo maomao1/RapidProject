@@ -9,10 +9,12 @@ import Foundation
 
 let RapidUserProtocol = "Privacy Policy"
 
-let BaseURl = "http://8.212.152.227/rfapi"
+let BaseURl = "https://cashxpresslending.com/rfapi"
+let BaseH5Api = "cashxpresslending.com"
+let BaseH5Url = "https://cashxpresslending.com/"
 
-let BaseH5Api = "8.212.152.227"
-
+let LoanProtocolUrl = "beenAppointed"
+let UserProtocolUrl = "ratherImpulsive"
 
 let RPFRouterSet = "rapid://rfapi.rapidfund.app/terrified"
 let RPFRouterHome = "rapid://rfapi.rapidfund.app/loudest"

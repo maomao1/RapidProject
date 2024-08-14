@@ -45,6 +45,26 @@ enum RPFOrderStatus: Int {
             return .c_FF5454
         }
     }
+    var btnColor: UIColor {
+        switch self {
+        case .overdue:
+            return .c_FF5454
+        case .repayment:
+            return .c_FFA559
+        case .application, .addInfo, .pendingConfirm:
+            return .c_1C917A
+            
+        case .underReview, .pendingLoan:
+            return .c_1C917A
+            
+        case .alreadySetted:
+            return .c_1C917A
+        case .blackList:
+            return .c_AEAEAE
+        case .unowned:
+            return .c_FF5454
+        }
+    }
 }
 struct RPFOrderModel {
     var honestly = ""

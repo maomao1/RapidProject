@@ -87,6 +87,7 @@ class RapidLoginViewModel {
             .subscribe(onNext: { [weak self] json in
                 guard let `self` = self else {return}
                 self.loginModel.accept(RapidLoginModel(json: json))
+                RapidUserCache.default.cacheUserNumber(num: phone)
                 self.loginSuccessAction.onNext(Void())
     
             },

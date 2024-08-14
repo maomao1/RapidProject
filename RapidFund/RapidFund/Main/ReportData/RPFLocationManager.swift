@@ -18,14 +18,18 @@ class RPFLocationManager: NSObject {
     var analysisHandle: AnalysisInfoCall?
     var status: CLAuthorizationStatus?
     
+    var isUploadLocation = true
+    
      override init() {
          super.init()
-         requestLocationAuthorizationStatus()
+         self.locationManager.distanceFilter = 1000
+         self.locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
     }
     
     
-    func requestLocationAuthorizationStatus()  {
+    func requestLocationAuthorizationStatus(isLocation: Bool)  {
         self.locationManager.delegate = self
+        self.isUploadLocation = isLocation
         if #available(iOS 14.0, *) {
             status = self.locationManager.authorizationStatus
         } else {
@@ -34,14 +38,20 @@ class RPFLocationManager: NSObject {
         switch status {
         case .notDetermined:
             self.locationManager.requestWhenInUseAuthorization()
+//            self.startGettingLocation()
         case .denied, .restricted:
             print("")
-            if let handle = self.locationInfoHandle {
-                handle("","","","","","\(0)","\(0)",RPFDeviceManager.getWiFiName())
+            if self.isUploadLocation {
+                if let handle = self.locationInfoHandle {
+                    handle("","","","","","\(0)","\(0)",RPFDeviceManager.getWiFiName())
+                }
+            }else{
+                if let handle = self.analysisHandle {
+                    handle("\(0)","\(0)")
+                }
             }
-            if let handle = self.analysisHandle {
-                handle("\(0)","\(0)")
-            }
+            
+            
         case .none:
             self.startGettingLocation()
         case .some(.authorizedAlways):
@@ -78,15 +88,20 @@ extension RPFLocationManager: CLLocationManagerDelegate {
                     let thoroughfare = placemark.thoroughfare ?? "Unknown"
                     let latitude = location.coordinate.latitude
                     let longitude = location.coordinate.longitude
-                    if let handle = self.locationInfoHandle {
-                        handle(country,countryCode,administrativeArea,locality,thoroughfare,"\(longitude)","\(latitude)",RPFDeviceManager.getWiFiName())
+                    
+                    if self.isUploadLocation {
+                        if let handle = self.locationInfoHandle {
+                            handle(country,countryCode,administrativeArea,locality,thoroughfare,"\(longitude)","\(latitude)",RPFDeviceManager.getWiFiName())
+                        }
+                    }else{
+                        if let handle = self.analysisHandle {
+                            handle("\(longitude)","\(latitude)")
+                        }
                     }
-                    if let handle = self.analysisHandle {
-                        handle("\(longitude)","\(latitude)")
-                    }
+                    
+                    
                     self.stopGettingLocation()
                     
-//                    print(RPFDeviceManager.getWifiInfo(),RPFDeviceManager.getWiFiList())
                     
                 }
             }
@@ -96,11 +111,45 @@ extension RPFLocationManager: CLLocationManagerDelegate {
         
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Failed to get user's location: \(error.localizedDescription)")
-        if let handle = self.locationInfoHandle {
-            handle("","","","","","\(0)","\(0)",RPFDeviceManager.getWiFiName())
+        if self.isUploadLocation {
+            if let handle = self.locationInfoHandle {
+                handle("","","","","","\(0)","\(0)",RPFDeviceManager.getWiFiName())
+            } 
+        }else{
+            if let handle = self.analysisHandle {
+                handle("\(0)","\(0)")
+            }
         }
-        if let handle = self.analysisHandle {
-            handle("\(0)","\(0)")
+        
+        
+    }
+    
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        if #available(iOS 14.0, *) {
+            status = manager.authorizationStatus
+        } else {
+            status = CLLocationManager.authorizationStatus()
+        }
+        switch status {
+        case .notDetermined:
+            self.locationManager.requestWhenInUseAuthorization()
+        case .denied, .restricted:
+            print("")
+            if let handle = self.locationInfoHandle {
+                handle("","","","","","\(0)","\(0)",RPFDeviceManager.getWiFiName())
+            }
+            if let handle = self.analysisHandle {
+                handle("\(0)","\(0)")
+            }
+        case .none:
+            self.startGettingLocation()
+        case .some(.authorizedAlways):
+            self.startGettingLocation()
+        case .some(.authorizedWhenInUse):
+            self.startGettingLocation()
+        @unknown default:
+            fatalError("Unknown locationManager authorization status.")
         }
     }
 }

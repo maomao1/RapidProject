@@ -27,8 +27,9 @@ let kScreenHeightResolution = kScreenHeight * Scale
 //MARK: - cache
 let kDeviceId = "kDeviceId"
 let kRapidSession = "kRapid_loginSession"
+let kRapidMobileNumber = "kRapid_loginNumber"
 let kRapidLoginTime = "kRapid_login_time"
-
+let kRapidServiceCenter = "kRapid_service_center"
 
 
 struct RapidMetrics {

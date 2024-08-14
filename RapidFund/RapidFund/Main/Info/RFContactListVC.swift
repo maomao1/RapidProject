@@ -180,7 +180,9 @@ extension RFContactListVC: UITableViewDelegate, UITableViewDataSource {
                 json.append(["bumped": obj.bumped ?? "", "wasan": obj.wasan ?? "", "fany": obj.fany, "disappear": obj.disappear ?? ""])
             }
         }
+        self.showLoading()
         RapidApi.shared.saveContactInfo(para: ["putit": self.productId, "trouble": json.toJSONString ?? ""]).subscribe(onNext: { [weak self] obj in
+            self?.hiddenLoading()
             guard let model = RFUploadResultModel.deserialize(from: obj.dictionaryObject) else {
                 return
             }
@@ -190,13 +192,17 @@ extension RFContactListVC: UITableViewDelegate, UITableViewDataSource {
             self.tb.reloadData()
             self.jumpNext()
         }, onError: { [weak self] err in
+            self?.hiddenLoading()
             MBProgressHUD.showError(err.localizedDescription)
             
         }).disposed(by: bag)
     }
     
     private func uploadAnalysis(type: RFAnalysisScenenType){
-        RPFLocationManager.manager.requestLocationAuthorizationStatus()
+        RPFReportManager.shared.saveAnalysis(pId: self.productId, type: type, startTime: self.enterPageTime, longitude: "0", latitude: "0")
+        return
+        
+        RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: false)
         RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
             guard let `self` = self else {return}
             RPFReportManager.shared.saveAnalysis(pId: self.productId, type: type, startTime: self.enterPageTime, longitude: longitude, latitude: latitude)

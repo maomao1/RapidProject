@@ -23,7 +23,6 @@ class RapidHomeProductCell: UITableViewCell {
     }
     
     func setUpViews(){
-        
         contentView.addSubview(containerView)
         contentView.addSubview(productImage)
         contentView.addSubview(nameLabel)
@@ -32,7 +31,6 @@ class RapidHomeProductCell: UITableViewCell {
         contentView.addSubview(soundImg)
         contentView.addSubview(soundLabel)
         contentView.addSubview(applyBtn)
-//        contentView.addSubview(limitImg)
         containerView.addSubview(statusBgView)
         contentView.addSubview(statusLabel)
         
@@ -83,13 +81,7 @@ class RapidHomeProductCell: UITableViewCell {
             make.left.equalTo(soundImg.snp.right).offset(6.rf)
             make.right.equalTo(soundBgView)
         }
-        
-//        limitImg.snp.makeConstraints { make in
-//            make.left.equalTo(productImage.snp.left)
-//            make.top.equalTo(containerView.snp.top).offset(-7.rf)
-//            
-//        }
-        
+  
         statusLabel.snp.makeConstraints { make in
             make.right.equalTo(applyBtn.snp.left).offset(-12.rf)
             make.top.equalTo(containerView.snp.top).offset(2.rf)
@@ -115,12 +107,69 @@ class RapidHomeProductCell: UITableViewCell {
         self.applyBtn.setTitle(model.fed, for: .selected)
         self.statusLabel.text = model.productTags
 //        self.statusBgView.backgroundColor = .red
-        
+       self.statusLabel.isHidden =  model.productTags.isEmpty
+        self.statusBgView.isHidden = model.productTags.isEmpty
         if model.buttoncolor.count > 1{
             self.applyBtn.backgroundColor = UIColor.init(webColor: model.buttoncolor)
             self.statusBgView.backgroundColor = UIColor.init(webColor: model.buttoncolor)
         }
         self.soundLabel.text = model.orderRefinancingText
+        if model.orderRefinancingText.isEmpty {
+            self.soundImg.isHidden = true
+            self.soundLabel.isHidden = true
+            self.soundBgView.isHidden = true
+            
+            contentLabel.snp.remakeConstraints { make in
+                make.left.equalTo(nameLabel)
+                make.top.equalTo(nameLabel.snp.bottom).offset(12.rf)
+                make.bottom.equalTo(containerView).inset(25.rf)
+            }
+            soundBgView.snp.remakeConstraints { make in
+                make.left.equalTo(productImage)
+                make.bottom.equalTo(containerView).inset(12.rf)
+                make.right.equalTo(applyBtn.snp.left).offset(-15.rf)
+                make.height.equalTo(24.rf)
+            }
+            
+            soundImg.snp.remakeConstraints { make in
+                make.centerY.equalTo(soundBgView)
+                make.left.equalTo(soundBgView.snp.left).offset(8.rf)
+                make.size.equalTo(CGSize(width: 14.rf, height: 14.rf))
+            }
+            
+            soundLabel.snp.remakeConstraints { make in
+                make.centerY.equalTo(soundBgView)
+                make.left.equalTo(soundImg.snp.right).offset(6.rf)
+                make.right.equalTo(soundBgView)
+            }
+        }else{
+            self.soundImg.isHidden = false
+            self.soundLabel.isHidden = false
+            self.soundBgView.isHidden = false
+            
+            contentLabel.snp.remakeConstraints { make in
+                make.left.equalTo(nameLabel)
+                make.top.equalTo(nameLabel.snp.bottom).offset(12.rf)
+            }
+            soundBgView.snp.remakeConstraints { make in
+                make.left.equalTo(productImage)
+                make.bottom.equalTo(containerView).inset(12.rf)
+                make.right.equalTo(applyBtn.snp.left).offset(-15.rf)
+                make.height.equalTo(24.rf)
+            }
+            
+            soundImg.snp.remakeConstraints { make in
+                make.centerY.equalTo(soundBgView)
+                make.left.equalTo(soundBgView.snp.left).offset(8.rf)
+                make.size.equalTo(CGSize(width: 14.rf, height: 14.rf))
+            }
+            
+            soundLabel.snp.remakeConstraints { make in
+                make.centerY.equalTo(soundBgView)
+                make.left.equalTo(soundImg.snp.right).offset(6.rf)
+                make.right.equalTo(soundBgView)
+            }
+        }
         
     }
     
@@ -188,13 +237,14 @@ class RapidHomeProductCell: UITableViewCell {
         btn.titleLabel?.font = .f_lightSys10
         btn.layer.masksToBounds = true
         btn.layer.cornerRadius = 18.rf
-        btn.backgroundColor = .c_FFA559
+        btn.backgroundColor = .c_1C917A
+        btn.isUserInteractionEnabled = false
         return btn
     }()
     
     fileprivate lazy var statusBgView: UIView = {
         let view = UIView()
-        view.backgroundColor = .c_FFA559
+        view.backgroundColor = .c_1C917A
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 4.5.rf
         return view
@@ -231,6 +281,8 @@ class RapidHomeProductCell: UITableViewCell {
 class RapidHomeHotCell: UITableViewCell {
     struct AutoLayout {
         static let applyText = "Apply for a Loan"
+        static let bottomTitleText = "Authoritative Certification"
+        static let bottomContentText = "We have proudly obtained comprehensive authorization and registration from authoritative institutions, showcasing our commitment to legal and compliant lending services, and pledging to safeguard the financial security and rights of every client."
         
     }
     
@@ -279,22 +331,24 @@ class RapidHomeHotCell: UITableViewCell {
         contentView.addSubview(applyArrow)
         contentView.addSubview(homeMoneyView)
         contentView.addSubview(homeMoneyRateView)
+        
+        contentView.addSubview(bottomBg)
+        contentView.addSubview(bottomTitle)
+        contentView.addSubview(bottomContent)
+        contentView.addSubview(btmLeftImg)
+        contentView.addSubview(btmRightImg)
        
         rapidImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(5.5.rf)
             make.size.equalTo(CGSize(width: 83.rc, height: 89.rc))
         }
-//        rapidNameLabel.snp.makeConstraints { make in
-//            make.centerX.equalTo(rapidImageView)
-//            make.top.equalTo(rapidImageView.snp.bottom).offset(2.5.rf)
-//        }
         
         unLoginImgBg.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(rapidImageView.snp.bottom).offset(14.5.rf)
             make.left.equalTo(63.5.rf)
-            make.bottom.equalTo(-70.rf)
+//            make.bottom.equalTo(-70.rf)
         }
         
         homeMoneyView.snp.makeConstraints { make in
@@ -328,6 +382,40 @@ class RapidHomeHotCell: UITableViewCell {
             make.centerY.equalTo(applyBtn)
             make.right.equalTo(applyBtn.snp.right).offset(-32.rc)
         }
+        
+        bottomTitle.snp.makeConstraints { make in
+            make.left.equalTo(applyBtn.snp.left).offset(12.rf)
+            make.top.equalTo(applyBtn.snp.bottom).offset(32.5.rf)
+            make.right.equalTo(applyBtn.snp.right).offset(-12.rf)
+            make.height.equalTo(15.rf)
+        }
+        
+        bottomContent.snp.makeConstraints { make in
+            make.left.right.equalTo(bottomTitle)
+            make.top.equalTo(bottomTitle.snp.bottom).offset(5.rf)
+        }
+        
+        btmLeftImg.snp.makeConstraints { make in
+            make.left.equalTo(bottomTitle)
+            make.top.equalTo(bottomContent.snp.bottom).offset(12.rf)
+            make.size.equalTo(CGSize(width: 123.rc, height: 42.rc))
+            make.bottom.equalTo(-118.5.rf)
+        }
+        
+        btmRightImg.snp.makeConstraints { make in
+            make.right.equalTo(bottomTitle)
+            make.centerY.equalTo(btmLeftImg)
+            make.size.equalTo(CGSize(width: 123.rc, height: 42.rc))
+            
+        }
+        
+        bottomBg.snp.makeConstraints { make in
+            make.left.equalTo(applyBtn)
+            make.right.equalTo(applyBtn.snp.right).offset(9.rf)
+            make.top.equalTo(applyBtn.snp.bottom)
+            make.bottom.equalTo(btmLeftImg.snp.bottom).offset(16.rf)
+        }
+        
     }
     
     let rapidImageView = UIImageView(image: .homeRapidIcon)
@@ -338,6 +426,40 @@ class RapidHomeHotCell: UITableViewCell {
     let unLoginImgBg  = UIImageView(image: .homeUnloginBg)
     let homeMoneyView = HomeMoneyView()
     let homeMoneyRateView = HomeMoneyRateView()
+    
+    fileprivate lazy var bottomBg: UIImageView = {
+        let image = UIImageView(image: .homeBottomBgImg)
+        return image
+    }()
+    
+    fileprivate lazy var bottomTitle: UILabel = {
+        let label = UILabel()
+        label.font = .f_lightSys14
+        label.textColor = .c_151515
+        label.text = AutoLayout.bottomTitleText
+        label.textAlignment = .left
+        return label
+    }()
+    
+    fileprivate lazy var bottomContent: UILabel = {
+        let label = UILabel()
+        label.font = .f_lightSys10
+        label.textColor = .c_999999
+        label.text = AutoLayout.bottomContentText
+        label.numberOfLines = 0
+        label.textAlignment = .left
+        return label
+    }()
+    
+    fileprivate lazy var btmLeftImg:  UIImageView = {
+        let image = UIImageView(image: .homeBottomLeftImg)
+        return image
+    }()
+    
+    fileprivate lazy var btmRightImg:  UIImageView = {
+        let image = UIImageView(image: .homeBottomRightImg)
+        return image
+    }()
     
     lazy var applyBtn: UIButton = {
         let button = UIButton(type: .custom)

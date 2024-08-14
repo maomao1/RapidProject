@@ -528,7 +528,7 @@ extension RFIDDetailVC {
         }else if type == .FacePhoto {
             startTime = self.clickFaceTime
         }
-        RPFLocationManager.manager.requestLocationAuthorizationStatus()
+        RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: false)
         RPFLocationManager.manager.analysisHandle = { [weak self] (longitude,latitude) in
             guard let `self` = self else {return}
             RPFReportManager.shared.saveAnalysis(pId: self.productId, type: type, startTime: startTime, longitude: longitude, latitude: latitude)

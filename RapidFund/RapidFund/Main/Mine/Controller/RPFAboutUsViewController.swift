@@ -63,7 +63,7 @@ extension RPFAboutUsViewController {
             make.right.equalToSuperview()
             make.left.equalTo(48.rf)
             make.top.equalTo(logoImgView.snp.top).offset(38.5.rf)
-            make.height.equalTo((kScreenWidth - 48.rf) * 1.25)
+            make.height.equalTo(475.rf)
         }
         
         tableView.snp.makeConstraints { make in

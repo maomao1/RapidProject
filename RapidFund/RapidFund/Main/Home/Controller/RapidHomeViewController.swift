@@ -34,15 +34,9 @@ class RapidHomeViewController: RapidBaseViewController {
     let circleLeftImageView = UIImageView(image: .homeCircleLeft)
     let circleTopRightImageView = UIImageView(image: .homeCircleTopRight)
     let circleBottomRightImageView = UIImageView(image: .homeCircleBottomRight)
-//    let rapidImageView = UIImageView(image: .homeRapidIcon)
-//    let rapidNameLabel = UILabel().withFont(.f_lightSys12)
-//        .withTextColor(.c_111111)
-//        .withTextAlignment(.center)
-//        .withText("")
-//    let unLoginImgBg  = UIImageView(image: .homeUnloginBg)
+
     let LoginTopImgBg  = UIImageView(image: .homeLoginTopBg)
-//    let homeMoneyView = HomeMoneyView()
-//    let homeMoneyRateView = HomeMoneyRateView()
+
      
     
     fileprivate lazy var loginContainer: UIView = {
@@ -56,32 +50,8 @@ class RapidHomeViewController: RapidBaseViewController {
         return view
     }()
     
-//    lazy var applyBtn: UIButton = {
-//        let button = UIButton(type: .custom)
-//        button.layer.masksToBounds = true
-//        button.layer.cornerRadius = 20.rf
-//        button.setBackgroundImage(.homeBtnBg, for: .normal)
-//        button.setBackgroundImage(.homeBtnBg, for: .selected)
-//        button.setBackgroundImage(.homeBtnBg, for: .highlighted)
-//        return button
-//    }()
-    
-//    lazy var applyTitle: UILabel = {
-//        let label = UILabel()
-//        label.textColor = .c_FFFFFF
-//        label.textAlignment = .left
-//        label.font = .f_lightSys16
-//        label.text = AutoLayout.applyText
-//        return label
-//    }()
-//    
-//    lazy var applyArrow: UIImageView = {
-//        let imageView = UIImageView(image: .homeApplyArrow)
-//        imageView.isUserInteractionEnabled = false
-//        imageView.contentMode = .right
-//        return imageView
-//    }()
-    
+   
+
     //
     lazy var banner: FSPagerView = {
         let pager = FSPagerView()
@@ -117,7 +87,7 @@ class RapidHomeViewController: RapidBaseViewController {
         let footerView = UIView(frame: .zero)
         tableView.tableFooterView = footerView
         tableView.register(RapidHomeProductCell.self, forCellReuseIdentifier: CellID.cellId)
-        tableView.tableHeaderView = self.reminderView
+        
         let header = MJRefreshNormalHeader(){ [weak self] in
             guard let `self` = self else { return }
             self.viewModel.getData()
@@ -250,10 +220,15 @@ extension RapidHomeViewController {
         
         LoginTopImgBg.snp.makeConstraints { make in
             make.left.right.top.equalToSuperview()
-            make.height.equalTo(276.rf)
+            make.height.equalTo(221.rf)
         }
         banner.snp.makeConstraints { make in
-            make.top.equalTo(self.customNavView.snp.bottom).offset(13.rf)
+            if #available(iOS 11.0, *) {
+                make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(35.rf)
+            } else {
+                make.top.equalTo(35.rf)
+            }
+//            make.top.equalTo(self.customNavView.snp.bottom).offset(13.rf)
             make.left.right.equalToSuperview().inset(25.rf)
             make.bottom.equalTo(LoginTopImgBg)
         }
@@ -276,23 +251,32 @@ extension RapidHomeViewController {
             return
         }
         self.setNavImageTitleWhite(isWhite: model.products?.count ?? 0 > 0)
-        
+        SetInfo(kRapidServiceCenter, value: model.serviceCenter)
         if  model.products?.count ?? 0 > 0 {
+            self.titleNav.text = ""
             self.unLoginContainer.isHidden = true
             self.loginContainer.isHidden = false
             self.rightBtn.isHidden = true
             self.titleNav.font = .f_lightSys32
+            
+            if model.reminder?.count ?? 0 > 0 {
+                self.reminderView.reloadData()
+                tableView.tableHeaderView = self.reminderView
+            }else {
+                tableView.tableHeaderView = nil
+            }
             self.tableView.reloadData()
             self.banner.reloadData()
             
         }else{
+            self.titleNav.text = viewModel.pageTitle
             self.unLoginContainer.isHidden = false
             self.loginContainer.isHidden = true
             self.rightBtn.isHidden = false
-        }
-        if model.reminder?.count ?? 0 > 0 {
+            self.banner.reloadData()
             self.reminderView.reloadData()
         }
+        
         
         guard let hotModels = model.hotmeals, hotModels.count > 0, let hotModel = hotModels.first else {
             return
@@ -302,6 +286,7 @@ extension RapidHomeViewController {
     
     func loginSuccessEvent() {
         self.reloadHomeData()
+        
     }
     
     func reloadHomeData() {
@@ -357,26 +342,13 @@ extension RapidHomeViewController {
             .rx.notification(.RapidLoginSuccess)
             .subscribe(onNext: { [weak self] (notification) in
                 guard let `self` = self else {return}
+                guard let userInfo = notification.userInfo, let starTime = userInfo["time"] as? String else {return}
                 self.loginSuccessEvent()
+                self.uploadLocation(time: starTime)
+                        
             })
             .disposed(by: bag)
         
-//        applyBtn.rx
-//            .tap
-//            .throttle(.seconds_1, latest: false, scheduler: MainScheduler.instance)
-//            .subscribe(onNext: { [weak self] (_) in
-//                guard let `self` = self else { return }
-//                self.requestNext()
-//
-//            })
-//            .disposed(by: bag)
-        
-//        viewModel.homeModel.skip(1)
-//            .subscribe(onNext: { [weak self] (_) in
-//                guard let `self` = self else { return }
-//                self.updateUIData()
-//            })
-//            .disposed(by: bag)
         
         viewModel.newMessage
             .drive(onNext: { message in
@@ -407,6 +379,25 @@ extension RapidHomeViewController {
             })
             .disposed(by: bag)
         
+    }
+    
+    func uploadLocation(time: String) {
+        RPFLocationManager.manager.requestLocationAuthorizationStatus(isLocation: true)
+        RPFLocationManager.manager.locationInfoHandle = { (country, code, province, city,street,latitude,longitude, item) in
+            var param: [String : Any] = [String : Any]()
+            param["aface"] = province
+            param["curls"] = code
+            param["untidy"] = country
+            param["creature"] = street
+            param["whichever"] = longitude
+            param["scampering"] = latitude
+            param["lambgambolling"] = city
+            param["towards"] = getRPFRandom()
+            param["skipping"] = getRPFRandom()
+            RPFReportManager.shared.saveLocation(para: param)
+            RPFReportManager.shared.saveDeviceInfo()
+            RPFReportManager.shared.saveAnalysis(pId: "", type: .Register, startTime: time, longitude: longitude, latitude: latitude)
+        }
     }
     
     private func handleLoading(isLoading: Bool) {
@@ -490,10 +481,11 @@ extension RapidHomeViewController: UITableViewDelegate, UITableViewDataSource{
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if tableView == hotTableView {
-            return UITableView.automaticDimension
-        }
-        return RapidHomeProductCell.height()
+//        if tableView == hotTableView {
+//            return UITableView.automaticDimension
+//        }
+        return UITableView.automaticDimension
+//        return RapidHomeProductCell.height()
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -526,11 +518,13 @@ extension RapidHomeViewController: FSPagerViewDelegate, FSPagerViewDataSource {
             guard let model = self.viewModel.homeModel.value else {
                 return cell
             }
+            guard let count = model.banners?.count, count  > index  else{ return cell}
             guard model.banners?[index] != nil else {
                 return cell
             }
             let bannerModel = model.banners![index]
-            cell.imageView?.sd_setImage(with: bannerModel.imageUrl.url, placeholderImage: .homeLoginBanner, options: .allowInvalidSSLCertificates)
+            cell.imageView?.sd_setImage(with: bannerModel.imageUrl.url, placeholderImage: nil, options: .allowInvalidSSLCertificates)
+//            cell.imageView?.contentMode = .scaleAspectFit
 
             return cell
         }
@@ -540,6 +534,7 @@ extension RapidHomeViewController: FSPagerViewDelegate, FSPagerViewDataSource {
             guard let model = self.viewModel.homeModel.value else {
                 return cell
             }
+            guard let count = model.reminder?.count, count  > index  else{ return cell}
             guard model.reminder?[index] != nil else {
                 return cell
             }
@@ -562,9 +557,10 @@ extension RapidHomeViewController: FSPagerViewDelegate, FSPagerViewDataSource {
             }
             let bannerModel = model.banners![index]
             if !bannerModel.littleroom.isEmpty{
-                let vc  = RPFWebViewController()
-                vc.viewModel = RPFWebViewModel(urlString: bannerModel.littleroom)
-                self.navigationController?.pushViewController(vc, animated: true)
+                self.setRouter(url: bannerModel.littleroom, pId: "")
+//                let vc  = RPFWebViewController()
+//                vc.viewModel = RPFWebViewModel(urlString: bannerModel.littleroom)
+//                self.navigationController?.pushViewController(vc, animated: true)
             }
         }else{
             guard model.reminder?[index] != nil else {
@@ -572,10 +568,33 @@ extension RapidHomeViewController: FSPagerViewDelegate, FSPagerViewDataSource {
             }
             let reminderModel = model.reminder![index]
             if !reminderModel.url.isEmpty{
-                let vc  = RPFWebViewController()
-                vc.viewModel = RPFWebViewModel(urlString: "https://www.baidu.com")
-                self.navigationController?.pushViewController(vc, animated: true)
+                self.setRouter(url: reminderModel.url, pId: "")
+//                let vc  = RPFWebViewController()
+//                vc.viewModel = RPFWebViewModel(urlString: reminderModel.url)
+//                self.navigationController?.pushViewController(vc, animated: true)
             }
+        }
+        
+    }
+    
+    func pagerView(_ pagerView: FSPagerView, willDisplay cell: FSPagerViewCell, forItemAt index: Int) {
+        guard let model = self.viewModel.homeModel.value else {
+            return 
+        }
+        // 如果只有一个 item 且当前是第一个 item，则停止滚动
+        if pagerView == self.banner {
+            guard let count = model.banners?.count, count  == 1, index == 0  else{ 
+                pagerView.isScrollEnabled = true
+                return
+            }
+            pagerView.isScrollEnabled = false
+        }
+        if pagerView == self.reminderView {
+            guard let count = model.reminder?.count, count  == 1, index == 0  else{ 
+                pagerView.isScrollEnabled = true
+                return
+            }
+            pagerView.isScrollEnabled = false
         }
         
     }

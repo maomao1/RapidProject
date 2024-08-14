@@ -31,9 +31,15 @@ class RapidUserCache {
         UserDefaults.standard.synchronize()
     }
     
+    func cacheUserNumber(num: String) {
+        UserDefaults.standard.setValue(num, forKey: kRapidMobileNumber)
+        UserDefaults.standard.synchronize()
+    }
+    
     func clearUserInfo() {
         UserDefaults.standard.setValue("", forKey: kRapidSession)
         UserDefaults.standard.setValue("", forKey: kRapidLoginTime)
+        UserDefaults.standard.setValue("", forKey: kRapidMobileNumber)
         UserDefaults.standard.synchronize()
     }
 }

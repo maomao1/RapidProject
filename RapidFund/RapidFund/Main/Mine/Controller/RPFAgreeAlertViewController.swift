@@ -11,7 +11,8 @@ import RxCocoa
 import SnapKit
 
 class RPFAgreeAlertViewController: RapidBaseViewController {
-   
+    typealias LoanProtocolCall = () -> ()
+    typealias userProtocolCall = () -> ()
     // MARK: - Constants
     struct AutoLayout {
         static let agreeString = "Loan Agreement"
@@ -19,6 +20,8 @@ class RPFAgreeAlertViewController: RapidBaseViewController {
     }
     
     let disposeBag = DisposeBag()
+    var loanCall: LoanProtocolCall?
+    var userCall: userProtocolCall?
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -255,14 +258,38 @@ extension RPFAgreeAlertViewController {
     
     
     func gotoAgreement() {
+//        if let hanle = self.loanCall {
+//            self.dismiss(animated: true)
+//            hanle()
+//        }
+//        return
         let vc = RPFWebViewController()
-        vc.viewModel = RPFWebViewModel(urlString: "http://www.baidu.com", isAppendPara: false)
-        self.navigationController?.pushViewController(vc, animated: true)
+        vc.viewModel = RPFWebViewModel(urlString: BaseH5Url + LoanProtocolUrl)
+        vc.modalPresentationStyle = .overFullScreen
+        vc.modalTransitionStyle = .crossDissolve
+//        self.navigationController?.pushViewController(vc, animated: true)
+        self.present(vc, animated: true)
+        
+//        DispatchQueue.main.async {
+//            let agreeNVC = RapidBaseNavgationController(rootViewController: RPFWebViewController())
+//            agreeNVC.modalPresentationStyle = .overFullScreen
+//            agreeNVC.modalTransitionStyle = .crossDissolve
+//            self.present(agreeNVC, animated: true, completion: nil)
+//        }
+        
     }
     
     func gotoPrivacy() {
+//        if let hanle = self.userCall {
+//            self.dismiss(animated: true)
+//            hanle()
+//        }
+//        return
         let vc = RPFWebViewController()
-        vc.viewModel = RPFWebViewModel(urlString: "http://www.baidu.com", isAppendPara: false)
-        self.navigationController?.pushViewController(vc, animated: true)
+        vc.modalPresentationStyle = .overFullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        vc.viewModel = RPFWebViewModel(urlString: BaseH5Url + UserProtocolUrl)
+        self.present(vc, animated: true)
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
